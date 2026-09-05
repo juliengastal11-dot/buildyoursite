@@ -1,0 +1,107 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ===========================================================================
+   THEME — ce bloc est remplacé au bootstrap par la palette décidée pour ce site.
+   Les noms de variables sont ceux qu'attendent tous les composants du socle :
+   on remplace les valeurs, jamais les noms.
+   =========================================================================== */
+@theme {
+  --color-background: #ffffff;
+  --color-foreground: #0a0a0a;
+  --color-card: #ffffff;
+  --color-card-foreground: #0a0a0a;
+  --color-primary: #171717;
+  --color-on-primary: #fafafa;
+  --color-secondary: #f5f5f5;
+  --color-on-secondary: #171717;
+  --color-accent: #171717;
+  --color-on-accent: #fafafa;
+  --color-muted: #f5f5f5;
+  --color-muted-foreground: #737373;
+  --color-border: #e5e5e5;
+  --color-destructive: #dc2626;
+  --color-on-destructive: #ffffff;
+  --color-ring: #171717;
+
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --radius-card: 0.75rem;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+}
+
+/* ===========================================================================
+   Mouvement
+   Les courbes intégrées du navigateur sont trop molles. On passe par ces
+   deux-là partout, et on n'en invente pas d'autres.
+   =========================================================================== */
+@theme {
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+/* --- Mouvement piloté par GSAP --------------------------------------------
+   components/ui/reveal, cascade, entree-hero, compteur, parallaxe, defilant.
+
+   Ce que le mouvement va dévoiler est masqué d'avance, mais SEULEMENT quand
+   JavaScript a pris la main : `app/layout.tsx` pose `html.js` avant le
+   premier rendu. Sans JavaScript, rien n'est masqué et tout est visible.
+   Sans cette règle, un élément apparaîtrait, disparaîtrait à l'hydratation,
+   puis réapparaîtrait.
+
+   GSAP lève le masque en style en ligne (`autoAlpha`), qui l'emporte sur
+   cette feuille. Si TOUT reste invisible, un script a planté avant
+   l'hydratation : regarde la console, ne touche pas à cette règle. */
+html.js [data-mouvement="reveal"],
+html.js [data-mouvement="compteur"],
+html.js [data-mouvement="cascade"] > *,
+html.js [data-mouvement="hero"] > * {
+  visibility: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Les composants affichent alors sans animer ; la feuille ne masque rien
+     non plus, par sécurité. */
+  html.js [data-mouvement="reveal"],
+  html.js [data-mouvement="compteur"],
+  html.js [data-mouvement="cascade"] > *,
+  html.js [data-mouvement="hero"] > * {
+    visibility: visible;
+  }
+}
+
+/* --- Zoom au survol d'une carte photo ------------------------------------
+   Conditionne a un vrai pointeur : sur tactile, un appui declenche un faux
+   survol et l'image resterait agrandie apres le doigt. */
+.zoom-survol {
+  transition: transform 700ms var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .group:hover .zoom-survol {
+    transform: scale(1.05);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .zoom-survol { transition: none; }
+  .group:hover .zoom-survol { transform: none; }
+}
