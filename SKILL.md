@@ -24,8 +24,14 @@ cohérente et qui tourne — pas la perfection.
 
 ## Configuration
 
-**Avant tout, lis `<skill>/config.json`.** `<skill>` est le dossier de base annoncé au
-lancement du skill — ne code jamais ce chemin en dur, il diffère chez chaque utilisateur.
+**Avant tout, lis `~/.claude/buildyoursite/config.json`** — sous Windows,
+`%USERPROFILE%\.claude\buildyoursite\config.json`. Les données du skill vivent **hors de
+son dossier**, pour survivre à une mise à jour qui remplacerait celui-ci. Si tu ne l'y
+trouves pas, regarde `<skill>/config.json` : une installation antérieure au déménagement
+l'y porte encore, et l'installeur le déplacera au prochain passage.
+
+`<skill>` est le dossier de base annoncé au lancement — ne code jamais ce chemin en dur, il
+diffère chez chaque utilisateur.
 
 | Clé | Usage |
 |---|---|
@@ -52,10 +58,16 @@ phase 0.55.
 | Modules | `<skill>/modules/{auth,stripe,admin,legal}` |
 | Références | `<skill>/references/` — dont `structures.md`, `mouvement.md` et `lancement.md`, à lire avant tout blueprint |
 | Scripts | `<skill>/scripts/` |
-| Pro Max | `<skill>/lib/ui-ux-pro-max` |
+| Données du skill | `~/.claude/buildyoursite` — `config.json` et la bibliothèque de design, hors du skill |
+| Pro Max | `~/.claude/buildyoursite/ui-ux-pro-max` |
 | Le site en cours | `<dossier de la session>/<nom-du-site>` — jamais ailleurs, voir phase 0.55 |
 
-Si `<skill>/lib/ui-ux-pro-max` est absent, l'installeur ne l'a pas encore récupéré : renvoie
+**Le relevé de capacités imprime ces deux chemins** en fin de sortie, résolus pour cette
+machine. Prends-les là plutôt que de les reconstruire : une installation d'avant le
+déménagement porte encore ses données dans `<skill>/lib/ui-ux-pro-max` et
+`<skill>/config.json`, et le relevé le dit.
+
+Si la bibliothèque est absente, l'installeur ne l'a pas encore récupérée : renvoie
 l'utilisateur vers lui plutôt que de travailler sans design system.
 
 ## Modèle et effort
@@ -427,8 +439,11 @@ de rester entre toi et toi-même :
 ## Phase 0.5 — Design system
 
 ```
-python "<skill>/lib/ui-ux-pro-max/.claude/skills/ui-ux-pro-max/scripts/search.py" "<requête>" --design-system --stack nextjs
+python "<moteur de design>" "<requête>" --design-system --stack nextjs
 ```
+
+`<moteur de design>` est le chemin que le relevé de capacités a imprimé, celui de
+`search.py`. Ne le reconstruis pas de mémoire.
 
 **Interroge toujours Pro Max en anglais.** La base est anglophone : une requête française
 renvoie zéro résultat, même sur un sujet qu'elle couvre très bien. Traduis le brief.

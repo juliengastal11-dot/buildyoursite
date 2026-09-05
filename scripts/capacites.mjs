@@ -19,6 +19,8 @@ import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
+import { CHEMIN_CONFIG, CHEMIN_PROMAX, DOSSIER_DONNEES, RECHERCHE_PROMAX, aDemenager } from "./emplacements.mjs";
+
 const RACINE_SKILL = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const ok = (m) => console.log("  ✓ " + m);
 const ko = (m) => console.log("  ✗ " + m);
@@ -44,7 +46,7 @@ if (py) ok(py + " — Pro Max peut être interrogé");
 else ko("Python introuvable — Pro Max ne pourra pas être interrogé, le design system sera décidé sans lui");
 
 /* --- UI/UX Pro Max, et sa fraîcheur --- */
-const promax = path.join(RACINE_SKILL, "lib", "ui-ux-pro-max");
+const promax = CHEMIN_PROMAX;
 if (existsSync(path.join(promax, ".git"))) {
   const date = silencieux(`git -C "${promax}" log -1 --format=%cs`);
   const jours = date ? Math.round((Date.now() - new Date(date).getTime()) / 86400000) : null;
@@ -64,7 +66,7 @@ if (existsSync(path.join(promax, ".git"))) {
 /* --- config.json --- */
 let config = {};
 try {
-  config = JSON.parse(readFileSync(path.join(RACINE_SKILL, "config.json"), "utf8"));
+  config = JSON.parse(readFileSync(CHEMIN_CONFIG, "utf8"));
 } catch {
   ko("config.json absent — lance l'installeur");
 }
@@ -110,6 +112,14 @@ if (dedans(RACINE_SKILL) || dedans(path.join(os.homedir(), ".claude"))) {
 }
 if (config.racineProjets && !dedans(config.racineProjets)) {
   console.log(`  ! tes sites sont d'habitude dans ${config.racineProjets} — on peut continuer ici, ou rouvrir Claude Code là-bas`);
+}
+
+console.log("\n  Emplacements :");
+console.log("  · données du skill : " + DOSSIER_DONNEES);
+console.log("  · moteur de design : python \"" + RECHERCHE_PROMAX + "\"");
+if (aDemenager()) {
+  console.log("  ! des données vivent encore dans le dossier du skill — une mise à jour les");
+  console.log("    emporterait. Relance l'installeur, il les déménage.");
 }
 
 console.log("\n  Connecteurs — à vérifier depuis Claude, pas d'ici :");

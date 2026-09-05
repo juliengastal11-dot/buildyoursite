@@ -82,8 +82,8 @@ const opt = (n, d = null) => {
 async function clePexels() {
   if (process.env.PEXELS_API_KEY?.trim()) return process.env.PEXELS_API_KEY.trim();
   try {
-    const ici = path.dirname(fileURLToPath(import.meta.url));
-    const conf = JSON.parse(await readFile(path.join(ici, "..", "config.json"), "utf8"));
+    const { CHEMIN_CONFIG } = await import("./emplacements.mjs");
+    const conf = JSON.parse(await readFile(CHEMIN_CONFIG, "utf8"));
     return conf.pexelsApiKey?.trim() || null;
   } catch {
     return null;

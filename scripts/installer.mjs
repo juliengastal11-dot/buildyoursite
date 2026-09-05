@@ -17,10 +17,11 @@ import path from "node:path";
 import os from "node:os";
 import readline from "node:readline/promises";
 import { fileURLToPath } from "node:url";
+import { DOSSIER_DONNEES, CIBLE_CONFIG, CIBLE_PROMAX, aDemenager, demenager } from "./emplacements.mjs";
 
 const RACINE_SKILL = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const DEPOT_PROMAX = "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill";
-const CHEMIN_PROMAX = path.join(RACINE_SKILL, "lib", "ui-ux-pro-max");
+const CHEMIN_PROMAX = CIBLE_PROMAX;
 
 const ok = (m) => console.log("  \u2713 " + m);
 const ko = (m) => console.log("  \u2717 " + m);
@@ -77,6 +78,15 @@ if (bloquant) {
   process.exit(1);
 }
 
+/* ---------------------------- emplacements ------------------------------- */
+/* config.json et la bibliothèque vivent hors du skill, pour survivre à sa
+   réinstallation. Une installation d'avant ce changement les porte encore à
+   côté du code : on déménage, une fois. */
+titre("Emplacements");
+if (aDemenager()) demenager(ok);
+mkdirSync(DOSSIER_DONNEES, { recursive: true });
+ok("données du skill : " + DOSSIER_DONNEES);
+
 /* --------------------------- bibliothèque design ------------------------- */
 titre("Bibliothèque de design (UI/UX Pro Max, MIT, dépôt séparé)");
 try {
@@ -94,7 +104,7 @@ try {
 
 /* ------------------------------- config.json ----------------------------- */
 titre("Configuration");
-const cheminConfig = path.join(RACINE_SKILL, "config.json");
+const cheminConfig = CIBLE_CONFIG;
 const cheminExemple = path.join(RACINE_SKILL, "config.exemple.json");
 // config.json reste local et n'est pas versionné : on le crée depuis le modèle.
 const config = JSON.parse(readFileSync(existsSync(cheminConfig) ? cheminConfig : cheminExemple, "utf8"));

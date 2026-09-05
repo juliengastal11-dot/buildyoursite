@@ -934,3 +934,33 @@ manifestes sont validés contre les schémas officiels avant chaque publication.
 le relevé disait « lance l'installeur : node scripts/installer.mjs ». Utile depuis le
 dossier du skill, inutile ailleurs — et installé en plugin, le skill vit dans un cache dont
 personne ne connaît le chemin. Le message donne maintenant le chemin absolu.
+
+---
+
+# Les données quittent le dossier du skill (2026-09-06)
+
+Conséquence directe de l'installation en plugin. Un plugin vit dans un cache que Claude Code
+peut remplacer à chaque mise à jour. Or deux choses vivaient à côté du code : `config.json`,
+écrit par l'installeur, et la bibliothèque de design, plusieurs centaines de mégaoctets.
+Une mise à jour les emportait, sans rien dire, et le skill repartait sans configuration ni
+moteur de design.
+
+Elles vivent maintenant dans `~/.claude/buildyoursite`, hors d'atteinte.
+
+**Le dossier officiel n'était pas utilisable.** Claude Code fournit `CLAUDE_PLUGIN_DATA`,
+prévu exactement pour ça. Mais la documentation est explicite : il n'est exporté qu'aux
+processus de hooks et aux serveurs MCP. Nos scripts, eux, sont lancés dans un terminal, où
+la variable est absente. S'y fier aurait donné un emplacement variable selon qui lance le
+script, donc un installeur qui écrit ici et un relevé qui cherche là. Un chemin déterministe
+vaut mieux qu'un chemin officiel obtenu une fois sur deux. `BUILDYOURSITE_DATA` permet de le
+déplacer.
+
+**Personne ne perd sa configuration.** L'ancien emplacement continue d'être lu tant qu'il
+porte les fichiers, et l'installeur déménage au premier passage. Le relevé signale ce qui
+traîne encore dans le dossier du skill.
+
+**Un chemin de moins à connaître par cœur.** Le relevé imprime désormais le dossier de
+données et la commande complète du moteur de design. Le `SKILL.md` dit de les prendre là,
+plutôt que de reconstruire un chemin qui dépend de la façon dont le skill a été installé.
+C'est la même leçon que le message d'installeur en chemin relatif : dès qu'un outil peut
+vivre à deux endroits, il doit dire où il est.

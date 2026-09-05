@@ -113,8 +113,12 @@ node scripts/installer.mjs
 Il vérifie les prérequis, clone
 [UI/UX Pro Max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) dans `lib/`, et vous
 demande où vous rangez vos sites d'habitude. Relancez-le quand vous voulez : il met à jour
-au lieu de réinstaller. Après une mise à jour du plugin, relancez-le : la bibliothèque de
-design vit dans le dossier du skill et une réinstallation peut l'emporter.
+au lieu de réinstaller.
+
+Vos données vivent dans `~/.claude/buildyoursite`, **en dehors du skill**. Une mise à jour
+du plugin remplace le code sans toucher à votre configuration ni à la bibliothèque de
+design, qui pèse plusieurs centaines de mégaoctets et n'a pas à être retéléchargée. Pour
+les ranger ailleurs, posez la variable d'environnement `BUILDYOURSITE_DATA`.
 
 Non interactif :
 
@@ -141,14 +145,14 @@ bas à droite sur **Édition** et cliquez sur ce que vous voulez changer.
 | | |
 |---|---|
 | `SKILL.md` | Le comportement : phases, règles, garde-fous |
-| `config.json` | Votre configuration locale, créée par l'installeur, non versionnée |
+| `~/.claude/buildyoursite/` | Vos données : `config.json` et la bibliothèque de design. **Hors du skill**, pour survivre à ses mises à jour |
 | `socle/` | La base Next.js, avec l'overlay et les primitives de mouvement |
 | `modules/` | Greffes : authentification, paiement, back-office, **pages légales** |
 | `references/` | Structures par type de site, relevé de charte, vérification du rendu, overlay |
 | `scripts/` | Installeur, lanceur de dev, blueprint, photos provisoires et leur planche-contact, contrôles automatiques |
 | `DECISIONS.md` | Ce que le dépôt fait et ne fait pas, et pourquoi |
 | `AMELIORATIONS.md` | Le journal des incidents réels et de ce qu'ils ont changé |
-| `lib/ui-ux-pro-max/` | Dépôt externe, cloné par l'installeur, non versionné ici |
+| `~/.claude/buildyoursite/ui-ux-pro-max/` | Dépôt externe, cloné par l'installeur, jamais versionné ici |
 
 Trois fichiers valent le détour si vous voulez comprendre l'esprit du projet :
 **`references/releve-complet.js`**, qui mesure les six dimensions d'une charte en un
