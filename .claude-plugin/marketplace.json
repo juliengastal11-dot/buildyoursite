@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
+  "name": "buildyoursite",
+  "version": "1.0.0",
+  "description": "Créer un site client complet, puis le modifier en cliquant dessus.",
+  "owner": {
+    "name": "juliengastal11-dot",
+    "url": "https://github.com/juliengastal11-dot"
+  },
+  "plugins": [
+    {
+      "name": "buildyoursite",
+      "source": "./",
+      "description": "Construit un site web client complet en une passe — Next.js, TypeScript, Tailwind, Prisma, authentification — puis bascule en édition visuelle : on clique sur une zone de la page dans l'aperçu, on écrit ce qu'on veut, le code change. Reprend la charte d'un site de référence en la mesurant plutôt qu'en la devinant : palette, typographie, géométrie, liens, photos, cadrage, mouvement.",
+      "version": "1.0.0",
+      "author": {
+        "name": "juliengastal11-dot",
+        "url": "https://github.com/juliengastal11-dot"
+      },
+      "homepage": "https://github.com/juliengastal11-dot/buildyoursite",
+      "repository": "https://github.com/juliengastal11-dot/buildyoursite",
+      "license": "MIT",
+      "category": "development",
+      "keywords": [
+        "site-web",
+        "nextjs",
+        "full-stack",
+        "edition-visuelle",
+        "bootstrap",
+        "design-system",
+        "vitrine",
+        "tailwind",
+        "prisma"
+      ]
+    }
+  ]
+}

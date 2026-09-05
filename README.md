@@ -84,16 +84,37 @@ une décision de structure ou de design plutôt qu'une retouche.
 
 ## Installation
 
+Depuis Claude Code, sans quitter le terminal :
+
+```
+/plugin marketplace add juliengastal11-dot/buildyoursite
+```
+
+```
+/plugin install buildyoursite@buildyoursite
+```
+
+Ou à la main, si vous préférez maîtriser l'emplacement :
+
 ```bash
 git clone https://github.com/juliengastal11-dot/buildyoursite ~/.claude/skills/buildyoursite
-cd ~/.claude/skills/buildyoursite
+```
+
+Dans les deux cas, **redémarrez Claude Code**, puis tapez `/buildyoursite`. Le skill relève
+les capacités de la machine et vous dit quoi lancer s'il manque quelque chose, avec le
+chemin exact.
+
+### L'installeur
+
+```bash
 node scripts/installer.mjs
 ```
 
-L'installeur vérifie les prérequis, clone
+Il vérifie les prérequis, clone
 [UI/UX Pro Max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) dans `lib/`, et vous
 demande où vous rangez vos sites d'habitude. Relancez-le quand vous voulez : il met à jour
-au lieu de réinstaller.
+au lieu de réinstaller. Après une mise à jour du plugin, relancez-le : la bibliothèque de
+design vit dans le dossier du skill et une réinstallation peut l'emporter.
 
 Non interactif :
 

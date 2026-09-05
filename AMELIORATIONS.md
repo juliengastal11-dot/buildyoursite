@@ -908,3 +908,29 @@ aujourd'hui, les primitives de mouvement ou les composants du socle demain — s
 date de la copie. Ce n'est pas un défaut en soi : un site livré doit être stable. Mais
 quand l'outil sert aussi à revenir sur d'anciens projets, il lui faut un chemin de mise à
 niveau explicite, sinon la première impression est celle d'une panne.
+
+---
+
+# Le manifeste disait « skills : ici », et le skill disparaissait (2026-09-06)
+
+En ajoutant le manifeste de place de marché, lecture du schéma officiel. Il décrit le champ
+`skills` d'un `plugin.json` comme un dossier **supplémentaire**, contenant des
+`<nom>/SKILL.md`. Nos deux manifestes portaient `"skills": "./"`.
+
+Deux conséquences, toutes deux invisibles jusqu'à l'installation. La racine ne contient
+aucun sous-dossier avec un `SKILL.md`, donc ce champ ne désignait rien. Et surtout, la règle
+qui charge un `SKILL.md` posé à la racine ne s'applique **que si** aucun champ `skills` n'est
+déclaré. En le déclarant, on désactivait la seule chose qui faisait exister le skill.
+
+Installé comme plugin, le dépôt aurait donc livré un plugin sans aucune commande. Le champ
+est retiré : la racine porte son `SKILL.md`, le nom d'invocation vient de son en-tête.
+
+**Le schéma contredit la documentation sur un point.** La page explique qu'un plugin situé à
+la racine de sa place de marché prend `"source": "."`. Le schéma publié, lui, impose qu'un
+chemin commence par `./`. On écrit donc `"./"`, qui satisfait les deux. Les quatre
+manifestes sont validés contre les schémas officiels avant chaque publication.
+
+**Et un message qui supposait un dossier courant.** Quand la bibliothèque de design manque,
+le relevé disait « lance l'installeur : node scripts/installer.mjs ». Utile depuis le
+dossier du skill, inutile ailleurs — et installé en plugin, le skill vit dans un cache dont
+personne ne connaît le chemin. Le message donne maintenant le chemin absolu.

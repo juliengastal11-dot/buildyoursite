@@ -53,7 +53,12 @@ if (existsSync(path.join(promax, ".git"))) {
   if (jours !== null && jours > 60) ligne += " — relance l'installeur pour le mettre à jour";
   ok(ligne);
 } else {
-  ko("UI/UX Pro Max absent — lance l'installeur : node scripts/installer.mjs");
+  // Chemin absolu : le skill peut vivre dans `~/.claude/skills` comme dans le
+  // cache des plugins, et l'utilisateur n'a pas à deviner lequel.
+  ko(
+    "UI/UX Pro Max absent — lance l'installeur :\n" +
+      `      node "${path.join(RACINE_SKILL, "scripts", "installer.mjs")}"`,
+  );
 }
 
 /* --- config.json --- */
