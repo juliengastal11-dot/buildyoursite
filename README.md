@@ -85,7 +85,7 @@ une décision de structure ou de design plutôt qu'une retouche.
 ## Installation
 
 ```bash
-git clone https://github.com/<votre-compte>/buildyoursite ~/.claude/skills/buildyoursite
+git clone https://github.com/juliengastal11-dot/buildyoursite ~/.claude/skills/buildyoursite
 cd ~/.claude/skills/buildyoursite
 node scripts/installer.mjs
 ```
