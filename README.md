@@ -12,6 +12,40 @@ reste chez vous, dans un dépôt que vous possédez, avec l'outil que vous avez 
 
 ---
 
+## Démarrage rapide
+
+**1.** Dans Claude Code, deux commandes :
+
+```
+/plugin marketplace add juliengastal11-dot/buildyoursite
+```
+
+```
+/plugin install buildyoursite@buildyoursite
+```
+
+**2.** Redémarrez Claude Code. Les skills sont recensés au lancement : sans redémarrage, la
+commande n'existe pas encore.
+
+**3.** Ouvrez Claude Code **dans le dossier où vous voulez votre site**, et tapez
+`/buildyoursite`. Le skill relève ce que votre machine sait faire et vous donne la commande
+d'installation à lancer une fois, avec son chemin exact.
+
+**4.** Lancez cette commande, puis retapez `/buildyoursite`. Il vous pose ses questions et
+construit.
+
+> **Deux choses à savoir avant de commencer.**
+>
+> Il faut **Node 20 ou plus**, **git**, et **Python 3** pour le moteur de design. Sans Python
+> le skill fonctionne quand même, mais il décide les palettes et les typographies sans base,
+> et ça se voit sur le résultat.
+>
+> Il faut **Opus 5 au minimum, effort `high`**. En dessous, la qualité chute nettement :
+> briefs plus courts, moins d'arbitrages, mouvement oublié. Le skill vous le rappelle avant
+> de commencer, et vous laisse changer de modèle sans rien perdre.
+
+---
+
 ## Ce que ça fait vraiment
 
 **Phase 1 — le bootstrap.** Il relève d'abord ce que la machine sait faire — Node, Python,
