@@ -296,6 +296,39 @@ site complet.
 La question suivante s'adapte : on ne demande pas « ce qui doit vivre en base » à quelqu'un
 qui veut une landing page.
 
+### Puis : sur quel écran ses visiteurs seront-ils ?
+
+**Ne demande jamais « mobile ou ordinateur ? ».** La question laisserait croire qu'on
+choisit l'un contre l'autre, alors que le site est fluide dans tous les cas et vérifié aux
+deux largeurs. Ce qui se décide ici, c'est **l'écran qu'on compose en premier**, celui dont
+on optimise le confort quand les deux ne peuvent pas gagner.
+
+Le genre de site donne déjà une réponse probable. **Propose-la, et laisse corriger d'un
+clic** plutôt que de poser la question à froid :
+
+> **Tes visiteurs arriveront surtout d'où ?**
+> - *Du téléphone* — un lien depuis Instagram, une fiche Google, un QR code sur une carte
+> - *De l'ordinateur* — une recherche depuis un bureau, un lien reçu par e-mail au travail
+> - *Les deux autant* — je compose pour le téléphone et je vérifie l'ordinateur de près
+>
+> Dans tous les cas le site s'adapte aux deux ; ça change seulement ce que je soigne en
+> premier.
+
+| Réponse | Ce que ça change vraiment |
+|---|---|
+| **Téléphone d'abord** | Je compose à 375 px et j'élargis. Une action par écran, peu de colonnes, du texte court au-dessus de la ligne de flottaison. Les coordonnées deviennent des actions : appeler en un geste, itinéraire, messagerie. Mouvement plus sobre et images plus légères — un défilement chorégraphié coûte cher sur un réseau mobile. L'auto-test commence par 375 px. |
+| **Ordinateur d'abord** | Je compose à 1280 px et je replie. Grilles plus denses, tableaux et comparatifs possibles, navigation dépliée, contenu plus long assumé. Le mouvement au défilement a de la place pour respirer. L'auto-test commence par 1280 px, **et 375 px reste obligatoire** : c'est là que les colonnes cassent. |
+| **Les deux** | Composition à 375 px, parce que remonter est plus sûr que redescendre, et vérification serrée aux deux largeurs plutôt qu'à l'une. |
+
+**Le défaut, quand il n'y a pas de réponse :** téléphone d'abord pour un commerce, un
+service local, une landing ou une vitrine ; ordinateur d'abord pour une application, un
+back-office, un outil professionnel ou un site destiné à des entreprises. Ce sont des
+tendances, pas des lois : la réponse de l'utilisateur l'emporte toujours sur ce défaut.
+
+**Écris-le dans la barre de direction du blueprint**, comme le mouvement et la palette : un
+choix qui gouverne la mise en page mérite d'être relu, pas deviné une deuxième fois par les
+agents. Et à l'étape 7, demande-lui de regarder **son écran prioritaire en premier**.
+
 Ce que tu dois savoir avant de continuer :
 - **le nom du site** — c'est le nom de son dossier — et pour qui il est
 - **les modules** à greffer : auth ? paiement ? back-office ?
@@ -312,7 +345,7 @@ Découpage qui fonctionne :
 
 | Salve | Contenu |
 |---|---|
-| 1 — le projet | **le genre de site**, le nom du site, pour qui il est, les modules à greffer |
+| 1 — le projet | **le genre de site**, **l’écran prioritaire**, le nom du site, pour qui il est, les modules à greffer |
 | 2 — le contenu et les actifs | pages attendues, ce qui doit vivre en base, ce que le propriétaire doit pouvoir modifier lui-même, **les actifs — logo, photos, captures — et, si un générateur d'images est connecté, générés ou provisoires**, contraintes connues |
 | 3 — les deux fixes | l'inspiration, puis la validation du blueprint |
 
@@ -980,8 +1013,11 @@ appliqué, base poussée, serveur de dev en marche. Il reste à écrire le site.
    a le droit d'être dépouillé, et c'est un choix à écrire dans le blueprint.
 
    **Puis l'auto-test, avant de montrer quoi que ce soit.** Chaque point se vérifie, aucun
-   ne se suppose — la liste complète est dans `references/verifier-le-rendu.md` : chaque
-   page à 375 px de large ; chaque bouton et chaque lien cliqués ; le formulaire jusqu'à son
+   ne se suppose — la liste complète est dans `references/verifier-le-rendu.md`. **Commence
+   par l'écran prioritaire du blueprint**, puis fais l'autre : c'est le premier qui doit
+   être irréprochable, le second seulement correct. Aucune largeur n'est facultative pour
+   autant — les colonnes cassent à 375 px, y compris sur un site pensé pour le bureau.
+   Chaque page à 375 px de large ; chaque bouton et chaque lien cliqués ; le formulaire jusqu'à son
    état de succès ; la console vide ; le mouvement réduit ; les queues des lettres (g, y, p)
    dans tout texte masqué. Ce que tu trouves, tu le corriges et tu le dis. Sur les deux
    premiers bootstraps, c'est l'utilisateur qui a trouvé le CSS cassé, les photos absentes,

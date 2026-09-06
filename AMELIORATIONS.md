@@ -1003,3 +1003,42 @@ outil à lui, pas celui d'un service qu'il n'a jamais installé.
 **La règle générale.** Tout ce qui, dans ce skill, dépend d'un service extérieur se
 reconnaît à ce qu'il sait faire. Un nom propre dans le déroulé est un défaut, sauf quand il
 désigne une dépendance que nous installons nous-mêmes.
+
+---
+
+# L'écran prioritaire n'était décidé par personne (2026-09-06)
+
+Le socle est fluide, l'auto-test contrôle 375 px et 1280 px, et le blueprint n'a jamais dit
+**pour quel écran le site est composé**. Résultat : la mise en page se décidait au hasard de
+ce que rendait le design system, en général au format bureau, et le téléphone héritait de
+ce qui restait. Sur un commerce de quartier dont la moitié des visiteurs arrive d'une fiche
+Google, c'est le mauvais sens.
+
+## La question à ne pas poser
+
+« Mobile ou ordinateur ? » laisse croire qu'on choisit l'un contre l'autre. C'est faux : le
+site s'adapte aux deux, toujours, et les deux largeurs restent vérifiées. On demande donc
+**d'où arrivent les visiteurs** — un lien Instagram, une fiche Google, une recherche depuis
+un bureau — et on en déduit l'écran qu'on compose en premier.
+
+## Ce que la réponse change, sinon la question est décorative
+
+Composer à 375 px puis élargir n'est pas composer à 1280 px puis replier. Le premier impose
+une action par écran, peu de colonnes, du texte court avant la ligne de flottaison, des
+coordonnées transformées en gestes — appeler, ouvrir un itinéraire — et un budget de
+mouvement et d'images plus serré, parce qu'un défilement chorégraphié coûte cher sur un
+réseau mobile. Le second autorise des grilles denses, des tableaux, une navigation dépliée
+et du contenu long.
+
+L'auto-test suit la même priorité : l'écran principal doit être irréprochable, l'autre
+correct. **Aucune largeur n'est facultative pour autant** — les grilles cassent à 375 px, y
+compris sur un site pensé pour le bureau, et une page cassée sur téléphone reste cassée
+même quand le téléphone est minoritaire.
+
+## Proposer plutôt que demander
+
+Le genre de site donne déjà la réponse la plus probable : téléphone pour un commerce, un
+service local, une landing ou une vitrine ; ordinateur pour une application, un back-office
+ou un outil professionnel. Le skill propose ce défaut et laisse corriger d'un clic. C'est la
+même règle que pour le relevé de capacités : une question dont la réponse est déjà connue à
+quatre-vingts pour cent ne se pose pas à froid, elle se propose.

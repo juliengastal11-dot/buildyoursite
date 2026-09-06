@@ -95,6 +95,11 @@ un créneau choisi à 10:00 Paris était bien stocké en `08:00Z`.
 Chaque point se vérifie dans le panneau ou par un appel, jamais de mémoire — aucun ne se
 suppose.
 
+> **L'ordre suit l'écran prioritaire du blueprint.** Sur un site pensé pour le bureau,
+> commence par 1280 px — mais ne saute jamais 375 px : c'est là que les grilles cassent, et
+> une page cassée sur téléphone reste une page cassée même quand le téléphone est
+> minoritaire.
+
 1. **Chaque page à 375 px de large** (`resize_window`, préréglage mobile), puis à la largeur
    du bureau. Débordements, textes coupés, images écrasées, barre de navigation qui recouvre
    un titre.
