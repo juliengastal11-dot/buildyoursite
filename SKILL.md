@@ -211,21 +211,35 @@ node "<skill>/scripts/capacites.mjs"
 ```
 
 Il vérifie lui-même — jamais sur parole — Node, Python, la bibliothèque de design et sa
-fraîcheur, l'identité git, la clé Pexels. Puis **complète depuis tes propres outils** ce
-qu'un script ne peut pas voir : les connecteurs. Higgsfield (images et vidéo générées) :
-si ses outils sont présents, appelle son solde — c'est gratuit — et note les crédits.
-Hostinger : note-le sans rien en faire, on ne déploie pas.
+fraîcheur, l'identité git, la clé Pexels.
 
-Recopie le tout en une checklist, une ligne par capacité, et dis ce que chaque ✗ change :
+**Puis complète depuis tes propres outils ce qu'aucun script ne peut voir : les
+connecteurs.** Ils ne sont pas déclarés dans un fichier que le terminal saurait lire — ils
+viennent du compte ou des plugins — et toi seul les as sous les yeux. Alors **regarde ta
+propre liste d'outils, et cherche une capacité, jamais une marque** :
+
+| Ce que tu cherches | Comment tu le reconnais | Ce que ça change |
+|---|---|---|
+| **Un générateur d'images ou de vidéo** | un outil qui fabrique une image ou une vidéo à partir d'un texte — noms fréquents : `generate_image`, `generate_video`, `text_to_image` — souvent accompagné de retouche : détourage, agrandissement, remplacement de fond | les visuels manquants peuvent être **générés dans l'univers du site** au lieu d'être provisoires |
+| **De quoi en connaître le coût** | sur le même connecteur, un outil de solde, de crédits, de quota ou de facturation | tu peux annoncer un prix avant chaque image ; sans lui, dis que le coût n'est pas mesurable d'ici |
+| **Un hébergeur** | un outil de déploiement, de domaine ou de serveur | rien. Note-le sans rien en faire, on ne déploie pas |
+
+**N'écris jamais de liste de services connus dans ce skill.** Une liste de marques est déjà
+fausse le jour où on l'écrit — chacun a son fournisseur — et périmée six mois plus tard. La
+capacité, elle, ne vieillit pas. Nomme dans le relevé **le connecteur que tu as réellement
+trouvé**, quel qu'il soit, et sers-t'en ensuite sous ce nom.
+
+Recopie le tout en une checklist, une ligne par capacité, et dis ce que chaque ✗ change.
+Exemple, avec un générateur appelé ici `X` — le tien portera un autre nom :
 
 > ✓ Node 22 · ✓ Python 3.12 · ✓ Pro Max, à jour il y a 3 jours · ✓ identité git
 > ✗ clé Pexels — photos provisoires via Openverse, à vérifier sur la planche
-> ✓ Higgsfield connecté, 80 crédits — les visuels manquants peuvent être générés
-> ✗ Hostinger — sans effet, on ne déploie pas
+> ✓ X connecté, solde 80 crédits — les visuels manquants peuvent être générés
+> ✗ aucun connecteur d'hébergement — sans effet, on ne déploie pas
 
-Ce relevé décide de la forme des questions qui suivent : on ne demande jamais « as-tu
-Higgsfield ? », on demande ce que sa présence rend possible. Et un ✗ n'est pas un reproche
-— c'est une information, sans lien, sans insistance.
+Ce relevé décide de la forme des questions qui suivent : on ne demande jamais « as-tu tel
+service ? », on demande ce que sa présence rend possible. Et un ✗ n'est pas un reproche —
+c'est une information, sans lien, sans insistance.
 
 ## Phase 0.b — Brief
 
@@ -273,7 +287,7 @@ Découpage qui fonctionne :
 | Salve | Contenu |
 |---|---|
 | 1 — le projet | **le genre de site**, le nom du site, pour qui il est, les modules à greffer |
-| 2 — le contenu et les actifs | pages attendues, ce qui doit vivre en base, ce que le propriétaire doit pouvoir modifier lui-même, **les actifs — logo, photos, captures — et, si Higgsfield est connecté, générés ou provisoires**, contraintes connues |
+| 2 — le contenu et les actifs | pages attendues, ce qui doit vivre en base, ce que le propriétaire doit pouvoir modifier lui-même, **les actifs — logo, photos, captures — et, si un générateur d'images est connecté, générés ou provisoires**, contraintes connues |
 | 3 — les deux fixes | l'inspiration, puis la validation du blueprint |
 
 N'invente jamais pour t'épargner une question. Une hypothèse non posée finit dans le
@@ -296,16 +310,20 @@ Pour un produit qu'on écoute ou qu'on essaie — application, musique, jeu — 
 les démos : un extrait, un enregistrement d'écran. C'est la preuve la plus forte qu'une page
 puisse porter, et elle ne s'invente pas.
 
-**Si le relevé a trouvé Higgsfield**, la salve 2 porte une question de plus, avec les
-chiffres :
+**Si le relevé a trouvé un générateur d'images**, la salve 2 porte une question de plus,
+avec son nom et ses chiffres :
 
 > **Pour les visuels qui manquent :**
-> - *Générés dans l'univers du site* — Higgsfield, environ 2 crédits par image, prix
->   annoncé avant chacune ; il en reste N
+> - *Générés dans l'univers du site* — par {le connecteur trouvé}, coût annoncé avant
+>   chaque image ; il te reste {solde}
 > - *Provisoires sous licence* — gratuits, barrés d'un bandeau, à remplacer par les siens
 
-Sans Higgsfield, ne pose pas la question : les provisoires, et une seule ligne pour dire
-que la génération existerait avec ce connecteur. Pas de lien, pas d'insistance.
+Le coût par image dépend du service : **relève-le sur place** plutôt que de l'annoncer de
+mémoire, et si tu ne peux pas le connaître, dis-le au lieu de l'inventer.
+
+**Sans générateur, ne pose pas la question** : les provisoires, et une seule ligne pour dire
+que la génération serait possible avec un connecteur d'images. Ne nomme aucun service, ne
+mets aucun lien, n'insiste pas — ce n'est pas à ce skill de vendre un abonnement.
 
 Les deux questions ci-dessous sont **obligatoires et passent en dernier** :
 
@@ -877,8 +895,9 @@ appliqué, base poussée, serveur de dev en marche. Il reste à écrire le site.
    écraser un fichier dans `public/photos/`, sans toucher au code. Exige-le dans les briefs
    plutôt que de laisser chaque agent réinventer un `<Image fill>`.
 
-   **Si Higgsfield est connecté et que l'utilisateur a choisi la génération**, les mêmes
-   règles que pour les provisoires, plus celles de l'argent et des visages :
+   **Si un générateur est connecté et que l'utilisateur a choisi la génération**, les mêmes
+   règles que pour les provisoires, quel que soit le service, plus celles de l'argent et des
+   visages :
    - **le prix avant chaque image**, en clair, et le solde qui reste ; une série s'annonce
      en un total, une seule fois, avant la première ;
    - **une image se regarde avant d'être posée** — planche-contact, marques et logos glissés

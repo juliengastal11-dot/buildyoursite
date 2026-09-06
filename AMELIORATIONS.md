@@ -964,3 +964,42 @@ données et la commande complète du moteur de design. Le `SKILL.md` dit de les 
 plutôt que de reconstruire un chemin qui dépend de la façon dont le skill a été installé.
 C'est la même leçon que le message d'installeur en chemin relatif : dès qu'un outil peut
 vivre à deux endroits, il doit dire où il est.
+
+---
+
+# Un nom de marque dans le déroulé ne marche que pour celui qui l'a écrit (2026-09-06)
+
+Le relevé de capacités cherchait un connecteur d'images **par son nom**, celui du service
+utilisé pendant le troisième bootstrap. Conséquence : quelqu'un qui utilise un autre service
+de génération d'images n'aurait rien vu. Le skill lui aurait proposé des photos provisoires,
+et il aurait conclu que la génération n'existe pas, alors que son outil était là, sous les
+yeux de Claude, à côté des autres.
+
+## Ce qu'un script peut voir, et ce qu'il ne peut pas
+
+Premier réflexe : lire la configuration des connecteurs depuis le terminal. Vérifié sur une
+vraie machine — il n'y a rien à lire. Aucun serveur n'est déclaré dans les fichiers de
+configuration ; ils viennent du compte ou des plugins et n'existent que dans la session.
+**Le seul observateur possible, c'est Claude lui-même**, qui a la liste de ses outils sous
+les yeux. Le script ne peut que lui dire quoi chercher.
+
+## Chercher une capacité, pas une marque
+
+Écarté : une liste des dix services les plus connus, interrogés un par un. Une liste de
+marques est déjà fausse le jour où on l'écrit — chacun a son fournisseur — et périmée six
+mois plus tard, à chaque nouveau service. Elle contredit aussi ce qu'on vient de décider
+pour la publication : aucun prestataire nommé, aucune préférence glissée dans le projet.
+
+À la place, trois signatures : un outil qui fabrique une image ou une vidéo à partir d'un
+texte, un outil de solde ou de quota sur le même connecteur, un outil de déploiement. Le
+premier décide si les visuels manquants peuvent être générés. Le deuxième décide si un prix
+peut être annoncé avant chaque image — et quand il manque, on le dit au lieu d'inventer un
+tarif. Le troisième ne change rien, on ne déploie pas.
+
+Le connecteur trouvé est **nommé dans le relevé sous son vrai nom**, quel qu'il soit, et
+utilisé ensuite sous ce nom. La question posée à l'utilisateur porte donc le nom de son
+outil à lui, pas celui d'un service qu'il n'a jamais installé.
+
+**La règle générale.** Tout ce qui, dans ce skill, dépend d'un service extérieur se
+reconnaît à ce qu'il sait faire. Un nom propre dans le déroulé est un défaut, sauf quand il
+désigne une dépendance que nous installons nous-mêmes.

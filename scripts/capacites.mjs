@@ -6,9 +6,11 @@
    vérifie lui-même, jamais sur parole : Node, Python, la bibliothèque de
    design et sa fraîcheur, l'identité git, la clé Pexels.
 
-   Ce qu'il ne peut pas voir : les connecteurs (Higgsfield, Hostinger). Ceux-là
-   se vérifient depuis Claude, avec ses propres outils — le script le rappelle
-   en dernière ligne.
+   Ce qu'il ne peut pas voir : les connecteurs. Ils ne sont pas déclarés dans
+   un fichier lisible d'ici — ils viennent du compte ou des plugins — et seul
+   Claude les a sous les yeux. Le script rappelle donc en dernière ligne quelle
+   CAPACITÉ chercher, jamais quelle marque : chacun a son fournisseur, et une
+   liste de noms serait fausse le jour où on l'écrit.
 
    Usage :  node <skill>/scripts/capacites.mjs
 --------------------------------------------------------------------------- */
@@ -122,7 +124,8 @@ if (aDemenager()) {
   console.log("    emporterait. Relance l'installeur, il les déménage.");
 }
 
-console.log("\n  Connecteurs — à vérifier depuis Claude, pas d'ici :");
-console.log("  · Higgsfield : si ses outils sont présents, appelle son solde (gratuit) et note les crédits.");
-console.log("    Présent, les visuels manquants peuvent être générés ; absent, rien ne change.");
-console.log("  · Hostinger : note-le sans rien en faire, on ne déploie pas.\n");
+console.log("\n  Connecteurs — à vérifier depuis Claude, pas d'ici, et par capacité :");
+console.log("  · Un outil qui GÉNÈRE une image ou une vidéo à partir d'un texte, quel que soit son nom.");
+console.log("    Présent, les visuels manquants peuvent être générés au lieu d'être provisoires.");
+console.log("    S'il expose un solde ou un quota, appelle-le : c'est ce qui permet d'annoncer un prix.");
+console.log("  · Un outil de déploiement ou de domaine : note-le sans rien en faire, on ne déploie pas.\n");

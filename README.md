@@ -50,7 +50,7 @@ construit.
 ## Ce que ça fait vraiment
 
 **Phase 1 — le bootstrap.** Il relève d'abord ce que la machine sait faire — Node, Python,
-git, clé Pexels, connecteur Higgsfield — et adapte ses questions. Quelques questions, un
+git, clé Pexels, générateur d'images connecté quel qu'il soit — et adapte ses questions. Quelques questions, un
 blueprint que vous validez si vous le souhaitez, puis la construction : Next.js 15, TypeScript, Tailwind v4, Prisma + SQLite,
 authentification si nécessaire, back-office si nécessaire. Plusieurs sous-agents travaillent
 en parallèle sur des fichiers disjoints. Il ne vous rend la main que quand `npm run build`
