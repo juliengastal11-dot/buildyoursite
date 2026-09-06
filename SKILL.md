@@ -979,6 +979,22 @@ réseau** que le lanceur affiche — c'est celle qu'il tape sur son téléphone,
 Wi-Fi — et la question : « regarde-le, sur ton téléphone aussi : est-ce que ça ressemble à
 ce que tu imaginais ? ». Puis attends sa réponse avant de considérer le bootstrap terminé.
 
+### Quand il a dit oui — ce qui lui reste
+
+Le bootstrap s'arrête là, et une chose se dit **une seule fois**, à ce moment précis :
+
+> **L'hébergement est à toi.** On ne met pas en ligne : le code est chez toi, dans ton
+> dépôt, et tu le publies où tu veux. Ce skill est open source et ne prend aucune
+> commission — aucun hébergeur, aucun prestataire, aucun lien affilié n'est glissé dans le
+> projet. Tu choisis, et tu paies qui tu veux.
+
+**Si le site vend**, une ligne de plus : le module de paiement est branché, ses clés sont
+volontairement vides, et le compte comme les frais lui appartiennent. Il les remplit dans
+`.env` depuis son propre tableau de bord. **Si le site ne vend pas, ne parle pas de
+paiement** : il n'y en a aucun, et l'évoquer laisserait croire à une étape manquante.
+
+Ça se dit à la remise, pas à chaque modification de la phase 2.
+
 ## Phase 2 — Itération visuelle
 
 L'utilisateur annote la page dans le navigateur. Ses commentaires arrivent dans

@@ -199,6 +199,10 @@ passage — palette, typographie, géométrie, liens, photos et leur cadrage, mo
   points de restauration. La mise en ligne est votre décision.
 - **Aucune copie de site tiers.** Le skill refuse de proposer la reproduction fidèle d'un
   site qui ne vous appartient pas.
+- **Aucun prestataire imposé, aucun lien affilié.** Le projet ne pousse ni hébergeur ni
+  service, et le skill ne touche aucune commission. L'hébergement reste votre choix. Si le
+  site vend, le module de paiement est branché mais ses clés restent vides : le compte et
+  les frais sont les vôtres. Le skill vous le rappelle à la remise du site.
 
 ## Limites connues, honnêtement
 
