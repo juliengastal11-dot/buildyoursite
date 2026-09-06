@@ -250,7 +250,7 @@ site complet.
 |---|---|
 | **Landing / page produit** | Le chemin court de `structures.md` : pas de base ni de back-office sauf pour un formulaire, un ou deux agents, blueprint d'une page, mentions légales et confidentialité seulement. Pro Max en `--domain landing`. |
 | **Vitrine** | Le chemin standard des deux premiers bootstraps. Pro Max décide la structure. |
-| **Boutique** | Modules auth, stripe, admin, legal complet avec CGV. La structure vient de la fonction, Pro Max ne donne que l'identité. |
+| **Boutique** | Modules auth, stripe, admin, legal complet avec CGV. La structure vient de la fonction, Pro Max ne donne que l'identité. **Dis-lui tout de suite qu'il lui faudra un compte Stripe** : la vérification d'identité et les coordonnées bancaires prennent parfois plusieurs jours, et il peut l'ouvrir pendant qu'on construit. |
 | **Application** | Blueprint centré sur les modèles et les écrans, mouvement au minimum, pas de défilement fluide, Pro Max en `--motion 1-2`. |
 
 La question suivante s'adapte : on ne demande pas « ce qui doit vivre en base » à quelqu'un
@@ -642,9 +642,15 @@ et tes hypothèses explicites.
 
 **Il porte une section « SEO et lancement »** : ce que le socle assure tout seul, ce que tu
 fais au bootstrap, et ce qui reste à confirmer par l'utilisateur — l'URL publique, les
-données de l'entreprise, l'analytics et le bandeau qu'il imposerait. Le tableau complet est
-dans `references/lancement.md` ; le blueprint en reprend les lignes qui concernent ce
-projet. Un site dont le référencement est traité doit pouvoir le prouver ligne par ligne.
+données de l'entreprise, l'analytics et le bandeau qu'il imposerait, **l'hébergement, et le
+compte Stripe si le site vend**. Le tableau complet est dans `references/lancement.md` ; le
+blueprint en reprend les lignes qui concernent ce projet. Un site dont le référencement est
+traité doit pouvoir le prouver ligne par ligne.
+
+**Ces deux dernières lignes se lisent avant la construction, pas après.** Un compte de
+paiement se vérifie en plusieurs jours et un nom de domaine se choisit à tête reposée : les
+découvrir à la remise, c'est les découvrir trop tard. Le blueprint les annonce, la remise
+les rappelle.
 
 **Ouvre-le par une ligne « Construit avec »** : le modèle orchestrateur, l'effort si tu le
 connais, le modèle des sous-agents, et la date. Quand un site est repris six mois plus tard
