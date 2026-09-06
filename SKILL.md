@@ -127,24 +127,24 @@ structure ou de design plutôt qu'une retouche, repasse sur Opus le temps de ce 
 critère est simple : *est-ce que je remplace du texte et des classes, ou est-ce que je
 décide quelque chose ?*
 
-### Dis-le à l'utilisateur, dès la première phrase
+### Dis-le à l'utilisateur — au premier message, et une seule fois
 
-Tu connais ton modèle ; tu ne connais pas forcément ton effort. Alors **annonce le modèle,
-recommande l'effort**, et laisse-le vérifier :
+Tu connais ton modèle ; tu ne connais pas forcément ton effort. Lui ne connaît peut-être ni
+l'un ni l'autre, et surtout pas ce que ça change. **Le texte à écrire est en phase 0.a**, à
+la suite du déroulé et avant la question « On y va ? » : ce que tu utilises, ce qu'un modèle
+trop léger coûte concrètement, la barre à tenir, et pourquoi les assistants restent sur
+Sonnet.
 
-> Je construis avec **Opus 5**. Pour un site complet, vérifie que l'effort est au moins
-> `high` — `/effort xhigh` est encore mieux. Les assistants que je lance travailleront sur
-> Sonnet, c'est voulu.
+Ce qui compte ici, et qu'aucune reformulation ne doit perdre :
 
-Et **si tu tournes sur un modèle en dessous de la barre**, dis-le franchement avant de
-poser la moindre question :
+- **le dire avant tout travail**, parce qu'après il faut tout relancer ;
+- **dire ce que ça change**, pas seulement quel réglage viser — « effort `high` minimum » ne
+  décide personne, « sinon tu paieras la différence en allers-retours » décide ;
+- **ne jamais y revenir**. Le sujet est clos après le premier message. Pas de rappel au
+  blueprint, pas de confirmation avant de construire.
 
-> ⚠️ Je tourne sur **{modèle}**. Ce skill est calibré pour Opus 5 ou Fable 5.1 : sur un
-> site complet, la différence se voit — sur les décisions de design, la cohérence des
-> textes et le nombre de reprises. Pour changer : `/model opus`, puis `/effort xhigh`, puis
-> relance `/buildyoursite`. Je peux continuer comme ça si tu préfères, dis-moi.
-
-Ne le noie pas dans un paragraphe technique : deux lignes, une action, et on continue.
+Sous la barre, même bloc, ouvert par un avertissement franc et l'option de changer proposée
+en premier. Deux lignes, une action, et on continue.
 
 ---
 
@@ -177,13 +177,28 @@ peut suivre du doigt. Reprends-la telle quelle, en remplaçant `{appellation}` s
 >    zone de la page, tu écris ce que tu veux changer, et le site change.
 >
 > Je pilote l'ingénierie et la technique, tu supervises le design et l'identité visuelle.
->
-> *Je construis avec {modèle}. Pour un site complet, vérifie que l'effort est au moins
-> `high` — `/effort xhigh` est encore mieux. Les assistants que je lancerai travailleront
-> sur Sonnet, c'est voulu.*
 
-**Puis arrête-toi : c'est le moment de changer de modèle, pas plus tard.** Termine ce
-premier message par une question à un clic, avant tout travail :
+**Enchaîne, dans le même message, sur le modèle — expliqué, pas seulement annoncé.** C'est
+le réglage qui change le plus le résultat, et celui que personne ne pense à vérifier.
+Écris-le en clair, avec ce qu'il change concrètement :
+
+> **Un mot sur le modèle, parce que c'est ce qui change le plus le résultat.**
+>
+> Je construis avec **{modèle}**. Ce que je vais faire demande de tenir longtemps : des
+> heures de travail suivi, plusieurs assistants à piloter en parallèle, des dizaines de
+> décisions de design, et des textes qui doivent rester cohérents d'une page à l'autre.
+>
+> **Un modèle trop léger ne plante pas** — c'est bien le problème. Il livre un site qui
+> fonctionne et qui déçoit : des consignes plus courtes aux assistants, des détails
+> arbitrés à la va-vite, le mouvement oublié, et des allers-retours que tu paieras en
+> temps à la fin.
+>
+> La barre : **Opus 5, effort `high` au minimum, `xhigh` de préférence**. Les assistants
+> que je lancerai, eux, travailleront sur Sonnet : c'est voulu, leur travail est de
+> l'exécution et ils reçoivent des consignes détaillées.
+
+**Puis arrête-toi. C'est maintenant qu'on change de modèle, pas plus tard** — après, il
+faudrait tout relancer. Termine ce premier message par une question à un clic :
 
 > **On y va ?**
 > - *C'est parti* → tu enchaînes sur le relevé des capacités
@@ -191,11 +206,22 @@ premier message par une question à un clic, avant tout travail :
 >   `fable`), puis `/effort xhigh`, et dis-moi « continue » — je reprends exactement ici,
 >   rien n'est perdu. » Et tu attends.
 
-Si tu tournes **sous la barre** — Sonnet ou moins — la question change de forme et passe
-**avant** la liste des étapes : l'avertissement de « Modèle et effort », puis les deux mêmes
-options, « je change de modèle » recommandée en premier. Un utilisateur sur Sonnet sans le
-savoir doit pouvoir corriger d'un clic, pas tout relancer. Vécu au troisième bootstrap :
-l'information sur le modèle arrivait après le début du travail, donc trop tard pour servir.
+**Si tu tournes sous la barre** — Sonnet ou moins — le même bloc passe **avant** la liste
+des étapes, ouvert par un avertissement franc plutôt que par « un mot sur le modèle », et
+l'option « je change de modèle » est proposée en premier. Quelqu'un qui ignore sur quel
+modèle il tourne doit pouvoir corriger d'un clic, pas découvrir le problème en lisant le
+résultat.
+
+**Une fois pour toutes.** Cette explication et cette question ne se répètent jamais. Tu ne
+redemandes pas confirmation, tu ne remets pas le sujet au blueprint, tu ne t'excuses pas de
+ton modèle en cours de route. C'est dit au premier message, avec ce qu'il faut pour décider,
+et le sujet est clos. Vécu au troisième bootstrap : l'information arrivait après le début du
+travail, donc trop tard pour servir à quoi que ce soit.
+
+**Une seule exception, et c'est une phrase, jamais une question** : à la remise du site, tu
+peux signaler qu'un modèle plus léger suffit pour les modifications au clic — voir « Modèle
+et effort ». Ça arrive à un autre moment, pour une autre raison, et ça n'appelle pas de
+réponse.
 
 Ça ne coûte rien à écrire, et ça change tout pour la personne en face : elle sait où elle
 en est pendant vingt minutes de construction, elle sait qu'elle pourra intervenir à
@@ -1021,6 +1047,15 @@ et les frais sont les siens.
 **Si le site ne vend pas**, une demi-ligne, et formulée comme une porte ouverte plutôt que
 comme un manque : « si un jour tu veux vendre, le module Stripe se greffe sans reconstruire
 le site ». N'en dis pas plus : il n'a rien à faire aujourd'hui.
+
+**Et une dernière phrase, sur le modèle** — la seule fois où tu en reparles depuis le
+premier message :
+
+> Pour la suite, les modifications au clic, un modèle plus léger suffit : `/model sonnet`
+> va plus vite et coûte bien moins. Je remonterai de moi-même si une demande touche à la
+> structure plutôt qu'à un détail.
+
+C'est une information, pas une question. Il n'a rien à répondre.
 
 Ça se dit à la remise, pas à chaque modification de la phase 2.
 
