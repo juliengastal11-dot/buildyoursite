@@ -46,7 +46,7 @@ projet : ce qui est couvert, ce qui reste, et pourquoi.
 | **Analytics** | Le socle n'en installe pas : sans traceur, **aucun bandeau de consentement n'est nécessaire**, et la page de confidentialité le dit. Si le propriétaire en veut, préférer un outil sans cookie ; avec cookies, le bandeau devient obligatoire et la page de confidentialité change |
 | Le favicon définitif | Le monogramme, c'est lui qui l'a |
 | Le nom de domaine et l'hébergement | On ne déploie pas |
-| Le compte de paiement, s'il y a une vente | Le module est branché, ses clés restent vides. Le compte, les clés et les frais sont ceux du propriétaire |
+| Le compte Stripe, s'il y a une vente | Le module est branché en Checkout hébergé, ses clés restent vides. Le compte, les clés et les frais sont ceux du propriétaire |
 
 ## Rien n'est imposé, et rien n'est rémunéré
 
@@ -55,6 +55,12 @@ n'installe aucun traceur, ne pousse aucun hébergeur, n'ouvre aucun compte et ne
 lien affilié dans le projet. Le code est prêt à recevoir des clés de paiement et à être
 publié n'importe où ; le propriétaire décide chez qui, et paie qui il veut. Le dire à la
 remise évite qu'il cherche une étape manquante là où il y a une porte ouverte.
+
+**Stripe est le seul prestataire de paiement livré**, et c'est un choix de simplicité, pas
+une exclusivité : le Checkout hébergé évite au site de voir un numéro de carte, donc évite
+au propriétaire toute la conformité qui va avec. Rien n'empêche d'en brancher un autre, le
+tunnel est du code ordinaire. Sur un site qui ne vend pas, le module n'est pas installé du
+tout et peut se greffer plus tard sans reconstruire.
 
 ## Ce qu'on n'ajoute pas par défaut, et pourquoi
 

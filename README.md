@@ -4,8 +4,9 @@ Un skill Claude Code qui construit un site client complet en une passe, puis vou
 modifier **en cliquant dessus**.
 
 Vous décrivez le site. Il pose la base full-stack — modèles de données, routes API, pages,
-design system, mouvement, contenus, serveur lancé, aperçu affiché. Ensuite vous cliquez sur une zone de
-la page, vous écrivez ce que vous voulez changer, et le code change.
+design system, mouvement, contenus, serveur lancé, aperçu affiché — avec le paiement Stripe
+branché si le site vend. Ensuite vous cliquez sur une zone de la page, vous écrivez ce que
+vous voulez changer, et le code change.
 
 Sans quitter le terminal, sans abonnement supplémentaire, sans service en ligne. Le code
 reste chez vous, dans un dépôt que vous possédez, avec l'outil que vous avez déjà.
@@ -201,8 +202,10 @@ passage — palette, typographie, géométrie, liens, photos et leur cadrage, mo
   site qui ne vous appartient pas.
 - **Aucun prestataire imposé, aucun lien affilié.** Le projet ne pousse ni hébergeur ni
   service, et le skill ne touche aucune commission. L'hébergement reste votre choix. Si le
-  site vend, le module de paiement est branché mais ses clés restent vides : le compte et
-  les frais sont les vôtres. Le skill vous le rappelle à la remise du site.
+  site vend, **Stripe est branché d'office**, en Checkout hébergé, ses clés laissées vides :
+  le compte et les frais sont les vôtres, et le site ne voit jamais un numéro de carte. Le
+  skill vous le rappelle à la remise. Un autre prestataire reste possible, le tunnel est du
+  code ordinaire.
 
 ## Limites connues, honnêtement
 

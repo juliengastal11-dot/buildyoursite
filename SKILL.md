@@ -988,10 +988,14 @@ Le bootstrap s'arrête là, et une chose se dit **une seule fois**, à ce moment
 > commission — aucun hébergeur, aucun prestataire, aucun lien affilié n'est glissé dans le
 > projet. Tu choisis, et tu paies qui tu veux.
 
-**Si le site vend**, une ligne de plus : le module de paiement est branché, ses clés sont
-volontairement vides, et le compte comme les frais lui appartiennent. Il les remplit dans
-`.env` depuis son propre tableau de bord. **Si le site ne vend pas, ne parle pas de
-paiement** : il n'y en a aucun, et l'évoquer laisserait croire à une étape manquante.
+**Si le site vend**, une ligne de plus : **Stripe est déjà branché**, en Checkout hébergé —
+la page de paiement est chez Stripe, le site ne voit jamais un numéro de carte. Il ne manque
+que ses clés, laissées vides dans `.env`, qu'il copie depuis son tableau de bord. Le compte
+et les frais sont les siens.
+
+**Si le site ne vend pas**, une demi-ligne, et formulée comme une porte ouverte plutôt que
+comme un manque : « si un jour tu veux vendre, le module Stripe se greffe sans reconstruire
+le site ». N'en dis pas plus : il n'a rien à faire aujourd'hui.
 
 Ça se dit à la remise, pas à chaque modification de la phase 2.
 
