@@ -1455,9 +1455,51 @@ D12 à D15.
 
 ## Ce qui reste à éprouver
 
-`scripts/partager.mjs` n'a jamais tourné de bout en bout : `cloudflared` n'est installé sur
-aucune machine d'essai. Ce qui est vérifié : le refus hors projet, le relevé, la liste des
-marqueurs, le message d'installation, et le mécanisme d'arrêt d'une arborescence de
-processus. Ce qui ne l'est pas : la lecture de l'URL du tunnel dans la sortie de
-`cloudflared`, et l'enchaînement complet de l'arrêt sur deux processus réels. **Le prochain
-bootstrap est le premier essai réel de ce chemin** — le traiter comme tel.
+`scripts/partager.mjs` a depuis été éprouvé de bout en bout — voir la section suivante. Il
+reste deux zones non couvertes : l'échec de compilation pendant un partage, et le chemin
+« hébergeur déjà connecté ».
+
+---
+
+# Le partage par tunnel, éprouvé de bout en bout (2026-09-06)
+
+`scripts/partager.mjs` avait été écrit sans jamais pouvoir tourner : aucun outil de tunnel
+n'était installé sur la machine. Le chemin complet est maintenant vérifié, sur un projet
+neuf tiré du socle.
+
+## Ce qui a été mesuré
+
+| | Résultat |
+|---|---|
+| Compilation, serveur de production, ouverture du tunnel | enchaînés sans intervention |
+| Adresse publique lue dans la sortie de l'outil | trouvée, et rendue en `BUILDYOURSITE_PARTAGE=` |
+| Réponse depuis l'extérieur | `HTTP 200` en 0,42 s |
+| Contenu servi | le vrai site compilé, 23 795 octets, titre correct, classe `eyebrow` rendue |
+| Overlay d'édition | **absent** — la compilation de production le retire, comme annoncé |
+| Seconde page (`/robots.txt`) | `HTTP 200` |
+| Après arrêt | aucun `cloudflared` résiduel, aucun `node` résiduel, port libéré |
+| Le lien après arrêt | `HTTP 530` — mort, comme promis |
+
+## Le piège trouvé en installant l'outil
+
+**L'outil installé reste invisible de la session déjà ouverte.** L'installateur écrit bien
+son chemin dans le PATH de la machine, mais un terminal démarré avant garde l'environnement
+qu'il avait alors. Conséquence : on installe l'outil parce que le script vient de le
+réclamer, on relance le script, et il répond encore « rien n'est disponible ». Personne ne
+devine qu'il faut rouvrir une session.
+
+`trouverCloudflared()` regarde donc aussi les emplacements d'installation par défaut, et se
+sert du chemin complet quand il l'y trouve — en le citant, parce qu'il contient des espaces
+sous Windows.
+
+C'est un défaut qui ne pouvait apparaître qu'en installant l'outil pour de vrai. Écrire le
+script sans pouvoir l'exécuter l'aurait laissé passer.
+
+## Ce qui reste non éprouvé
+
+- **L'échec de compilation** pendant un partage : le message et le code de sortie n'ont pas
+  été provoqués.
+- **Le chemin hébergeur** (b), qui demande une interface en ligne de commande déjà connectée.
+- **`Ctrl+C` tapé à la main** : l'arrêt a été déclenché par la fin du processus parent, et le
+  résultat observable est le bon — rien ne survit, le port est rendu. Le gestionnaire de
+  signal lui-même n'a donc pas été isolé de ce qui l'entoure.

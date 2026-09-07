@@ -121,6 +121,35 @@ function outilDisponible(nom) {
   return silencieux(WINDOWS ? `where ${nom}` : `which ${nom}`, 3000) !== null;
 }
 
+/* ---------------------------------------------------------------------------
+   Où trouver cloudflared quand le PATH ne le connaît pas encore.
+
+   Vécu, et c'est un piège qui se referme exactement au pire moment : on
+   installe l'outil parce que le script vient de le réclamer, on relance le
+   script, et il répond encore « rien n'est disponible ». L'installateur écrit
+   bien le chemin dans le PATH de la machine, mais un terminal DÉJÀ OUVERT
+   garde l'environnement qu'il avait à son démarrage. Il faudrait rouvrir une
+   session — ce que personne ne devine.
+
+   On regarde donc aussi les emplacements d'installation par défaut, et on se
+   sert du chemin complet quand on l'y trouve.
+--------------------------------------------------------------------------- */
+const EMPLACEMENTS_CLOUDFLARED = WINDOWS
+  ? [
+      "C:\\Program Files (x86)\\cloudflared\\cloudflared.exe",
+      "C:\\Program Files\\cloudflared\\cloudflared.exe",
+    ]
+  : ["/usr/local/bin/cloudflared", "/opt/homebrew/bin/cloudflared", "/usr/bin/cloudflared"];
+
+/** Le chemin de cloudflared, ou null. Cite le chemin : il contient des espaces. */
+function trouverCloudflared() {
+  if (outilDisponible("cloudflared")) return "cloudflared";
+  for (const chemin of EMPLACEMENTS_CLOUDFLARED) {
+    if (existsSync(chemin)) return `"${chemin}"`;
+  }
+  return null;
+}
+
 /** `vercel whoami` répond le nom d'utilisateur sur stdout et sort en erreur
  *  si personne n'est connecté — exactement ce que `silencieux` réduit à
  *  null. `--no-install` est essentiel : un relevé n'installe rien. */
@@ -273,7 +302,7 @@ async function attendreReponse(port, delaiMaxMs = 15000) {
 function lancerTunnel(port) {
   return new Promise((resolve, reject) => {
     log("ouverture du tunnel cloudflared…");
-    const enfant = spawn(`cloudflared tunnel --url http://localhost:${port}`, {
+    const enfant = spawn(`${CLOUDFLARED} tunnel --url http://localhost:${port}`, {
       stdio: ["ignore", "pipe", "pipe"],
       shell: true,
     });
@@ -464,10 +493,10 @@ if (!existsSync(path.join(racineProjet, "app"))) {
 
 /* 2. le relevé — on s'arrête au premier qui répond, pas la peine d'attendre
       npx pour rien une fois qu'on sait qu'on prendra le tunnel. */
-const cloudflaredPresent = outilDisponible("cloudflared");
+const CLOUDFLARED = trouverCloudflared();
 let utilisateurV = null;
 let utilisateurN = null;
-if (!cloudflaredPresent) {
+if (!CLOUDFLARED) {
   utilisateurV = connecteVercel();
   utilisateurN = connecteNetlify();
 }
@@ -479,7 +508,7 @@ if (!cloudflaredPresent) {
 afficherTrous(await chercherTrous(racineProjet));
 
 /* 4. la décision */
-if (cloudflaredPresent) {
+if (CLOUDFLARED) {
   await partagerParTunnel(racineProjet, PORT, SANS_BUILD);
 } else if (utilisateurV || utilisateurN) {
   partagerParHebergeur(utilisateurV, utilisateurN);
