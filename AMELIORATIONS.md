@@ -1503,3 +1503,46 @@ script sans pouvoir l'exécuter l'aurait laissé passer.
 - **`Ctrl+C` tapé à la main** : l'arrêt a été déclenché par la fin du processus parent, et le
   résultat observable est le bon — rien ne survit, le port est rendu. Le gestionnaire de
   signal lui-même n'a donc pas été isolé de ce qui l'entoure.
+
+---
+
+# La question du lien était au mauvais endroit (2026-09-06)
+
+Corrigé le jour même, après une question de l'utilisateur : *à quel moment poses-tu la
+question du partage ?*
+
+## L'erreur de raisonnement
+
+J'avais mis la question au début, en salve 3, avec cette justification : « ce n'est pas une
+commodité de fin de parcours, c'est une contrainte d'architecture ».
+
+La contrainte est réelle — un site dont la base vit sur le disque et dont les actions
+écrivent dedans ne se déploie pas sur un hébergement sans serveur — **mais elle n'appartient
+qu'au lien hébergé.** Le tunnel, lui, sert le site tel qu'il est, depuis la machine, avec sa
+vraie base et ses écritures qui fonctionnent. Il n'impose rien au blueprint.
+
+J'ai donc appliqué au tunnel une limite qui ne le concerne pas, et fait poser à l'utilisateur,
+au moment où il pense à son contenu, une question dont la conséquence n'arrive qu'à la fin.
+
+C'est un défaut de raisonnement plus intéressant qu'un défaut de code : la règle générale que
+j'en tire est **qu'une justification héritée d'un cas voisin ne se recopie pas sans vérifier
+qu'elle s'applique.** Ici, « déployer » et « partager » se ressemblaient assez pour que je
+transporte la contrainte de l'un à l'autre sans la retester.
+
+## Ce que ça devient
+
+Trois moments, et **un seul est une question** :
+
+1. **Relevé de capacités**, phase 0.a — `cloudflared` présent ou non, une ligne, `✓` ou `✗`.
+   Une information, comme la clé Pexels.
+2. **Pendant `npm install`**, phase 0.55 — s'il manque, une ligne avec la commande, à lancer
+   pendant l'attente. Aucune réponse attendue : s'il ne fait rien, on continue.
+3. **À la remise**, une fois qu'il a dit que le site lui plaît — *« Tu veux un lien à envoyer,
+   pour le montrer à quelqu'un ? »*
+
+Le signalement du milieu garde sa raison d'être : c'est du temps mort qui existe déjà, le seul
+moment où une action de l'utilisateur ne coûte rien. Mais il ne bloque plus rien, et le script
+réimprime la commande le moment venu.
+
+**Ce qu'il reste au début : rien à décider.** Ce qui est le bon niveau de charge pour une
+fonction dont on ne sait pas encore si on en aura besoin.

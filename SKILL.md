@@ -349,8 +349,8 @@ Découpage qui fonctionne :
 | Salve | Contenu |
 |---|---|
 | 1 — le projet | **le genre de site**, **l’écran prioritaire**, le nom du site, pour qui il est, les modules à greffer |
-| 2 — le contenu et les actifs | pages attendues, ce qui doit vivre en base, ce que le propriétaire doit pouvoir modifier lui-même, **les actifs — logo, photos, captures — et, si un générateur d'images est connecté, générés ou provisoires**, contraintes connues |
-| 3 — l'exploitation | **le partage d'un lien**, et si le module `admin` est retenu, **quels écrans** |
+| 2 — le contenu et les actifs | pages attendues, ce qui doit vivre en base, ce que le propriétaire doit pouvoir modifier lui-même, **les actifs — logo, photos, captures : leur chemin ou leur adresse** — et, si un générateur d'images est connecté, générés ou provisoires |
+| 3 — le back-office | seulement si le module `admin` est retenu : **quels écrans** |
 | 4 — les deux fixes, seules | l'inspiration, puis la validation du blueprint — **et rien d'autre dans cette salve** |
 
 > ⚠️ **Les deux questions fixes vont dans leur propre salve, sans aucune question à réponse
@@ -414,26 +414,25 @@ mémoire, et si tu ne peux pas le connaître, dis-le au lieu de l'inventer.
 que la génération serait possible avec un connecteur d'images. Ne nomme aucun service, ne
 mets aucun lien, n'insiste pas — ce n'est pas à ce skill de vendre un abonnement.
 
-### La salve 3 — deux questions qui décident de l'architecture
+### La salve 3 — les écrans du back-office
 
-**Le partage d'un lien**, toujours posée :
+Une seule question, et seulement si le module `admin` est retenu.
 
-> **Faudra-t-il pouvoir envoyer un lien à quelqu'un pendant la construction ?**
-> - *Oui, un lien à partager* — un client, un associé, ton téléphone
-> - *Non, je regarde sur ma machine* — rien à installer
+> **Ne demande rien ici sur le partage d'un lien.** La question ne se pose qu'à la remise —
+> voir « Ce que fini veut dire ». Le tunnel sert le site tel qu'il est, depuis la machine de
+> l'utilisateur, avec sa vraie base : **il ne change rien à ce qu'on construit**, donc il n'y
+> a rien à décider au début.
+>
+> J'avais mis cette question ici, en la justifiant par une contrainte d'architecture. La
+> contrainte est réelle — un site dont la base vit sur le disque ne se déploie pas sur un
+> hébergement sans serveur — mais elle ne concerne **que le lien hébergé**, pas le tunnel.
+> Poser au début une question dont la conséquence n'arrive qu'à la fin, c'est du bruit dans
+> le moment où l'utilisateur pense à son contenu.
+>
+> Ce qui reste au début : le relevé de capacités dit si `cloudflared` est présent, et la
+> phase 0.55 en tire une ligne d'information pendant `npm install`. Aucune réponse attendue.
 
-Ce n'est pas une commodité de fin de parcours, c'est une **contrainte d'architecture** : un
-site dont la base vit sur le disque et dont les actions écrivent dedans ne se déploie pas sur
-un hébergement sans serveur. Savoir la réponse au début change ce qu'on écrit ; la découvrir à
-la remise oblige à improviser. Le détail est dans `references/lancement.md`, section
-« Partager un lien avant la mise en ligne ».
-
-**Si la réponse est oui**, l'installation ou la connexion se fait **pendant `npm install`**
-(phase 0.55) — du temps mort qui existe déjà, le seul moment où demander une action à
-l'utilisateur ne coûte rien. À la fin, la même demande arrive quand tout le monde veut voir le
-résultat, et elle est vécue comme un obstacle.
-
-**Les écrans du back-office**, seulement si le module `admin` est retenu :
+**Les écrans du back-office** :
 
 > **Que doit-il pouvoir modifier lui-même ?**
 > - *Les textes et les messages reçus* — l'essentiel, et de loin le plus utilisé
@@ -810,9 +809,18 @@ Avant le blueprint, parce que son affichage a besoin du serveur :
    dans `.next` et se corrompent mutuellement. `TaskStop` sur la tâche du Monitor, et un
    nouveau Monitor après.
 
-   **Et si le partage a été accepté en salve 3, c'est maintenant que ça se joue** : pendant
-   que `npm install` tourne, donne à l'utilisateur la commande d'installation ou de connexion.
-   Une ligne, une commande, et il attendait de toute façon.
+   **Si le relevé a dit que `cloudflared` manque, c'est maintenant qu'on le signale** —
+   pendant que `npm install` tourne, en **une ligne, sans question et sans attendre de
+   réponse** :
+
+   > Si tu veux pouvoir envoyer un lien à quelqu'un quand ce sera fini, une commande suffit,
+   > et tu peux la lancer pendant que j'installe : `winget install --id Cloudflare.cloudflared`.
+   > Sinon on verra à la fin, ça marche aussi.
+
+   C'est du temps mort qui existe déjà, et c'est le seul moment du bootstrap où une action de
+   l'utilisateur ne coûte rien. À la remise, la même commande arrive quand tout le monde veut
+   voir le résultat, et elle est vécue comme un obstacle. Mais **ce n'est pas une question** :
+   s'il ne répond pas, on continue, et le script le lui redira le moment venu.
 
 5. **Arme le watcher maintenant** — pas en fin de bootstrap (voir `references/overlay.md`).
    L'overlay fonctionne sur toute page rendue par l'application dès que le serveur tourne, et
@@ -1346,15 +1354,24 @@ un, en distinguant ceux qui sont **visibles par un visiteur** (dans `app/`, `com
 pense-bête ; sur un lien envoyé à un client c'est une note de chantier publiée — un relecteur
 en a fait le défaut le plus sérieux d'un site par ailleurs propre.
 
-**Et s'il a demandé le partage en salve 3**, la ligne du lien :
+**Puis la question du lien, une fois qu'il a dit que le site lui plaît** — c'est ici qu'elle
+se pose, et nulle part avant :
+
+> **Tu veux un lien à envoyer, pour le montrer à quelqu'un ?**
+> - *Oui* → tu lances `partager.mjs` et tu lui donnes l'adresse
+> - *Non, pas maintenant* → tu n'en reparles plus ; il pourra le demander à tout moment
 
 ```bash
 node "<skill>/scripts/partager.mjs"
 ```
 
-Dis en une phrase ce que le lien est : le vrai site, formulaires compris, servi depuis sa
-machine, et **il meurt quand il ferme la fenêtre**. Ce n'est pas un hébergement, et il ne faut
-jamais le laisser croire.
+Dis en une phrase ce que le lien est, et n'en cache pas la limite : **le vrai site**,
+formulaires et back-office compris, servi depuis sa machine — et **il meurt quand il ferme la
+fenêtre**. Ce n'est pas un hébergement, et il ne faut jamais le laisser croire.
+
+Si `cloudflared` manque encore, le script imprime lui-même la commande d'installation et
+s'arrête proprement : une trentaine de secondes, puis on relance. Ne fais pas l'installation
+à sa place — c'est un logiciel sur sa machine.
 
 ### Quand il a dit oui — ce qui lui reste
 

@@ -55,14 +55,21 @@ d'être montré à un client, à un associé, à soi-même sur un autre appareil
 qu'on ait choisi un hébergeur. C'est un besoin fréquent, et le refuser sous prétexte qu'« on
 ne déploie pas » revient à refuser de montrer son travail.
 
-> **Ce n'est pas une étape finale, c'est une contrainte d'architecture.**
+> **La contrainte d'architecture ne concerne que le lien hébergé.**
 >
 > Un site avec une base SQLite posée sur le disque et des actions serveur qui écrivent dedans
 > **ne se déploie pas** sur un hébergement sans serveur : le disque y est en lecture seule.
 > Les contournements existent — reconstruire la base au build, tolérer l'écriture qui échoue —
 > mais improvisés à la fin, sous contrainte, ils produisent de mauvaises décisions. Vécu.
 >
-> D'où la question posée **au début**, en salve 2, et pas à la remise.
+> **Le tunnel, lui, ne change rien.** Il sert le site tel qu'il est, depuis la machine de
+> l'utilisateur, avec sa vraie base et ses écritures qui fonctionnent. Il n'impose aucune
+> décision au blueprint, donc **il n'y a rien à demander au début**.
+>
+> J'ai d'abord placé la question en salve 2, en la justifiant par cette contrainte. C'était
+> une erreur de raisonnement : j'ai appliqué au tunnel une limite qui n'appartient qu'au
+> déploiement, et j'ai fait poser à l'utilisateur, au moment où il pense à son contenu, une
+> question dont la conséquence n'arrive qu'à la remise.
 
 ### Deux besoins, deux réponses
 
@@ -88,14 +95,23 @@ node "<skill>/scripts/partager.mjs"
 Le script ne pose aucune question : il regarde ce qui est disponible, choisit le plus simple,
 et affiche une URL. Si rien n'est disponible, il imprime la seule commande à lancer.
 
-### Le moment où l'on demande la connexion
+### Quand on en parle, et comment
 
-Si l'utilisateur veut pouvoir partager, **l'installation ou la connexion se fait pendant
-`npm install`**. C'est du temps mort qui existe déjà, où il attend sans rien faire ; c'est le
-seul moment du bootstrap où lui demander une action ne coûte rien.
+**Trois moments, et un seul est une question.**
 
-Demandée à la fin, la même chose arrive quand tout le monde veut voir le résultat, et elle est
-vécue comme un obstacle. C'est exactement ce qui s'est passé la première fois.
+| Quand | Quoi | Réponse attendue |
+|---|---|---|
+| Relevé de capacités, phase 0.a | `cloudflared` est-il là ? Une ligne du relevé, `✓` ou `✗` | aucune — c'est une information |
+| Pendant `npm install`, phase 0.55 | s'il manque : une ligne avec la commande d'installation, à lancer pendant l'attente | aucune — s'il ne fait rien, on continue |
+| À la remise, une fois le site validé | **« Tu veux un lien à envoyer, pour le montrer à quelqu'un ? »** | oui ou non |
+
+Le signalement pendant `npm install` existe pour une raison précise : c'est du temps mort qui
+existe déjà, et le seul moment du bootstrap où une action de l'utilisateur ne coûte rien. À la
+remise, la même commande arrive quand tout le monde veut voir le résultat, et elle est vécue
+comme un obstacle — c'est exactement ce qui s'est passé la première fois.
+
+Mais **ce n'est pas une question**, et ça ne bloque rien : le script réimprimera la commande
+le moment venu, et trente secondes plus tard le lien existe.
 
 ### Deux précautions qui ne se discutent pas
 

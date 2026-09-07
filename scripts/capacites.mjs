@@ -88,6 +88,37 @@ else
     "clé Pexels absente — photos provisoires via Openverse : sur le sujet, mais tirées d'une archive, à vérifier sur la planche-contact",
   );
 
+/* --- de quoi donner un lien à partager ---------------------------------
+   Une information, pas une question. Elle ne change rien à ce qu'on
+   construit — le tunnel sert le site tel quel depuis cette machine — mais
+   elle dit si le lien sera disponible d'un mot à la fin, ou s'il faudra
+   installer quelque chose. Autant le savoir pendant l'installation des
+   dépendances plutôt qu'au moment où l'on veut montrer le résultat.
+
+   Le PATH ne suffit pas : un terminal ouvert avant l'installation de l'outil
+   garde l'environnement qu'il avait alors, et ne le verra jamais. */
+const CLOUDFLARED = [
+  "C:\\Program Files (x86)\\cloudflared\\cloudflared.exe",
+  "C:\\Program Files\\cloudflared\\cloudflared.exe",
+  "/usr/local/bin/cloudflared",
+  "/opt/homebrew/bin/cloudflared",
+  "/usr/bin/cloudflared",
+];
+const tunnelDispo =
+  silencieux(process.platform === "win32" ? "where cloudflared" : "which cloudflared") !== null ||
+  CLOUDFLARED.some((p) => existsSync(p));
+
+if (tunnelDispo) ok("cloudflared — un lien public à envoyer, prêt en une trentaine de secondes");
+else {
+  const commande =
+    process.platform === "win32"
+      ? "winget install --id Cloudflare.cloudflared"
+      : process.platform === "darwin"
+        ? "brew install cloudflared"
+        : "voir la documentation Cloudflare pour ta distribution";
+  ko(`cloudflared absent — sans lui, pas de lien à envoyer. Une commande suffit : ${commande}`);
+}
+
 /* --- le dossier de la session : c'est LÀ que le site sera créé ---------
    Les outils de Claude Code sont autorisés dans le dossier où la session est
    ouverte, et demandent une permission à chaque écriture en dehors. Le site

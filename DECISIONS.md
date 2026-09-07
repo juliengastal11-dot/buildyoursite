@@ -360,8 +360,15 @@ un hébergement sans serveur, où le disque est en lecture seule. Les contournem
 reconstruire la base au build, tolérer l'écriture qui échoue, servir les images d'ailleurs —
 mais improvisés à la fin, sous contrainte, ils produisent de mauvaises décisions.
 
-**Donc la question se pose au début**, en salve 3, et pas à la remise. Savoir qu'un lien sera
-partagé change ce qu'on écrit.
+**Mais cette contrainte n'appartient qu'au lien hébergé.** Le tunnel sert le site tel qu'il
+est, depuis la machine, avec sa vraie base : il n'impose rien au blueprint. J'ai d'abord placé
+la question au début en la justifiant par la contrainte — en appliquant au tunnel une limite
+qui ne le concerne pas, et en faisant décider l'utilisateur, au moment où il pense à son
+contenu, de quelque chose dont la conséquence n'arrive qu'à la fin.
+
+**La question se pose donc à la remise**, une fois que le site lui plaît : « tu veux un lien à
+envoyer ? ». Au début, il ne reste qu'une information — le relevé dit si l'outil est là, et si
+non, une ligne pendant `npm install` donne la commande. Aucune réponse attendue.
 
 **Deux besoins, deux réponses.** « Montrer » et « envoyer » ne demandent pas la même chose. Le
 lien éphémère — un tunnel au-dessus du site compilé, servi depuis la machine — ne coûte aucun
