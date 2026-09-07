@@ -31,6 +31,20 @@
   --radius-card: 0.75rem;
 }
 
+/* Eyebrow : le petit libellé en capitales espacées au-dessus d'un titre.
+
+   Il vit ici et nulle part ailleurs. `Section`, `not-found` et les gabarits du
+   module legal posent tous `className="eyebrow"` : quand cette règle manquait,
+   ils rendaient un paragraphe ordinaire, sans capitales ni espacement. Le
+   défaut ne se voyait pas — le texte s'affichait quand même — et il a traversé
+   un bootstrap entier avant d'être trouvé. */
+@utility eyebrow {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
 @layer base {
   * {
     border-color: var(--color-border);
@@ -90,6 +104,56 @@ html.js [data-mouvement="hero"] > * {
   }
 }
 
+/* ===========================================================================
+   LES ÉTATS — ce qui répond
+
+   Les primitives de `components/ui/` répondent toutes à la même question :
+   comment un élément ARRIVE. Aucune ne répond à l'autre moitié : comment il
+   RÉPOND quand on s'approche. C'est pourtant là que se joue la sensation de
+   vie d'un site — une carte qui se soulève sous le curseur se remarque plus
+   qu'une apparition au défilement.
+
+   Sans ces classes, chaque agent improvise la sienne : sur un bootstrap réel,
+   trois fichiers portaient trois transitions différentes et un quatrième n'en
+   avait aucune. Le vocabulaire tient en trois classes ; on n'en invente pas
+   d'autres.
+
+   Deux garde-fous valent pour toutes :
+   · `(hover: hover) and (pointer: fine)` — sur tactile, un appui déclenche un
+     faux survol et l'état resterait collé après le doigt ;
+   · `prefers-reduced-motion` — le mouvement disparaît, la lisibilité reste.
+   =========================================================================== */
+
+/* Une carte, une vignette, un bloc cliquable : se soulève, s'enfonce à la
+   pression. À réserver à ce qui MÈNE quelque part — un bloc décoratif qui
+   réagit au curseur promet un clic qui n'existe pas. */
+.carte-reactive {
+  transition: transform 200ms var(--ease-out), box-shadow 200ms var(--ease-out),
+    border-color 200ms var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .carte-reactive:hover,
+  .group:hover > .carte-reactive {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 30px -18px color-mix(in oklab, var(--color-foreground) 45%, transparent);
+  }
+}
+.carte-reactive:active {
+  transform: translateY(-1px);
+}
+
+/* Un lien terminé par une flèche — « Découvrir X → ». La flèche avance, le
+   texte ne bouge pas : le déplacement dit la direction sans faire sauter la
+   ligne. La flèche doit porter la classe `.fleche`. */
+.lien-fleche .fleche {
+  transition: transform 200ms var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .lien-fleche:hover .fleche {
+    transform: translateX(4px);
+  }
+}
+
 /* --- Zoom au survol d'une carte photo ------------------------------------
    Conditionne a un vrai pointeur : sur tactile, un appui declenche un faux
    survol et l'image resterait agrandie apres le doigt. */
@@ -101,7 +165,18 @@ html.js [data-mouvement="hero"] > * {
     transform: scale(1.05);
   }
 }
+
 @media (prefers-reduced-motion: reduce) {
-  .zoom-survol { transition: none; }
-  .group:hover .zoom-survol { transform: none; }
+  .zoom-survol,
+  .carte-reactive,
+  .lien-fleche .fleche {
+    transition: none;
+  }
+  .group:hover .zoom-survol,
+  .carte-reactive:hover,
+  .group:hover > .carte-reactive,
+  .carte-reactive:active,
+  .lien-fleche:hover .fleche {
+    transform: none;
+  }
 }

@@ -196,8 +196,15 @@ passage — palette, typographie, géométrie, liens, photos et leur cadrage, mo
 
 ## Ce que ça ne fait pas
 
-- **Aucun déploiement.** Le projet reste local, avec son propre dépôt git et ses
-  points de restauration. La mise en ligne est votre décision.
+- **Aucune mise en ligne.** Le projet reste chez vous, avec son propre dépôt git et ses
+  points de restauration. Aucun compte n'est ouvert en votre nom, aucun hébergeur n'est
+  choisi à votre place, et si un déploiement devient nécessaire, c'est vous qui tapez la
+  commande.
+
+  En revanche, **vous pouvez envoyer un lien** à un client ou à un associé pendant la
+  construction, sans rien héberger : `scripts/partager.mjs` sert votre site compilé derrière
+  une adresse publique temporaire, formulaires et back-office compris. Le lien meurt quand
+  vous fermez la fenêtre — c'est un aperçu, pas une publication.
 - **Aucune copie de site tiers.** Le skill refuse de proposer la reproduction fidèle d'un
   site qui ne vous appartient pas.
 - **Aucun prestataire imposé, aucun lien affilié.** Le projet ne pousse ni hébergeur ni
@@ -212,9 +219,13 @@ passage — palette, typographie, géométrie, liens, photos et leur cadrage, mo
 - **Éprouvé sur Windows.** Les scripts gèrent macOS et Linux, mais n'y ont pas été testés.
 - **Français par défaut.** `config.json` a une clé `langue`, mais les gabarits et les
   contenus générés sont pensés en français.
-- **Deux bootstraps complets à ce jour** : une vitrine reprenant la charte d'un site de
-  référence, et une boutique dont l'identité vient entièrement du design system. Les deux
-  ont laissé leurs cicatrices dans `AMELIORATIONS.md`.
+- **Quatre bootstraps complets à ce jour** : une vitrine reprenant la charte d'un site de
+  référence, une boutique dont l'identité vient entièrement du design system, un site de
+  réservation, et une vitrine avec back-office refaite à partir du site existant du client.
+  Tous ont laissé leurs cicatrices dans `AMELIORATIONS.md`.
+- **Le partage d'un lien demande un outil de tunnel** installé sur la machine. Sans lui, le
+  script vous donne la commande d'installation et s'arrête là : il n'installe rien à votre
+  place.
 - **Les pages légales sont des gabarits**, pas des documents prêts. Elles portent des
   marqueurs `[[À CONFIRMER PAR L'UTILISATEUR]]` que le contrôle automatique signale tant qu'ils restent. Rien
   n'y est inventé — un SIRET plausible serait pire qu'un trou visible.

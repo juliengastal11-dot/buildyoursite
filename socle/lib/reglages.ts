@@ -10,6 +10,18 @@ import { db } from "@/lib/db";
    ⚠️ N'y laisse jamais les valeurs d'un projet réel. Le socle est copié tel
    quel dans chaque nouveau site : une coordonnée oubliée ici se retrouve chez
    tous les clients suivants. C'est arrivé.
+
+   ⚠️ CE FICHIER TOUCHE LA BASE. Il n'est donc importable que depuis du code
+   serveur. Le formatage — dates, montants, listes — vit dans `lib/formats.ts`,
+   qui ne dépend de rien : c'est celui-là qu'un composant client importe. La
+   séparation n'est pas cosmétique, elle a été payée par un build cassé ; la
+   raison est écrite en tête de `lib/formats.ts`.
+
+   LE PATRON À CONSERVER : les valeurs par défaut vivent dans le CODE, la base
+   ne stocke que ce qui a été modifié. Trois conséquences, toutes voulues :
+   le site fonctionne avant même le premier seed ; « rétablir la valeur
+   d'origine » est une simple suppression de ligne ; et le contenu de départ
+   est versionné avec le projet, donc relisible dans une revue de code.
 --------------------------------------------------------------------------- */
 
 export const REGLAGES_DEFAUT = {
@@ -46,52 +58,7 @@ export async function lireReglages(): Promise<Reglages> {
   return valeurs;
 }
 
-/* ---------------------------------------------------------------------------
-   Formatage des dates — centralisé volontairement.
-
-   Fixer la locale et le fuseau ici évite que chaque composant appelle
-   `toLocaleDateString` à sa sauce : le serveur et le navigateur rendraient
-   alors des chaînes différentes, et React signalerait une erreur d'hydratation.
-   Adapte la locale et le fuseau au projet.
---------------------------------------------------------------------------- */
-
-const LOCALE = "fr-FR";
-const FUSEAU = "Europe/Paris";
-
-export function formatJour(d: Date): string {
-  return new Intl.DateTimeFormat(LOCALE, {
-    weekday: "long",
-    day: "numeric",
-    month: "long",
-    timeZone: FUSEAU,
-  }).format(d);
-}
-
-export function formatHeure(d: Date): string {
-  return new Intl.DateTimeFormat(LOCALE, {
-    hour: "2-digit",
-    minute: "2-digit",
-    timeZone: FUSEAU,
-  }).format(d);
-}
-
-export function formatJourHeure(d: Date): string {
-  return `${formatJour(d)} à ${formatHeure(d)}`;
-}
-
-/** Clé de regroupement par journée, stable quel que soit le fuseau du serveur. */
-export function cleJour(d: Date): string {
-  return new Intl.DateTimeFormat("en-CA", {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-    timeZone: FUSEAU,
-  }).format(d);
-}
-
-/** Formate un montant stocké en centimes entiers. */
-export function formatPrix(centimes: number, devise = "EUR"): string {
-  return new Intl.NumberFormat(LOCALE, { style: "currency", currency: devise }).format(
-    centimes / 100,
-  );
-}
+/* Le formatage — dates, heures, montants, listes — est dans `lib/formats.ts`.
+   Ne le réimporte pas ici pour le réexporter : la commodité rétablirait le
+   piège que la séparation vient de supprimer. Chaque fichier importe
+   `@/lib/formats` directement. */

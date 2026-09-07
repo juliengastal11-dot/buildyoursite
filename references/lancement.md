@@ -48,6 +48,70 @@ projet : ce qui est couvert, ce qui reste, et pourquoi.
 | Le nom de domaine et l'hébergement | On ne déploie pas |
 | Le compte Stripe, s'il y a une vente | Le module est branché en Checkout hébergé, ses clés restent vides. Le compte, les clés et les frais sont ceux du propriétaire |
 
+## Partager un lien avant la mise en ligne
+
+Mettre en ligne et **envoyer un lien** ne sont pas la même chose. Un site peut avoir besoin
+d'être montré à un client, à un associé, à soi-même sur un autre appareil, des semaines avant
+qu'on ait choisi un hébergeur. C'est un besoin fréquent, et le refuser sous prétexte qu'« on
+ne déploie pas » revient à refuser de montrer son travail.
+
+> **Ce n'est pas une étape finale, c'est une contrainte d'architecture.**
+>
+> Un site avec une base SQLite posée sur le disque et des actions serveur qui écrivent dedans
+> **ne se déploie pas** sur un hébergement sans serveur : le disque y est en lecture seule.
+> Les contournements existent — reconstruire la base au build, tolérer l'écriture qui échoue —
+> mais improvisés à la fin, sous contrainte, ils produisent de mauvaises décisions. Vécu.
+>
+> D'où la question posée **au début**, en salve 2, et pas à la remise.
+
+### Deux besoins, deux réponses
+
+| | Le lien éphémère | Le lien qui tient |
+|---|---|---|
+| **Pour** | « regarde ça, maintenant » | « je t'envoie ça, réponds quand tu peux » |
+| **Comment** | un tunnel au-dessus du site compilé, servi depuis la machine | un déploiement chez un hébergeur |
+| **Délai** | une trentaine de secondes | quelques minutes, la première fois |
+| **Compte** | aucun | une connexion dans le navigateur, que **seul l'utilisateur** peut faire |
+| **Ce qui marche** | **tout** — formulaires, back-office, écritures en base | la lecture ; les écritures échouent |
+| **Durée de vie** | tant que la fenêtre reste ouverte | des semaines |
+
+**Le tunnel est la réponse par défaut**, et c'est celle à laquelle on ne pense pas en premier.
+Servi au-dessus d'un `npm run build && npm start`, il donne le vrai site : l'overlay d'édition
+est absent — il est conditionné à `NODE_ENV === "development"` —, la base est la vraie, le
+formulaire enregistre pour de bon. Sa limite se dit en une phrase : **le lien meurt quand on
+ferme.**
+
+```bash
+node "<skill>/scripts/partager.mjs"
+```
+
+Le script ne pose aucune question : il regarde ce qui est disponible, choisit le plus simple,
+et affiche une URL. Si rien n'est disponible, il imprime la seule commande à lancer.
+
+### Le moment où l'on demande la connexion
+
+Si l'utilisateur veut pouvoir partager, **l'installation ou la connexion se fait pendant
+`npm install`**. C'est du temps mort qui existe déjà, où il attend sans rien faire ; c'est le
+seul moment du bootstrap où lui demander une action ne coûte rien.
+
+Demandée à la fin, la même chose arrive quand tout le monde veut voir le résultat, et elle est
+vécue comme un obstacle. C'est exactement ce qui s'est passé la première fois.
+
+### Deux précautions qui ne se discutent pas
+
+- **Refus d'indexation.** Tant que `NEXT_PUBLIC_SITE_URL` n'est pas renseignée, le site ne
+  connaît pas sa propre adresse : ses URL canoniques pointent sur localhost et il est
+  probablement en aperçu. Une copie de travail ne doit jamais concurrencer le vrai site du
+  client dans les moteurs.
+- **Les marqueurs `[[À CONFIRMER PAR L'UTILISATEUR]]` se listent avant de donner le lien.**
+  Sur une machine locale, c'est un pense-bête. Sur un lien envoyé à un client, c'est une note
+  de chantier publiée — un relecteur l'a classé défaut le plus sérieux d'un site par ailleurs
+  propre.
+
+Et une conséquence sur la vérification : **l'image de partage entre dans l'auto-test.** Quand
+on envoie un lien par messagerie, la vignette qui s'affiche *est* `opengraph-image`. Elle est
+générée automatiquement, donc jamais regardée.
+
 ## Rien n'est imposé, et rien n'est rémunéré
 
 Ces deux lignes ne sont pas des trous dans la livraison, ce sont des choix. Le skill

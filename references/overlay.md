@@ -71,10 +71,15 @@ fonctionne pas ».
 ## Le watcher
 
 **À armer dès que le serveur de dev tourne — phase 0.55 —, pas en fin de bootstrap.** Le
-troisième bootstrap l'a payé : armé à la dernière étape, il a laissé les commentaires sur le
-blueprint et pendant les vérifications s'empiler sans réponse, puis les a livrés d'un coup à
-la fin. Persistant, il reste armé toute la session ; réarme-le seulement s'il est mort.
+troisième bootstrap l'a payé : armé à la dernière étape, il a laissé les commentaires envoyés
+pendant les vérifications s'empiler sans réponse, puis les a livrés d'un coup à la fin.
+Persistant, il reste armé toute la session ; réarme-le seulement s'il est mort.
 Outil `Monitor`, `persistent: true`, depuis la racine du projet :
+
+> **L'overlay ne fonctionne pas sur `/blueprint`.** Cette page est servie telle quelle par
+> `app/blueprint/route.ts` — le HTML autonome de `blueprint-html.mjs`, hors du layout de
+> l'application, donc sans aucun script. Vérifié : `document.scripts` y est vide. Sur le
+> blueprint, l'utilisateur relit et répond dans le chat ; ne lui promets pas le contraire.
 
 ```bash
 F=".buildyoursite/comments.json"

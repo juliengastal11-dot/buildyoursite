@@ -4,6 +4,22 @@ Le deuxième bootstrap a livré un site plat. Les primitives existaient ; person
 demandées. Ce fichier existe pour que le mouvement soit **décidé au blueprint, écrit dans
 les briefs, et vérifié à la fin** — jamais laissé au hasard d'un agent.
 
+> **Le mouvement a deux moitiés, et on n'en voyait qu'une.**
+>
+> **L'arrivée** — comment un élément entre en scène. C'est le sujet des six primitives
+> ci-dessous, et c'était tout ce que ce fichier couvrait.
+>
+> **La réaction** — comment un élément répond au curseur, au doigt, au clavier. C'est
+> l'autre moitié, et elle vit dans `app/globals.css`, sous « LES ÉTATS » : voir la section
+> [Les états](#les-états--ce-qui-répond) à la fin.
+>
+> Vécu au quatrième bootstrap : le site de référence avait trois téléphones cliquables qui
+> se soulevaient au survol. Le relevé l'avait mesuré — `transform, box-shadow, filter,
+> opacity · 0.55s`, noir sur blanc. Rien, entre le relevé et les briefs, ne transformait
+> cette mesure en consigne. Le site livré avait un téléphone, immobile et sans lien. Ce que
+> l'utilisateur a remarqué en premier, ce n'est pas une apparition manquante : c'est que
+> rien ne bougeait sous sa souris.
+
 ## Trois principes
 
 **Le mouvement raconte, il ne décore pas.** Une apparition dit « voici la suite ». Une
@@ -94,21 +110,74 @@ y est préférable.
   freine en fin de course, comme un objet qui se pose.
 - **Rejouer.** Jamais.
 
+## Les états — ce qui répond
+
+Trois classes dans `app/globals.css`, et on n'en invente pas d'autres. Elles sont en CSS et
+non en JavaScript : un survol n'a pas besoin d'être orchestré, et une transition CSS survit à
+tout, y compris à un script qui plante.
+
+| Classe | Pour | Ce que ça fait |
+|---|---|---|
+| `carte-reactive` | une carte, une vignette, un bloc **cliquable** | se soulève de 3 px avec une ombre portée, s'enfonce à la pression |
+| `lien-fleche` + `.fleche` sur l'icône | un lien terminé par une flèche — « Découvrir X → » | la flèche avance de 4 px, le texte ne bouge pas |
+| `zoom-survol` | une photo dans un cadre `overflow-hidden`, avec `group` sur le parent | l'image grandit de 5 % dans son cadre |
+
+Les trois se taisent sous `prefers-reduced-motion` et sur écran tactile — un appui y
+déclencherait un faux survol, et l'état resterait collé après le doigt.
+
+### Ce qu'on refuse
+
+- **Faire réagir ce qui ne mène nulle part.** Un bloc décoratif qui se soulève sous le
+  curseur promet un clic qui n'existe pas. `carte-reactive` va sur ce qui contient un lien.
+- **Trois transitions différentes dans trois fichiers.** C'était l'état d'un vrai bootstrap :
+  un agent avait écrit `hover:-translate-y-0.5`, un autre `transition-colors duration-150`,
+  un troisième rien du tout. D'où ces classes.
+- **Un survol qui déplace le texte.** La flèche avance, la ligne reste. Sinon on lit une
+  page qui tremble.
+- **Un état sans focus clavier.** Ce qui se distingue à la souris doit se distinguer au
+  clavier : les composants du socle portent déjà un anneau de focus, ne le retire jamais
+  pour faire joli.
+
 ## Dans les briefs d'agent
 
-Chaque brief de section dit **ce qui bouge et avec quoi**, en une ligne par élément :
+Chaque brief de section dit **ce qui bouge**, puis **ce qui répond**, en une ligne chacun :
 
-> Héros : `EntreeHero` sur le bloc de texte. Grille des produits : `Cascade`. Photo de
-> l'atelier : `Parallaxe`. Le reste est immobile.
+> **Ce qui bouge** — Héros : `EntreeHero` sur le bloc de texte. Grille des produits :
+> `Cascade`. Photo de l'atelier : `Parallaxe`. Le reste est immobile.
+>
+> **Ce qui répond** — les cartes produit sont cliquables : `carte-reactive`. Le lien
+> « Découvrir » : `lien-fleche`. La photo de l'atelier ne réagit pas, elle ne mène nulle part.
 
-Et rappelle la règle : « les valeurs viennent de `lib/mouvement.ts`, n'écris aucune durée ni
-distance en dur ».
+Et rappelle les deux règles : « les valeurs d'arrivée viennent de `lib/mouvement.ts`, n'écris
+aucune durée ni distance en dur » et « les états viennent des classes de `globals.css`,
+n'écris pas de `hover:` à la main ».
+
+**Un brief qui ne dit rien de la seconde ligne produit une page morte sous la souris.** Ça
+n'a pas d'effet sur le build, ça ne se voit sur aucune capture d'écran, et c'est la première
+chose que l'utilisateur remarque quand il essaie son site.
 
 ## À la vérification finale
 
 Fais défiler chaque page dans le panneau. Le héros est-il entré ? Les grilles se
 dévoilent-elles ? Un chiffre a-t-il compté ? Si rien ne bouge, ce n'est pas de la sobriété :
 c'est un brief qui n'a rien demandé.
+
+**Puis survole.** Passe le curseur sur une carte cliquable, sur un lien à flèche, sur une
+photo. Si rien ne répond, la moitié « réaction » a été oubliée — c'est arrivé, et personne ne
+l'a vu avant la remise. Un `grep` de `carte-reactive` et `lien-fleche` dans le projet dit en
+une seconde si les classes ont été demandées ou si les agents les ont ignorées : zéro
+occurrence sur un site qui a des cartes cliquables est un défaut, pas un choix.
+
+**Et vérifie vraiment le mouvement réduit**, ne le suppose pas à la lecture du code. Dans le
+panneau, une bascule suffit :
+
+```js
+matchMedia("(prefers-reduced-motion: reduce)").matches
+```
+
+Si le panneau ne sait pas l'émuler, relis **chaque** primitive et **chaque** classe d'état
+pour confirmer sa garde — et dis dans ton rapport que c'est une relecture, pas un essai.
+« Probablement respecté » n'est pas une vérification.
 
 Si **tout** est invisible, un script a planté avant l'hydratation — la feuille masque
 d'avance ce que GSAP doit dévoiler (`html.js [data-mouvement]`). La console dit lequel.

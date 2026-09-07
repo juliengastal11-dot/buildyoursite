@@ -34,6 +34,17 @@ const aDrapeau = (n) => args.includes("--" + n);
 
 const IGNORE = new Set(["node_modules", ".next", ".git", "lib", "dist", "build", ".buildyoursite"]);
 
+/**
+ * Un chemin de projet, toujours avec des barres obliques.
+ *
+ * Sous Windows, `path.relative` rend « app\contact\page.tsx ». Les rapports
+ * mélangeaient alors les deux formes selon le contrôle qui parlait, et un
+ * chemin à antislashs ne se recopie pas tel quel dans une commande.
+ */
+function cheminLisible(racine, fichier) {
+  return path.relative(racine, fichier).split(path.sep).join("/");
+}
+
 async function fichiers(racine, exts) {
   const out = [];
   async function descendre(d) {
@@ -80,7 +91,7 @@ async function donneesPersonnelles(racine) {
       if (tolere.test(ligne) || ligne.trimStart().startsWith("*")) continue;
       for (const [motif, quoi] of motifs) {
         if (motif.test(ligne)) {
-          signale(true, `${quoi} dans le socle`, `${path.relative(racine, f)} — ${ligne.trim().slice(0, 90)}`);
+          signale(true, `${quoi} dans le socle`, `${cheminLisible(racine, f)} — ${ligne.trim().slice(0, 90)}`);
         }
       }
     }
@@ -152,7 +163,7 @@ async function couleursNonDefinies(racine) {
         const racineNom = nom.split("-")[0];
         if (MOTS_CLES.has(nom) || MOTS_CLES.has(racineNom)) continue;
         if (!utilises.has(nom)) {
-          utilises.set(nom, `${path.relative(racine, f)}:${i + 1}`);
+          utilises.set(nom, `${cheminLisible(racine, f)}:${i + 1}`);
         }
       }
     }
@@ -178,7 +189,7 @@ async function degradesObsoletes(racine) {
         signale(
           true,
           "dégradé en syntaxe Tailwind 3 — ne rend rien en v4",
-          `${path.relative(racine, f)}:${i + 1} — remplacer bg-gradient-to-* par bg-linear-to-*`,
+          `${cheminLisible(racine, f)}:${i + 1} — remplacer bg-gradient-to-* par bg-linear-to-*`,
         );
       }
     }
@@ -202,7 +213,7 @@ async function valeursEnDur(racine) {
         signale(
           false,
           "couleur littérale dans un composant du socle",
-          `${path.relative(racine, f)}:${i + 1} — ${ligne.trim().slice(0, 80)}`,
+          `${cheminLisible(racine, f)}:${i + 1} — ${ligne.trim().slice(0, 80)}`,
         );
       }
     }
@@ -210,28 +221,71 @@ async function valeursEnDur(racine) {
 }
 
 /* ===========================================================================
-   4. Trous des pages légales — bloquant avant remise
+   4. Trous des pages légales — bloquant en production, dans le code livré
    =========================================================================== */
 /**
- * Retire commentaires de bloc et de ligne.
+ * Retire commentaires de bloc et de ligne, en conservant le nombre de lignes.
  *
- * Sans ça, l'en-tête d'un gabarit qui EXPLIQUE la convention `[[À COMPLÉTER]]`
- * était compté comme un trou. Un garde qui compte faux se fait ignorer, et un
- * garde ignoré ne sert à rien — c'est la leçon des huit premiers faux positifs.
+ * Sans le premier filtre, l'en-tête d'un gabarit qui EXPLIQUE la convention
+ * `[[À COMPLÉTER]]` était compté comme un trou. Un garde qui compte faux se
+ * fait ignorer, et un garde ignoré ne sert à rien — c'est la leçon des huit
+ * premiers faux positifs.
+ *
+ * Effacer un commentaire de bloc d'un coup aurait aussi décalé tous les
+ * numéros de ligne rapportés après lui : on n'efface que son texte, jamais
+ * les retours à la ligne qu'il contient.
  */
 function sansCommentaires(texte) {
-  return texte.replace(/\/\*[\s\S]*?\*\//g, "").replace(/^\s*\/\/.*$/gm, "");
+  return texte
+    .replace(/\/\*[\s\S]*?\*\//g, (bloc) => bloc.replace(/[^\n]/g, ""))
+    .replace(/^\s*\/\/.*$/gm, "");
 }
 
-async function trousLegaux(racine) {
+// Capture le texte demandé après les deux points, sur une ou plusieurs lignes
+// — vu en vrai dans les CGV, une exception listée juste après le marqueur.
+// Sans deux points (l'ancienne forme `[[À COMPLÉTER]]` seule), le groupe
+// capturé est vide, et c'est très bien : rien à afficher après le tiret.
+const RE_A_CONFIRMER = /\[\[À (?:COMPLÉTER|CONFIRMER)[^:\]]*:?\s*([^\]]*)\]\]/g;
+
+async function trousLegaux(racine, production) {
+  // Un marqueur publié tel quel dans les mentions légales a été classé
+  // défaut le plus sérieux du site par un relecteur humain : le total seul
+  // ne disait pas où regarder. Regroupés par fichier, et distingués selon
+  // ce qui part vraiment en ligne — app/, components/, lib/ — de ce qui
+  // reste dans les fichiers de préparation.
+  const codeLivre = new Map();
+  const preparation = new Map();
+
   for (const f of await fichiers(racine, [".tsx", ".ts", ".md"])) {
     const texte = sansCommentaires(await readFile(f, "utf8"));
-    // Deux formes : l'ancienne « À COMPLÉTER » et « À CONFIRMER PAR L'UTILISATEUR »,
-    // qui dit mieux à qui revient la réponse.
-    const n = (texte.match(/\[\[À (COMPLÉTER|CONFIRMER)/g) ?? []).length;
-    if (n > 0) {
-      signale(false, `${n} donnée(s) à confirmer par l'utilisateur`, path.relative(racine, f));
+    const rel = path.relative(racine, f).split(path.sep).join("/");
+    const entrees = [];
+    for (const m of texte.matchAll(RE_A_CONFIRMER)) {
+      const ligne = texte.slice(0, m.index).split("\n").length;
+      const demande = m[1].replace(/\s+/g, " ").trim();
+      const apercu = demande.length > 60 ? demande.slice(0, 60) + "…" : demande;
+      entrees.push(`ligne ${ligne}${apercu ? ` — ${apercu}` : ""}`);
     }
+    if (entrees.length === 0) continue;
+    (/^(app|components|lib)\//.test(rel) ? codeLivre : preparation).set(rel, entrees);
+  }
+
+  // Même mécanisme que les photos provisoires : bloquant seulement si
+  // `production` est vrai, et seulement pour ce que le visiteur reçoit.
+  for (const [rel, entrees] of codeLivre) {
+    signale(
+      production,
+      `${entrees.length} donnée(s) à confirmer dans du code livré — ${rel}`,
+      entrees.join("\n      "),
+    );
+  }
+  // Un fichier de préparation ne part jamais en production : jamais bloquant.
+  for (const [rel, entrees] of preparation) {
+    signale(
+      false,
+      `${entrees.length} donnée(s) à confirmer — fichier de préparation, jamais livré au visiteur — ${rel}`,
+      entrees.join("\n      "),
+    );
   }
 }
 
@@ -247,7 +301,7 @@ async function photosProvisoires(racine, production) {
     // Le marqueur est écrit dans l'EXIF par le générateur : il survit à un
     // recadrage qui effacerait le bandeau visuel.
     if (buf.includes(Buffer.from("PHOTO PROVISOIRE", "latin1"))) {
-      trouvees.push(path.relative(racine, f));
+      trouvees.push(cheminLisible(racine, f));
     }
   }
   if (trouvees.length === 0) return;
@@ -280,14 +334,27 @@ async function photosProvisoires(racine, production) {
    dépouillé. C'est pour ça que ce n'est qu'un avertissement : la liste est là
    pour qu'on tranche page par page, pas pour qu'on obéisse.
    =========================================================================== */
+// Le tunnel de commande a le droit d'être nu : connexion, inscription,
+// panier, commande, paiement. Sans cette liste, `app/connexion/page.tsx`
+// remontait comme un défaut à chaque contrôle alors que c'est voulu — une
+// page de connexion est nue par nature, comme le tunnel de commande.
+const CHEMINS_SANS_NAV_TOLERES = /^(connexion|inscription|commande|panier|paiement)(\/|$)/;
+
 async function pagesSansNavigation(racine) {
   const app = path.join(racine, "app");
   const sansNav = [];
   for (const f of await fichiers(app, [".tsx"])) {
-    if (path.basename(f) !== "page.tsx") continue;
+    const base = path.basename(f);
+    // La 404 est une page comme une autre : un visiteur arrivé par un lien
+    // cassé ou un QR code mal recopié doit pouvoir repartir. Elle ne
+    // s'appelle pas `page.tsx`, et échappait donc à ce contrôle — trouvée
+    // par un relecteur humain sur une 404 réduite à un unique bouton, pas
+    // par ce script.
+    if (base !== "page.tsx" && base !== "not-found.tsx") continue;
     const rel = path.relative(app, f).split(path.sep).join("/");
     // L'admin a son propre layout, l'API n'a pas de page, le blueprint est un outil.
     if (/^(admin|api|blueprint)(\/|$)/.test(rel)) continue;
+    if (CHEMINS_SANS_NAV_TOLERES.test(rel)) continue;
     const texte = sansCommentaires(await readFile(f, "utf8"));
     if (!/<Nav[\s/>]/.test(texte)) sansNav.push("app/" + rel);
   }
@@ -349,17 +416,33 @@ async function motsCreux(racine) {
   const trouvailles = [];
   for (const f of await fichiers(racine, [".tsx", ".ts", ".md"])) {
     if (f.includes("node_modules") || f.includes("verifier-projet")) continue;
-    const texte = sansCommentaires(await readFile(f, "utf8"))
+    // Les fichiers de préparation à la racine — BLUEPRINT.md, CONTENU.md,
+    // AMELIORATIONS.md, DECISIONS.md, README.md, ou tout autre .md posé à la
+    // racine — ne sont jamais livrés au visiteur. Trois lignes signalées sur
+    // cinq, un jour, venaient de là : ce contrôle porte sur ce que le
+    // visiteur lit, le code des pages et des composants.
+    if (path.dirname(f) === racine && f.toLowerCase().endsWith(".md")) continue;
+
+    const brut = await readFile(f, "utf8");
+    const lignesBrutes = brut.split("\n");
+    const texte = sansCommentaires(brut)
       // Les apostrophes typographiques et les entités JSX sont ramenées à
       // l'apostrophe droite, sinon « n&apos;hésitez pas » passe entre les mailles.
       .replace(/&apos;|’|&#39;/g, "'")
       .toLowerCase();
     for (const [i, ligne] of texte.split("\n").entries()) {
       for (const mot of MOTS_CREUX) {
-        if (ligne.includes(mot)) {
-          trouvailles.push(`${path.relative(racine, f)}:${i + 1} — « ${mot} »`);
-          break;
-        }
+        if (!ligne.includes(mot)) continue;
+        // Une formule volontaire — une signature déposée du client, reprise
+        // mot pour mot de son propre site — se tait avec un commentaire
+        // `mots-creux-ok` sur la ligne elle-même ou juste au-dessus. Sans ça,
+        // « au service de » remontait à chaque contrôle alors que c'était la
+        // signature du client, pas un tic d'IA.
+        const tue =
+          (lignesBrutes[i] ?? "").includes("mots-creux-ok") ||
+          (lignesBrutes[i - 1] ?? "").includes("mots-creux-ok");
+        if (!tue) trouvailles.push(`${cheminLisible(racine, f)}:${i + 1} — « ${mot} »`);
+        break;
       }
     }
   }
@@ -369,7 +452,9 @@ async function motsCreux(racine) {
   signale(
     false,
     `${trouvailles.length} ligne(s) de texte à relire — mots creux ou tics d'IA`,
-    apercu + (reste > 0 ? `\n      … et ${reste} autre(s)` : ""),
+    apercu +
+      (reste > 0 ? `\n      … et ${reste} autre(s)` : "") +
+      `\n      une formule volontaire se tait avec un commentaire « mots-creux-ok » sur la ligne ou juste au-dessus.`,
   );
 }
 
@@ -446,7 +531,7 @@ if (cibleProjet) {
   console.log(`Contrôle du projet — ${racine}${production ? " (avant production)" : ""}\n`);
   await couleursNonDefinies(racine);
   await degradesObsoletes(racine);
-  await trousLegaux(racine);
+  await trousLegaux(racine, production);
   await photosProvisoires(racine, production);
   await pagesSansNavigation(racine);
   await motsCreux(racine);

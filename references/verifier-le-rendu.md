@@ -107,18 +107,46 @@ suppose.
    qui n'existe pas.
 3. **Le formulaire jusqu'à son état de succès** — et son état d'erreur. Que voit-on après
    avoir envoyé ? Et si un champ manque ?
-4. **La console vide**, à la largeur du bureau et à 375 px (`read_console_messages`,
-   erreurs seulement).
-5. **Le mouvement réduit.** Le panneau ne sait pas l'émuler : vérifie dans le code que chaque
-   primitive de mouvement affiche sans animer quand la préférence est active — elles le
-   font toutes par construction, mais un agent a pu en réécrire une.
-6. **Les queues des lettres** — g, y, p — dans tout texte masqué ou tronqué, à 100 %.
-7. **Rien ne déborde latéralement** : la page ne défile pas de côté, même en tirant.
-8. **Le relecteur** : un agent sans contexte, l'URL et la liste des pages, une seule
-   consigne — rapporter, pas corriger.
-9. **L'œil neuf, en dernier.** La liste posée, la page regardée comme un inconnu qui
-   arrive : est-ce que tout a sa place, est-ce qu'un élément parallèle est inégal, est-ce
-   qu'un passage sent le remplissage.
+4. **Le survol.** Passe le curseur sur une carte cliquable, un lien à flèche, une photo.
+   Si rien ne répond, la moitié « réaction » du mouvement a été oubliée — voir
+   `mouvement.md`, « Les états ». Un `grep -r "carte-reactive\|lien-fleche" app components`
+   qui ne rend rien sur un site plein de cartes cliquables est un défaut, pas un choix.
+5. **La console vide**, à la largeur du bureau et à 375 px (`read_console_messages`,
+   erreurs seulement). **Une erreur inexpliquée s'identifie, elle ne se balaye pas.** Sur un
+   bootstrap, huit `404` ont été vues, regardées une fois dans le journal réseau, et
+   écartées comme « du bruit » sans jamais être nommées. Elles l'étaient peut-être ; on n'en
+   sait rien, et c'est ça le défaut. Retrouve la requête fautive
+   (`read_network_requests` avec un `urlPattern`), nomme-la, et alors seulement écarte-la.
+6. **Le mouvement réduit — testé, pas supposé.** Dans le panneau :
+   `matchMedia("(prefers-reduced-motion: reduce)").matches`, et si le panneau sait l'émuler,
+   recharge et regarde. S'il ne sait pas, relis **chaque** primitive et **chaque** classe
+   d'état pour confirmer sa garde — et dis dans ton rapport que c'est une relecture, pas un
+   essai. « Probablement respecté » n'est pas une vérification.
+7. **Le clavier.** `Tab` depuis le haut d'une page : l'ordre suit-il la lecture, le lien
+   d'évitement apparaît-il en premier, l'anneau de focus est-il visible partout, le menu
+   mobile se ferme-t-il à `Échap`, et sort-on d'un panneau ouvert sans souris ? Sur un site
+   destiné à des collectivités ou à un service public, c'est une obligation autant qu'un
+   argument de vente.
+8. **L'image de partage.** Ouvre `/opengraph-image` et regarde-la. C'est la vignette qui
+   s'affiche quand le lien du site est envoyé par messagerie — souvent la toute première
+   chose qu'un client voit du travail. Elle est générée automatiquement, donc jamais
+   regardée : nom tronqué, contraste raté, description qui déborde ne se voient qu'ici.
+9. **Les queues des lettres** — g, y, p — dans tout texte masqué ou tronqué, à 100 %.
+10. **Rien ne déborde latéralement** : la page ne défile pas de côté, même en tirant.
+11. **Les trous restants, comptés et situés.** `verifier-projet.mjs` liste les
+    `[[À CONFIRMER PAR L'UTILISATEUR : … ]]` avec leur fichier et leur ligne. Ceux qui sont
+    dans du code livré — `app/`, `components/`, `lib/` — sont **visibles par un visiteur** :
+    sur la machine du constructeur c'est un pense-bête, sur un lien envoyé à un client c'est
+    une note de chantier publiée. Un relecteur a classé celui des mentions légales comme le
+    défaut le plus sérieux d'un site par ailleurs propre. Ils se redisent à la remise, un par
+    un, avec leur emplacement.
+12. **Le relecteur** : un agent sans contexte, l'URL et la liste des pages, une seule
+    consigne — rapporter, pas corriger. **Il ouvre son propre onglet** (`tabs_create`) et ne
+    touche à aucun autre : c'est le seul agent autorisé à se servir du navigateur, et il
+    travaille quand plus personne n'écrit.
+13. **L'œil neuf, en dernier.** La liste posée, la page regardée comme un inconnu qui
+    arrive : est-ce que tout a sa place, est-ce qu'un élément parallèle est inégal, est-ce
+    qu'un passage sent le remplissage.
 
 Ce que tu trouves, tu le corriges et tu le dis. Chaque défaut que l'utilisateur a trouvé sur
 les deux premiers bootstraps était un point de cette liste, non vérifié.

@@ -31,6 +31,7 @@ const DEFAUT = {
   foreground: "#1f1e1d",
   card: "#faf9f5",
   primary: "#2b2a28",
+  secondary: "#dfe3e6",
   accent: "#d97757",
   border: "#dcd9d0",
   muted: "#e8e6df",
@@ -170,11 +171,131 @@ function rendre(md) {
   return html.join("\n");
 }
 
+/* ----------------------------- squelette ------------------------------- */
+
+/* Un squelette est un plan de masse, pas une maquette : on ne montre que la
+   forme (hauteur, fond) et trois libellés, pour qu'il se lise en trois
+   secondes. Hauteurs croissantes et nettement différentes, pour qu'un
+   bandeau ne se confonde jamais avec un héros — même imprimé en noir et
+   blanc, où la couleur seule ne distingue rien. */
+const HAUTEURS = { bandeau: 34, normal: 72, grand: 110, plein: 150 };
+
+/* Les fonds que connaît le composant Section du socle
+   (socle/components/ui/section.tsx). Un fond absent ou mal orthographié
+   retombe sur "background" plutôt que de faire échouer le rendu. */
+const FONDS = ["background", "card", "muted", "primary", "secondary"];
+
+/** Une ligne "nom | hauteur | fond | contenu | mouvement" → objet tolérant :
+    un champ manquant ou une valeur inconnue prend un repli plutôt que de
+    planter — seul le nom est réellement requis, et son absence écarte
+    simplement la ligne (cf. extraireSquelettes). */
+function analyserSection(ligne) {
+  const [nom, hautBrut, fondBrut, contenu, mouvementBrut] = ligne
+    .split("|")
+    .map((c) => c.trim());
+  return {
+    nom: nom ?? "",
+    hauteur: HAUTEURS[hautBrut] ? hautBrut : "normal",
+    fond: FONDS.includes(fondBrut) ? fondBrut : "background",
+    contenu: contenu || "",
+    mouvement: mouvementBrut
+      ? mouvementBrut.split(",").map((m) => m.trim()).filter(Boolean)
+      : [],
+  };
+}
+
+/* Repère les blocs ```squelette, en extrait les pages, et les retire du
+   texte — sans quoi ils se rendraient une seconde fois comme un vulgaire
+   <pre><code> dans le corps du document. Tolère un bloc non refermé (on
+   consomme jusqu'à la fin du fichier plutôt que de boucler) et un bloc vide
+   ou entièrement malformé (aucune page n'est ajoutée : rien ne se rend
+   plutôt que de planter). */
+function extraireSquelettes(md) {
+  const lignes = md.split(/\r?\n/);
+  const pages = [];
+  const reste = [];
+  let i = 0;
+  while (i < lignes.length) {
+    const ouverture = /^```\s*squelette\b(.*)$/.exec(lignes[i]);
+    if (!ouverture) {
+      reste.push(lignes[i++]);
+      continue;
+    }
+    const titre = ouverture[1].trim() || "Page";
+    i++;
+    const brut = [];
+    while (i < lignes.length && !/^```/.test(lignes[i])) brut.push(lignes[i++]);
+    i++; // saute la clôture ``` — ou la fin de fichier, si elle manque
+
+    const sections = brut
+      .map((l) => l.trim())
+      .filter((l) => l && !l.startsWith("#")) // ligne vide ou commentée : ignorée
+      .map(analyserSection)
+      .filter((s) => s.nom); // une ligne sans nom n'a rien à montrer
+
+    if (sections.length) pages.push({ titre, sections });
+  }
+  return { pages, reste: reste.join("\n") };
+}
+
+/** Un bloc de section : fond nommé, hauteur à l'échelle, nom en gras,
+    contenu discret tronqué proprement, mouvement en étiquette dans le coin.
+    Texte clair sur fond primary pour rester lisible — même recette que le
+    ruban plus bas (fond primary, texte bg). */
+function rendreBloc(s) {
+  const contenu = s.contenu ? `<span class="bloc-contenu">${echappe(s.contenu)}</span>` : "";
+  const mouvement = s.mouvement.length
+    ? `<span class="bloc-mvt">${echappe(s.mouvement.join(" · "))}</span>`
+    : "";
+  return `<div class="bloc bloc-${s.fond}" style="height:${HAUTEURS[s.hauteur]}px">
+        <div class="bloc-texte"><span class="bloc-nom">${echappe(s.nom)}</span>${contenu}</div>
+        ${mouvement}
+      </div>`;
+}
+
+/* Les squelettes de toutes les pages, côte à côte (une grille qui repasse à
+   une colonne quand la largeur manque) : le plan de masse complet du site,
+   embrassé d'un coup d'œil — pour qu'un plan approuvé sur la seule foi de
+   tableaux ne cache plus de surprise (constaté en vrai : un héros à un seul
+   téléphone approuvé, alors que le site de référence en montrait trois). */
+function rendreSquelettes(pages) {
+  if (!pages.length) return "";
+  const unePage = (p) => `<div class="page-squelette">
+      <div class="titre-page">${echappe(p.titre)}</div>
+      <div class="fenetre">
+        <div class="fenetre-barre" aria-hidden="true"><i></i><i></i><i></i></div>
+        ${p.sections.map(rendreBloc).join("\n")}
+      </div>
+    </div>`;
+  return `<div class="squelettes">${pages.map(unePage).join("\n")}</div>`;
+}
+
 /* ------------------------------- page ---------------------------------- */
 
 const md = readFileSync(resolve(src), "utf8");
 const p = palette();
-const titre = (/^#\s+(.*)$/m.exec(md)?.[1] ?? "Blueprint").trim();
+const { pages, reste } = extraireSquelettes(md);
+// titre extrait de reste (squelettes déjà retirés) : sinon une ligne "# ..."
+// mise en commentaire dans un bloc squelette pourrait passer pour le titre.
+const titre = (/^#\s+(.*)$/m.exec(reste)?.[1] ?? "Blueprint").trim();
+const squelettes = rendreSquelettes(pages);
+
+// Les squelettes se placent juste après le h1 du blueprint, avant tout le
+// reste : c'est ce qu'on veut voir en premier. On rend donc reste en deux
+// morceaux de part et d'autre du titre plutôt que d'aller triturer le HTML
+// déjà produit (plus sûr qu'un remplacement par regex sur du texte libre,
+// qui pourrait contenir des motifs "$1" trompeurs).
+const lignesReste = reste.split(/\r?\n/);
+const iTitre = lignesReste.findIndex((l) => /^#\s+/.test(l));
+const corpsPage = !squelettes
+  ? rendre(reste)
+  : iTitre === -1
+    ? `${squelettes}\n${rendre(reste)}`
+    : [
+        rendre(lignesReste.slice(0, iTitre + 1).join("\n")),
+        squelettes,
+        rendre(lignesReste.slice(iTitre + 1).join("\n")),
+      ].join("\n");
 
 const page = `<!doctype html>
 <html lang="fr"><head><meta charset="utf-8">
@@ -186,8 +307,8 @@ const page = `<!doctype html>
 <style>
   :root{
     --bg:${p.background}; --fg:${p.foreground}; --card:${p.card};
-    --primary:${p.primary}; --accent:${p.accent}; --border:${p.border};
-    --muted:${p.muted}; --muted-fg:${p["muted-foreground"]};
+    --primary:${p.primary}; --secondary:${p.secondary}; --accent:${p.accent};
+    --border:${p.border}; --muted:${p.muted}; --muted-fg:${p["muted-foreground"]};
   }
   *{box-sizing:border-box}
   body{margin:0;background:var(--bg);color:var(--fg);
@@ -222,11 +343,40 @@ const page = `<!doctype html>
      padding:.6rem .8rem;border-bottom:1px solid var(--border);white-space:nowrap}
   td{padding:.55rem .8rem;border-bottom:1px solid var(--border);vertical-align:top}
   tr:last-child td{border-bottom:0}
+
+  /* --- squelettes : plan de masse, pas une maquette ---------------------- */
+  .squelettes{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,280px));
+              justify-content:center;gap:1.5rem;margin:1.6rem 0 2.8rem}
+  .titre-page{font-size:.92rem;font-weight:600;letter-spacing:-.01em;margin:0 0 .5rem}
+  .fenetre{border:1px solid var(--border);border-radius:10px;overflow:hidden;background:var(--card)}
+  .fenetre-barre{display:flex;gap:5px;padding:.5rem .6rem;background:var(--muted);
+                 border-bottom:1px solid var(--border)}
+  .fenetre-barre i{width:7px;height:7px;border-radius:50%;background:var(--border)}
+  .bloc{position:relative;display:flex;justify-content:space-between;gap:.5rem;
+        padding:.4rem .6rem;border-bottom:1px solid var(--border);overflow:hidden}
+  .bloc:last-child{border-bottom:0}
+  .bloc-background{background:var(--bg)}
+  .bloc-card{background:var(--card)}
+  .bloc-muted{background:var(--muted)}
+  .bloc-primary{background:var(--primary);color:var(--bg)}
+  .bloc-secondary{background:var(--secondary)}
+  .bloc-texte{align-self:center;min-width:0;display:flex;flex-direction:column;gap:.1rem}
+  .bloc-nom{font-weight:600;font-size:.7rem;line-height:1.15;
+            white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .bloc-contenu{font-size:.62rem;line-height:1.2;opacity:.62;
+                white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  /* Centré, et non calé en haut : posée au sommet d'un bloc, l'étiquette se lit
+     comme appartenant au bloc PRÉCÉDENT. Vérifié à l'écran sur un squelette de
+     trois pages — c'était la seule chose ambiguë du rendu. */
+  .bloc-mvt{flex:0 0 auto;align-self:center;max-width:9rem;
+            font:500 .58rem/1.3 "JetBrains Mono",monospace;letter-spacing:.03em;text-transform:uppercase;
+            background:var(--bg);color:var(--fg);border:1px solid var(--border);border-radius:4px;
+            padding:.15rem .4rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;opacity:.85}
 </style></head>
 <body>
 <div class="ruban">Blueprint &middot; à valider</div>
 <div class="page">
-${rendre(md)}
+${corpsPage}
 </div>
 </body></html>`;
 

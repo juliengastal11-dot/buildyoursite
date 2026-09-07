@@ -11,6 +11,12 @@
    une boutique reste plus sobre ; une application n'anime presque rien.
 
    Toutes les durées sont en secondes, les distances en pixels.
+
+   ⚠️ Ce fichier ne couvre que le mouvement d'ARRIVÉE — comment un élément entre
+   en scène. Ce qui RÉPOND au curseur, au doigt et au clavier vit dans
+   `app/globals.css`, sous « LES ÉTATS » : c'est du CSS, pas du JavaScript, et
+   ça n'a donc pas besoin de valeurs partagées. Les deux moitiés se décident
+   ensemble au blueprint, et se vérifient ensemble à la fin.
 --------------------------------------------------------------------------- */
 
 export const MOUVEMENT = {

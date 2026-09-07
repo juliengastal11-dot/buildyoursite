@@ -290,3 +290,122 @@ va plus vite parce qu'il fait moins, pas parce qu'il fait moins bien.
 
 **Ce que ça ne change pas.** La barre de direction, le texte écrit avant la construction, le
 mouvement décidé, l'auto-test : le socle de méthode est le même pour tous les genres.
+
+## D12 — Le mouvement a deux moitiés : l'arrivée et la réaction
+
+Le socle ne savait faire qu'une chose : faire **arriver** les éléments. Six primitives, toutes
+déclenchées par le chargement ou le défilement, toutes répondant à la question « comment cet
+élément entre-t-il en scène ». Rien ne répondait à l'autre moitié : **comment répond-il quand
+on s'approche.**
+
+**Ce que ça coûtait.** Chaque agent improvisait. Sur un bootstrap réel, un fichier portait
+`hover:-translate-y-0.5`, un autre `transition-colors duration-150`, un troisième rien du
+tout : trois décisions isolées là où il fallait un système. Et surtout, un site de référence
+dont les cartes se soulevaient au survol — mesuré par le relevé, `transform, box-shadow,
+filter, opacity · 0.55s` — a donné un site livré immobile sous la souris. C'est la première
+chose que l'utilisateur a remarquée.
+
+**La décision.** Trois classes dans `app/globals.css`, sous « LES ÉTATS » : `carte-reactive`,
+`lien-fleche`, `zoom-survol`. En CSS et non en JavaScript — un survol n'a pas besoin d'être
+orchestré, et une transition CSS survit à un script qui plante. Toutes gardées par
+`(hover: hover) and (pointer: fine)` et par `prefers-reduced-motion`.
+
+**Et une ligne de plus dans chaque brief d'agent.** « Ce qui bouge » ne suffisait pas : il
+faut « ce qui répond ». Un brief muet sur la seconde produit une page morte sous la souris —
+sans effet sur le build, invisible sur toute capture d'écran.
+
+**Ce qu'on refuse.** Faire réagir ce qui ne mène nulle part : un bloc décoratif qui se soulève
+promet un clic qui n'existe pas.
+
+## D13 — Un verdict par élément interactif, et un blueprint qui montre
+
+Deux décisions liées, nées du même incident : un élément de la référence a disparu du site
+livré sans laisser de trace, et l'utilisateur a dû demander pourquoi.
+
+**Le verdict par élément.** Le relevé produit un inventaire des éléments interactifs — un
+lien, un bouton, une carte cliquable par ligne, avec sa destination, sa zone, sa réaction au
+survol et son éventuel caractère flottant. Le blueprint donne à **chaque ligne** l'un de trois
+verdicts : *reproduit*, *réinterprété*, *abandonné*, avec la raison quand ce n'est pas le
+premier.
+
+La colonne « Repris : oui/non » du tableau des dimensions ne suffisait pas. Elle disait
+« liens sortants : repris — oui », ce qui était vrai (ils étaient dans les réglages) et faux
+en même temps (un bouton flottant présent sur toutes les pages de la référence avait disparu).
+**Un verdict porte sur un élément, pas sur une catégorie.**
+
+**Le blueprint qui montre.** Le tableau des sections décrit ce qu'on construit, jamais ce
+qu'on laisse — et il ne se regarde pas, il se lit. Un utilisateur ne peut pas valider un
+design à partir d'un texte : il a approuvé un plan complet et cohérent sans pouvoir voir que
+son héros passait de trois téléphones à un.
+
+D'où le bloc `squelette` : cinq champs par section — nom, hauteur, fond, contenu, mouvement —
+rendus par `blueprint-html.mjs` en un plan de masse, toutes les pages côte à côte, aux
+couleurs du projet. **Ce n'est pas une maquette et ça ne doit pas essayer de l'être.** Ça se
+lit en trois secondes, et ça déplace les questions de design **avant** la construction, là où
+une correction coûte une phrase.
+
+**Pourquoi pas une vraie maquette.** Parce qu'elle coûterait cher, qu'elle serait fausse dès
+la première section écrite, et qu'elle donnerait l'illusion d'une validation visuelle qu'elle
+ne peut pas tenir. Un plan de masse assume ce qu'il est.
+
+## D14 — Partager un lien est une contrainte d'architecture, pas une étape finale
+
+Le skill refusait tout déploiement, ce qui est juste : le code appartient à l'utilisateur, et
+choisir un hébergeur à sa place l'engagerait. Mais ce refus couvrait aussi un besoin qui n'a
+rien à voir avec l'hébergement — **envoyer un lien à quelqu'un pour qu'il regarde**.
+
+**Ce que la première tentative a appris.** Elle a échoué proprement : un site dont la base
+SQLite vit sur le disque et dont les actions serveur écrivent dedans **ne se déploie pas** sur
+un hébergement sans serveur, où le disque est en lecture seule. Les contournements existent —
+reconstruire la base au build, tolérer l'écriture qui échoue, servir les images d'ailleurs —
+mais improvisés à la fin, sous contrainte, ils produisent de mauvaises décisions.
+
+**Donc la question se pose au début**, en salve 3, et pas à la remise. Savoir qu'un lien sera
+partagé change ce qu'on écrit.
+
+**Deux besoins, deux réponses.** « Montrer » et « envoyer » ne demandent pas la même chose. Le
+lien éphémère — un tunnel au-dessus du site compilé, servi depuis la machine — ne coûte aucun
+compte, prend une trentaine de secondes, et donne le **vrai** site, formulaires et back-office
+compris, parce qu'on sert une compilation de production. Sa limite est franche : il meurt
+quand on ferme. Le lien qui tient demande un hébergeur et une connexion que **seul
+l'utilisateur** peut faire, et la base y devient lecture seule.
+
+**Le tunnel est la réponse par défaut**, et c'est celle à laquelle on ne pense pas en premier :
+le réflexe est d'aller au déploiement, qui est la réponse la plus lourde.
+
+**Le moment de la connexion.** Si l'utilisateur veut partager, l'installation ou la connexion
+se fait **pendant `npm install`** : du temps mort qui existe déjà, le seul moment où lui
+demander une action ne coûte rien. Demandée à la fin, la même chose arrive quand tout le monde
+veut voir le résultat, et elle est vécue comme un obstacle.
+
+**Deux précautions non négociables.** Refus d'indexation tant que l'adresse publique
+définitive n'est pas renseignée — une copie de travail ne concurrence jamais le vrai site du
+client. Et les marqueurs `[[À CONFIRMER PAR L'UTILISATEUR]]` listés avant de donner le lien :
+sur une machine locale c'est un pense-bête, sur un lien envoyé à un client c'est une note de
+chantier publiée.
+
+**Ce que ça ne change pas.** Le script ne publie rien : il sert depuis la machine, ou il
+imprime la commande que l'utilisateur tapera lui-même. Aucun compte ouvert, aucun hébergeur
+poussé, aucun lien d'affiliation.
+
+## D15 — Séparer le pur du serveur dans les fichiers-contrats
+
+Les helpers de formatage — dates, montants, listes — vivaient dans `lib/reglages.ts`, à côté
+de `lireReglages()` qui interroge la base. Regroupés par sujet, ce qui paraissait logique.
+
+**Le piège.** Un composant client — un simulateur de prix — importait `formatPrix`, et
+traînait derrière lui la chaîne complète jusqu'à Prisma dans le paquet du navigateur. Ça
+compilait, donc personne ne le voyait. Jusqu'au jour où une ligne `import path from "node:path"`
+est arrivée dans `lib/db.ts` : le build a échoué d'un coup, avec une trace d'erreur qui
+remontait jusqu'au simulateur, à quatre fichiers de là.
+
+**La décision.** On sépare par **nature**, pas par sujet : `lib/<sujet>.ts` pour ce qui est
+pur et importable partout, `lib/<sujet>-serveur.ts` pour ce qui touche la base, le disque ou
+l'environnement. Le socle livre `lib/formats.ts` à côté de `lib/reglages.ts`, et l'un ne
+réexporte pas l'autre — la commodité rétablirait exactement le piège qu'on vient de supprimer.
+
+**Et le patron qui va avec, à conserver.** Les valeurs par défaut vivent dans le **code**, la
+base ne stocke que ce qui a été modifié. Trois conséquences, toutes voulues : le site
+fonctionne avant même le premier seed ; « rétablir la valeur d'origine » est une simple
+suppression de ligne ; et le contenu de départ est versionné avec le projet, donc relisible
+dans une revue de code.

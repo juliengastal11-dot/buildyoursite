@@ -57,7 +57,7 @@ phase 0.55.
 | Socle Next.js | `<skill>/socle` |
 | Modules | `<skill>/modules/{auth,stripe,admin,legal}` |
 | Références | `<skill>/references/` — dont `structures.md`, `mouvement.md` et `lancement.md`, à lire avant tout blueprint |
-| Scripts | `<skill>/scripts/` |
+| Scripts | `<skill>/scripts/` — dont `partager.mjs`, qui donne un lien à envoyer sans rien héberger |
 | Données du skill | `~/.claude/buildyoursite` — `config.json` et la bibliothèque de design, hors du skill |
 | Pro Max | `~/.claude/buildyoursite/ui-ux-pro-max` |
 | Le site en cours | `<dossier de la session>/<nom-du-site>` — jamais ailleurs, voir phase 0.55 |
@@ -175,6 +175,9 @@ peut suivre du doigt. Reprends-la telle quelle, en remplaçant `{appellation}` s
 >    ce que tu imaginais. Tant que tu ne l'as pas dit, ce n'est pas fini.
 > 8. **Ensuite, tu modifies en cliquant** : tu passes en mode Édition, tu cliques sur une
 >    zone de la page, tu écris ce que tu veux changer, et le site change.
+> 9. **Et si tu veux montrer le résultat à quelqu'un**, je peux te donner un lien à envoyer,
+>    sans rien mettre en ligne et sans créer de compte nulle part. Je te demande ça au début,
+>    parce que ça change deux ou trois choses dans la façon de construire.
 >
 > Je pilote l'ingénierie et la technique, tu supervises le design et l'identité visuelle.
 
@@ -347,7 +350,19 @@ Découpage qui fonctionne :
 |---|---|
 | 1 — le projet | **le genre de site**, **l’écran prioritaire**, le nom du site, pour qui il est, les modules à greffer |
 | 2 — le contenu et les actifs | pages attendues, ce qui doit vivre en base, ce que le propriétaire doit pouvoir modifier lui-même, **les actifs — logo, photos, captures — et, si un générateur d'images est connecté, générés ou provisoires**, contraintes connues |
-| 3 — les deux fixes | l'inspiration, puis la validation du blueprint |
+| 3 — l'exploitation | **le partage d'un lien**, et si le module `admin` est retenu, **quels écrans** |
+| 4 — les deux fixes, seules | l'inspiration, puis la validation du blueprint — **et rien d'autre dans cette salve** |
+
+> ⚠️ **Les deux questions fixes vont dans leur propre salve, sans aucune question à réponse
+> libre à côté.** Vécu : posées dans la même salve qu'un « où sont tes fichiers ? »,
+> l'utilisateur a tapé sa réponse libre et validé l'ensemble — les deux questions fixes sont
+> revenues vides, et il a fallu les reposer.
+>
+> **La conséquence a été bien plus grave que la question manquante** : l'inspiration revenue
+> vide a fait sauter toute la phase 0.c, et j'ai comblé le trou en devinant. Voir
+> l'avertissement en tête de la phase 0.c.
+>
+> **Une question fixe qui revient vide se repose. Elle ne se déduit jamais.**
 
 N'invente jamais pour t'épargner une question. Une hypothèse non posée finit dans le
 blueprint, et si personne ne le lit, elle finit dans le code.
@@ -355,8 +370,23 @@ blueprint, et si personne ne le lit, elle finit dans le code.
 ### La question des actifs — quatre réponses, quatre plans
 
 Dans la salve 2, demande-le tel quel : **« Tu as un logo, des photos, des captures d'écran,
-une vidéo ? Glisse-les dans le chat. »** La réponse range le projet dans l'une de ces quatre
-situations, et chacune décide du plan visuel :
+une vidéo ? Donne-moi le chemin du dossier où ils sont, ou l'adresse du site qui les
+héberge. »**
+
+> **Ne demande jamais de les glisser dans le chat.** Une image collée dans la conversation
+> arrive sous mes yeux et **jamais sur le disque** : je la vois, je peux la décrire, et je
+> n'ai aucun moyen de la copier dans `public/`. Vécu au quatrième bootstrap — le logo est
+> arrivé par le chat, et il a fallu une question de plus pour obtenir l'adresse du site où
+> les fichiers vivaient vraiment.
+>
+> Ce qui marche : un chemin de dossier (`C:\Clients\untel\logos`), une adresse de site d'où
+> les télécharger, un lien de partage. Ce qui ne marche pas : le glisser-déposer.
+>
+> Une image collée reste utile pour **montrer** — « voilà l'allure que je veux » — jamais pour
+> **fournir** un fichier.
+
+La réponse range le projet dans l'une de ces quatre situations, et chacune décide du plan
+visuel :
 
 | Situation | Ce que ça change |
 |---|---|
@@ -384,6 +414,37 @@ mémoire, et si tu ne peux pas le connaître, dis-le au lieu de l'inventer.
 que la génération serait possible avec un connecteur d'images. Ne nomme aucun service, ne
 mets aucun lien, n'insiste pas — ce n'est pas à ce skill de vendre un abonnement.
 
+### La salve 3 — deux questions qui décident de l'architecture
+
+**Le partage d'un lien**, toujours posée :
+
+> **Faudra-t-il pouvoir envoyer un lien à quelqu'un pendant la construction ?**
+> - *Oui, un lien à partager* — un client, un associé, ton téléphone
+> - *Non, je regarde sur ma machine* — rien à installer
+
+Ce n'est pas une commodité de fin de parcours, c'est une **contrainte d'architecture** : un
+site dont la base vit sur le disque et dont les actions écrivent dedans ne se déploie pas sur
+un hébergement sans serveur. Savoir la réponse au début change ce qu'on écrit ; la découvrir à
+la remise oblige à improviser. Le détail est dans `references/lancement.md`, section
+« Partager un lien avant la mise en ligne ».
+
+**Si la réponse est oui**, l'installation ou la connexion se fait **pendant `npm install`**
+(phase 0.55) — du temps mort qui existe déjà, le seul moment où demander une action à
+l'utilisateur ne coûte rien. À la fin, la même demande arrive quand tout le monde veut voir le
+résultat, et elle est vécue comme un obstacle.
+
+**Les écrans du back-office**, seulement si le module `admin` est retenu :
+
+> **Que doit-il pouvoir modifier lui-même ?**
+> - *Les textes et les messages reçus* — l'essentiel, et de loin le plus utilisé
+> - *Plus l'offre et les tarifs* — quand les prix bougent
+> - *Tout ce que le blueprint prévoira* — un écran par modèle métier
+
+Entre « pas de back-office » et « sept écrans complets », il y a une marche que personne ne
+proposait. Vécu : l'agent du back-office a été le plus lourd des quatre — 155 appels d'outils,
+la plus grosse part du budget de construction — pour un espace que le propriétaire ouvrira
+peut-être trois fois par an.
+
 Les deux questions ci-dessous sont **obligatoires et passent en dernier** :
 
 > **{appellation}, souhaites-tu que je m'inspire d'un site déjà existant ?**
@@ -400,10 +461,34 @@ Les deux questions ci-dessous sont **obligatoires et passent en dernier** :
 La seconde question existe pour que le choix — et la responsabilité — soient les siens.
 Ne la saute jamais, même quand tu penses connaître sa préférence.
 
-## Phase 0.c — Si une référence est donnée
+## Phase 0.c — Si une référence est donnée, ou trouvée
 
 Trois questions de plus, **posées avant de relever quoi que ce soit**. Elles ne coûtent rien
 et elles évitent une contrefaçon.
+
+> ## ⚠️ Cette phase n'a pas eu lieu, et je ne m'en suis pas aperçu
+>
+> Vécu au quatrième bootstrap. Le nom du site m'a fait **deviner** son adresse. Je l'ai
+> ouverte, relevée, et j'ai téléchargé sept fichiers image. Les trois questions ci-dessous
+> n'ont jamais été posées : leurs réponses sont devenues des hypothèses dans le blueprint,
+> c'est-à-dire des affirmations corrigeables — mais **après** le relevé, pas avant.
+>
+> Ça s'est bien terminé : le site appartenait à l'utilisateur. Le garde-fou existe exactement
+> pour le cas contraire, et il n'a pas fonctionné.
+>
+> **Trois règles, courtes, qui ne se discutent pas :**
+>
+> 1. **Aucun relevé, aucune navigation, aucun téléchargement avant que les trois réponses
+>    soient à l'écran.** Pas « avant le blueprint » : avant d'ouvrir la page.
+> 2. **Une référence que tu as devinée est une référence.** Que l'adresse vienne de
+>    l'utilisateur ou de ton propre rapprochement à partir du nom de la marque ne change
+>    rien : tu poses les trois questions, en disant d'où tu sors l'adresse.
+> 3. **Ces réponses ne se déduisent jamais.** Une question fixe revenue vide se repose. Une
+>    hypothèse dans le blueprint n'est pas une réponse : elle arrive trop tard pour empêcher
+>    quoi que ce soit.
+>
+> Si la question 1 n'a pas de réponse, tu n'as pas de référence. Tu construis sans, et c'est
+> tout.
 
 **Question 1 — elle gouverne tout le reste.**
 
@@ -481,8 +566,9 @@ sienne**, dis-le une fois, clairement, puis suis sa réponse. C'est sa décision
 Atteins la page (`references/extraction-charte.md` §1-4 : SPA, iframe, sous-domaine
 `.static.`), puis **colle `references/releve-complet.js` dans `javascript_tool`.**
 
-Six dimensions en une fois : palette, typographie, géométrie, liens, photos, mouvement.
-Le script mesure — il ne suppose pas — et il rend sa propre liste à cocher.
+Huit dimensions en une fois : palette, typographie, géométrie, liens, photos, cadrage,
+mouvement, et **l'inventaire des éléments interactifs**. Le script mesure — il ne suppose
+pas — et il rend sa propre liste à cocher.
 
 **N'improvise pas un relevé partiel.** Ma recette a grossi par couches, et à chaque
 bootstrap j'ai oublié la couche la plus récente : les couleurs sans la géométrie, puis la
@@ -495,6 +581,34 @@ référence à l'une et invisible à l'autre — c'est comme ça qu'une photo a 
 **Recharge la page avant de relever le mouvement.** Une apparition jouée « une fois » a déjà
 joué si tu as parcouru la page, et tu conclurais qu'il n'y en a pas. Le script te prévient
 quand la page n'est plus en haut.
+
+**Sur un site statique, prends aussi le HTML directement.** `get_page_text` peut ne rendre
+qu'un morceau : sur une page contenant un `<article>`, il n'a renvoyé que cette balise — une
+carte au lieu de la page entière — sans rien signaler. Le `sitemap.xml` donne la liste des
+pages, `curl` les récupère toutes en un passage, et le texte est au mot près. Le navigateur
+reste indispensable pour tout le reste : couleurs calculées, géométrie, mouvement, inventaire
+interactif. Recette dans `references/extraction-charte.md` §5.
+
+### Chaque élément interactif reçoit un verdict
+
+L'inventaire rendu par le script liste, une ligne par élément : ce que c'est, où ça mène,
+comment ça réagit au survol, et s'il est flottant. **Le blueprint donne à chaque ligne l'un de
+trois verdicts** — *reproduit*, *réinterprété*, *abandonné* — avec la raison quand ce n'est
+pas « reproduit ».
+
+**Vécu, et c'est la remarque que l'utilisateur a faite en découvrant son site.** La référence
+avait trois téléphones dans son héros : chacun un lien vers sa page de marque, tous les trois
+se soulevant au survol, et un bouton flottant sur chaque page. Le site livré a eu **un**
+téléphone, immobile, sans lien, et plus de bouton flottant.
+
+Passer de trois téléphones à un était un vrai choix — un héros porte une promesse et une
+action. Mais il n'apparaissait nulle part **comme un écart** : le tableau des sections décrit
+ce qu'on construit, jamais ce qu'on laisse. Et la perte de l'interaction, elle, n'était pas un
+choix du tout : le relevé avait les transitions, rien ne les transformait en consigne.
+
+**Un élément qui disparaît sans sa ligne est un défaut, pas une décision.** Et une ligne qui
+porte une réaction au survol devient une ligne « ce qui répond » dans le brief de l'agent —
+voir `references/mouvement.md`, section « Les états ».
 
 ### Le blueprint porte le relevé
 
@@ -614,6 +728,16 @@ Suis `references/extraction-charte.md`, puis n'appelle Pro Max que sur :
 
 Ne laisse jamais `--design-system` écraser une charte qu'il t'a demandé de garder.
 
+> **Quand la référence appartient à l'utilisateur, n'appelle pas `--design-system` du tout.**
+> Sa marque existe : elle a une palette, des polices, un logo, une géométrie. Le moteur, lui,
+> répond à une requête, pas à une marque — sur un éditeur de logiciel pour collectivités, il a
+> rendu un motif d'une seule page et une palette grise générique, l'un et l'autre à jeter. Le
+> temps passé à formuler la requête, puis à écarter sa réponse, est du temps perdu deux fois.
+>
+> Va directement aux domaines ciblés : `--domain landing` pour les motifs de page,
+> `--domain ux` pour les garde-fous de qualité, `--domain gsap` si la page demande une
+> chorégraphie. La palette et la typographie viennent du relevé.
+
 **Référence + nouvelle création** — le partage est inverse. Tu relèves quand même la charte,
 mais tu n'en gardes que **l'ADN** : palette, esprit, ton, densité. Puis
 `--design-system` reprend la main sur la structure, le rythme et les partis pris. Passe-lui
@@ -642,6 +766,11 @@ Avant le blueprint, parce que son affichage a besoin du serveur :
 
    Puis : copie le socle, greffe les modules retenus, `git init`, premier commit.
 
+   **Un module ne se copie pas en bloc.** `modules/legal/files/` contient les CGV : sur un
+   site qui ne vend rien, supprime `app/cgv/` après la copie, sinon la page existe, n'est
+   reliée nulle part, et attend qu'un moteur la trouve. Même règle pour tout gabarit d'un
+   module que le blueprint n'a pas retenu.
+
    **Avant ce premier commit, vérifie `git config user.email`.** S'il ne renvoie rien, pose
    l'identité en local depuis `gitNom` et `gitEmail` de `config.json` :
    `git config --local user.name "…"` puis `user.email`. Vécu : un commit refusé pour
@@ -664,12 +793,42 @@ Avant le blueprint, parce que son affichage a besoin du serveur :
    ensuite. Ne suppose jamais le port : c'est précisément l'erreur que ce script existe pour
    rendre impossible.
 
+   **Le serveur doit vivre toute la session, et un appel ordinaire ne le permet pas** : une
+   commande lancée en arrière-plan porte un délai maximal, au bout duquel le site s'éteint au
+   milieu du travail. Passe par l'outil `Monitor`, `persistent: true`, en filtrant sa sortie —
+   sinon le journal de Next produit un événement par requête et noie la session :
+
+   ```bash
+   cd "<projet>" && node "<skill>/scripts/demarrer-dev.mjs" 2>&1 \
+     | grep --line-buffered -E "BUILDYOURSITE_URL|Network|EADDRINUSE|rror|⨯|Failed|buildyoursite\]"
+   ```
+
+   `description` : `serveur de dev <projet>`. Le filtre garde l'URL, l'adresse réseau et les
+   erreurs, et rien d'autre.
+
+   **Il faut l'arrêter avant chaque `npm run build`**, puis le relancer — les deux écrivent
+   dans `.next` et se corrompent mutuellement. `TaskStop` sur la tâche du Monitor, et un
+   nouveau Monitor après.
+
+   **Et si le partage a été accepté en salve 3, c'est maintenant que ça se joue** : pendant
+   que `npm install` tourne, donne à l'utilisateur la commande d'installation ou de connexion.
+   Une ligne, une commande, et il attendait de toute façon.
+
 5. **Arme le watcher maintenant** — pas en fin de bootstrap (voir `references/overlay.md`).
-   L'overlay fonctionne dès que le serveur tourne, y compris sur `/blueprint` : si le watcher
-   n'écoute pas, les commentaires s'empilent sur le disque sans réponse. Vécu au troisième
-   bootstrap : armé à la dernière étape, il a livré d'un coup, à la fin, tout ce que
-   l'utilisateur avait envoyé depuis le blueprint — et lui a fait croire que le mode édition
-   ne marchait pas.
+   L'overlay fonctionne sur toute page rendue par l'application dès que le serveur tourne, et
+   l'utilisateur commente pendant que tu construis : si le watcher n'écoute pas, les
+   commentaires s'empilent sur le disque sans réponse. Vécu au troisième bootstrap : armé à la
+   dernière étape, il a livré d'un coup, à la fin, tout ce que l'utilisateur avait envoyé — et
+   lui a fait croire que le mode édition ne marchait pas.
+
+   > ⚠️ **L'overlay ne fonctionne PAS sur `/blueprint`.** Cette page est servie telle quelle
+   > par `app/blueprint/route.ts` : c'est le HTML autonome produit par `blueprint-html.mjs`,
+   > hors du layout de l'application, donc sans aucun script. Vérifié : `document.scripts` y
+   > est vide. Il n'y a ni barre Édition, ni pastille, ni commentaire.
+   >
+   > **Ne promets donc jamais « tu peux annoter le blueprint au clic ».** Je l'ai annoncé à
+   > l'utilisateur sur la foi de ce fichier, et c'était faux. Sur le blueprint, il relit et il
+   > répond dans le chat — c'est très bien ainsi.
 
 ## Phase 0.58 — Les mots des clients
 
@@ -682,6 +841,17 @@ formulations exactes**, en trois colonnes : la douleur (« j'ai attendu trois se
 un devis »), le résultat espéré (« qu'on me dise clairement combien ça coûte »), les
 objections (« je ne sais pas si c'est frais »). Sans accès au web, demande à l'utilisateur
 de coller quelques avis, ou de nommer les objections qu'il entend le plus.
+
+> **Quand la référence appartient à l'utilisateur, commence par elle.** Sa page d'aide, sa
+> foire aux questions, ses guides et ses pages de tarifs contiennent les objections qu'il
+> entend **vraiment**, écrites par quelqu'un qui les a entendues cent fois. Elles valent mieux
+> que trois recherches génériques, et elles sont déjà dans sa langue.
+>
+> Vécu : les cinq objections de la FAQ du site de référence — « ça va remplacer nos agents »,
+> « l'IA se trompe », « où vont les données », « faut-il un marché public », « et les frais
+> cachés » — ont nourri toute la voix du nouveau site. Le web n'a servi qu'à confirmer.
+>
+> L'ordre est donc : **son site d'abord, le web ensuite pour compléter et vérifier.**
 
 Ce que ça donne, et ce que ça interdit :
 
@@ -738,6 +908,50 @@ Sonnet 5 — 2026-09-04.`
 **Numérote tes hypothèses (`H1`, `H2`…) et tes sections (`§1`, `§2`…).** C'est ce qui permet
 à l'utilisateur de dire « H5 non, et §3 ajoute ceci » au lieu de décrire ce qu'il vise.
 
+**Et trie-les par coût de l'erreur, en deux groupes.** D'abord **« Si je me trompe ici, on
+reconstruit »** : deux ou trois hypothèses, pas plus — le mode fidèle ou réinterprété, la
+structure de l'offre, qui parle dans le héros. Ensuite **« Si je me trompe ici, on
+corrige »** : tout le reste.
+
+Vécu : dix-sept hypothèses présentées au même niveau, aucune contestée. Soit elles étaient
+toutes justes, soit la liste était trop longue pour être auditée — et ne pas savoir laquelle
+est déjà le problème. **Une liste de trois se lit.**
+
+### Le blueprint doit MONTRER, pas seulement décrire
+
+C'est le manque le plus coûteux de toute la chaîne. Un blueprint fait de tableaux demande à
+l'utilisateur de valider un design à partir d'un texte. Vécu : il a approuvé un plan complet
+et cohérent, et n'a découvert qu'à la livraison que le héros contenait un seul téléphone là
+où son site de référence en avait trois. **L'information n'existait nulle part sous une forme
+regardable.**
+
+Écris donc, **une par page**, un bloc `squelette` dans `BLUEPRINT.md` :
+
+````
+```squelette Accueil /
+Nav | bandeau | secondary | Logo, 5 liens, 2 boutons
+Héros | grand | background | Devise, titre, trait tricolore, 2 boutons — téléphone 22:47 à droite | EntreeHero, Reveal
+Bandeau de confiance | bandeau | secondary | 4 faits en ligne | Cascade
+22h47 | normal | primary | Chiffre géant, 3 compteurs, conclusion | Compteur, Reveal
+Pied de page | normal | secondary | 4 colonnes, mentions légales
+```
+````
+
+Cinq champs séparés par `|` : **nom**, **hauteur** (`bandeau`, `normal`, `grand`, `plein`),
+**fond** (les fonds du composant `Section` : `background`, `card`, `muted`, `primary`,
+`secondary`), **contenu** en une phrase, et **mouvement** — facultatif, les primitives
+utilisées.
+
+`blueprint-html.mjs` en fait un **plan de masse** : une colonne de blocs étiquetés, à
+l'échelle, aux couleurs du projet, toutes les pages côte à côte. Ce n'est pas une maquette et
+ça ne doit pas essayer de l'être. Ça se lit en trois secondes, et ça fait poser les bonnes
+questions **avant** la construction — là où une correction coûte une phrase — plutôt qu'après,
+où elle coûte une reprise.
+
+**Le squelette est le seul endroit où l'on voit une section absente.** Une page qui devrait
+respirer et qui s'affiche en six blocs serrés se remarque immédiatement ; le tableau des
+sections, lui, paraîtra toujours complet.
+
 **Le blueprint porte le texte.** Écris `CONTENU.md` à la racine du projet, avant de lancer
 le moindre agent : chaque ligne que le visiteur lira — titres, accroches, paragraphes,
 libellés de boutons, questions et réponses de la FAQ, microcopie des formulaires, états
@@ -759,8 +973,11 @@ node "<skill>/scripts/blueprint-html.mjs" BLUEPRINT.md
 ```
 
 Ça écrit `.buildyoursite/blueprint.html` en reprenant **automatiquement la palette du projet**
-depuis `app/globals.css`. Le socle sert ce fichier sur `/blueprint` en développement :
-`navigate` sur `http://localhost:3000/blueprint`.
+depuis `app/globals.css`, et en rendant les squelettes en tête de page. Le socle sert ce
+fichier sur `/blueprint` en développement : `navigate` sur `http://localhost:3000/blueprint`.
+
+**Regarde-le toi-même avant de le présenter.** C'est la première image du projet ; si le plan
+de masse te surprend, il surprendra l'utilisateur.
 
 **N'essaie pas une URL `file://`.** Vérifié : le panneau ouvre l'onglet mais le fige en
 instantané statique, ni rendu ni capturable, et l'onglet devient impossible à faire naviguer.
@@ -781,11 +998,10 @@ questions ouvertes. Le tout **en une seule fois** — une interruption, pas troi
 aussi le fichier avec `SendUserFile` et laisse-le affiché sur `/blueprint`, pour qu'il
 puisse le parcourir en grand s'il le souhaite.
 
-**Il peut aussi annoter le blueprint au clic**, comme n'importe quelle page : le mode
-Édition fonctionne sur `/blueprint`. Dis-le-lui en une ligne. Ses commentaires arrivent par
-le watcher, armé depuis la phase 0.55 : passe le lot à `en_cours`, applique-les à
-`BLUEPRINT.md`, régénère l'HTML, réponds en une ligne. Les sections numérotées (`§1`, `§2`)
-sont ce qui permet de retrouver ce qu'il a cliqué.
+**Sur le blueprint, il répond dans le chat** — le mode Édition n'y fonctionne pas, la page est
+servie hors de l'application et ne porte aucun script. Ne lui promets pas le contraire : je
+l'ai fait, et c'était faux. Les sections et hypothèses numérotées (`§1`, `H5`) sont ce qui
+rend sa réponse écrite aussi précise qu'un clic.
 
 Formule tes hypothèses en **affirmations vérifiables**, jamais en questions vagues :
 « je pars du principe que ce site est le tien » vaut mieux que « est-ce que ça te va ? ».
@@ -805,11 +1021,11 @@ opposables plus tard, quand personne ne se souvient de ce qui avait été suppos
 Le terrain est prêt depuis la phase 0.55 : projet créé, dépendances installées, thème
 appliqué, base poussée, serveur de dev en marche. Il reste à écrire le site.
 
-1. **Écris toi-même les fichiers-contrats**, avant de lancer le moindre agent : helpers
-   partagés (formatage de dates, lecture des réglages), `lib/site.ts` — nom, description
-   en une phrase, pages publiques, couleurs de partage : tout ce que les moteurs et les
-   réseaux verront —, `layout.tsx`, `page.tsx` d'assemblage, `seed.ts`. Les agents doivent
-   construire contre une cible fixe.
+1. **Écris toi-même les fichiers-contrats**, avant de lancer le moindre agent : `lib/formats.ts`
+   (formatage — pur), `lib/reglages.ts` (lecture des réglages — serveur), `lib/site.ts` — nom,
+   description en une phrase, pages publiques, couleurs de partage : tout ce que les moteurs
+   et les réseaux verront —, `layout.tsx`, `page.tsx` d'assemblage, `seed.ts`. Les agents
+   doivent construire contre une cible fixe.
 
    **Les réglages sont un contrat, pas une documentation.** Un chiffre qui vit dans les
    réglages ne s'écrit jamais en toutes lettres. Le seuil de port offert était en dur dans
@@ -822,6 +1038,23 @@ appliqué, base poussée, serveur de dev en marche. Il reste à écrire le site.
    **L'en-tête s'appelle `Nav` (`components/sections/nav.tsx`), le pied de page
    `PiedDePage`**, et chaque page hors tunnel de commande rend les deux. Le contrôle
    automatique compte sur ces noms pour repérer les pages sans navigation.
+
+   **`app/not-found.tsx` en fait partie.** Le socle la livre nue — il ne peut pas importer
+   des composants qui n'existent pas encore — et c'est à toi de l'habiller, au même moment
+   que les pages légales. Livrée telle quelle, elle a été classée deuxième défaut du site par
+   un relecteur : un visiteur arrivé par un lien cassé ou un QR code mal recopié se retrouve
+   dans une impasse à un seul bouton. Pense aussi à passer son `min-h-dvh` en `min-h-[60dvh]`,
+   sinon elle pousse le pied de page hors de l'écran.
+
+   **Sépare le pur du serveur.** `lib/formats.ts` — dates, montants, listes — ne dépend de
+   rien et s'importe partout ; `lib/reglages.ts` touche la base et ne s'importe que côté
+   serveur. Ne les refusionne jamais « pour la commodité », et ne réexporte pas l'un depuis
+   l'autre. Vécu : les deux vivaient dans le même fichier, un composant client a importé un
+   formateur de prix, et il a traîné Prisma dans le paquet du navigateur — invisible jusqu'au
+   jour où un `import` de module Node a fait échouer le build, avec une trace qui remontait à
+   quatre fichiers de là. La règle vaut pour tout fichier-contrat que tu écris :
+   **`<sujet>.ts` pur, `<sujet>-serveur.ts` pour ce qui touche la base, le disque ou
+   l'environnement.**
 2. **Sous-agents en parallèle** (un seul message, plusieurs appels `Agent`), découpés par
    périmètre de fichiers exclusif, jamais par couche technique. Un découpage éprouvé, pour
    une vitrine :
@@ -866,15 +1099,38 @@ appliqué, base poussée, serveur de dev en marche. Il reste à écrire le site.
    gabarit de titre — mais ces deux-là ne peuvent venir que de celui qui écrit la page. Le
    garde-fou signale ce qui manque.
 
-   **Dis à chaque agent ce qui bouge, et avec quoi.** Une ligne par élément, dans le brief :
+   **Dis à chaque agent ce qui bouge, puis ce qui répond.** Deux lignes, pas une :
 
-   > Héros : `EntreeHero` sur le bloc de texte. Grille des produits : `Cascade`. Photo de
-   > l'atelier : `Parallaxe`. Le reste est immobile. Les valeurs viennent de
-   > `lib/mouvement.ts` — aucune durée ni distance en dur.
+   > **Ce qui bouge** — Héros : `EntreeHero` sur le bloc de texte. Grille des produits :
+   > `Cascade`. Photo de l'atelier : `Parallaxe`. Le reste est immobile. Les valeurs viennent
+   > de `lib/mouvement.ts` — aucune durée ni distance en dur.
+   >
+   > **Ce qui répond** — les cartes produit sont cliquables : `carte-reactive`. Le lien
+   > « Découvrir » : `lien-fleche`, avec la classe `fleche` sur l'icône. La photo de l'atelier
+   > ne réagit pas, elle ne mène nulle part. N'écris aucun `hover:` à la main : les états
+   > viennent des classes de `globals.css`.
 
    Une entrée de héros par page, une cascade par grille, un compteur seulement sur un vrai
    chiffre, une parallaxe sur une ou deux photos. Un brief qui ne dit rien du mouvement
    produit une section immobile — trois agents sur quatre l'ont prouvé.
+
+   **Et un brief qui ne dit rien de la seconde ligne produit une page morte sous la souris.**
+   Vécu au quatrième bootstrap : la référence avait des cartes qui se soulevaient au survol, le
+   relevé l'avait mesuré, aucun brief ne l'a demandé. Ça n'a d'effet ni sur le build ni sur
+   aucune capture d'écran — et c'est la première chose que l'utilisateur a remarquée en
+   essayant son site. Le vocabulaire complet est dans `references/mouvement.md`, « Les états ».
+
+   **Interdis le navigateur aux agents de construction.** Dans chaque brief :
+
+   > Le serveur de dev tourne déjà : ne le lance pas, **n'ouvre pas le navigateur**. Tu
+   > vérifies ton travail avec `npx tsc --noEmit`.
+
+   Quatre agents pilotant le même panneau, c'est deux clics en timeout — « rebuilds très
+   fréquents déclenchés par d'autres agents », dit le rapport de l'un d'eux —, des navigations
+   inattendues chez les autres, et du budget dépensé à vérifier ce que ton auto-test
+   revérifiera de toute façon. La vérification visuelle t'appartient, seul, après. Le
+   relecteur est la seule exception : il travaille quand plus personne n'écrit, et il ouvre
+   **son propre onglet** (`tabs_create`).
 
    **Exige `data-src` dans chaque brief.** Formulation à reprendre telle quelle :
 
@@ -1017,18 +1273,26 @@ appliqué, base poussée, serveur de dev en marche. Il reste à écrire le site.
    par l'écran prioritaire du blueprint**, puis fais l'autre : c'est le premier qui doit
    être irréprochable, le second seulement correct. Aucune largeur n'est facultative pour
    autant — les colonnes cassent à 375 px, y compris sur un site pensé pour le bureau.
-   Chaque page à 375 px de large ; chaque bouton et chaque lien cliqués ; le formulaire jusqu'à son
-   état de succès ; la console vide ; le mouvement réduit ; les queues des lettres (g, y, p)
-   dans tout texte masqué. Ce que tu trouves, tu le corriges et tu le dis. Sur les deux
-   premiers bootstraps, c'est l'utilisateur qui a trouvé le CSS cassé, les photos absentes,
-   les pages sans navigation, le site plat — chaque fois une vérification que je n'avais
-   pas faite.
+   Chaque page à 375 px de large ; chaque bouton et chaque lien cliqués ; **le survol de ce qui
+   est cliquable** ; le formulaire jusqu'à son état de succès ; la console vide — **une erreur
+   inexpliquée s'identifie, elle ne se balaye pas** ; le mouvement réduit, **testé et non
+   supposé** ; le parcours au clavier ; **l'image de partage, ouverte et regardée** ; les
+   queues des lettres (g, y, p) dans tout texte masqué. Ce que tu trouves, tu le corriges et
+   tu le dis. Sur les deux premiers bootstraps, c'est l'utilisateur qui a trouvé le CSS cassé,
+   les photos absentes, les pages sans navigation, le site plat — chaque fois une vérification
+   que je n'avais pas faite. Au quatrième, j'ai écarté huit erreurs de console comme « du
+   bruit » sans jamais les nommer.
 
    **Puis le relecteur.** Lance un agent Sonnet **sans aucun contexte** — trois lignes de
-   brief : voici l'URL et la liste des pages ; ouvre-les ; rapporte ce qui flotte sans
-   explication, ce qui est inégal entre éléments parallèles, ce qui sent le remplissage, ce
-   qui ne bouge pas. Il ne corrige rien. Il voit ce que tu ne vois plus après trois heures
+   brief : voici l'URL et la liste des pages ; ouvre **ton propre onglet** avec `tabs_create`
+   et n'en change pas ; rapporte ce qui flotte sans explication, ce qui est inégal entre
+   éléments parallèles, ce qui sent le remplissage, ce qui ne bouge pas et ce qui ne répond
+   pas au curseur. Il ne corrige rien. Il voit ce que tu ne vois plus après trois heures
    dedans — pas ce qu'il ne peut pas voir.
+
+   C'est l'étape la mieux rentabilisée du bootstrap : douze observations au quatrième, dont
+   sept ont donné une correction — y compris la page 404 sans navigation et un marqueur
+   « À CONFIRMER » publié tel quel, que ni le garde-fou ni moi n'avions vus.
 
    **L'œil neuf, en dernier.** Pose la liste et regarde la page comme un visiteur qui
    arrive sans rien savoir. Est-ce que tout a sa place ? Un pas sans image quand les deux
@@ -1041,6 +1305,15 @@ appliqué, base poussée, serveur de dev en marche. Il reste à écrire le site.
    isolé — parce qu'une couleur non définie le rendait inutilisable. Même contrôle pour les
    primitives de mouvement : `Cascade`, `EntreeHero`, `Compteur`, `Defilant`, `Parallaxe`,
    `Reveal` — celles qui n'apparaissent nulle part n'ont pas été demandées.
+
+   **Et pour les états**, le même `grep` en une ligne :
+
+   ```bash
+   grep -rl "carte-reactive\|lien-fleche\|zoom-survol" app components | wc -l
+   ```
+
+   Zéro sur un site plein de cartes cliquables et de liens « Découvrir → » n'est pas de la
+   sobriété : c'est une moitié du mouvement qui n'a jamais été demandée dans les briefs.
 
 10. Vérifie que le watcher est toujours armé — il l'est depuis la phase 0.55 ; réarme-le
     seulement s'il est mort (voir `references/overlay.md`).
@@ -1065,6 +1338,23 @@ Rends la main en **quatre lignes** : ce qui a été construit, l'URL locale, **l
 réseau** que le lanceur affiche — c'est celle qu'il tape sur son téléphone, sur le même
 Wi-Fi — et la question : « regarde-le, sur ton téléphone aussi : est-ce que ça ressemble à
 ce que tu imaginais ? ». Puis attends sa réponse avant de considérer le bootstrap terminé.
+
+**Plus une cinquième ligne s'il reste des trous.** `verifier-projet.mjs` liste les
+`[[À CONFIRMER PAR L'UTILISATEUR : … ]]` avec leur fichier et leur ligne : redis-les, un par
+un, en distinguant ceux qui sont **visibles par un visiteur** (dans `app/`, `components/`,
+`lib/`) de ceux qui dorment dans un fichier de préparation. Sur sa machine c'est un
+pense-bête ; sur un lien envoyé à un client c'est une note de chantier publiée — un relecteur
+en a fait le défaut le plus sérieux d'un site par ailleurs propre.
+
+**Et s'il a demandé le partage en salve 3**, la ligne du lien :
+
+```bash
+node "<skill>/scripts/partager.mjs"
+```
+
+Dis en une phrase ce que le lien est : le vrai site, formulaires compris, servi depuis sa
+machine, et **il meurt quand il ferme la fenêtre**. Ce n'est pas un hébergement, et il ne faut
+jamais le laisser croire.
 
 ### Quand il a dit oui — ce qui lui reste
 
@@ -1206,6 +1496,25 @@ fichier écrit** dès qu'il contient une expression régulière non triviale.
 **Le journal réseau et le journal console sont des historiques, pas des états.** Une erreur
 qui y figure peut avoir été résolue depuis. Avant de conclure à un bug, refais l'appel.
 
+**Mais une erreur inexpliquée s'identifie, elle ne se balaye pas.** Le corollaire du piège
+précédent, et je suis tombé dedans : huit `404` en console, un coup d'œil au journal réseau,
+« du bruit », et on passe. Elles l'étaient peut-être — on n'en sait rien, et c'est ça le
+défaut. `read_network_requests` avec un `urlPattern` retrouve la requête fautive en un appel.
+Nomme-la, **puis** écarte-la.
+
+**Une image collée dans le chat n'existe pas sur le disque.** Elle arrive sous mes yeux et
+nulle part ailleurs : je peux la décrire, je ne peux ni la copier dans `public/` ni la passer
+à un script. Pour obtenir un fichier, il faut un chemin, un dossier ou une adresse. Le
+glisser-déposer sert à **montrer**, jamais à **fournir**.
+
+**Un fichier serveur importé par un composant client compile — jusqu'au jour où il ne compile
+plus.** Une chaîne d'imports innocente — un composant client → un helper de calcul → un
+helper de formatage → le fichier qui lit la base → Prisma — passe sans broncher tant que rien
+n'est spécifique à Node. Le jour où une ligne `import path from "node:path"` arrive quelque
+part dans la chaîne, le build échoue avec une trace qui désigne le composant, à quatre
+fichiers du vrai coupable. Sépare le pur du serveur dès l'écriture des fichiers-contrats,
+c'est le seul moment où ça ne coûte rien.
+
 **Deux blocages de suite sur le même outil, et il est en panne.** Un appel qui pend sans
 répondre, puis un second : on arrête, on le nomme à voix haute, on redémarre ce qui doit
 l'être. Jamais un troisième appel dans un sous-système bloqué. À ne pas confondre avec une
@@ -1214,4 +1523,17 @@ pas un blocage.
 
 ## Ce que tu ne fais pas
 
-Aucun déploiement. Ni Vercel, ni Netlify, ni mise en ligne. L'utilisateur s'en charge.
+**Aucune mise en ligne.** Tu n'ouvres de compte chez personne, tu ne choisis pas d'hébergeur,
+tu ne publies pas le site. Le code reste chez l'utilisateur, dans son dépôt, et il le met en
+ligne où il veut, quand il veut. Le skill ne pousse aucun prestataire et ne glisse aucun lien
+d'affiliation dans le projet.
+
+**Partager un lien n'est pas une mise en ligne**, et c'est la seule chose que tu fais dans ce
+domaine : `scripts/partager.mjs` sert le site depuis la machine de l'utilisateur derrière une
+adresse publique temporaire, sans compte et sans hébergeur. Le lien meurt quand il ferme la
+fenêtre — dis-le à chaque fois, pour que personne ne prenne un aperçu pour un site en
+production.
+
+Et si un déploiement devient nécessaire, **c'est lui qui tape la commande** : une publication
+est un acte qui l'engage, sous son compte et à ses frais. Tu prépares, tu expliques, tu ne
+publies pas à sa place.

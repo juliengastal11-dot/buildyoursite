@@ -17,15 +17,18 @@ Procédure éprouvée sur un aperçu hébergé qui empilait deux iframes (premie
 > | 5 | **Photos** — fichiers et textes alternatifs | Des dégradés à la place de photos qui étaient téléchargeables |
 > | 6 | **Cadrage** — ratios, coins, `object-position` | Des cadres tous identiques là où la référence alternait |
 > | 7 | **Mouvement** — défilement fluide, parallaxe, apparitions | Un site figé alors que la référence glissait |
+> | 8 | **Inventaire interactif** — un élément par ligne : ce que c'est, où ça mène, comment ça réagit | Trois téléphones cliquables qui se soulevaient, devenus un téléphone mort ; un bouton flottant disparu |
 >
-> **Les six ont été oubliés au moins une fois, et chaque fois trouvés par l'utilisateur.**
+> **Les huit ont été oubliés au moins une fois, et chaque fois trouvés par l'utilisateur.**
 > Cette liste n'est pas une précaution théorique : c'est l'inventaire de mes manques.
 >
-> Deux règles qui vont avec :
+> Trois règles qui vont avec :
 > - **Relance à deux largeurs**, 375 et 1280. Un `hidden lg:block` est indiscernable à l'une
 >   et invisible à l'autre.
 > - **Recharge avant de relever le mouvement.** Une apparition jouée une seule fois a déjà
 >   joué si tu as parcouru la page. Le script te prévient quand la page n'est plus en haut.
+> - **Chaque ligne de l'inventaire interactif reçoit un verdict au blueprint.** Voir la
+>   section suivante : c'est la règle qui rend un abandon visible.
 
 > ## À lire avant de relever quoi que ce soit
 >
@@ -42,6 +45,37 @@ Procédure éprouvée sur un aperçu hébergé qui empilait deux iframes (premie
 >
 > Rien de tout cela ne se voit à la relecture du code. Ça se voit en production, chez le
 > client, quand un visiteur clique sur Instagram et arrive chez un inconnu.
+
+## 0. Le verdict par élément — la règle qui rend un abandon visible
+
+Le relevé rend un **inventaire des éléments interactifs** : un lien, un bouton, une carte
+cliquable par ligne, avec sa destination, sa zone et sa réaction au survol. Le blueprint
+reprend cet inventaire et donne à **chaque ligne** un verdict :
+
+| Élément | Où | Ce qu'il fait | Verdict | Pourquoi |
+|---|---|---|---|---|
+| Trois téléphones | héros | liens vers les 3 marques, se soulèvent au survol | **réinterprété** | un héros porte une promesse et une action ; les marques ont leur section |
+| Bouton flottant WhatsApp | toutes pages | lien sortant, message pré-rempli | **reproduit** | |
+| Bandeau « Nouveau » | en-tête | lien vers une annonce, fermable | **abandonné** | rien à annoncer aujourd'hui ; à remettre au lancement |
+
+Trois verdicts, pas deux : **reproduit**, **réinterprété**, **abandonné**. Un « réinterprété »
+sans phrase d'explication n'en est pas un.
+
+**Pourquoi cette table existe.** Sans elle, le blueprint décrit ce qu'on construit et jamais
+ce qu'on laisse. L'utilisateur valide un plan complet et cohérent, sans pouvoir voir qu'un
+élément de son site a disparu en route. Il ne le découvre qu'à la livraison, et il doit
+poser la question lui-même — c'est exactement ce qui s'est passé au quatrième bootstrap, avec
+les téléphones du héros.
+
+La colonne « Repris : oui/non » du tableau des dimensions ne suffit pas : elle disait
+« liens sortants : repris — oui », ce qui était vrai (ils étaient dans les réglages) et faux
+en même temps (le bouton flottant avait disparu). Un verdict porte sur un élément, pas sur
+une catégorie.
+
+**Et ce qui réagit se reporte dans les briefs.** Une ligne d'inventaire qui porte une
+transition au survol devient une ligne « ce qui répond » dans le brief de l'agent — voir
+`mouvement.md`, section « Les états ». Une réaction relevée mais jamais transmise est une
+réaction perdue.
 
 ## 1. `WebFetch` ne suffit pas
 
@@ -91,6 +125,24 @@ Charge cette dernière URL. Tu as alors le DOM, le texte et le scroll.
 
 `get_page_text` d'un coup. Tu récupères la navigation, tous les titres, tous les paragraphes
 et les libellés de boutons — c'est-à-dire la structure **et** la copie.
+
+> **`get_page_text` peut ne rendre qu'un morceau.** Sur un site où il a trouvé un `<article>`,
+> il n'a renvoyé que le contenu de cette balise — une seule carte au lieu de la page entière —
+> sans rien signaler. Le symptôme : un texte anormalement court pour une page qu'on vient de
+> voir remplie à l'écran.
+>
+> **Sur un site statique, prends le HTML directement.** C'est plus fiable, c'est le texte au
+> mot près, et le `sitemap.xml` donne la liste complète des pages :
+>
+> ```bash
+> curl -s "<origine>/sitemap.xml" | grep -oE "<loc>[^<]+" | sed "s/<loc>//"
+> mkdir -p ref && curl -s "<origine>/" -o ref/accueil.html
+> ```
+>
+> Puis un petit script HTML → texte dans ton dossier de travail : on récupère toutes les
+> pages en un passage, avec les `alt`, les `href` et les titres, au lieu de naviguer page à
+> page dans le panneau. Le navigateur reste indispensable pour tout le reste — couleurs
+> calculées, géométrie, mouvement, inventaire interactif — qui n'existe pas dans le HTML.
 
 > **La structure se reprend toujours, la copie seulement si le site est le sien.**
 > D'un site tiers, retiens le *squelette* — combien de sections, dans quel ordre, quel type

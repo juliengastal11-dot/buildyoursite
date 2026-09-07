@@ -219,6 +219,76 @@ R.mouvement = mvt;
 
 window.scrollTo(0, yDepart);
 
+/* --- 8. INVENTAIRE DES ÉLÉMENTS INTERACTIFS ---------------------------
+   Le manque qui a coûté le plus cher au quatrième bootstrap.
+
+   La référence avait trois téléphones dans son héros : chacun un lien vers sa
+   page de marque, tous les trois se soulevant au survol. Elle avait aussi un
+   bouton flottant en bas à droite, sur chaque page. Le relevé mesurait bien
+   les transitions et listait bien les liens — mais séparément, dans deux
+   sections qui ne se parlaient pas. Le site livré a eu un téléphone, immobile
+   et sans lien, et plus de bouton flottant. Personne ne s'en est aperçu avant
+   la remise.
+
+   Cette section réunit les trois informations sur UNE ligne par élément : ce
+   que c'est, où ça mène, comment ça réagit. Le blueprint doit ensuite donner à
+   chaque ligne un verdict — reproduit, réinterprété, abandonné — avec la
+   raison quand c'est abandonné. Un élément qui disparaît sans sa ligne est un
+   défaut, pas une décision. */
+const transitionDe = (el) => {
+    const s = st(el);
+    if (s.transitionDuration === "0s" || !s.transitionDuration) return null;
+    return s.transitionProperty.slice(0, 50) + " · " + s.transitionDuration;
+};
+/* Le soulèvement au survol est presque toujours porté par la CARTE, pas par le
+   lien qu'elle contient. Sans remonter, on conclurait que rien ne réagit. */
+const ancetreQuiReagit = (el) => {
+    let p = el.parentElement;
+    for (let i = 0; p && p !== document.body && i < 6; i++) {
+      const t = transitionDe(p);
+      if (t) return { classes: (p.className || "").toString().slice(0, 60), reagit: t };
+      p = p.parentElement;
+    }
+    return null;
+};
+const estFlottant = (el) => {
+    let p = el;
+    for (let i = 0; p && p !== document.body && i < 5; i++) {
+      const pos = st(p).position;
+      if (pos === "fixed" || pos === "sticky") return true;
+      p = p.parentElement;
+    }
+    return false;
+};
+const interactifs = [...document.querySelectorAll("a[href], button, [role='button']")];
+R.inventaireInteractif = {
+    total: interactifs.length,
+    NOTE: "Chaque ligne doit recevoir un verdict au blueprint : reproduit / réinterprété / abandonné + raison.",
+    elements: interactifs.slice(0, 45).map((el) => {
+      const r = el.getBoundingClientRect();
+      const href = el.getAttribute("href");
+      const texte = (el.innerText || "").trim().replace(/\s+/g, " ");
+      return {
+        tag: el.tagName.toLowerCase(),
+        txt: texte.slice(0, 40),
+        aria: el.getAttribute("aria-label"),
+        href,
+        // Un lien sortant part chez quelqu'un d'autre : il ne se recopie que si
+        // le site appartient à l'utilisateur ET qu'il a accepté la reprise.
+        externe: !!href && /^https?:/i.test(href) && !href.includes(location.host),
+        // Une icône sans texte est presque toujours un lien : cherche sa cible.
+        iconeSeule: !texte && !!el.querySelector("svg, img"),
+        // Bouton flottant, barre collante : ces éléments-là s'oublient parce
+        // qu'ils ne sont dans aucune section.
+        flottant: estFlottant(el),
+        zone: el.closest("header") ? "header" : el.closest("footer") ? "footer" : "corps",
+        cible: Math.round(r.width) + "x" + Math.round(r.height),
+        reagit: transitionDe(el),
+        blocQuiReagit: ancetreQuiReagit(el),
+      };
+    }),
+};
+
 /* --- 7. la liste à cocher, rendue avec le relevé ---------------------- */
 R.CHECKLIST = [
     "palette relevée depuis les styles CALCULÉS (pas les variables :root)",
@@ -228,6 +298,9 @@ R.CHECKLIST = [
     "photos + leurs textes alternatifs (ils disent où va chacune)",
     "CADRAGE : ratios, coins surdimensionnés alternés, object-position par photo",
     "mouvement : défilement fluide, parallaxe, apparitions, transitions",
+    "INVENTAIRE INTERACTIF : un verdict par ligne dans le blueprint — reproduit / réinterprété / abandonné",
+    "les éléments FLOTTANTS de l'inventaire ont leur verdict (ils ne sont dans aucune section, on les oublie)",
+    "ce qui RÉAGIT au survol est reporté dans les briefs (voir mouvement.md, « Les états »)",
     "RELEVÉ REFAIT à une seconde largeur (375 et 1280)",
     "réponses phase 0.c reportées : propriété, liens, fidèle ou réinterprété",
 ];
