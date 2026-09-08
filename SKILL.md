@@ -56,7 +56,7 @@ phase 0.55.
 |---|---|
 | Socle Next.js | `<skill>/socle` |
 | Modules | `<skill>/modules/{auth,stripe,admin,legal}` |
-| Références | `<skill>/references/` — dont `structures.md`, `mouvement.md` et `lancement.md`, à lire avant tout blueprint |
+| Références | `<skill>/references/` — dont `structures.md`, `mouvement.md`, `decor.md` et `lancement.md`, à lire avant tout blueprint |
 | Scripts | `<skill>/scripts/` — dont `partager.mjs`, qui donne un lien à envoyer sans rien héberger |
 | Données du skill | `~/.claude/buildyoursite` — `config.json` et la bibliothèque de design, hors du skill |
 | Pro Max | `~/.claude/buildyoursite/ui-ux-pro-max` |
@@ -1275,6 +1275,25 @@ appliqué, base poussée, serveur de dev en marche. Il reste à écrire le site.
    répondaient 200, le build était vert, et on y arrivait sans pouvoir en repartir. C'est
    l'utilisateur qui l'a vu, en demandant « un bouton retour ». Seul le tunnel de commande
    a le droit d'être dépouillé, et c'est un choix à écrire dans le blueprint.
+
+   **Puis le décor, une fois la structure et le mouvement en place** — jamais avant, on
+   décorerait des sections qu'on va supprimer. Un site dont chaque section est un rectangle
+   sur un aplat se reconnaît au premier coup d'œil. Deux fonds suffisent à le corriger :
+
+   ```bash
+   node "<skill>/scripts/fonds.mjs" --projet . --type degrade --sortie public/fonds/hero.svg
+   node "<skill>/scripts/fonds.mjs" --projet . --type vagues --hauteur 180 --sortie public/fonds/separateur.svg
+   ```
+
+   Les couleurs sortent des jetons du thème, donc un fond ne peut pas être hors palette. Les
+   cinq types, les hauteurs, et la règle des deux fonds par site : `references/decor.md`.
+
+   **Et si l'agencement d'une section te manque**, le socle déclare un registre de composants
+   que tu peux lire depuis le terminal, sans navigateur : `npx shadcn@latest view
+   @watermelon/<nom>`. **Tu lis la composition, tu ne colles pas le code** — il porte des
+   couleurs en dur, du texte de démonstration et une seconde bibliothèque de mouvement.
+   Rejoue l'agencement avec nos jetons et nos primitives. Les trois raisons, détaillées :
+   `references/decor.md`.
 
    **Puis l'auto-test, avant de montrer quoi que ce soit.** Chaque point se vérifie, aucun
    ne se suppose — la liste complète est dans `references/verifier-le-rendu.md`. **Commence

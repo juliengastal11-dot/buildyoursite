@@ -15,5 +15,8 @@
     "ui": "@/components/ui",
     "lib": "@/lib"
   },
-  "iconLibrary": "lucide"
+  "iconLibrary": "lucide",
+  "registries": {
+    "@watermelon": "https://registry.watermelon.sh/r/{name}.json"
+  }
 }

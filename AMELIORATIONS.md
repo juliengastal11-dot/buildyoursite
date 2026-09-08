@@ -1546,3 +1546,66 @@ réimprime la commande le moment venu.
 
 **Ce qu'il reste au début : rien à décider.** Ce qui est le bon niveau de charge pour une
 fonction dont on ne sait pas encore si on en aura besoin.
+
+---
+
+# Ce qu'on prend d'un guide d'outils, et ce qu'on refuse (2026-09-06)
+
+Lecture d'un guide qui empile quatre outils pour qu'un site généré cesse d'en avoir l'air :
+un générateur de sites, une bibliothèque de blocs, un générateur de fonds SVG, une
+bibliothèque d'animations. Consigne : ne garder que du gratuit à cent pour cent, et
+n'intégrer que ce qui s'atteint depuis le terminal, sans que l'utilisateur ouvre un site.
+
+## Deux couches sur quatre étaient déjà chez nous
+
+Le générateur de sites, c'est ce skill. La bibliothèque d'animations, c'est GSAP et nos
+primitives — apparition, cascade, compteur, bandeau défilant couvrent quatre des dix effets
+de leur catalogue. Restaient le décor et l'agencement.
+
+## Le décor : fabriqué, pas téléchargé
+
+Le générateur de fonds cité est une application web, sans interface programmable. Impossible
+d'y aller à la place de l'utilisateur. Mais les formes utiles sont géométriques : elles se
+calculent. `scripts/fonds.mjs` produit dégradé flou, vagues, blob, triangles et semis depuis
+les jetons `--color-*` du thème.
+
+Le gain n'est pas d'éviter un aller-retour. **C'est que les couleurs sortent de la charte par
+construction** : un fond hors palette devient impossible, alors que c'est le défaut le plus
+courant quand on télécharge une image faite ailleurs.
+
+## Mesurer au lieu de juger
+
+Premier jet : triangles à 0,04 d'opacité, 80 points sur 1 440 × 500. Le panneau navigateur
+n'a rien montré. Piège connu — il ne repeint pas toujours sous la ligne de flottaison — donc
+j'ai rendu les cinq fonds en pixels et mesuré l'écart avec la couleur de fond. Verdict : un
+écart de 20 sur 765 pour les triangles, un pour cent de couverture pour le semis. Invisibles.
+
+Le contraste est devenu un calcul : on prend dans la palette la couleur la plus éloignée du
+fond en luminance, et l'opacité compense un écart faible. Après correction, écart moyen de 80
+pour les triangles, pics à 184 pour le semis.
+
+**Et une leçon sur l'instrument.** Mon premier indicateur comparait chaque pixel au coin
+supérieur gauche — lequel est lui-même recouvert d'un triangle. La grille corrigée paraissait
+donc encore ratée. Un instrument mal choisi condamne un travail correct : la deuxième mesure
+partait de la vraie couleur de fond, déclarée, pas devinée.
+
+## L'agencement : lire le registre, ne pas le coller
+
+Le socle déclare un registre de composants au format shadcn. `npx shadcn@latest view` en rend
+la fiche et le code source, depuis le terminal, gratuitement, sans compte ni navigateur.
+C'est exactement ce qui était demandé.
+
+Mais le code ne se colle pas, et c'est vérifié sur un composant réel : couleurs en dur
+(`bg-zinc-50`, `text-[#272729]`), dépendance à une seconde bibliothèque de mouvement à côté
+de GSAP, textes de démonstration. Coller enfreindrait D2 et D7 d'un coup.
+
+Ce qui reste, et qui a de la valeur : **un design system donne l'identité, pas l'agencement.**
+Comment une grille de tarifs place son plan mis en avant, comment un pied de page organise
+quatre colonnes. Des centaines d'exemples lisibles à la demande comblent ce trou, à condition
+de les traiter comme de la documentation. Voir D12.
+
+## La recherche ne marche pas, et il faut le dire
+
+`shadcn search` échoue sur ce registre : il ne publie pas d'index. On consulte un composant
+dont on connaît le nom. Écrit tel quel dans la référence plutôt que découvert en pleine
+construction.

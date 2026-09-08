@@ -416,3 +416,53 @@ base ne stocke que ce qui a été modifié. Trois conséquences, toutes voulues 
 fonctionne avant même le premier seed ; « rétablir la valeur d'origine » est une simple
 suppression de ligne ; et le contenu de départ est versionné avec le projet, donc relisible
 dans une revue de code.
+
+---
+
+## D12 — Le décor se fabrique, les bibliothèques se lisent
+
+Un site généré se reconnaît à deux choses : des sections rectangulaires sur un aplat, et une
+structure identique d'un site à l'autre. Le design system règle la palette et la typographie,
+pas ça.
+
+### Les fonds : fabriqués ici, jamais téléchargés
+
+Les formes utiles — dégradé flou, vagues, blob, triangles, semis — sont géométriques : elles
+se calculent. `scripts/fonds.mjs` les génère depuis les jetons `--color-*` du thème.
+
+**Trois raisons de ne pas passer par un générateur en ligne.** Les couleurs sortent de la
+charte par construction, donc un fond hors palette devient impossible — c'est le défaut le
+plus courant. Le fichier est écrit dans le projet, sans téléchargement, sans recadrage, sans
+navigateur. Et le rendu est déterministe : une palette qui change se régénère sans perdre la
+composition.
+
+**Ça coûte de la rigueur, pas de la confiance.** Le premier jet posait un motif à 0,04
+d'opacité : mesuré au pixel, invisible. Le contraste est maintenant calculé depuis la
+luminance du fond. Un générateur en ligne aurait eu le même défaut, sans le moyen de le
+mesurer.
+
+### Les registres de composants : une référence, pas une réserve
+
+Le socle déclare un registre au format shadcn. `npx shadcn@latest view @watermelon/<nom>`
+rend la fiche complète et le code source, depuis le terminal, gratuitement.
+
+**On lit l'agencement. On ne colle pas le code.** Vérifié sur un composant réel : couleurs en
+dur hors thème, dépendance à une seconde bibliothèque de mouvement à côté de GSAP, textes de
+démonstration. Coller reviendrait à enfreindre D2 — un design fini copié dans cinq sites en
+donne cinq identiques — et D7, qui refuse un deuxième système de mouvement.
+
+**Ce que ça apporte quand même, et c'est réel.** Un design system donne l'identité, pas
+l'agencement : comment une grille de tarifs place son plan mis en avant, comment un pied de
+page organise ses colonnes. Des centaines d'exemples lisibles à la demande comblent
+exactement ce trou, à condition de les traiter comme de la documentation.
+
+### Ce qu'on écarte
+
+**Les générateurs de sites en ligne.** Ils occupent la place que ce skill occupe déjà, et
+aucun n'est gratuit au-delà de quelques essais.
+
+**Les bibliothèques d'animation à copier-coller.** Leur catalogue est utile comme liste de ce
+qui mérite d'être animé — un titre, des chiffres, une apparition au défilement — mais leurs
+composants amènent une seconde bibliothèque de mouvement. Nos primitives couvrent déjà
+l'apparition, la cascade, le compteur et le bandeau défilant. Ce qui manque se code en GSAP,
+sans dépendance de plus.
