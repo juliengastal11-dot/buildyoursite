@@ -52,6 +52,9 @@ export function Cascade({
         duration: MOUVEMENT.duree,
         ease: MOUVEMENT.ease,
         stagger: decalage,
+        // Sans quoi le transform en ligne laissé par GSAP l’emporterait sur
+        // .carte-reactive:hover : une carte révélée ne se soulèverait plus.
+        clearProps: "transform",
         scrollTrigger: { trigger: el, start: MOUVEMENT.declencheur, once: true },
       });
     }, ref);

@@ -83,7 +83,7 @@ export function Section({
       <div className={cn("mx-auto px-6", LARGEURS[largeur])}>
         {(eyebrow || titre || intro) && (
           <header className="mb-12 md:mb-16">
-            {eyebrow && <p className="eyebrow text-accent">{eyebrow}</p>}
+            {eyebrow && <p className={cn("eyebrow", fond === "primary" || fond === "secondary" ? "text-accent" : "text-primary")}>{eyebrow}</p>}
             {titre && (
               <h2
                 id={idTitre}

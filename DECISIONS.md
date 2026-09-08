@@ -466,3 +466,48 @@ qui mérite d'être animé — un titre, des chiffres, une apparition au défile
 composants amènent une seconde bibliothèque de mouvement. Nos primitives couvrent déjà
 l'apparition, la cascade, le compteur et le bandeau défilant. Ce qui manque se code en GSAP,
 sans dépendance de plus.
+
+---
+
+## D16 — Rien qui coûte de l'argent ne se lance sans un oui, et un oui par génération
+
+Tranché le 2026-09-08 par l'utilisateur, après un bootstrap où 78 crédits ont été engagés
+en cinq générations sans qu'un accord ait été demandé.
+
+**La règle disait « annoncer ».** « Le prix avant chaque image, en clair » a été lu comme
+« dire le prix », et c'est ce qui a été fait, à l'euro près. Le défaut était dans le texte :
+annoncer n'est pas demander. Dépenser l'argent de quelqu'un est irréversible ; ça se
+confirme, ça ne se signale pas.
+
+**Un oui par génération, pas par lot.** Y compris une étape préparatoire, une reprise après
+un ratage, une variante, une correction qui « ne coûte que deux crédits ». Ce dernier cas
+est le plus dangereux parce qu'il est le plus justifiable. L'utilisateur peut élargir son
+accord — « oui pour les trois » — jamais l'orchestrateur.
+
+**Le prix est réel, pas estimé.** Le connecteur chiffre sans rien soumettre ; c'est la
+première moitié de toute génération, pas une précaution. Et un choix fait au brief — « je
+veux des visuels générés » — dit quel genre de visuel, jamais quel budget.
+
+**Un contrôle qui échoue déclenche un rapport, jamais une dépense.** Trouver un logo inventé
+sur une image autorise à le dire et à proposer les issues, la moins chère d'abord. Pas à
+regénérer.
+
+---
+
+## D17 — Les réponses libres se collectent dans un bloc à copier
+
+Le clic reste la règle partout où la réponse est un choix. Mais un nom, un tarif, un numéro
+ne se cliquent pas, et onze questions ouvertes posées en prose ont laissé un utilisateur
+devant onze mots sans savoir quoi faire.
+
+**Dès que trois réponses libres ou plus manquent, elles se demandent dans un bloc de code**
+que la personne copie, colle et complète à côté de chaque ligne. Le bloc a un bouton de
+copie : un clic, un collage, on écrit. C'est la seule forme qui ne demande aucun effort
+d'organisation à celui qui répond.
+
+**Et un message qui dit « je récapitule » est le récapitulatif.** Jamais l'annonce d'une
+liste sans la liste.
+
+Idée de l'utilisateur, le 2026-09-08. La forme et ses règles — une ligne par point, des mots
+du métier, un exemple là où la forme n'est pas évidente, le facultatif dit — sont dans
+`SKILL.md`, « le bloc à copier ».

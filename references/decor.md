@@ -28,6 +28,8 @@ donc un changement de palette se régénère sans perdre la composition.
 ### Les règles, et pourquoi
 
 **Deux fonds par site, pas davantage.** Un héros et un séparateur, c'est déjà beaucoup.
+Et seulement ceux que le blueprint nomme, avec leur emplacement : un fond généré « au cas où »
+finit dans `public/` sans emploi — c'est arrivé.
 Au-delà, chaque section a son décor et la page paraît rapiécée.
 
 **Le texte passe avant le fond.** Si la lecture demande un effort, baisse l'opacité ou pose

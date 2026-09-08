@@ -97,7 +97,7 @@ Le pied de page porte les liens légaux. C'est là qu'on les cherche.
 | Page | Rôle | Piège |
 |---|---|---|
 | Accueil | L'offre, la preuve, le CTA vers la réservation | |
-| Réservation | Choix du jour, du créneau, coordonnées | Contrainte d'unicité en base sur le créneau : deux clients peuvent valider en même temps |
+| Réservation | Choix du jour, du créneau, coordonnées | Contrainte d'unicité en base sur le créneau : deux clients peuvent valider en même temps. **Pas sur `debut` seul** — ça interdirait de re-réserver un créneau annulé : `actif Int? @default(1)` + `@@unique([debut, actif])`, `actif` passé à `null` à l'annulation (les `NULL` sont distincts dans un index unique) |
 | Confirmation | Récapitulatif, ce qui va suivre | |
 | Compte ou suivi | Ses rendez-vous | Facultatif si tout passe par e-mail |
 | Légal | Mentions légales, confidentialité | CGV si le service est payé en ligne |

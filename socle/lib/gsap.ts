@@ -22,3 +22,13 @@ export function mouvementReduit(): boolean {
 }
 
 export { gsap, ScrollTrigger };
+
+/* En développement seulement : GSAP exposé sur window pour que le panneau
+   navigateur puisse avancer l'horloge à la main (`__gsap.ticker.tick()`, puis
+   `__gsap.updateRoot(t)`) quand il est masqué et ne reçoit plus
+   requestAnimationFrame. Sans ça, aucune animation ne peut être vérifiée
+   depuis un panneau caché : l'horloge reste à zéro et tout diagnostic est
+   nul. Absent du paquet de production. */
+if (typeof window !== "undefined" && process.env.NODE_ENV === "development") {
+  (window as unknown as { __gsap?: typeof gsap }).__gsap = gsap;
+}

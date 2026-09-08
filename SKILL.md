@@ -56,7 +56,7 @@ phase 0.55.
 |---|---|
 | Socle Next.js | `<skill>/socle` |
 | Modules | `<skill>/modules/{auth,stripe,admin,legal}` |
-| Références | `<skill>/references/` — dont `structures.md`, `mouvement.md`, `decor.md` et `lancement.md`, à lire avant tout blueprint |
+| Références | `<skill>/references/` — dont `structures.md`, `mouvement.md`, `decor.md`, `video.md` et `lancement.md`, à lire avant tout blueprint ; `consignes-agents.md` avant de lancer les agents |
 | Scripts | `<skill>/scripts/` — dont `partager.mjs`, qui donne un lien à envoyer sans rien héberger |
 | Données du skill | `~/.claude/buildyoursite` — `config.json` et la bibliothèque de design, hors du skill |
 | Pro Max | `~/.claude/buildyoursite/ui-ux-pro-max` |
@@ -170,14 +170,15 @@ peut suivre du doigt. Reprends-la telle quelle, en remplaçant `{appellation}` s
 > 5. **Je construis**, avec plusieurs assistants qui travaillent en même temps. Ça prend
 >    un moment ; je te le dis quand ça commence, et je ne te dérange pas pendant.
 > 6. **Je vérifie tout avant de te montrer** : chaque page, sur mobile aussi, chaque
->    bouton, chaque formulaire, le mouvement — et je fais relire par un regard neuf.
+>    bouton, chaque formulaire, le mouvement, **un audit de sécurité** — et je fais relire
+>    par un regard neuf.
 > 7. **Tu regardes**, sur ton écran et sur ton téléphone, et tu me dis si ça ressemble à
 >    ce que tu imaginais. Tant que tu ne l'as pas dit, ce n'est pas fini.
 > 8. **Ensuite, tu modifies en cliquant** : tu passes en mode Édition, tu cliques sur une
 >    zone de la page, tu écris ce que tu veux changer, et le site change.
 > 9. **Et si tu veux montrer le résultat à quelqu'un**, je peux te donner un lien à envoyer,
->    sans rien mettre en ligne et sans créer de compte nulle part. Je te demande ça au début,
->    parce que ça change deux ou trois choses dans la façon de construire.
+>    sans rien mettre en ligne et sans créer de compte nulle part. Je te le proposerai à la
+>    fin, quand le site te plaira.
 >
 > Je pilote l'ingénierie et la technique, tu supervises le design et l'identité visuelle.
 
@@ -199,14 +200,18 @@ le réglage qui change le plus le résultat, et celui que personne ne pense à v
 > La barre : **Opus 5, effort `high` au minimum, `xhigh` de préférence**. Les assistants
 > que je lancerai, eux, travailleront sur Sonnet : c'est voulu, leur travail est de
 > l'exécution et ils reçoivent des consignes détaillées.
+>
+> **Si tu as accès à Fable 5.1, prends-le** : c'est le modèle qui tient le mieux sur la
+> longueur, et sur un site complet la différence se voit. Sinon, Opus 5 fait très bien le
+> travail — ne change rien.
 
 **Puis arrête-toi. C'est maintenant qu'on change de modèle, pas plus tard** — après, il
 faudrait tout relancer. Termine ce premier message par une question à un clic :
 
 > **On y va ?**
 > - *C'est parti* → tu enchaînes sur le relevé des capacités
-> - *Je règle d'abord le modèle ou l'effort* → tu réponds : « Tape `/model opus` (ou
->   `fable`), puis `/effort xhigh`, et dis-moi « continue » — je reprends exactement ici,
+> - *Je règle d'abord le modèle ou l'effort* → tu réponds : « Tape `/model fable` (ou
+>   `opus`), puis `/effort xhigh`, et dis-moi « continue » — je reprends exactement ici,
 >   rien n'est perdu. » Et tu attends.
 
 **Si tu tournes sous la barre** — Sonnet ou moins — le même bloc passe **avant** la liste
@@ -251,6 +256,7 @@ propre liste d'outils, et cherche une capacité, jamais une marque** :
 |---|---|---|
 | **Un générateur d'images ou de vidéo** | un outil qui fabrique une image ou une vidéo à partir d'un texte — noms fréquents : `generate_image`, `generate_video`, `text_to_image` — souvent accompagné de retouche : détourage, agrandissement, remplacement de fond | les visuels manquants peuvent être **générés dans l'univers du site** au lieu d'être provisoires |
 | **De quoi en connaître le coût** | sur le même connecteur, un outil de solde, de crédits, de quota ou de facturation | tu peux annoncer un prix avant chaque image ; sans lui, dis que le coût n'est pas mesurable d'ici |
+| **Un animateur d'image** | un outil de génération vidéo qui accepte **une image en entrée** — un rôle `image` dans ses médias | **animer les vraies photos du client** en boucles de quelques secondes. Mieux qu'un visuel inventé : il garde son lieu et ses gens. Voir `references/video.md` |
 | **Un hébergeur** | un outil de déploiement, de domaine ou de serveur | rien. Note-le sans rien en faire, on ne déploie pas |
 
 **N'écris jamais de liste de services connus dans ce skill.** Une liste de marques est déjà
@@ -295,6 +301,7 @@ site complet.
 | **Vitrine** | Le chemin standard des deux premiers bootstraps. Pro Max décide la structure. |
 | **Boutique** | Modules auth, stripe, admin, legal complet avec CGV. La structure vient de la fonction, Pro Max ne donne que l'identité. **Dis-lui tout de suite qu'il lui faudra un compte Stripe** : la vérification d'identité et les coordonnées bancaires prennent parfois plusieurs jours, et il peut l'ouvrir pendant qu'on construit. |
 | **Application** | Blueprint centré sur les modèles et les écrans, mouvement au minimum, pas de défilement fluide, Pro Max en `--motion 1-2`. |
+| **Landing + réservation** | Le chemin court de la landing pour la page, le parcours « Réservation » de `structures.md` pour l'agenda — base, unicité du créneau qui survit aux annulations, confirmation lue en base — et un espace privé minimal : créneaux, réservations. Trois à cinq agents. **Deux questions à clic de plus** : la durée du rendez-vous (30 / 45 / 60 min) et son lieu (chez le client, chez le professionnel, en visio, à convenir). Décidées seules au cinquième bootstrap, elles ont fini en hypothèses. |
 
 La question suivante s'adapte : on ne demande pas « ce qui doit vivre en base » à quelqu'un
 qui veut une landing page.
@@ -367,23 +374,69 @@ Découpage qui fonctionne :
 N'invente jamais pour t'épargner une question. Une hypothèse non posée finit dans le
 blueprint, et si personne ne le lit, elle finit dans le code.
 
+### Quand plusieurs réponses libres manquent — le bloc à copier
+
+Le clic reste la règle partout où la réponse est un choix. Mais un nom, un tarif, un numéro,
+une adresse ne se cliquent pas. **Dès que trois réponses libres ou plus manquent, ne les
+demande pas en prose** : écris un bloc de code que la personne copie, colle dans le chat et
+complète à côté de chaque ligne. Le bloc a un bouton de copie — un clic, un collage, on
+écrit. C'est la seule forme qui ne lui demande aucun effort d'organisation.
+
+```
+Copie ce bloc dans le chat et écris ta réponse après les deux-points.
+Laisse vide ou mets « ? » pour ce que tu ne sais pas : j'écrirai une hypothèse
+dans le blueprint, tu la corrigeras là.
+
+1. Nom qui doit s'afficher sur le site :
+2. Phrase d'accroche, ce que tu dirais à quelqu'un qui hésite :
+3. Tes formules et leurs prix (ex. suivi individuel 60 €/séance) :
+4. Zone où tu te déplaces (ex. ta ville et 20 km) :
+5. Infos légales — statut, SIRET, adresse (facultatif) :
+```
+
+Les règles qui vont avec, et qui font la différence entre un formulaire et une corvée :
+
+- **Une ligne par point, numérotée, libellé puis deux-points.** Format stable, relisible
+  ligne à ligne quand la réponse revient.
+- **Des mots du métier de la personne**, pas des mots de rédacteur : « parcours » a reçu
+  une description de prestations au cinquième bootstrap ; « comment tu es devenu coach » aurait
+  reçu un parcours.
+- **Un exemple entre parenthèses** sur toute ligne dont la forme attendue n'est pas
+  évidente. Aucun sur « nom ».
+- **Ce qui est facultatif le dit** sur sa propre ligne.
+- **Deux lignes d'en-tête maximum** : quoi faire, et quoi faire quand on ne sait pas.
+- **Rien de ce qui a déjà été répondu** dans les salves à clic.
+- **Texte brut à l'intérieur** : ni gras, ni tableau, ni lien — ça doit se coller proprement.
+
+**Et un message qui dit « je récapitule » est le récapitulatif.** Jamais l'annonce d'une
+liste sans la liste. Au cinquième bootstrap, « je récapitule tout ce qu'il me manque : site
+de référence, phrase d'accroche, nom, photos… » a laissé l'utilisateur devant onze mots
+sans savoir quoi faire — et trois réponses sont arrivées à côté.
+
 ### La question des actifs — quatre réponses, quatre plans
 
 Dans la salve 2, demande-le tel quel : **« Tu as un logo, des photos, des captures d'écran,
-une vidéo ? Donne-moi le chemin du dossier où ils sont, ou l'adresse du site qui les
-héberge. »**
+une vidéo ? Glisse-les dans le chat, ou donne-moi le chemin du dossier où ils sont, ou
+l'adresse du site qui les héberge. »**
 
-> **Ne demande jamais de les glisser dans le chat.** Une image collée dans la conversation
-> arrive sous mes yeux et **jamais sur le disque** : je la vois, je peux la décrire, et je
-> n'ai aucun moyen de la copier dans `public/`. Vécu au quatrième bootstrap — le logo est
-> arrivé par le chat, et il a fallu une question de plus pour obtenir l'adresse du site où
-> les fichiers vivaient vraiment.
+> **Une image collée dans le chat se récupère sur le disque.** Le skill a longtemps dit le
+> contraire — et je l'ai encore dit au cinquième bootstrap, deux fois, alors que le script
+> existait. La conversation est écrite dans un `.jsonl` où les images vivent en base64 :
 >
-> Ce qui marche : un chemin de dossier (`C:\Clients\untel\logos`), une adresse de site d'où
-> les télécharger, un lien de partage. Ce qui ne marche pas : le glisser-déposer.
+> ```bash
+> node "<skill>/scripts/images-du-chat.mjs" --lister
+> node "<skill>/scripts/images-du-chat.mjs" --sortie public/photos
+> ```
 >
-> Une image collée reste utile pour **montrer** — « voilà l'allure que je veux » — jamais pour
-> **fournir** un fichier.
+> Il ne retient que les images collées par l'utilisateur — jamais tes propres captures du
+> panneau, soixante contre cinq dans une session ordinaire — les dédoublonne et les remet
+> dans l'ordre. Vérifié sur six images collées : toutes retrouvées, avec leurs dimensions. **La réserve à
+> dire quand elle compte** : la définition peut avoir été réduite à l'envoi — le script le
+> signale sous 1 600 px de large. Sans importance pour un logo, une capture ou une
+> référence ; pour une photo de héros pleine largeur, demande l'original.
+>
+> Et une image collée se **lit** aussi : un tableau de tarifs arrivé en capture d'écran s'est
+> encodé en données sans une question de plus.
 
 La réponse range le projet dans l'une de ces quatre situations, et chacune décide du plan
 visuel :
@@ -403,8 +456,9 @@ puisse porter, et elle ne s'invente pas.
 avec son nom et ses chiffres :
 
 > **Pour les visuels qui manquent :**
-> - *Générés dans l'univers du site* — par {le connecteur trouvé}, coût annoncé avant
->   chaque image ; il te reste {solde}
+> - *Générés dans l'univers du site* — par {le connecteur trouvé}, il te reste {solde}.
+>   **Je te demanderai ton accord avant chaque dépense**, avec le prix exact et ce qu'il
+>   restera — ce choix dit quel genre de visuel, pas quel budget
 > - *Provisoires sous licence* — gratuits, barrés d'un bandeau, à remplacer par les siens
 
 Le coût par image dépend du service : **relève-le sur place** plutôt que de l'annoncer de
@@ -447,7 +501,9 @@ peut-être trois fois par an.
 Les deux questions ci-dessous sont **obligatoires et passent en dernier** :
 
 > **{appellation}, souhaites-tu que je m'inspire d'un site déjà existant ?**
-> - *Oui* → il donne une URL
+> - *Oui* → **et l'adresse arrive dans un second temps.** Une option à clic ne porte pas
+>   de texte libre : il clique le libellé sans passer par « Autre ». Après son oui, demande
+>   l'adresse seule, en texte, avant de continuer
 > - *Non, compose l'identité de zéro* → UI/UX Pro Max décide tout
 
 `{appellation}` vient de `config.json`. Vide, la question devient simplement
@@ -1140,6 +1196,12 @@ opposables plus tard, quand personne ne se souvient de ce qui avait été suppos
 Le terrain est prêt depuis la phase 0.55 : projet créé, dépendances installées, thème
 appliqué, base poussée, serveur de dev en marche. Il reste à écrire le site.
 
+**Un échec d'outil qui touche au livrable se dit dans le fil, en une ligne, avec ce que tu
+fais ensuite** — réessayer, contourner, ou renoncer et le noter dans le blueprint. Une photo
+qui ne se convertit pas, un fichier qui ne s'écrit pas, une génération refusée. Au cinquième
+bootstrap, quinze appels ont échoué ; l'utilisateur en a su deux. Un échec qu'on ne dit pas
+est un défaut qu'on livre.
+
 1. **Écris toi-même les fichiers-contrats**, avant de lancer le moindre agent : `lib/formats.ts`
    (formatage — pur), `lib/reglages.ts` (lecture des réglages — serveur), `lib/site.ts` — nom,
    description en une phrase, pages publiques, couleurs de partage : tout ce que les moteurs
@@ -1174,6 +1236,15 @@ appliqué, base poussée, serveur de dev en marche. Il reste à écrire le site.
    quatre fichiers de là. La règle vaut pour tout fichier-contrat que tu écris :
    **`<sujet>.ts` pur, `<sujet>-serveur.ts` pour ce qui touche la base, le disque ou
    l'environnement.**
+   **Et un fichier de consignes commun, lu en premier par chaque agent** —
+   `.buildyoursite/consignes-agents.md` : les règles, le thème lu de `globals.css`, l'API du
+   socle, les fichiers-contrats, les formats, les mots interdits, le rapport attendu. Le
+   brief individuel ne porte alors que le périmètre, les props, la mise en page section par
+   section, ce qui bouge et ce qui répond — une page au lieu de quatre. Gabarit :
+   `references/consignes-agents.md`. Éprouvé au cinquième bootstrap : cinq agents, pas un
+   texte inventé, pas une couleur en dur, et des rapports qui signalent d'eux-mêmes leurs
+   ambiguïtés.
+
 2. **Sous-agents en parallèle** (un seul message, plusieurs appels `Agent`), découpés par
    périmètre de fichiers exclusif, jamais par couche technique. Un découpage éprouvé, pour
    une vitrine :
@@ -1332,18 +1403,54 @@ appliqué, base poussée, serveur de dev en marche. Il reste à écrire le site.
    **Si un générateur est connecté et que l'utilisateur a choisi la génération**, les mêmes
    règles que pour les provisoires, quel que soit le service, plus celles de l'argent et des
    visages :
-   - **le prix avant chaque image**, en clair, et le solde qui reste ; une série s'annonce
-     en un total, une seule fois, avant la première ;
+   - **aucune génération sans un oui explicite, et un oui par génération.** Annoncer n'est
+     pas demander. Pour chaque image et chaque vidéo, sans exception : le même appel est
+     d'abord lancé avec `get_cost: true` — il ne consomme rien et rend le prix exact. C'est
+     la première moitié de toute génération, pas une précaution ; sans ce chiffre il n'y a
+     pas de question à poser, donc pas de génération. Puis tu écris le prix, le solde avant
+     et après, et **tu t'arrêtes et tu attends** :
+
+     > **{ce que c'est} — {coût} crédits. Il t'en reste {solde}, il t'en restera {reste}.
+     > Je lance ?**
+     > - *Oui* · *Non, garde la photo telle quelle*
+
+     Une étape préparatoire est une génération : si animer une photo exige de l'élargir
+     d'abord, ça se chiffre et ça se demande séparément. Une reprise après un ratage, une
+     variante : pareil. **L'utilisateur peut élargir son accord, jamais toi** — « oui pour
+     les trois » couvre les trois parce que c'est lui qui l'a dit. Le choix « générés » fait
+     au brief dit quel genre de visuel, pas quel budget : il n'autorise aucune dépense.
+     Laisse `use_unlim` absent de l'appel : si une réserve gratuite couvre le modèle, le
+     serveur ne soumet rien et rend la question à lui poser. Et un `get_cost` accepté ne
+     valide pas les paramètres : un modèle vidéo avec une image de départ a échoué en 422
+     après un devis accepté — non facturé, mais à prévoir ;
+   - **dis ce qui a été dépensé** une fois la génération passée : ce que c'était, combien,
+     le nouveau solde. Sans ça, personne ne peut vérifier l'annonce ;
+   - **ses photos passent avant toute image inventée.** Quand il a fourni des photos, un
+     repli vers la génération se demande — « il me manque un visuel pour cette section et
+     aucune de tes photos ne convient : j'en génère un, ou je mets une provisoire ? » — il ne
+     se décide pas seul. Au cinquième bootstrap, une image inventée s'est posée sur le site
+     d'un vrai client qui voulait ses propres photos animées ;
    - **une image se regarde avant d'être posée** — planche-contact, marques et logos glissés
      par le modèle, anatomie, et la cohérence avec la marque : un détail dans la mauvaise
-     couleur trahit la marque auprès de ceux qui la connaissent ;
+     couleur trahit la marque auprès de ceux qui la connaissent.
+
+     **Trouver un défaut ne donne pas le droit de le corriger en dépensant.** Tu rapportes ce
+     que tu as vu et tu proposes les issues, la moins chère d'abord : recadrer pour sortir le
+     logo du champ (gratuit), retoucher la zone (gratuit), regénérer (des crédits, et une
+     question). Un contrôle qui échoue déclenche un rapport, jamais une dépense. Au
+     cinquième bootstrap, un logo inventé sur une chaussure a été « refait sans, 2 crédits
+     de plus » dans le message même qui le signalait ;
    - **jamais un visage** sans la photo de la personne elle-même et son accord — le modèle
      ne connaît pas le gérant ;
    - les images générées ne portent pas de bandeau : elles sont un livrable choisi. Elles
      portent en revanche la décision de la salve 2 — dire qu'elles sont générées, ou
      prévoir leur remplacement.
 
-   **Puis REGARDE-LES. C'est une étape, pas une précaution.**
+   **Puis REGARDE-LES. C'est une étape, pas une précaution — et elle vaut pour toute photo,
+   provisoire, fournie ou générée.** `planche-contact.mjs` sur `public/photos` : c'est là
+   qu'on voit un visage de tiers, un texte incrusté, un logo de marque sur une chaussure
+   générée. Au cinquième bootstrap, sans photo provisoire, l'étape entière a été sautée, et
+   le logo n'a été vu que parce qu'une image a été ouverte à la main.
 
    ```bash
    node "<skill>/scripts/planche-contact.mjs"
@@ -1406,6 +1513,20 @@ appliqué, base poussée, serveur de dev en marche. Il reste à écrire le site.
    Rejoue l'agencement avec nos jetons et nos primitives. Les trois raisons, détaillées :
    `references/decor.md`.
 
+   **Puis l'audit de sécurité, promis au premier message.** Le garde-fou en automatise une
+   partie — `.env` suivi par git, une clé en clair dans le code, `dangerouslySetInnerHTML`
+   sans justification, une action serveur d'administration sans contrôle de session. Le
+   reste se relit : chaque formulaire validé côté serveur, aucune requête construite depuis
+   une entrée utilisateur, un paramètre `?suite=` qui ne redirige que vers un chemin interne,
+   un débit limité sur les formulaires publics. Écris le verdict dans le blueprint, une ligne
+   par point : un audit qui ne laisse pas de trace n'a pas eu lieu.
+
+   **L'espace privé se vérifie sans mot de passe tapé par toi** : la règle de sécurité te
+   l'interdit. Vérifie la redirection (`curl -o /dev/null -w "%{http_code} %{redirect_url}"
+   /admin`), relis chaque action serveur — `exigeAdmin()` en tête — teste-les par script si
+   besoin, et **dis à la remise que l'interface de l'espace privé est à tester par
+   l'utilisateur**. Le taire, c'est livrer un écran que personne n'a ouvert.
+
    **Puis l'auto-test, avant de montrer quoi que ce soit.** Chaque point se vérifie, aucun
    ne se suppose — la liste complète est dans `references/verifier-le-rendu.md`. **Commence
    par l'écran prioritaire du blueprint**, puis fais l'autre : c'est le premier qui doit
@@ -1427,6 +1548,11 @@ appliqué, base poussée, serveur de dev en marche. Il reste à écrire le site.
    éléments parallèles, ce qui sent le remplissage, ce qui ne bouge pas et ce qui ne répond
    pas au curseur. Il ne corrige rien. Il voit ce que tu ne vois plus après trois heures
    dedans — pas ce qu'il ne peut pas voir.
+
+   **Son onglet est en arrière-plan** : une capture qui ne montre aucun changement au survol
+   rapporte l'instrument, pas le site. Il vérifie au style calculé (`getComputedStyle`) avant
+   d'écrire « rien ne répond ». Et s'il tombe en 429, relance-le tel quel : c'est une
+   saturation, pas un défaut de brief.
 
    C'est l'étape la mieux rentabilisée du bootstrap : douze observations au quatrième, dont
    sept ont donné une correction — y compris la page 404 sans navigation et un marqueur
@@ -1581,6 +1707,13 @@ arrière », tu as un historique propre pour le faire.
 Tous constatés en conditions réelles. Les lire coûte trente secondes, les découvrir coûte
 un aller-retour.
 
+**Le répertoire courant du shell se réinitialise entre deux appels** (« Shell cwd was
+reset ») : chemins absolus, ou `cd` en tête de chaque commande. Un `verifier-projet.mjs
+--projet .` lancé après un `cd` dans le skill contrôle le skill — résultat sans valeur.
+
+**`sharp` qui réécrit son propre fichier d'entrée échoue sous Windows** (`UNKNOWN`, errno
+-4094) : écris un `.tmp` puis `renameSync`.
+
 **Le port déjà pris — réparé automatiquement, ne le refais pas à la main.**
 `scripts/demarrer-dev.mjs` s'en charge. Le piège qu'il supprime : quand 3000 est occupé,
 Next ne refuse pas de démarrer, il **bascule en silence** sur 3001. On ouvre alors
@@ -1619,7 +1752,10 @@ binaire natif se plaint malgré tout, `npm approve-scripts <paquet>`.
 sur la version embarquée, un dégradé en `style` inline est plus sûr qu'une classe qui ne
 sera jamais générée.
 
-**Impose trois paliers de taille sur chaque titre** dans les briefs d'agent, jamais deux.
+**Impose trois paliers de taille sur chaque titre** dans les briefs d'agent, jamais deux. Et
+dans tes propres exemples : un `className` littéral à deux paliers dans un brief l'emporte sur
+la règle — deux agents l'ont suivi à la lettre et l'ont signalé. Trois paliers partout, ou dis
+que le `h3` peut en avoir deux.
 Un mot français long en police display déborde toujours du palier le plus bas — sur le
 premier bootstrap, un adverbe en display 800 faisait 523 px dans une boîte de 477.
 
@@ -1649,10 +1785,24 @@ précédent, et je suis tombé dedans : huit `404` en console, un coup d'œil au
 défaut. `read_network_requests` avec un `urlPattern` retrouve la requête fautive en un appel.
 Nomme-la, **puis** écarte-la.
 
-**Une image collée dans le chat n'existe pas sur le disque.** Elle arrive sous mes yeux et
-nulle part ailleurs : je peux la décrire, je ne peux ni la copier dans `public/` ni la passer
-à un script. Pour obtenir un fichier, il faut un chemin, un dossier ou une adresse. Le
-glisser-déposer sert à **montrer**, jamais à **fournir**.
+**Une image collée dans le chat existe bien sur le disque — dans le transcript.**
+`scripts/images-du-chat.mjs` la décode depuis le `.jsonl` de la session. Ne redis plus
+« elle n'arrive jamais sur mon disque » : c'était vrai avant le script, et je l'ai répété deux
+fois au cinquième bootstrap après qu'il existait. La seule réserve est la définition, que le
+script affiche.
+
+**Le panneau navigateur masqué fige tout — GSAP, les captures et les timers.** Sans
+`requestAnimationFrame`, le mouvement ne joue pas ; les captures après un défilement
+restent figées sur la première peinture ; `setTimeout` est bridé à la seconde et un script
+qui attend en boucle dépasse les 45 s de l'outil. Mesure en JavaScript synchrone, avance
+l'horloge avec `window.__gsap` (`ticker.tick()` puis `updateRoot(time + 3)`), et pour
+regarder le rendu défilé, passe par le connecteur Chrome — qui capture même en
+arrière-plan, mais n'y charge pas les médias et ignore `resize_window`.
+
+**Un titre qui déborde sous `overflow-hidden` est invisible au script de débordement** — le
+filtre « masqué par un parent » l'écarte, et c'est le cas du héros. Mesure le mot le plus
+long du `h1` avec `canvas.measureText` dans sa police calculée, et compare à
+`h1.clientWidth` : « sérieusement, » en Syne 800 faisait 401 px dans 327.
 
 **Un fichier serveur importé par un composant client compile — jusqu'au jour où il ne compile
 plus.** Une chaîne d'imports innocente — un composant client → un helper de calcul → un
@@ -1669,6 +1819,11 @@ tâche longue qui *rend compte* — un rendu, une installation, un build — qui
 pas un blocage.
 
 ## Ce que tu ne fais pas
+
+**Rien qui coûte de l'argent à l'utilisateur ne se lance sans son accord explicite** — pas
+une image générée, pas une vidéo, pas un appel facturé, pas un nom de domaine. Annoncer un
+prix n'est pas obtenir un accord : après l'annonce, tu t'arrêtes et tu attends. Vécu : 78
+crédits engagés en cinq générations, sur des messages qui disaient « je lance maintenant ».
 
 **Aucune mise en ligne.** Tu n'ouvres de compte chez personne, tu ne choisis pas d'hébergeur,
 tu ne publies pas le site. Le code reste chez l'utilisateur, dans son dépôt, et il le met en

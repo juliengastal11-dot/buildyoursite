@@ -20,6 +20,7 @@
 
 import { readFile, readdir, stat } from "node:fs/promises";
 import { existsSync } from "node:fs";
+import { execSync } from "node:child_process";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -32,7 +33,11 @@ const opt = (n, d = null) => {
 };
 const aDrapeau = (n) => args.includes("--" + n);
 
-const IGNORE = new Set(["node_modules", ".next", ".git", "lib", "dist", "build", ".buildyoursite"]);
+// `lib` n’y est plus : il y figurait pour la bibliothèque de design, qui vit
+// désormais hors du skill. Le laisser rendait le contrôle aveugle sur tout le
+// dossier lib/ des projets — actions serveur, jetons, secrets. Constaté quand
+// une action d’administration sans contrôle de session est passée sans un mot.
+const IGNORE = new Set(["node_modules", ".next", ".git", "dist", "build", ".buildyoursite"]);
 
 /**
  * Un chemin de projet, toujours avec des barres obliques.
@@ -172,6 +177,68 @@ async function couleursNonDefinies(racine) {
   for (const [nom, ou] of utilises) {
     if (definis.has(nom)) continue;
     signale(true, `couleur « ${nom} » utilisee sans etre definie`, `${ou} — absente de @theme`);
+  }
+}
+
+/* ===========================================================================
+   2 quinquies. L'audit de sécurité — ce qui s'automatise
+   Promis au premier message, fait avant la remise. Quatre contrôles qu'un
+   script attrape mieux qu'une relecture : un secret qui traîne dans le code,
+   le fichier d'environnement suivi par git, du HTML injecté sans raison
+   écrite, une action serveur d'administration sans contrôle de session.
+   Le reste — validation côté serveur, redirections, débit — se relit.
+   =========================================================================== */
+async function securite(racine) {
+  // .env suivi par git : la clé de tout le monde.
+  try {
+    const suivis = execSync("git ls-files", { cwd: racine, encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] });
+    for (const f of suivis.split("\n")) {
+      if (/^\.env(\..+)?$/.test(f.trim()) && !/\.example$/.test(f.trim())) {
+        signale(true, "fichier d'environnement suivi par git", `${f} — retire-le de l'index et ajoute-le au .gitignore ; s'il a été poussé, les clés sont à régénérer`);
+      }
+    }
+  } catch {
+    /* pas un dépôt git : rien à contrôler ici */
+  }
+
+  const SECRET = /(sk_live_|sk_test_|pk_live_|whsec_|AIza[0-9A-Za-z_-]{20,}|ghp_[0-9A-Za-z]{20,}|xox[bp]-[0-9A-Za-z-]{10,})/;
+  const fichiersCode = await fichiers(racine, [".ts", ".tsx", ".js", ".mjs"]);
+
+  for (const f of fichiersCode) {
+    const texte = await readFile(f, "utf8");
+    const rel = path.relative(racine, f);
+    const lignes = texte.split("\n");
+    const client = /^\s*["']use client["']/m.test(texte);
+
+    for (const [i, ligne] of lignes.entries()) {
+      // Une clé en clair, où que ce soit — et pire dans un fichier client.
+      if (SECRET.test(ligne) && !/process\.env\./.test(ligne)) {
+        signale(true, "une clé en clair dans le code", `${rel}:${i + 1} — passe par une variable d'environnement${client ? " ; ce fichier est CLIENT, la clé partirait dans le navigateur" : ""}`);
+      }
+      // Du HTML injecté sans raison écrite à côté.
+      if (ligne.includes("dangerouslySetInnerHTML")) {
+        const contexte = lignes.slice(Math.max(0, i - 3), i + 1).join("\n");
+        if (!/\/\/|\/\*|\{\/\*/.test(contexte)) {
+          signale(false, "HTML injecté sans justification", `${rel}:${i + 1} — un commentaire doit dire d'où vient ce HTML et pourquoi il est sûr`);
+        }
+      }
+    }
+
+    // Une action serveur d'administration doit commencer par vérifier la session.
+    if (/^\s*["']use server["']/m.test(texte) && /admin/i.test(rel)) {
+      const exportees = texte.match(/export\s+async\s+function\s+\w+/g) || [];
+      if (exportees.length && !/exigeAdmin\(|auth\(\)|getServerSession\(|requireAdmin\(/.test(texte)) {
+        signale(true, "action serveur d'administration sans contrôle de session", `${rel} — ${exportees.length} fonction(s) exportée(s), aucun appel à exigeAdmin() ou équivalent`);
+      }
+    }
+  }
+
+  // Une vidéo trop lourde en fond : sur téléphone, c'est le premier écran qui attend.
+  for (const f of await fichiers(path.join(racine, "public"), [".mp4", ".webm"])) {
+    const { size } = await stat(f);
+    if (size > 3 * 1024 * 1024) {
+      signale(false, "vidéo de plus de 3 Mo dans public/", `${path.relative(racine, f)} — ${(size / 1048576).toFixed(1)} Mo ; transcode en 720p, sans audio (references/video.md)`);
+    }
   }
 }
 
@@ -576,6 +643,7 @@ if (cibleProjet) {
   await degradesObsoletes(racine);
   await policesDistantes(racine);
   await traceDesign(racine);
+  await securite(racine);
   await trousLegaux(racine, production);
   await photosProvisoires(racine, production);
   await pagesSansNavigation(racine);

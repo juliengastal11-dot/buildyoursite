@@ -102,7 +102,11 @@ suppose.
 
 1. **Chaque page à 375 px de large** (`resize_window`, préréglage mobile), puis à la largeur
    du bureau. Débordements, textes coupés, images écrasées, barre de navigation qui recouvre
-   un titre.
+   un titre. **Et le mot le plus long du `h1`, mesuré** : le script de débordement ne voit
+   pas un titre coupé sous un `overflow-hidden` — celui du héros, presque toujours. Dans sa
+   police calculée, `canvas.getContext("2d").measureText(mot).width` comparé à
+   `h1.clientWidth` : « sérieusement, » en Syne 800 à 36 px faisait 401 px dans 327, coupé
+   net à l'écran, invisible pour le script.
 2. **Chaque bouton et chaque lien**, cliqués. Un lien mort, un bouton sans effet, une ancre
    qui n'existe pas.
 3. **Le formulaire jusqu'à son état de succès** — et son état d'erreur. Que voit-on après
@@ -111,6 +115,11 @@ suppose.
    Si rien ne répond, la moitié « réaction » du mouvement a été oubliée — voir
    `mouvement.md`, « Les états ». Un `grep -r "carte-reactive\|lien-fleche" app components`
    qui ne rend rien sur un site plein de cartes cliquables est un défaut, pas un choix.
+   **Survole une carte qui a fini d'entrer en scène**, pas une carte immobile : GSAP laissait
+   un `transform` en ligne à la fin d'une cascade, et un style en ligne l'emporte sur
+   `.carte-reactive:hover` — le survol était mort sur toute carte révélée, sur quatre
+   bootstraps, sans qu'aucune capture le montre. La mesure qui tranche, après la
+   révélation : `el.getAttribute("style")` ne doit plus contenir `transform`.
 5. **La console vide**, à la largeur du bureau et à 375 px (`read_console_messages`,
    erreurs seulement). **Une erreur inexpliquée s'identifie, elle ne se balaye pas.** Sur un
    bootstrap, huit `404` ont été vues, regardées une fois dans le journal réseau, et

@@ -61,6 +61,8 @@ export function Reveal({
         ...arrivee,
         duration: MOUVEMENT.duree,
         delay: delai,
+        // Le transform en ligne laissé par GSAP l’emporterait sur .carte-reactive:hover.
+        clearProps: "transform",
         ease: MOUVEMENT.ease,
         scrollTrigger: { trigger: el, start: MOUVEMENT.declencheur, once: true },
       });

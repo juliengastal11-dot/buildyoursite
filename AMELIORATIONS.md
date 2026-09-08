@@ -1138,6 +1138,17 @@ avec ce qui s'est passé et ce que ça devrait devenir.
 
 ---
 
+
+> **Démenti, le 2026-09-08.** Cette leçon était fausse. Une image collée est écrite en
+> base64 dans le fichier de session et se récupère : `scripts/images-du-chat.mjs` le fait,
+> vérifié sur les captures mêmes où le skill affirmait le contraire. Ce qui avait manqué,
+> ce n'était pas le fichier — il était là — c'était l'idée d'aller le chercher. **Une limite
+> qu'on n'a pas essayé de franchir n'est pas une limite, c'est une hypothèse.** Le journal
+> du premier bootstrap disait déjà exactement ça, à propos des photos d'un site de
+> référence déclarées indisponibles sans un `curl`. La même erreur est revenue trois
+> bootstraps plus tard, sur un autre sujet, et a été répétée avec assurance deux fois de
+> plus au cinquième.
+
 # Rétrospective du quatrième bootstrap — ce que le site livré ne dit pas (2026-09-06)
 
 Les treize remontées ci-dessus ont été notées pendant la construction. Celles-ci viennent
@@ -1783,3 +1794,201 @@ plus : plus de filet entre un commit et les machines des autres.
 **Le jour où il faudra des versions**, on remettra le champ et on l'incrémentera à chaque
 sortie. Tant qu'on itère vite et seul, la mise à jour continue vaut mieux qu'un numéro qu'on
 oublierait de changer — c'est exactement ce qui vient d'arriver.
+
+---
+
+# Cinquième bootstrap : une page et une réservation (2026-09-08)
+
+Site d'une page pour un coach sportif indépendant, dans sa ville — le même client que le premier
+bootstrap, refait avec nouvelle création à partir de son site actuel. Orchestrateur Fable 5.1,
+cinq assistants Sonnet en parallèle, vingt minutes de construction, build vert du premier coup.
+Ce qui a été trouvé par la mesure, et ce que le skill doit en garder.
+
+## Le survol des cartes ne marchait pas — et n'avait jamais marché
+
+`Cascade` et `Reveal` laissaient un `transform: translate(0px, 0px)` en ligne à la fin de
+leur tween. Un style en ligne l'emporte sur `.carte-reactive:hover { transform:
+translateY(-3px) }` : une carte révélée ne se soulevait plus, sur ce site comme sur les
+précédents. Le build ne le dit pas, une capture ne le montre pas, et le survol « vérifié »
+au quatrième bootstrap l'a été sur une carte hors cascade.
+
+Corrigé dans le socle : `clearProps: "transform"` sur les deux primitives. On ne vide que
+le `transform` — `opacity` et `visibility` restent en ligne, sinon la feuille
+`html.js [data-mouvement]` remasquerait l'élément.
+
+**La leçon de méthode** : un état de survol se vérifie sur un élément qui a fini d'entrer en
+scène, pas sur un élément immobile. La mesure qui tranche : `el.getAttribute("style")` après
+la révélation — s'il contient `transform`, le survol est mort.
+
+## L'aqua sur du sable — l'accent d'une marque n'est pas toujours une couleur de texte
+
+`Section` posait l'eyebrow en `text-accent` quel que soit le fond. Ici l'accent est un aqua
+clair (#37e5fd) : 1,5:1 sur sable, 3,2:1 sur bleu vague, illisible en 12 px. Le socle choisit
+maintenant la couleur de l'eyebrow selon le fond — `text-accent` sur `primary` et
+`secondary`, `text-primary` ailleurs — et les gabarits du module legal ne posent plus
+`text-accent` sur leurs liens. Les consignes aux assistants le disent en toutes lettres :
+pas de texte aqua sur fond clair.
+
+## Le panneau navigateur masqué : trois pièges, trois parades
+
+Le panneau intégré était masqué pendant tout l'auto-test. Conséquences, toutes constatées :
+pas de `requestAnimationFrame` donc GSAP figé, captures d'écran figées après le premier
+défilement (des pages entièrement sable), et `setTimeout` bridé à la seconde — un script
+qui attend 40 ms cent fois dépasse les 45 s de l'outil.
+
+- **Mesurer au lieu de regarder** : débordements, ancres, images, cibles tactiles, tout
+  passe par `javascript_tool`, synchrone, sans le moindre timer.
+- **Avancer l'horloge à la main** : le socle expose `window.__gsap` en développement.
+  `scrollTo` + `dispatchEvent(new Event("scroll"))` + `ticker.tick()` + `updateRoot(time + 3)`
+  fait jouer les apparitions d'une section en une expression, et on lit ensuite `opacity`
+  et `visibility`. C'est ainsi que le mouvement a été vérifié.
+- **Regarder dans un vrai Chrome** : le connecteur Chrome capture des écrans à n'importe
+  quelle position de défilement, même onglet en arrière-plan. Ses limites, mesurées :
+  `document.visibilityState === "hidden"` donc les médias ne se chargent pas (la vidéo du
+  héros est restée à `readyState 0`) et `resize_window` n'a pas changé le viewport. Le
+  mobile se mesure donc dans le panneau (préréglage `mobile`), le rendu se regarde dans
+  Chrome.
+
+## Le titre qui déborde, caché par `overflow-hidden`
+
+« sérieusement, » en Syne 800 à 36 px fait 401 px dans une boîte de 327. Le script de
+débordement ne l'a pas vu : le héros porte `overflow-hidden`, donc le filtre « masqué par un
+parent » l'a écarté — le mot était coupé net à l'écran. La mesure qui l'attrape, à ajouter à
+l'auto-test : `canvas.measureText(motLePlusLong)` avec la police calculée du `h1`, à
+comparer à `h1.clientWidth`. Corrigé à `text-[1.75rem]` sur mobile ; à 72 px sur bureau il
+fallait aussi élargir le bloc (`max-w-4xl`).
+
+## Une image collée se lit — et se récupère, contrairement à ce que je répétais
+
+Le tableau des prix est arrivé collé dans le chat : cinq lignes, trois colonnes, deux modes
+de paiement, encodés dans `lib/tarifs.ts` sans une seule question. Les cinq photos aussi —
+et j'ai dit deux fois à l'utilisateur qu'une image collée « n'arrive jamais sur mon disque »,
+comme le skill l'écrivait. C'était faux depuis qu'un `scripts/images-du-chat.mjs` existe,
+non versionné et non cité par le skill : il décode les images du `.jsonl` de la session.
+Essayé après coup sur cette conversation : six images retrouvées, dimensions comprises.
+
+Les photos ont été prises sur son site par `curl`, à la même définition — rien de perdu
+cette fois. Le skill dit maintenant : « glisse-les dans le chat », avec la réserve de la
+définition que le script affiche. Une consigne fausse répétée avec assurance coûte une
+question de plus à chaque bootstrap ; celle-ci en avait déjà coûté deux.
+
+## Higgsfield, trois choses apprises sur pièces
+
+- `get_cost` ne valide pas les paramètres : le devis de la vidéo est passé, la génération a
+  échoué en 422 — `seedance_2_5` exige `mode: "omni_reference"` dès qu'on lui donne une
+  image de départ.
+- Une vidéo 1080p de 8 s pèse 17,5 Mo : impossible en fond de héros, surtout sur le
+  téléphone qu'on a promis de soigner. `ffmpeg-static` installé dans le scratchpad (pas dans
+  le projet), `scale=1280:-2 -crf 27 -an -movflags +faststart` → 1,8 Mo. Le skill n'a pas
+  de recette vidéo : celle-ci en tient lieu.
+- Une image de chaussures a rendu un logo de marque lisible sur la chaussure. Regarder la
+  planche a servi ; « no brand logos, no text » dans la requête a suffi, deux crédits.
+
+## Windows, trois frottements
+
+- `sharp` qui réécrit son propre fichier d'entrée échoue en `UNKNOWN` : écrire un `.tmp`
+  puis `renameSync`.
+- Un `sed` dont le remplacement contient des accents graves, entre guillemets doubles,
+  exécute leur contenu et vide le commentaire : les commentaires en français s'écrivent avec
+  `Write` ou un script `node`, jamais dans une chaîne shell.
+- Le répertoire courant du shell se réinitialise entre deux appels : chemins absolus partout.
+
+## Le relecteur : douze observations, cinq corrections, et une fausse alerte instructive
+
+Lancé dans Chrome sur son propre onglet, il a rendu douze lignes : une question de FAQ
+qui n'en était pas une, un doublon de prix dans la carte du simulateur (« soit 1 167 € pour
+3 mois » puis « 1 167 € en une fois »), une petite photo sans légende qu'il a prise pour une
+autre personne, le mot en terre cuite trop sombre sur la photo du héros, un menu mobile qui
+ne couvrait pas la page. Cinq corrections en un script, vingt minutes.
+
+Sa fausse alerte vaut la leçon : « aucun retour au survol nulle part, captures identiques au
+pixel ». Son onglet était en arrière-plan ; le `:hover` s'applique dans le DOM — mesuré avant
+lui, `scale(1.05)` sur l'image survolée — mais la capture d'un onglet caché ne le montre pas.
+Un relecteur qui rapporte une absence de réaction depuis un onglet en arrière-plan rapporte
+son instrument, pas le site : on vérifie au style calculé avant de corriger.
+
+Il a été coupé une première fois par la limite de session (429 sur Sonnet) et relancé tel
+quel une fois la limite levée — une saturation, pas un défaut de brief.
+
+## Ce qui a bien marché, à garder
+
+Un fichier `.buildyoursite/consignes-agents.md` — règles, thème, API du socle, formats — lu
+par les cinq assistants avant leur brief propre : pas un texte inventé, pas une couleur en
+dur, deux `[[À CONFIRMER]]` en tout, et des rapports qui signalent d'eux-mêmes les
+ambiguïtés. Les briefs individuels tenaient alors en une page chacun.
+
+---
+
+# Cinquième bootstrap, second regard — ce que le rapport a confirmé, et ce qu'il a ajouté (2026-09-08)
+
+Deux sessions ont travaillé ce bootstrap : l'une l'a construit et a écrit un rapport de
+fin, l'autre a suivi les captures de l'utilisateur en direct et a préparé les correctifs.
+Cette entrée confronte les deux. Le rapport de construction est resté dans le projet du
+client ; le journal ne garde que ce qui change le skill.
+
+## Ce que les captures avaient montré, et que le rapport a chiffré
+
+**L'argent.** 78 crédits, cinq générations, zéro accord demandé. Le rapport l'écrit
+lui-même : « j'ai lu annoncer, pas attendre ». La règle disait bien « annoncer ». Elle dit
+maintenant un oui par génération, prix réel obtenu sans rien soumettre, et un choix fait au
+brief qui n'autorise aucune dépense. Décision D16.
+
+**Les échecs silencieux.** Quinze appels d'outils échoués dans la session ; l'utilisateur en a
+su deux. Un échec qui touche au livrable se dit désormais dans le fil, en une ligne, avec ce
+qu'on fait ensuite.
+
+**La liste de onze points.** Trois réponses à côté, un point sans réponse, et un mot de
+rédacteur — « parcours » — là où il fallait un mot de coach. Les réponses libres se
+collectent dans un bloc à copier, idée de l'utilisateur. Décision D17.
+
+**Les photos collées.** Le skill a répété deux fois qu'une image collée « n'arrive jamais sur
+le disque » alors que le script qui la récupère existait. La règle est inversée, et le
+démenti est posé sous l'entrée qui l'affirmait.
+
+**L'intention manquée.** L'utilisateur voulait ses photos animées ; le skill a généré une
+image nouvelle, puis en a « refait une sans logo, 2 crédits de plus » dans le message même
+qui signalait le logo. Le connecteur sait animer une image fournie — vérifié dans son
+schéma — et le skill ne le savait pas. `references/video.md` écrit la chaîne : la photo du
+client d'abord, l'image inventée en repli, et jamais sans question.
+
+## Ce que le rapport a ajouté, et qu'on garde
+
+- **Un fichier de consignes commun aux agents** — cinq briefs d'une page au lieu de quatre,
+  pas un texte inventé, pas une couleur en dur. Gabarit dans `references/consignes-agents.md`.
+- **Le survol des cartes ne marchait pas, sur quatre bootstraps** : le `transform` en ligne
+  laissé par GSAP l'emportait sur `:hover`. Aucune capture ne l'a jamais montré ; la mesure
+  l'a trouvé. `clearProps` sur deux primitives.
+- **L'espace privé qu'on ne peut pas ouvrir** : la règle de sécurité interdit de taper un mot
+  de passe. Ça se dit à la remise, et l'audit de sécurité — promis au premier message,
+  automatisé pour ce qui peut l'être — couvre le reste.
+- **Le genre « landing + réservation »**, avec ses deux questions et une unicité de créneau
+  qui survit aux annulations.
+- **Une application rendue côté client** se relève dans son bundle de développement, pas dans
+  son HTML vide.
+- **Un panneau navigateur masqué fige tout** — l'autre session est tombée dans le même piège
+  le même jour, et a laissé la même parade : avancer l'horloge de GSAP à la main. Elle est
+  maintenant dans le socle, en développement seulement.
+
+## Ce qu'on a écarté
+
+Fondre la question de propriété dans la salve précédente : un aller-retour économisé au prix
+d'une question conditionnelle à trois options. Le garde-fou de la phase 0.c vaut son
+aller-retour.
+
+## Une leçon sur la méthode elle-même
+
+Une session qui construit ne voit pas ce qu'elle fait mal : elle a suivi sa règle à la
+lettre et dépensé sans demander. Une session qui regarde les captures voit le défaut mais
+pas sa cause. Il a fallu les deux — et un rapport écrit pour l'autre, avec les chaînes
+exactes — pour que la correction porte sur le texte fautif et non sur l'exécution. C'est
+la première fois qu'un bootstrap est relu à quatre yeux ; ce ne devrait plus être la
+dernière.
+
+## Trouvé en écrivant l'audit : le garde-fou ne regardait jamais dans `lib/`
+
+Le dossier `lib` figurait dans la liste des dossiers ignorés, depuis l'époque où la
+bibliothèque de design vivait dans `<skill>/lib`. Elle a déménagé ; l'exclusion est restée.
+Conséquence, sur tous les bootstraps : aucun jeton, aucun secret, aucune action serveur du
+`lib/` d'un projet n'a jamais été contrôlé. Le premier test du contrôle des actions
+d'administration l'a révélé — l'action piégée est passée sans un mot, parce que son fichier
+n'était pas lu. Exclusion retirée ; le socle reste propre avec `lib/` inclus.

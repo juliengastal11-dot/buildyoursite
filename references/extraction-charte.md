@@ -131,6 +131,13 @@ et les libellés de boutons — c'est-à-dire la structure **et** la copie.
 > sans rien signaler. Le symptôme : un texte anormalement court pour une page qu'on vient de
 > voir remplie à l'écran.
 >
+> **Sur une application rendue côté client, le sitemap et le HTML sont vides — mais le
+> bundle de développement ne l'est pas.** `curl` le `bundle.js` cité par la coquille ; s'il
+> n'est pas minifié, ses modules `./src/**` se découpent sur les marqueurs
+> `/***/ "./src/…":` (un `awk` suffit) et donnent les textes, les classes et les `alt` au
+> mot près — plus fiables que `get_page_text`. Vécu au cinquième bootstrap sur un aperçu
+> no-code : le `sitemap.xml` renvoyait un `<div id="root">` et rien d'autre.
+>
 > **Sur un site statique, prends le HTML directement.** C'est plus fiable, c'est le texte au
 > mot près, et le `sitemap.xml` donne la liste complète des pages :
 >

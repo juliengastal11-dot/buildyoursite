@@ -54,7 +54,7 @@ git, clé Pexels, générateur d'images connecté quel qu'il soit — et adapte 
 blueprint que vous validez si vous le souhaitez, puis la construction : Next.js 15, TypeScript, Tailwind v4, Prisma + SQLite,
 authentification si nécessaire, back-office si nécessaire. Plusieurs sous-agents travaillent
 en parallèle sur des fichiers disjoints. Il ne vous rend la main que quand `npm run build`
-passe et que le serveur tourne. Le socle livre ce qu'un lancement exige — robots, plan du
+passe et que le serveur tourne. Un audit de sécurité passe avant la remise. Le socle livre ce qu'un lancement exige — robots, plan du
 site, image de partage, favicon, métadonnées et canoniques — et le blueprint liste ce qui ne
 peut venir que de vous, marqué « à confirmer par l'utilisateur ».
 
