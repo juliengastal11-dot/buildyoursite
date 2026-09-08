@@ -46,6 +46,27 @@ déclenché par quoi — et lisent leurs valeurs dans `lib/mouvement.ts`.
 | `Defilant` | des mots-clés, des origines, des logos de partenaires | une bande, rarement deux | chargement, en boucle |
 | `Parallaxe` | une photo pleine largeur ou un cadre image | une ou deux | défilement, continu |
 
+### Celles qui répondent, au lieu d'entrer en scène
+
+Les six précédentes font entrer un élément. Les trois suivantes réagissent à ce que fait le
+visiteur. Elles ne portent pas `data-mouvement` : leur élément doit rester visible sans
+JavaScript, alors qu'une entrée en scène doit rester cachée jusqu'à ce qu'elle se joue.
+
+| Primitive | Pour quoi | Combien | Déclenché par |
+|---|---|---|---|
+| `Relief` | une carte qui s'incline et s'éclaire sous le curseur | une grille, jamais deux | le curseur — **ignoré sur écran tactile** |
+| `Progression` | une barre de lecture, en haut de la fenêtre | une, sur un texte long | le défilement |
+| `Rotatif` | un mot qui change dans une accroche | **une par page** | le temps, en boucle |
+
+`Relief` ne s'active que sur `(hover: hover) and (pointer: fine)` : sur un écran tactile, le
+navigateur émule un survol au premier appui et la carte resterait inclinée après le doigt.
+
+`Progression` n'a de sens que sur un texte long — un article, une page légale. Sur une page
+d'accueil de trois écrans, elle promet une longueur que la page n'a pas.
+
+`Rotatif` garde la phrase serrée : la largeur du bloc suit le mot affiché. Sans JavaScript et
+en mouvement réduit, seul le premier mot existe, sans blanc réservé.
+
 ### Emplois, dans le code
 
 ```tsx
@@ -77,6 +98,16 @@ déclenché par quoi — et lisent leurs valeurs dans `lib/mouvement.ts`.
 
 // Bloc isolé : fondu par défaut, ou masque.
 <Reveal mode="masque"><blockquote>…</blockquote></Reveal>
+
+// Carte qui répond au curseur. `lumiere={false}` sur un fond déjà chargé.
+<Relief className="rounded-xl border bg-card p-8">…</Relief>
+
+// Barre de lecture. Sans `cible`, elle suit la page entière.
+<Progression />
+<Progression cible="#article" />
+
+// Mot qui change. Le premier est celui du rendu serveur.
+Un site pour votre <Rotatif mots={["restaurant", "cabinet dentaire", "atelier"]} />.
 ```
 
 ## Régler `lib/mouvement.ts` depuis Pro Max

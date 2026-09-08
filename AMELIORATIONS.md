@@ -1609,3 +1609,56 @@ de les traiter comme de la documentation. Voir D12.
 `shadcn search` échoue sur ce registre : il ne publie pas d'index. On consulte un composant
 dont on connaît le nom. Écrit tel quel dans la référence plutôt que découvert en pleine
 construction.
+
+---
+
+# Trois primitives de réponse, et quatre pièges d'environnement (2026-09-06)
+
+Nos six primitives faisaient toutes la même chose : faire entrer un élément. Manquaient les
+mouvements qui **répondent** — au curseur, au défilement, au temps. `Relief` incline et
+éclaire une carte sous la souris, `Progression` trace une barre de lecture, `Rotatif` fait
+tourner un mot dans une accroche. Tout en GSAP, aucune dépendance de plus.
+
+## Ce qu'elles apprennent de neuf
+
+Elles ne portent **pas** `data-mouvement`. La feuille de style masque ce qui porte cet
+attribut jusqu'à l'hydratation, ce qui est juste pour une entrée en scène et faux pour une
+carte : sans JavaScript, elle ne s'afficherait jamais.
+
+`Relief` ne s'active que sur `(hover: hover) and (pointer: fine)`. Sur un écran tactile, le
+navigateur émule un survol au premier appui et la carte resterait inclinée après le doigt.
+
+## Un vrai défaut, vu à l'écran
+
+`Rotatif` empilait ses mots dans une même cellule de grille pour que la phrase ne saute pas.
+Résultat visible sur la capture : « Un site pour votre atelier          . » — la grille se
+cale sur le mot le plus long et la ponctuation reste échouée à droite. La largeur du bloc
+suit maintenant le mot affiché, animée avec la bascule.
+
+Et une correction dans la correction : **un élément de grille s'étire à la largeur de sa
+cellule**, donc mesurer les mots dans la grille les donnait tous égaux et l'animation était
+nulle. Il faut `justify-self-start` pour obtenir la largeur naturelle. Mesuré après
+correction : 174, 275 et 107 pixels, et le bloc suit.
+
+## Quatre pièges d'environnement, zéro défaut de produit
+
+J'ai conclu deux fois qu'un composant était cassé. Les deux fois, c'était l'instrument.
+
+| Symptôme | Cause réelle |
+|---|---|
+| La barre de progression reste à zéro | `window.scrollTo` ne passe pas par Lenis, qui est seul à prévenir ScrollTrigger |
+| Aucune animation ne démarre, jamais | **Le panneau navigateur caché ne reçoit pas `requestAnimationFrame`** : l'horloge de GSAP reste à zéro |
+| Les hauteurs en `vh` valent zéro | Le panneau annonce une fenêtre de hauteur nulle tant qu'on ne lui impose pas une taille |
+| Les classes Tailwind arbitraires manquent | Le compilateur n'avait pas rescanné le fichier créé après le démarrage du serveur |
+
+**Le signe qui tranche : `gsap.ticker.frame`.** À zéro, rien ne peut bouger et tout diagnostic
+d'animation est nul. On avance alors l'horloge à la main — `ticker.tick()` pour un effet
+court, `gsap.updateRoot(t)` pour parcourir une chronologie. C'est ainsi que les trois
+primitives ont été vérifiées : rotation 3D mesurée sur la carte, progression 0,5 à mi-course,
+largeurs 174 → 275 → 107 sur le mot qui tourne.
+
+**Et une leçon d'honnêteté.** J'avais écrit dans le code que la formulation précédente de la
+barre « donnait une plage nulle, constaté sur le socle ». C'était faux : la plage était juste,
+c'est l'horloge qui dormait. Un commentaire qui invente une cause est pire qu'un commentaire
+absent — il fait perdre du temps à celui qui le lira dans six mois. Corrigé pour ne dire que
+ce qui a été mesuré.

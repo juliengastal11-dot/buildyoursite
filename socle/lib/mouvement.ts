@@ -2,7 +2,8 @@
    Réglages du mouvement — un fichier-contrat, comme le thème.
 
    Les primitives de `components/ui/` (Reveal, Cascade, Compteur, Defilant,
-   EntreeHero, Parallaxe) portent la STRUCTURE d'un mouvement : ce qui bouge,
+   EntreeHero, Parallaxe, Relief, Progression, Rotatif) portent la STRUCTURE
+   d'un mouvement : ce qui bouge,
    dans quel ordre, déclenché par quoi. Elles ne portent aucune valeur. Les
    valeurs sont ici, et c'est ici — une seule fois, au bootstrap — qu'on les
    cale sur la direction de mouvement décidée pour ce site.
@@ -48,4 +49,26 @@ export const MOUVEMENT = {
 
   /** Durée du comptage d'un chiffre. */
   compteur: 1.6,
+
+  /* --- Ce qui répond au curseur ou au défilement, plutôt qu'à l'arrivée --- */
+
+  relief: {
+    /** Inclinaison maximale d'une carte sous le curseur, en degrés. Au-delà de 8,
+        la carte cesse d'être une surface et le texte se déforme. */
+    inclinaison: 6,
+    /** Agrandissement au survol. 1,02 se sent sans se voir. */
+    echelle: 1.02,
+    /** Temps de rattrapage du curseur. Court, sinon la carte traîne. */
+    duree: 0.4,
+  },
+
+  /** Épaisseur de la barre de progression de lecture, en pixels. */
+  progression: { epaisseur: 3 },
+
+  rotatif: {
+    /** Temps d'affichage d'un mot. Moins de 2 s, on n'a pas fini de lire. */
+    pause: 2.2,
+    /** Durée de la bascule d'un mot au suivant. */
+    duree: 0.45,
+  },
 } as const;
