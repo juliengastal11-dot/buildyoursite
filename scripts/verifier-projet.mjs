@@ -481,6 +481,10 @@ async function pagesSansNavigation(racine) {
    Une rédaction longue dérive vers la langue corporate même quand le brief
    demande le contraire. Ce contrôle liste ce qui a dérivé ; il ne tranche
    pas : une expression peut être voulue par la marque. Le lecteur décide.
+
+   Deux dérives, une seule liste : les mots creux, et le tiret long posé au
+   milieu d'une phrase, qui est la signature typographique du texte écrit
+   par une machine.
    =========================================================================== */
 const MOTS_CREUX = [
   "sans couture",
@@ -521,6 +525,29 @@ const MOTS_CREUX = [
   "de a à z",
 ];
 
+/* Vrai si la ligne contient un tiret long employé au milieu d'une phrase.
+   Deux emplois légitimes sont écartés, et il a fallu les deux pour que le
+   contrôle soit utilisable :
+
+   - **Le tiret qui ouvre le texte** est une réplique ou l'attribution d'une
+     citation. En JSX il n'ouvre pas la ligne mais suit la balise, comme dans
+     `<p>— Marie, cliente depuis 2019</p>` : c'est pour ça qu'on regarde le
+     dernier caractère avant le tiret, et non le début de la ligne.
+   - **Le tiret collé des deux côtés** est un intervalle : « 9h–18h »,
+     « 2019–2024 ». Rien à y redire. */
+function tiretDeMachine(ligne) {
+  const OUVREURS = new Set([">", '"', "'", "`", "{", "(", "[", ":", "|"]);
+  for (let i = 0; i < ligne.length; i++) {
+    if (ligne[i] !== "—" && ligne[i] !== "–") continue;
+    const avant = ligne.slice(0, i).replace(/\s+$/, "");
+    if (avant === "" || OUVREURS.has(avant.at(-1))) continue;
+    const colle = !/\s/.test(ligne[i - 1] ?? "") && !/\s/.test(ligne[i + 1] ?? "");
+    if (colle) continue;
+    return true;
+  }
+  return false;
+}
+
 async function motsCreux(racine) {
   const trouvailles = [];
   for (const f of await fichiers(racine, [".tsx", ".ts", ".md"])) {
@@ -540,18 +567,30 @@ async function motsCreux(racine) {
       .replace(/&apos;|’|&#39;/g, "'")
       .toLowerCase();
     for (const [i, ligne] of texte.split("\n").entries()) {
+      // Une formule volontaire, une signature déposée du client reprise mot
+      // pour mot de son propre site, se tait avec un commentaire
+      // `mots-creux-ok` sur la ligne elle-même ou juste au-dessus. Sans ça,
+      // « au service de » remontait à chaque contrôle alors que c'était la
+      // signature du client, pas un tic d'IA. Le même commentaire couvre le
+      // tiret voulu.
+      const tue =
+        (lignesBrutes[i] ?? "").includes("mots-creux-ok") ||
+        (lignesBrutes[i - 1] ?? "").includes("mots-creux-ok");
+
       for (const mot of MOTS_CREUX) {
         if (!ligne.includes(mot)) continue;
-        // Une formule volontaire — une signature déposée du client, reprise
-        // mot pour mot de son propre site — se tait avec un commentaire
-        // `mots-creux-ok` sur la ligne elle-même ou juste au-dessus. Sans ça,
-        // « au service de » remontait à chaque contrôle alors que c'était la
-        // signature du client, pas un tic d'IA.
-        const tue =
-          (lignesBrutes[i] ?? "").includes("mots-creux-ok") ||
-          (lignesBrutes[i - 1] ?? "").includes("mots-creux-ok");
         if (!tue) trouvailles.push(`${cheminLisible(racine, f)}:${i + 1} — « ${mot} »`);
         break;
+      }
+
+      /* Le tiret long au milieu d'une phrase est la signature visuelle du
+         texte écrit par une machine. Le visiteur ne sait pas toujours la
+         nommer, mais il la voit, et il en conclut que personne n'a écrit
+         cette page. On ne signale que cet emploi : le tiret qui ouvre une
+         ligne est une réplique ou l'attribution d'une citation, et « 9h–18h »
+         est un intervalle. Ni l'un ni l'autre ne trahit quoi que ce soit. */
+      if (!tue && tiretDeMachine(ligne)) {
+        trouvailles.push(`${cheminLisible(racine, f)}:${i + 1} — tiret long dans une phrase`);
       }
     }
   }

@@ -5,12 +5,14 @@ import { DefilementFluide } from "@/components/ui/defilement-fluide";
 import { BuildYourSiteOverlay } from "@/components/buildyoursite/overlay";
 
 /* Les métadonnées de base, héritées par toutes les pages. Chaque page pose
-   les siennes — `title`, `description`, `alternates.canonical` — et le gabarit
-   « %s — Nom du site » fait le reste. L'image de partage vient de
+   les siennes, `title`, `description` et `alternates.canonical`, et le gabarit
+   « %s · Nom du site » fait le reste. Le point médian plutôt qu'un tiret long :
+   le tiret long est la signature du texte écrit par une machine, et il n'a pas
+   sa place jusque dans l'onglet du navigateur. L'image de partage vient de
    app/opengraph-image.tsx, l'icône de app/icon.svg. */
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
-  title: { default: SITE.nom, template: `%s — ${SITE.nom}` },
+  title: { default: SITE.nom, template: `%s · ${SITE.nom}` },
   description: SITE.description,
   alternates: { canonical: "/" },
   openGraph: {

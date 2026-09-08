@@ -73,10 +73,22 @@ Direction du site : {la ligne de `lib/mouvement.ts` — vitrine ample / boutique
 application immobile}. Les valeurs sont dans `lib/mouvement.ts` ; tu ne les changes pas.
 Une primitive d'entrée par section au plus. Le texte de paragraphe ne s'anime jamais.
 
-## Les mots interdits
+## Les mots interdits, et le signe interdit
 
 {la liste des mots creux relevés : « solutions », « accompagnement personnalisé »,
-« passion », … — ceux que le garde-fou refuse}
+« passion », … ceux que le garde-fou refuse}
+
+**Aucun tiret long « — » ni demi-long « – » au milieu d'une phrase.** C'est la signature
+visuelle du texte écrit par une machine, et le visiteur la voit. Une incise prend deux
+virgules ou une parenthèse, une rupture prend un point, une explication prend deux points.
+Le tiret reste permis en début de ligne, pour une réplique ou l'attribution d'une citation,
+et collé dans un intervalle comme « 9h–18h ». Cette règle vaut aussi pour les textes que tu
+recopies depuis `CONTENU.md` : si la ligne source en contient un, remplace-le et signale-le
+dans ton rapport.
+
+**Quand le tiret sépare deux champs plutôt que deux morceaux de phrase**, titre d'onglet,
+fil d'ariane, ligne qui aligne une quantité et un prix, écris un point médian « · ». Une
+virgule y serait illisible.
 
 ## Ton rapport, à la fin
 

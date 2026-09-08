@@ -1992,3 +1992,30 @@ Conséquence, sur tous les bootstraps : aucun jeton, aucun secret, aucune action
 `lib/` d'un projet n'a jamais été contrôlé. Le premier test du contrôle des actions
 d'administration l'a révélé — l'action piégée est passée sans un mot, parce que son fichier
 n'était pas lu. Exclusion retirée ; le socle reste propre avec `lib/` inclus.
+
+## Le tiret long, signature de la machine
+
+Demande de l'utilisateur, le 2026-09-08 : « il faut dire dans le skill de ne pas mettre
+d'em dash, car ça fait trop généré avec IA ». Il a raison, et le chiffre le prouve : le
+contrôle, une fois écrit, a trouvé **60 lignes** dans un site livré et **18** dans un autre.
+Le tiret long était partout, dans les titres d'onglet, dans les accroches, jusque dans les
+mentions légales.
+
+Ce que ça coûtait : un site vitrine vend d'abord l'idée qu'une personne parle. Un lecteur
+qui reconnaît la ponctuation d'une machine cesse de croire au reste de la page, sans
+toujours savoir nommer ce qui l'a alerté.
+
+Trois emplois légitimes ont dû être écartés pour que le contrôle soit utilisable, et il a
+fallu les trouver un par un :
+
+1. **Le tiret qui ouvre une réplique ou une attribution.** En JSX il n'ouvre pas la ligne,
+   il suit la balise : `<p>— Marie, cliente depuis 2019</p>`. Ma première version regardait
+   le début de la ligne et signalait donc toutes les attributions. Le contrôle regarde
+   maintenant le dernier caractère avant le tiret.
+2. **L'intervalle collé**, « 9h–18h », « 2019–2024 », qui n'est pas une incise.
+3. **Le séparateur de champs**, dans un titre d'onglet ou une ligne de commande. Celui-là ne
+   se corrige pas par une virgule, qui rendrait la ligne illisible, mais par un point médian.
+   Le gabarit des titres du socle est passé à « · » pour la même raison.
+
+Les commentaires de code ne comptent pas : ils sont retirés avant lecture, et personne ne
+les lit sur le site. Les notes internes du skill non plus, écrites bien avant la règle.

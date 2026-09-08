@@ -37,7 +37,7 @@ export default function Home() {
           </h1>
           <p className="mt-6 max-w-prose text-lg opacity-80">
             Cette page est le placeholder du socle. Elle sera remplacée par les pages réelles
-            pendant le bootstrap — en attendant, elle montre ce que le mouvement sait faire.
+            pendant le bootstrap. En attendant, elle montre ce que le mouvement sait faire.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <span className="rounded-card bg-accent px-5 py-2.5 text-on-accent">Entrée du héros</span>
@@ -88,7 +88,7 @@ export default function Home() {
         </Parallaxe>
         <Reveal mode="masque" className="mt-10 max-w-prose">
           <p className="text-lg text-muted-foreground">
-            Et ce paragraphe se dévoile derrière un masque, de haut en bas — le second mode de
+            Et ce paragraphe se dévoile derrière un masque, de haut en bas, le second mode de
             <code className="mx-1 rounded-card bg-muted px-1.5 py-0.5 text-sm">Reveal</code>.
             Une fois, jamais deux.
           </p>

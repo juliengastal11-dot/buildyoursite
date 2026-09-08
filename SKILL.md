@@ -1137,8 +1137,40 @@ telles quelles** et n'en reformulent aucune.
 C'est la généralisation de ce que le premier bootstrap a prouvé : « la copie mot pour mot
 dans le brief » a donné huit fichiers sans un mauvais texte. Et c'est ce qui empêche la
 langue lisse qui s'installe dès qu'on écrit longtemps en construisant, quoi qu'ait dit le
-brief. On conçoit le texte comme on conçoit le thème — avant, et une fois ; la construction
+brief. On conçoit le texte comme on conçoit le thème : avant, et une fois. La construction
 ne fait que le poser.
+
+### Le signe qui trahit la machine : pas de tiret cadratin
+
+Le tiret long « — » posé au milieu d'une phrase, en incise ou pour marquer une rupture, est
+devenu la signature visuelle du texte écrit par une IA. Le lecteur ne sait pas toujours le
+nommer, mais il le voit, et il en conclut que personne n'a écrit cette page. Un site vitrine
+perd là ce qu'il a de plus cher : l'impression qu'une vraie personne parle. La règle vaut
+pareil pour le tiret demi-long « – » dans cet emploi.
+
+Ce qui le remplace, selon ce que la phrase faisait :
+
+| Au lieu de | Écris |
+|---|---|
+| une incise entre deux tirets | deux virgules, ou une parenthèse |
+| une rupture avant une chute | un point, et une phrase de plus |
+| une explication qui suit | deux points |
+| une énumération annoncée | deux points, ou une liste |
+
+**Un cas ne se corrige pas par une virgule : le séparateur.** Le titre d'onglet
+« Nos cafés — Café du J », un fil d'ariane, une ligne de commande qui aligne une quantité,
+un libellé et un prix : là, le tiret ne coupe pas une phrase, il sépare deux champs. Le
+remplacer par une virgule rendrait la ligne illisible. Écris un point médian « · », ou une
+barre verticale. Le socle le fait déjà pour le gabarit des titres de pages.
+
+Deux phrases courtes valent mieux qu'une longue coupée en son milieu. La règle porte sur
+**tout ce qui se lit** : le texte du site, `CONTENU.md`, le blueprint, les libellés, et les
+messages que tu écris à l'utilisateur dans le chat. Elle ne porte pas sur le tiret qui ouvre
+une ligne, réplique ou attribution de citation, ni sur un intervalle collé comme « 9h–18h »,
+ni sur les notes internes de ce skill, écrites avant la règle et jamais lues par un visiteur.
+
+`verifier-projet.mjs` le signale avec les mots creux ; un tiret voulu se tait avec le
+commentaire `mots-creux-ok`, comme une formule voulue.
 
 Puis **affiche-le dans le panneau navigateur** — l'utilisateur ne doit jamais avoir à quitter
 le terminal :
@@ -1476,7 +1508,7 @@ est un défaut qu'on livre.
 
    Couleurs utilisées sans être définies, dégradés en syntaxe Tailwind 3 qui ne rendent
    rien, trous `[[À CONFIRMER PAR L'UTILISATEUR]]` des pages légales, photos provisoires, **pages sans
-   navigation**, **mots creux et tics d'IA** dans le texte, **pages sans métadonnées et
+   navigation**, **mots creux et tirets longs** dans le texte, **pages sans métadonnées et
    images sans `alt`**. À sa première exécution réelle, il a trouvé **cinq bugs silencieux**
    qu'aucun build n'avait signalés.
 

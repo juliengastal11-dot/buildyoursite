@@ -511,3 +511,23 @@ liste sans la liste.
 Idée de l'utilisateur, le 2026-09-08. La forme et ses règles — une ligne par point, des mots
 du métier, un exemple là où la forme n'est pas évidente, le facultatif dit — sont dans
 `SKILL.md`, « le bloc à copier ».
+
+---
+
+## D18 — Pas de tiret long au milieu d'une phrase
+
+Le signe « — » posé en incise ou pour marquer une rupture est la signature visuelle du texte
+écrit par une IA. Le lecteur ne sait pas toujours le nommer, mais il le voit, et il en
+conclut que personne n'a écrit la page. C'est exactement ce qu'un site vitrine ne peut pas
+se permettre.
+
+**La règle porte sur tout ce qui se lit** : le texte du site, `CONTENU.md`, le blueprint, les
+libellés, et les messages écrits à l'utilisateur dans le chat. Une incise prend deux virgules
+ou une parenthèse, une rupture prend un point, une explication prend deux points.
+
+**Trois emplois restent permis** : le tiret qui ouvre une réplique ou l'attribution d'une
+citation, l'intervalle collé « 9h–18h », et le séparateur de champs d'un titre d'onglet, qui
+devient un point médian « · » plutôt qu'une virgule.
+
+`verifier-projet.mjs` le signale avec les mots creux, en avertissement ; un tiret voulu se
+tait avec le commentaire `mots-creux-ok`. Demande de l'utilisateur, le 2026-09-08.
