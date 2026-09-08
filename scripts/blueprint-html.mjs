@@ -55,13 +55,20 @@ function palette() {
 const echappe = (s) =>
   s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
-/** gras, italique, code, liens — appliqué après échappement */
+/** gras, italique, code, liens, pastilles de couleur — après échappement */
 function enligne(s) {
   return echappe(s)
     .replace(/`([^`]+)`/g, "<code>$1</code>")
     .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
     .replace(/(^|[\s(])\*([^*\n]+)\*/g, "$1<em>$2</em>")
-    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>');
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>')
+    /* Une couleur écrite en hexadécimal se lit mal et se compare encore moins.
+       On lui accole sa pastille : trois directions proposées côte à côte se
+       jugent alors d'un coup d'œil, sans quitter la page. */
+    .replace(
+      /(#[0-9a-fA-F]{6}\b)/g,
+      '<span class="pastille" style="background:$1"></span><code>$1</code>',
+    );
 }
 
 function rendre(md) {
@@ -326,6 +333,8 @@ const page = `<!doctype html>
   p{margin:.7rem 0}
   a{color:var(--primary);text-underline-offset:3px}
   strong{font-weight:600}
+  .pastille{display:inline-block;width:.85em;height:.85em;border-radius:3px;
+        border:1px solid rgba(0,0,0,.18);vertical-align:-.1em;margin-right:.3em}
   code{font:.86em/1.4 "JetBrains Mono",ui-monospace,monospace;
        background:var(--muted);padding:.12em .38em;border-radius:4px}
   pre{background:var(--card);border:1px solid var(--border);border-radius:10px;

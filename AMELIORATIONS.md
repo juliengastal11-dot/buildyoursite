@@ -1705,3 +1705,49 @@ avertissement. Testé sur un faux projet : il attrape la ligne et nomme le fichi
 d'être adoptée. Ici, la traduction inverse littéralement la consigne : le guide dit de
 charger depuis Google, nous disons de ne jamais le faire. Les deux ont raison, dans leur
 outil.
+
+---
+
+# Prouver qu'on est allé chercher, et laisser choisir quand la page est blanche (2026-09-06)
+
+Deux questions du même ordre : qu'est-ce qui garantit que le moteur de design a été
+interrogé, et comment un utilisateur sans site de référence exprime ce qu'il veut ?
+
+## Rien ne le garantissait
+
+Le déroulé disait « sa sortie est ta source de vérité design, ne l'invente pas dans ton
+coin ». Une consigne, pas un contrôle. Une palette inventée de tête et une palette relevée
+se ressemblent dans un blueprint : personne, six mois plus tard, ne peut dire laquelle il
+lit.
+
+Le blueprint porte maintenant une section **Relevé de design** : la requête exacte, la date,
+ce que le moteur a rendu ligne par ligne, ce qu'on garde, ce qu'on écarte et pourquoi. Le
+garde-fou refuse un projet dont le blueprint ne l'a pas — testé dans les deux sens.
+
+Elle existe même quand le moteur n'a pas été interrogé, par exemple sur une marque qui
+appartient déjà au client : elle dit alors « non interrogé, et pourquoi ». **Une trace qui
+explique une absence reste une trace. Le silence, non.**
+
+C'est ce qui manquait au deuxième bootstrap, sorti en crème et terre cuite : impossible de
+dire si c'était une décision ou un réflexe.
+
+## La page blanche : proposer trois directions, pas en imposer une
+
+Sans site de référence, l'utilisateur a le moins de mots pour dire ce qu'il veut, et le plus
+à perdre si on se trompe. Il découvrait la palette dans le blueprint, et sa seule réponse
+possible était « non, mais je ne sais pas dire pourquoi ».
+
+Le moteur est maintenant interrogé **trois fois sur la même requête métier**, en ne faisant
+varier que l'audace. On obtient trois identités réelles — pas trois variantes imaginées — et
+l'utilisateur choisit. Chacune porte un nom court tiré du métier : « Grain et cuivre » se
+choisit, « moderne et épuré » ne se choisit pas.
+
+**« Aucune ne me plaît » est le renseignement le plus utile de l'échange** : ce qu'on rejette
+dit ce qu'on veut mieux que ce qu'on demanderait. Une reformulation, une seconde proposition,
+puis on tranche — ce skill ne bloque pas sur une question de goût.
+
+## Un détail qui change le choix
+
+Les couleurs s'écrivent en hexadécimal dans le blueprint, et le rendu HTML leur accole
+maintenant leur pastille. Trois directions côte à côte se jugent d'un coup d'œil, sans lire
+un seul code. Le choix passe de « lis six valeurs et imagine » à « regarde et pointe ».

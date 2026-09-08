@@ -176,6 +176,24 @@ async function couleursNonDefinies(racine) {
 }
 
 /* ===========================================================================
+   2 quater. Le blueprint doit dire d'où vient son identité visuelle
+   Une palette inventée de tête et une palette relevée se ressemblent dans un
+   document. Seule la trace les distingue — et sans elle, personne ne peut
+   vérifier que le moteur de design a seulement été ouvert.
+   =========================================================================== */
+async function traceDesign(racine) {
+  const bp = path.join(racine, "BLUEPRINT.md");
+  if (!existsSync(bp)) return;
+  const texte = await readFile(bp, "utf8");
+  if (/^#+\s*Relev[eé] de design/im.test(texte)) return;
+  signale(
+    true,
+    "le blueprint ne dit pas d'où vient l'identité visuelle",
+    "BLUEPRINT.md — ajoute une section « Relevé de design » : la requête, ce que le moteur a rendu, ce qu'on garde. Moteur non interrogé ? Dis-le, et dis pourquoi",
+  );
+}
+
+/* ===========================================================================
    2 ter. Une police servie par un tiers
    Un `@import` ou un `<link>` vers un CDN de polices fait transmettre l'adresse
    IP du visiteur à un tiers, sans nécessité : `next/font` sert les mêmes
@@ -557,6 +575,7 @@ if (cibleProjet) {
   await couleursNonDefinies(racine);
   await degradesObsoletes(racine);
   await policesDistantes(racine);
+  await traceDesign(racine);
   await trousLegaux(racine, production);
   await photosProvisoires(racine, production);
   await pagesSansNavigation(racine);

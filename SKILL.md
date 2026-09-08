@@ -669,6 +669,41 @@ site, la palette correspond-elle au métier ? Si non, **ce n'est pas la base qui
 c'est la requête**. Reformule et cible par domaine — `--domain color`, `--domain typography`.
 Ne t'entête pas sur la première réponse, et ne la contourne pas de tête non plus.
 
+### Le relevé de design — la trace qui rend la consultation vérifiable
+
+**Rien ne prouve qu'un moteur a été interrogé, sauf ce qu'on en garde.** Une palette
+inventée de tête et une palette relevée se ressemblent dans un blueprint. Le blueprint porte
+donc une section `## Relevé de design`, et elle est **obligatoire** :
+
+```markdown
+## Relevé de design
+
+**Requête** : `coffee roastery warm brown cream earthy premium retail --design-system --variance 4`
+**Rendu le** : 2026-09-06
+
+| | Ce que le moteur a rendu | Ce qu'on garde |
+|---|---|---|
+| Motif de page | Feature-Rich Showcase | oui |
+| Palette | #2b1d16 #c98a5b #f4efe6 | oui |
+| Typographie | Fraunces / Inter | oui |
+| Mouvement | `--motion 6` | oui |
+| Effets | ombres douces, grain | grain seulement |
+
+**Écarté, et pourquoi** : l'entonnoir en trois étapes ne correspond pas à une vitrine.
+```
+
+Trois usages, tous réels. L'utilisateur voit **d'où vient** son identité, au lieu de la subir.
+Six mois plus tard, on sait quelle requête a produit ce site et on peut la rejouer. Et un
+écart entre le rendu et le site fini devient visible : c'est ce qui a manqué au deuxième
+bootstrap, sorti en crème et terre cuite sans que personne puisse dire si c'était une
+décision ou un réflexe.
+
+**Quand le moteur n'a pas été interrogé** — référence qui appartient à l'utilisateur, par
+exemple — la section existe quand même et dit pourquoi. Une trace qui dit « non interrogé,
+la marque du client fait loi » est une trace. Le silence n'en est pas une.
+
+**Le garde-fou refuse un projet dont le blueprint n'a pas cette section.**
+
 ### La barre de direction — ce qui sépare un site fait par une IA d'un site fait pour quelqu'un
 
 Pro Max rend une palette et des motifs ; il ne rend pas une direction. C'est à toi de la
@@ -716,9 +751,47 @@ effets, le mouvement et les guidelines de qualité.
 
 Ils découlent directement des réponses de la phase 0.c.
 
-**Aucune référence** — Pro Max décide tout. Sa sortie (pattern de page, sections, stratégie
-de CTA, palette en variables CSS, typo avec import Google Fonts, effets, à éviter, checklist)
-**est ta source de vérité design**. Ne l'invente pas dans ton coin.
+**Aucune référence** — le moteur décide, l'utilisateur arbitre. Sa sortie (motif de page,
+sections, stratégie de CTA, palette en variables CSS, typographie, effets, à éviter,
+checklist) **est ta source de vérité design**. Ne l'invente pas dans ton coin.
+
+Mais **ne lui livre pas une identité toute faite sans qu'il ait rien vu**. Partir d'une page
+blanche, c'est le cas où il a le moins de mots pour dire ce qu'il veut, et le plus à perdre
+si tu te trompes : le blueprint arriverait avec une palette qu'il découvre, et la seule
+réponse possible serait « non, mais je ne sais pas dire pourquoi ».
+
+### Trois directions, tirées du moteur, pas inventées
+
+Interroge le moteur **trois fois**, en faisant varier une seule molette à chaque fois —
+`--variance` sage, moyenne, audacieuse — sur la même requête métier. Tu obtiens trois
+identités réelles, pas trois variantes imaginées. Puis présente-les :
+
+> **Trois directions pour {le nom du site}. Laquelle te parle ?**
+>
+> | | Palette | Typographie | Ce que ça dit |
+> |---|---|---|---|
+> | **A — {nom court}** | #2b1d16 #c98a5b #f4efe6 | Fraunces / Inter | établi, chaleureux, artisanal |
+> | **B — {nom court}** | #101418 #4ade80 #f8fafc | Space Grotesk / Inter | net, technique, contemporain |
+> | **C — {nom court}** | #1c1f2a #e0b25c #faf7f2 | Syne / Karla | affirmé, éditorial, un peu rare |
+>
+> - *A, B ou C* → je pars là-dessus
+> - *Un mélange* → dis-moi ce que tu gardes de l'une et de l'autre
+> - *Aucune* → dis-moi ce qui ne va pas, je reformule la requête et je reviens
+
+**Les couleurs s'affichent en pastilles** dans le blueprint rendu par
+`scripts/blueprint-html.mjs` : trois directions côte à côte se jugent d'un coup d'œil, sans
+lire un seul hexadécimal. Écris-les donc en toutes lettres — `#2b1d16` — et non « brun
+foncé ».
+
+**Un nom court par direction**, tiré du monde du métier et non de l'ambiance : « Grain et
+cuivre » se choisit, « moderne et épuré » ne se choisit pas.
+
+**« Aucune » n'est pas un échec, c'est un renseignement.** Ce qu'il rejette dit ce qu'il veut
+mieux que ce qu'il demanderait. Reformule la requête avec, et propose à nouveau — une fois.
+Au troisième aller-retour, tranche toi-même et dis-le : on corrigera au clic en phase 2.
+
+**Si l'utilisateur ne veut pas choisir**, il le dira. Prends la direction du milieu et
+avance : ce skill ne bloque pas sur une question de goût.
 
 **Référence + reproduction fidèle** — c'est la charte extraite qui fait loi, pas Pro Max.
 Suis `references/extraction-charte.md`, puis n'appelle Pro Max que sur :
