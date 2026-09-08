@@ -778,6 +778,44 @@ Avant le blueprint, parce que son affichage a besoin du serveur :
 2. `npm install` **en arrière-plan** — ça dure une minute, autant qu'elle serve.
 3. Applique le thème dans `app/globals.css`, règle `lib/mouvement.ts`, écris le schéma
    Prisma, `npx prisma db push`, `npx prisma generate`.
+
+   **La police s'installe avec `next/font`, jamais par un import vers un CDN.** Le moteur de
+   design rend un nom de police accompagné d'une ligne `@import` vers Google Fonts. Cette
+   ligne est écrite pour des outils qui n'ont pas d'étape de construction. **Ne la colle
+   pas.** Traduis-la :
+
+   ```tsx
+   // app/layout.tsx
+   import { Plus_Jakarta_Sans, Syne } from "next/font/google";
+
+   const sans = Plus_Jakarta_Sans({ subsets: ["latin"], display: "swap", variable: "--police-sans" });
+   const titre = Syne({ subsets: ["latin"], display: "swap", variable: "--police-titre" });
+
+   <html lang="fr" className={`${sans.variable} ${titre.variable}`} suppressHydrationWarning>
+   ```
+
+   ```css
+   /* app/globals.css, dans @theme */
+   --font-sans: var(--police-sans), ui-sans-serif, system-ui, sans-serif;
+   --font-display: var(--police-titre), ui-sans-serif, system-ui, sans-serif;
+   ```
+
+   Quatre raisons, dans l'ordre d'importance :
+
+   - **Le droit.** Un import vers `fonts.googleapis.com` fait contacter Google par le
+     navigateur du visiteur, donc transmet son adresse IP à un tiers hors Union européenne,
+     sans nécessité puisque la police peut être servie par le site. Un tribunal allemand a
+     condamné un éditeur sur ce seul motif en 2022, et la CNIL va dans le même sens. Nos
+     sites portent une page de confidentialité qui affirme l'absence de transfert : cette
+     ligne la rendrait fausse.
+   - **La stabilité.** `next/font` calcule les métriques de la police de secours et évite le
+     saut de mise en page au moment où la vraie police arrive.
+   - **La vitesse.** Les fichiers sont téléchargés à la construction et servis par le site :
+     ni résolution DNS, ni connexion supplémentaire, ni chaîne d'imports en cascade.
+   - **La cohérence.** La police devient une variable CSS, donc un jeton du thème comme les
+     couleurs. Elle se change à un seul endroit.
+
+   Le garde-fou refuse un import vers un CDN de polices : ce n'est pas un avertissement.
 4. **Lance le serveur avec le lanceur du skill**, jamais `npm run dev` en direct :
 
    ```bash

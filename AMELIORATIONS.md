@@ -1662,3 +1662,46 @@ barre « donnait une plage nulle, constaté sur le socle ». C'était faux : la 
 c'est l'horloge qui dormait. Un commentaire qui invente une cause est pire qu'un commentaire
 absent — il fait perdre du temps à celui qui le lira dans six mois. Corrigé pour ne dire que
 ce qui a été mesuré.
+
+---
+
+# La police se sert depuis le site, jamais depuis un CDN (2026-09-06)
+
+Question partie d'une phrase d'un guide écrit pour un autre outil : « charge les typos depuis
+Google Fonts et déclare-les dans le CSS global ». Appliquée à notre socle, elle serait une
+régression — et elle a révélé un trou.
+
+## Le trou : personne ne disait comment poser une police
+
+Le socle sort avec des polices système et aucun chargement. Le moteur de design, lui, rend un
+nom de police accompagné d'une ligne `@import` vers un CDN. Entre les deux, **le skill ne
+disait rien**. Un agent aurait donc fait la chose évidente : coller l'import. C'est le genre
+de trou qui ne se voit pas dans une relecture, parce qu'il n'y a rien à relire.
+
+## Pourquoi coller l'import serait un défaut, et d'abord un défaut juridique
+
+Un import vers `fonts.googleapis.com` fait contacter Google par le navigateur du visiteur,
+donc transmet son adresse IP à un tiers hors Union européenne — sans nécessité, puisque la
+police peut être servie par le site. Un tribunal allemand a condamné un éditeur sur ce seul
+motif en janvier 2022, et la CNIL va dans le même sens.
+
+Ce n'est pas une question théorique pour nous : le socle livre une page de confidentialité, et
+`lancement.md` affirme qu'un site sans traceur n'a pas besoin de bandeau de consentement.
+Cette ligne rendrait cette affirmation fausse. **Une phrase de doc écrite pour un outil sans
+étape de construction n'est pas transposable à un outil qui en a une.**
+
+Trois raisons techniques suivent, et vont dans le même sens : `next/font` calcule les
+métriques de la police de secours et supprime le saut de mise en page, télécharge les
+fichiers à la construction, et transforme la police en variable CSS — donc en jeton du thème,
+changeable à un seul endroit, comme les couleurs.
+
+## Écrit dans le déroulé, et vérifié par le garde-fou
+
+L'étape du thème porte maintenant le patron exact, `next/font` branché sur `--font-sans` et
+`--font-display`. Et le garde-fou refuse un import vers un CDN de polices — bloquant, pas
+avertissement. Testé sur un faux projet : il attrape la ligne et nomme le fichier.
+
+**La leçon générale.** Une bonne pratique lue ailleurs se traduit dans notre contexte avant
+d'être adoptée. Ici, la traduction inverse littéralement la consigne : le guide dit de
+charger depuis Google, nous disons de ne jamais le faire. Les deux ont raison, dans leur
+outil.

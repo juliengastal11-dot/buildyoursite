@@ -176,6 +176,30 @@ async function couleursNonDefinies(racine) {
 }
 
 /* ===========================================================================
+   2 ter. Une police servie par un tiers
+   Un `@import` ou un `<link>` vers un CDN de polices fait transmettre l'adresse
+   IP du visiteur à un tiers, sans nécessité : `next/font` sert les mêmes
+   polices depuis le site. C'est un défaut juridique autant que technique, et
+   il contredit la page de confidentialité que le socle livre.
+   =========================================================================== */
+async function policesDistantes(racine) {
+  const CDN = /fonts\.googleapis\.com|fonts\.gstatic\.com|use\.typekit\.net|fonts\.bunny\.net|cdn\.jsdelivr\.net\/npm\/@fontsource/;
+  for (const f of await fichiers(racine, [".css", ".tsx", ".ts", ".html"])) {
+    const texte = await readFile(f, "utf8");
+    for (const [i, ligne] of texte.split("\n").entries()) {
+      const t = ligne.trimStart();
+      if (t.startsWith("//") || t.startsWith("*") || t.startsWith("/*")) continue;
+      if (!CDN.test(ligne)) continue;
+      signale(
+        true,
+        "police servie par un CDN tiers — l'adresse IP du visiteur y est transmise",
+        `${path.relative(racine, f)}:${i + 1} — installe-la avec next/font, elle sera servie par le site`,
+      );
+    }
+  }
+}
+
+/* ===========================================================================
    2 bis. Syntaxe de dégradé abandonnée par Tailwind 4
    `bg-gradient-to-*` est devenu `bg-linear-to-*`. L'ancienne forme ne produit
    aucune erreur : le dégradé ne s'affiche simplement pas. Trouvé pour de vrai
@@ -523,6 +547,7 @@ if (cibleSocle) {
   await donneesPersonnelles(racine);
   await couleursNonDefinies(racine);
   await degradesObsoletes(racine);
+  await policesDistantes(racine);
   await valeursEnDur(racine);
 }
 
@@ -531,6 +556,7 @@ if (cibleProjet) {
   console.log(`Contrôle du projet — ${racine}${production ? " (avant production)" : ""}\n`);
   await couleursNonDefinies(racine);
   await degradesObsoletes(racine);
+  await policesDistantes(racine);
   await trousLegaux(racine, production);
   await photosProvisoires(racine, production);
   await pagesSansNavigation(racine);
