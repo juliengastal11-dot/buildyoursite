@@ -22,6 +22,7 @@ projet : ce qui est couvert, ce qui reste, et pourquoi.
 | Page 404 | `app/not-found.tsx` | Dans la charte, avec un retour à l'accueil |
 | Pages légales | `modules/legal` | Mentions, confidentialité, CGV — avec les trous marqués |
 | Mobile | Tailwind, `Photo`, primitives | Tout est fluide par construction ; l'auto-test le vérifie à 375 px |
+| Polices | `next/font` | Servies par le site, jamais par un CDN : aucune adresse IP ne part chez un tiers, et la page de confidentialité reste vraie |
 
 ## Fait au bootstrap, par toi — et vérifié
 
