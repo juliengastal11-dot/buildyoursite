@@ -1751,3 +1751,35 @@ puis on tranche — ce skill ne bloque pas sur une question de goût.
 Les couleurs s'écrivent en hexadécimal dans le blueprint, et le rendu HTML leur accole
 maintenant leur pastille. Trois directions côte à côte se jugent d'un coup d'œil, sans lire
 un seul code. Le choix passe de « lis six valeurs et imagine » à « regarde et pointe ».
+
+---
+
+# Un numéro de version figé bloquait toutes les mises à jour (2026-09-06)
+
+Question de l'utilisateur : « une publication met-elle à jour tous les terminaux qui ont le
+skill ? » Non, et la vérification a montré pire que non.
+
+La documentation est explicite : **une source git qui déclare un `version` explicite ne
+distribue une mise à jour que lorsque ce numéro change.** Sans numéro, Claude Code se cale
+sur l'empreinte du dernier commit et livre chaque publication.
+
+Nos manifestes portaient `"version": "1.0.0"`, écrit une fois et jamais touché. Dix-neuf
+publications plus tard, **personne installé en plugin n'aurait rien reçu** — et rien ne
+l'aurait signalé, ni de leur côté ni du nôtre. Le champ est retiré des quatre manifestes.
+
+## Trois modes, trois comportements
+
+| Installation | Mise à jour |
+|---|---|
+| Le dossier source, sur la machine de l'auteur | rien à faire : c'est l'original |
+| Clone manuel | `git pull`, jamais automatique |
+| Plugin depuis la place de marché | rafraîchissement en arrière-plan, à chaque publication |
+
+**La branche publiée devient donc la branche de sortie.** Ce qui y est poussé part chez tout
+le monde au prochain rafraîchissement. C'est cohérent avec la façon dont on travaille — on
+n'y pousse que du volontaire, jamais du travail en cours — mais c'est une responsabilité de
+plus : plus de filet entre un commit et les machines des autres.
+
+**Le jour où il faudra des versions**, on remettra le champ et on l'incrémentera à chaque
+sortie. Tant qu'on itère vite et seul, la mise à jour continue vaut mieux qu'un numéro qu'on
+oublierait de changer — c'est exactement ce qui vient d'arriver.

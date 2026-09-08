@@ -129,11 +129,18 @@ Depuis Claude Code, sans quitter le terminal :
 /plugin install buildyoursite@buildyoursite
 ```
 
+Installé ainsi, le skill **se met à jour tout seul** : Claude Code rafraîchit les places
+de marché en arrière-plan, et aucune version n'est figée dans le manifeste, donc chaque
+publication vous parvient. `/plugin marketplace update` force le rafraîchissement.
+
 Ou à la main, si vous préférez maîtriser l'emplacement :
 
 ```bash
 git clone https://github.com/juliengastal11-dot/buildyoursite ~/.claude/skills/buildyoursite
 ```
+
+Cloné à la main, rien ne se met à jour tout seul : `git pull` dans ce dossier quand vous
+voulez la dernière version.
 
 Dans les deux cas, **redémarrez Claude Code**, puis tapez `/buildyoursite`. Le skill relève
 les capacités de la machine et vous dit quoi lancer s'il manque quelque chose, avec le
