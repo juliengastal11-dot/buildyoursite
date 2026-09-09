@@ -409,17 +409,17 @@ for (const [index, t] of taches.entries()) {
     const r = await fabriquer(t);
     if (r.origine.startsWith("Picsum")) generiques++;
     console.log(
-      `  ✓ ${t.fichier}  (${t.sujet} — ${r.origine}, ${Math.round(r.octets / 1024)} Ko)`,
+      `  ✓ ${t.fichier}  (${t.sujet} · ${r.origine}, ${Math.round(r.octets / 1024)} Ko)`,
     );
     ok++;
   } catch (e) {
-    console.log(`  ✗ ${t.fichier} — ${e.message}`);
+    console.log(`  ✗ ${t.fichier} · ${e.message}`);
   }
 }
 
 console.log(`\n${ok}/${taches.length} photo(s) provisoire(s).`);
 if (generiques > 0) {
-  console.log(`${generiques} en repli générique — belles images, mais hors sujet.`);
+  console.log(`${generiques} en repli générique : belles images, mais hors sujet.`);
   console.log("Ni Pexels ni Openverse n'ont répondu. Pour des photos plus soignées :");
   console.log("crée une clé gratuite sur pexels.com/api et pose-la dans");
   console.log("`pexelsApiKey` du config.json du skill.");

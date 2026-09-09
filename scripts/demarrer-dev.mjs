@@ -134,7 +134,7 @@ if (await portOccupe(port)) {
   if (pid && estServeurNext(cmd) && sertCeProjet(cmd)) {
     // Notre propre serveur, resté en vie après la fermeture d'une session.
     // Il sert un build périmé : on le termine et on reprend son port.
-    log(`port ${port} tenu par un serveur de CE projet (pid ${pid}) — je le termine.`);
+    log(`port ${port} tenu par un serveur de CE projet (pid ${pid}), je le termine.`);
     tuer(pid);
     await new Promise((r) => setTimeout(r, 1500));
     if (await portOccupe(port)) {
@@ -147,7 +147,7 @@ if (await portOccupe(port)) {
     const quoi = pid && estServeurNext(cmd) ? "un serveur Next d'un AUTRE projet" : "un processus que je ne reconnais pas";
     log(
       `port ${PORT_VOULU} occupé par ${quoi}` +
-        (pid ? ` (pid ${pid}${cmd ? ` — ${cmd.slice(0, 70)}` : ""})` : "") +
+        (pid ? ` (pid ${pid}${cmd ? ` · ${cmd.slice(0, 70)}` : ""})` : "") +
         `. Je ne le touche pas et je démarre sur ${port}.`,
     );
   }
@@ -162,7 +162,7 @@ for (let p = 3000; p <= 3010; p++) {
   if (!autrePid) continue;
   const autreCmd = ligneDeCommande(autrePid);
   if (estServeurNext(autreCmd) && sertCeProjet(autreCmd)) {
-    log(`un autre serveur de CE projet tourne sur ${p} (pid ${autrePid}) — je le termine :`);
+    log(`un autre serveur de CE projet tourne sur ${p} (pid ${autrePid}), je le termine :`);
     log(`  deux serveurs partagent .next et le corrompent, sans qu'aucune erreur ne remonte.`);
     tuer(autrePid);
   }
@@ -212,7 +212,7 @@ function lancer(port, essais = 0) {
   enfant.on("exit", async (code) => {
     if (portPris && essais < 20) {
       const suivant = await premierPortLibre(port + 1);
-      log(`le port ${port} était pris malgré tout — je relance sur ${suivant}.`);
+      log(`le port ${port} était pris malgré tout, je relance sur ${suivant}.`);
       lancer(suivant, essais + 1);
       return;
     }

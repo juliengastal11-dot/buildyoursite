@@ -2019,3 +2019,37 @@ fallu les trouver un par un :
 
 Les commentaires de code ne comptent pas : ils sont retirés avant lecture, et personne ne
 les lit sur le site. Les notes internes du skill non plus, écrites bien avant la règle.
+
+## Le nettoyage : 1172 tirets retirés de tout ce qui se lit (2026-09-09)
+
+La règle D18 interdisait le tiret long dans le texte des sites. Elle ne pouvait pas tenir :
+la documentation que je relis à chaque construction en contenait 868, les commentaires des
+scripts 200, le socle et les modules 114. Un modèle qui lit 1172 fois une ponctuation la
+reproduit. La règle n'était pas fausse, elle était contredite par son propre support.
+
+974 lignes réécrites sur 63 fichiers, puis 92 de plus pour les messages affichés en terminal.
+Seule la ponctuation change. Un contrôle mécanique compare chaque ligne modifiée à son
+origine, mot par mot, et refuse toute ligne où un mot a disparu ou plus de deux mots ont été
+ajoutés : zéro reformulation sur les 1066 lignes touchées.
+
+### Ce que ce chantier a appris
+
+**Une phrase coupée par un tiret se répare de quatre façons, et une seule est juste.** Une
+incise prend des parenthèses, une rupture prend un point, une explication prend deux points,
+un séparateur de champs prend un point médian. Le remplacement automatique était impossible
+pour cette raison : il aurait produit des phrases fausses.
+
+**Un deux-points dans un en-tête YAML casse tout.** Un relecteur a remplacé le tiret de la
+description du skill par deux points ; la valeur est devenue une paire clé-valeur invalide,
+et le skill est apparu sans description dans la liste. La description est maintenant entre
+guillemets. À vérifier après toute modification de l'en-tête.
+
+**Les sorties de programme ne sont pas de la prose, sauf quand elles en sont.** Le rapport du
+garde-fou aligne un chemin, un numéro de ligne et un motif : c'est un tableau, il prend un
+point médian. Mais « Python introuvable, Pro Max ne pourra pas être interrogé » est une
+phrase, et elle prend deux points. Les deux vivaient dans le même fichier.
+
+**Les pages légales portaient le tic le plus visible.** Le titre de chaque article des
+conditions de vente, les incises des mentions légales, la liste des sous-traitants de la
+politique de confidentialité : treize chaînes lues par les visiteurs de tous les sites
+construits jusqu'ici.

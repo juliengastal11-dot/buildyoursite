@@ -159,7 +159,7 @@ const sousLePli = [...document.querySelectorAll("section h2, section img, sectio
     (el) => el.getBoundingClientRect().top > window.innerHeight * 1.5,
 );
 mvt.apparitions = {
-    note: yDepart > 100 ? "PAGE DÉJÀ PARCOURUE — recharge et relance, sinon ce relevé ment." : "page en haut, relevé fiable",
+    note: yDepart > 100 ? "PAGE DÉJÀ PARCOURUE : recharge et relance, sinon ce relevé ment." : "page en haut, relevé fiable",
     avantEntree: sousLePli.slice(0, 5).map((el) => ({
       tag: el.tagName.toLowerCase(),
       opacite: st(el).opacity,
@@ -204,7 +204,7 @@ mvt.parallaxe = {
     detail: mesures,
     verdict:
       pire && Math.abs(pire.retard) > 3
-        ? "PARALLAXE PRÉSENTE — à reproduire (voir components/ui/parallaxe.tsx)"
+        ? "PARALLAXE PRÉSENTE : à reproduire (voir components/ui/parallaxe.tsx)"
         : "pas de parallaxe",
 };
 
@@ -298,7 +298,7 @@ R.CHECKLIST = [
     "photos + leurs textes alternatifs (ils disent où va chacune)",
     "CADRAGE : ratios, coins surdimensionnés alternés, object-position par photo",
     "mouvement : défilement fluide, parallaxe, apparitions, transitions",
-    "INVENTAIRE INTERACTIF : un verdict par ligne dans le blueprint — reproduit / réinterprété / abandonné",
+    "INVENTAIRE INTERACTIF : un verdict par ligne dans le blueprint, reproduit / réinterprété / abandonné",
     "les éléments FLOTTANTS de l'inventaire ont leur verdict (ils ne sont dans aucune section, on les oublie)",
     "ce qui RÉAGIT au survol est reporté dans les briefs (voir mouvement.md, « Les états »)",
     "RELEVÉ REFAIT à une seconde largeur (375 et 1280)",

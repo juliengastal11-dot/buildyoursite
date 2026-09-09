@@ -40,12 +40,12 @@ console.log("Relevé des capacités\n");
 /* --- Node --- */
 const noeud = process.versions.node;
 if (Number(noeud.split(".")[0]) >= 20) ok("Node " + noeud);
-else ko("Node " + noeud + " — il en faut au moins 20, Next.js 15 l'exige");
+else ko("Node " + noeud + " : il en faut au moins 20, Next.js 15 l'exige");
 
 /* --- Python, pour le moteur de recherche de Pro Max --- */
 const py = silencieux("python --version") || silencieux("python3 --version");
-if (py) ok(py + " — Pro Max peut être interrogé");
-else ko("Python introuvable — Pro Max ne pourra pas être interrogé, le design system sera décidé sans lui");
+if (py) ok(py + " : Pro Max peut être interrogé");
+else ko("Python introuvable : Pro Max ne pourra pas être interrogé, le design system sera décidé sans lui");
 
 /* --- UI/UX Pro Max, et sa fraîcheur --- */
 const promax = CHEMIN_PROMAX;
@@ -54,13 +54,13 @@ if (existsSync(path.join(promax, ".git"))) {
   const jours = date ? Math.round((Date.now() - new Date(date).getTime()) / 86400000) : null;
   let ligne = "UI/UX Pro Max présent";
   if (jours !== null) ligne += `, dernier commit il y a ${jours} jour(s)`;
-  if (jours !== null && jours > 60) ligne += " — relance l'installeur pour le mettre à jour";
+  if (jours !== null && jours > 60) ligne += ", relance l'installeur pour le mettre à jour";
   ok(ligne);
 } else {
   // Chemin absolu : le skill peut vivre dans `~/.claude/skills` comme dans le
   // cache des plugins, et l'utilisateur n'a pas à deviner lequel.
   ko(
-    "UI/UX Pro Max absent — lance l'installeur :\n" +
+    "UI/UX Pro Max absent. Lance l'installeur :\n" +
       `      node "${path.join(RACINE_SKILL, "scripts", "installer.mjs")}"`,
   );
 }
@@ -70,22 +70,22 @@ let config = {};
 try {
   config = JSON.parse(readFileSync(CHEMIN_CONFIG, "utf8"));
 } catch {
-  ko("config.json absent — lance l'installeur");
+  ko("config.json absent : lance l'installeur");
 }
 if (config.racineProjets) ok("racine des projets : " + config.racineProjets);
-else ko("racine des projets non définie — lance l'installeur");
+else ko("racine des projets non définie : lance l'installeur");
 
 /* --- identité git --- */
 const emailGlobal = silencieux("git config --global user.email");
 if (emailGlobal) ok("identité git : " + emailGlobal + " (configuration globale)");
-else if (config.gitEmail) ok("identité git : " + config.gitEmail + " — posée en local sur chaque projet");
-else ko("identité git absente — le premier commit d'un projet échouera ; relance l'installeur");
+else if (config.gitEmail) ok("identité git : " + config.gitEmail + ", posée en local sur chaque projet");
+else ko("identité git absente : le premier commit d'un projet échouera ; relance l'installeur");
 
 /* --- clé Pexels --- */
-if (config.pexelsApiKey) ok("clé Pexels — photos provisoires de stock, sur le sujet");
+if (config.pexelsApiKey) ok("clé Pexels : photos provisoires de stock, sur le sujet");
 else
   ko(
-    "clé Pexels absente — photos provisoires via Openverse : sur le sujet, mais tirées d'une archive, à vérifier sur la planche-contact",
+    "clé Pexels absente. Photos provisoires via Openverse : sur le sujet, mais tirées d'une archive, à vérifier sur la planche-contact",
   );
 
 /* --- de quoi donner un lien à partager ---------------------------------
@@ -108,7 +108,7 @@ const tunnelDispo =
   silencieux(process.platform === "win32" ? "where cloudflared" : "which cloudflared") !== null ||
   CLOUDFLARED.some((p) => existsSync(p));
 
-if (tunnelDispo) ok("cloudflared — un lien public à envoyer, prêt en une trentaine de secondes");
+if (tunnelDispo) ok("cloudflared : un lien public à envoyer, prêt en une trentaine de secondes");
 else {
   const commande =
     process.platform === "win32"
@@ -116,7 +116,7 @@ else {
       : process.platform === "darwin"
         ? "brew install cloudflared"
         : "voir la documentation Cloudflare pour ta distribution";
-  ko(`cloudflared absent — sans lui, pas de lien à envoyer. Une commande suffit : ${commande}`);
+  ko(`cloudflared absent. Sans lui, pas de lien à envoyer. Une commande suffit : ${commande}`);
 }
 
 /* --- le dossier de la session : c'est LÀ que le site sera créé ---------
@@ -135,27 +135,27 @@ const nomDossier = path.basename(session).toLowerCase();
 const DOSSIERS_FOURRE_TOUT = ["desktop", "bureau", "downloads", "téléchargements", "telechargements", "documents"];
 
 if (dedans(RACINE_SKILL) || dedans(path.join(os.homedir(), ".claude"))) {
-  ko(`dossier de la session : ${session} — c'est le dossier du skill. Ouvre Claude Code dans le dossier où tu veux ton site`);
+  ko(`dossier de la session : ${session}. C'est le dossier du skill. Ouvre Claude Code dans le dossier où tu veux ton site`);
 } else if (ici === normaliser(path.parse(session).root) || ici === normaliser(os.homedir())) {
-  ko(`dossier de la session : ${session} — la racine du disque ou du profil. Ouvre Claude Code dans un dossier dédié`);
+  ko(`dossier de la session : ${session}. La racine du disque ou du profil. Ouvre Claude Code dans un dossier dédié`);
 } else if (DOSSIERS_FOURRE_TOUT.includes(nomDossier)) {
-  console.log(`  ! dossier de la session : ${session} — on peut créer le site ici, mais un dossier dédié à tes sites serait mieux`);
+  console.log(`  ! dossier de la session : ${session}. On peut créer le site ici, mais un dossier dédié à tes sites serait mieux`);
 } else {
-  ok(`dossier de la session : ${session} — le site sera créé ici, dans un sous-dossier à son nom`);
+  ok(`dossier de la session : ${session}. Le site sera créé ici, dans un sous-dossier à son nom`);
 }
 if (config.racineProjets && !dedans(config.racineProjets)) {
-  console.log(`  ! tes sites sont d'habitude dans ${config.racineProjets} — on peut continuer ici, ou rouvrir Claude Code là-bas`);
+  console.log(`  ! tes sites sont d'habitude dans ${config.racineProjets}. On peut continuer ici, ou rouvrir Claude Code là-bas`);
 }
 
 console.log("\n  Emplacements :");
 console.log("  · données du skill : " + DOSSIER_DONNEES);
 console.log("  · moteur de design : python \"" + RECHERCHE_PROMAX + "\"");
 if (aDemenager()) {
-  console.log("  ! des données vivent encore dans le dossier du skill — une mise à jour les");
+  console.log("  ! des données vivent encore dans le dossier du skill. Une mise à jour les");
   console.log("    emporterait. Relance l'installeur, il les déménage.");
 }
 
-console.log("\n  Connecteurs — à vérifier depuis Claude, pas d'ici, et par capacité :");
+console.log("\n  Connecteurs, à vérifier depuis Claude, pas d'ici, et par capacité :");
 console.log("  · Un outil qui GÉNÈRE une image ou une vidéo à partir d'un texte, quel que soit son nom.");
 console.log("    Présent, les visuels manquants peuvent être générés au lieu d'être provisoires.");
 console.log("    S'il expose un solde ou un quota, appelle-le : c'est ce qui permet d'annoncer un prix.");

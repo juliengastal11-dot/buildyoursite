@@ -58,18 +58,18 @@ let bloquant = false;
 const noeud = process.versions.node;
 if (Number(noeud.split(".")[0]) >= 20) ok("Node " + noeud);
 else {
-  ko("Node " + noeud + " — il en faut au moins 20 (Next.js 15 l'exige)");
+  ko("Node " + noeud + " : il en faut au moins 20 (Next.js 15 l'exige)");
   bloquant = true;
 }
 
 const git = silencieux("git --version");
-git ? ok(git) : (ko("git introuvable — nécessaire pour la bibliothèque de design"), (bloquant = true));
+git ? ok(git) : (ko("git introuvable : nécessaire pour la bibliothèque de design"), (bloquant = true));
 
 // Python sert au moteur de recherche de UI/UX Pro Max.
 const py = silencieux("python --version") || silencieux("python3 --version");
 if (py) ok(py);
 else {
-  ko("Python introuvable — UI/UX Pro Max s'en sert pour ses recherches de design.");
+  ko("Python introuvable : UI/UX Pro Max s'en sert pour ses recherches de design.");
   console.log("    Le skill fonctionnera, mais sans son moteur de décision design.");
 }
 
@@ -99,7 +99,7 @@ try {
     ok("clonée");
   }
 } catch {
-  ko("clonage impossible — vérifie ta connexion, puis relance ce script.");
+  ko("clonage impossible : vérifie ta connexion, puis relance ce script.");
 }
 
 /* ------------------------------- config.json ----------------------------- */
@@ -162,17 +162,17 @@ if (config.pexelsApiKey) ok("photos provisoires : Pexels");
 else ok("photos provisoires : Openverse (pose une clé Pexels dans config.json pour mieux)");
 if (emailGlobal) ok("identité git : configuration globale (" + emailGlobal + ")");
 else if (config.gitEmail) ok("identité git : " + config.gitEmail + ", posée en local par projet");
-else ko("identité git absente — le premier commit d'un projet échouera. Relance avec --git-nom et --git-email.");
+else ko("identité git absente : le premier commit d'un projet échouera. Relance avec --git-nom et --git-email.");
 
 try {
   mkdirSync(racine, { recursive: true });
   ok("racine des projets : " + racine);
 } catch {
-  ko("impossible de créer " + racine + " — crée-le à la main ou change `racineProjets`.");
+  ko("impossible de créer " + racine + " : crée-le à la main ou change `racineProjets`.");
 }
 
 /* --------------------------------- fin ----------------------------------- */
 titre("Prêt.");
-console.log(`  Ouvre Claude Code dans le dossier où tu veux ton site — par exemple ${racine} —`);
+console.log(`  Ouvre Claude Code dans le dossier où tu veux ton site (par exemple ${racine})`);
 console.log("  puis tape /buildyoursite. Le site sera créé là, dans un sous-dossier à son nom.");
 console.log("  Mise à jour de la bibliothèque plus tard : relance ce script.\n");

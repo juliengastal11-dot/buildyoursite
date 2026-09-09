@@ -96,7 +96,7 @@ async function donneesPersonnelles(racine) {
       if (tolere.test(ligne) || ligne.trimStart().startsWith("*")) continue;
       for (const [motif, quoi] of motifs) {
         if (motif.test(ligne)) {
-          signale(true, `${quoi} dans le socle`, `${cheminLisible(racine, f)} — ${ligne.trim().slice(0, 90)}`);
+          signale(true, `${quoi} dans le socle`, `${cheminLisible(racine, f)} · ${ligne.trim().slice(0, 90)}`);
         }
       }
     }
@@ -176,7 +176,7 @@ async function couleursNonDefinies(racine) {
 
   for (const [nom, ou] of utilises) {
     if (definis.has(nom)) continue;
-    signale(true, `couleur « ${nom} » utilisee sans etre definie`, `${ou} — absente de @theme`);
+    signale(true, `couleur « ${nom} » utilisee sans etre definie`, `${ou} · absente de @theme`);
   }
 }
 
@@ -194,7 +194,7 @@ async function securite(racine) {
     const suivis = execSync("git ls-files", { cwd: racine, encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] });
     for (const f of suivis.split("\n")) {
       if (/^\.env(\..+)?$/.test(f.trim()) && !/\.example$/.test(f.trim())) {
-        signale(true, "fichier d'environnement suivi par git", `${f} — retire-le de l'index et ajoute-le au .gitignore ; s'il a été poussé, les clés sont à régénérer`);
+        signale(true, "fichier d'environnement suivi par git", `${f} · retire-le de l'index et ajoute-le au .gitignore ; s'il a été poussé, les clés sont à régénérer`);
       }
     }
   } catch {
@@ -213,13 +213,13 @@ async function securite(racine) {
     for (const [i, ligne] of lignes.entries()) {
       // Une clé en clair, où que ce soit, et pire dans un fichier client.
       if (SECRET.test(ligne) && !/process\.env\./.test(ligne)) {
-        signale(true, "une clé en clair dans le code", `${rel}:${i + 1} — passe par une variable d'environnement${client ? " ; ce fichier est CLIENT, la clé partirait dans le navigateur" : ""}`);
+        signale(true, "une clé en clair dans le code", `${rel}:${i + 1} · passe par une variable d'environnement${client ? " ; ce fichier est CLIENT, la clé partirait dans le navigateur" : ""}`);
       }
       // Du HTML injecté sans raison écrite à côté.
       if (ligne.includes("dangerouslySetInnerHTML")) {
         const contexte = lignes.slice(Math.max(0, i - 3), i + 1).join("\n");
         if (!/\/\/|\/\*|\{\/\*/.test(contexte)) {
-          signale(false, "HTML injecté sans justification", `${rel}:${i + 1} — un commentaire doit dire d'où vient ce HTML et pourquoi il est sûr`);
+          signale(false, "HTML injecté sans justification", `${rel}:${i + 1} · un commentaire doit dire d'où vient ce HTML et pourquoi il est sûr`);
         }
       }
     }
@@ -228,7 +228,7 @@ async function securite(racine) {
     if (/^\s*["']use server["']/m.test(texte) && /admin/i.test(rel)) {
       const exportees = texte.match(/export\s+async\s+function\s+\w+/g) || [];
       if (exportees.length && !/exigeAdmin\(|auth\(\)|getServerSession\(|requireAdmin\(/.test(texte)) {
-        signale(true, "action serveur d'administration sans contrôle de session", `${rel} — ${exportees.length} fonction(s) exportée(s), aucun appel à exigeAdmin() ou équivalent`);
+        signale(true, "action serveur d'administration sans contrôle de session", `${rel} · ${exportees.length} fonction(s) exportée(s), aucun appel à exigeAdmin() ou équivalent`);
       }
     }
   }
@@ -237,7 +237,7 @@ async function securite(racine) {
   for (const f of await fichiers(path.join(racine, "public"), [".mp4", ".webm"])) {
     const { size } = await stat(f);
     if (size > 3 * 1024 * 1024) {
-      signale(false, "vidéo de plus de 3 Mo dans public/", `${path.relative(racine, f)} — ${(size / 1048576).toFixed(1)} Mo ; transcode en 720p, sans audio (references/video.md)`);
+      signale(false, "vidéo de plus de 3 Mo dans public/", `${path.relative(racine, f)} · ${(size / 1048576).toFixed(1)} Mo ; transcode en 720p, sans audio (references/video.md)`);
     }
   }
 }
@@ -256,7 +256,7 @@ async function traceDesign(racine) {
   signale(
     true,
     "le blueprint ne dit pas d'où vient l'identité visuelle",
-    "BLUEPRINT.md — ajoute une section « Relevé de design » : la requête, ce que le moteur a rendu, ce qu'on garde. Moteur non interrogé ? Dis-le, et dis pourquoi",
+    "BLUEPRINT.md · ajoute une section « Relevé de design » : la requête, ce que le moteur a rendu, ce qu'on garde. Moteur non interrogé ? Dis-le, et dis pourquoi",
   );
 }
 
@@ -277,8 +277,8 @@ async function policesDistantes(racine) {
       if (!CDN.test(ligne)) continue;
       signale(
         true,
-        "police servie par un CDN tiers — l'adresse IP du visiteur y est transmise",
-        `${path.relative(racine, f)}:${i + 1} — installe-la avec next/font, elle sera servie par le site`,
+        "police servie par un CDN tiers : l'adresse IP du visiteur y est transmise",
+        `${path.relative(racine, f)}:${i + 1} · installe-la avec next/font, elle sera servie par le site`,
       );
     }
   }
@@ -297,8 +297,8 @@ async function degradesObsoletes(racine) {
       if (/\bbg-gradient-to-[trbl]/.test(ligne)) {
         signale(
           true,
-          "dégradé en syntaxe Tailwind 3 — ne rend rien en v4",
-          `${cheminLisible(racine, f)}:${i + 1} — remplacer bg-gradient-to-* par bg-linear-to-*`,
+          "dégradé en syntaxe Tailwind 3 : ne rend rien en v4",
+          `${cheminLisible(racine, f)}:${i + 1} · remplacer bg-gradient-to-* par bg-linear-to-*`,
         );
       }
     }
@@ -322,7 +322,7 @@ async function valeursEnDur(racine) {
         signale(
           false,
           "couleur littérale dans un composant du socle",
-          `${cheminLisible(racine, f)}:${i + 1} — ${ligne.trim().slice(0, 80)}`,
+          `${cheminLisible(racine, f)}:${i + 1} · ${ligne.trim().slice(0, 80)}`,
         );
       }
     }
@@ -373,7 +373,7 @@ async function trousLegaux(racine, production) {
       const ligne = texte.slice(0, m.index).split("\n").length;
       const demande = m[1].replace(/\s+/g, " ").trim();
       const apercu = demande.length > 60 ? demande.slice(0, 60) + "…" : demande;
-      entrees.push(`ligne ${ligne}${apercu ? ` — ${apercu}` : ""}`);
+      entrees.push(`ligne ${ligne}${apercu ? ` · ${apercu}` : ""}`);
     }
     if (entrees.length === 0) continue;
     (/^(app|components|lib)\//.test(rel) ? codeLivre : preparation).set(rel, entrees);
@@ -384,7 +384,7 @@ async function trousLegaux(racine, production) {
   for (const [rel, entrees] of codeLivre) {
     signale(
       production,
-      `${entrees.length} donnée(s) à confirmer dans du code livré — ${rel}`,
+      `${entrees.length} donnée(s) à confirmer dans du code livré · ${rel}`,
       entrees.join("\n      "),
     );
   }
@@ -392,7 +392,7 @@ async function trousLegaux(racine, production) {
   for (const [rel, entrees] of preparation) {
     signale(
       false,
-      `${entrees.length} donnée(s) à confirmer — fichier de préparation, jamais livré au visiteur — ${rel}`,
+      `${entrees.length} donnée(s) à confirmer, fichier de préparation, jamais livré au visiteur · ${rel}`,
       entrees.join("\n      "),
     );
   }
@@ -427,7 +427,7 @@ async function photosProvisoires(racine, production) {
   const apercu = trouvees.slice(0, 3).join(", ");
   const reste = trouvees.length - 3;
   console.log(
-    `\n  ${trouvees.length} photo(s) provisoire(s) — normal avant remise, bloquant en production.` +
+    `\n  ${trouvees.length} photo(s) provisoire(s) : normal avant remise, bloquant en production.` +
       `\n      ${apercu}${reste > 0 ? ` … et ${reste} autre(s)` : ""}`,
   );
 }
@@ -470,7 +470,7 @@ async function pagesSansNavigation(racine) {
   if (sansNav.length > 0) {
     signale(
       false,
-      `${sansNav.length} page(s) sans navigation — attendu pour le tunnel de commande, nulle part ailleurs`,
+      `${sansNav.length} page(s) sans navigation : attendu pour le tunnel de commande, nulle part ailleurs`,
       sansNav.join(", "),
     );
   }
@@ -579,7 +579,7 @@ async function motsCreux(racine) {
 
       for (const mot of MOTS_CREUX) {
         if (!ligne.includes(mot)) continue;
-        if (!tue) trouvailles.push(`${cheminLisible(racine, f)}:${i + 1} — « ${mot} »`);
+        if (!tue) trouvailles.push(`${cheminLisible(racine, f)}:${i + 1} · « ${mot} »`);
         break;
       }
 
@@ -590,7 +590,7 @@ async function motsCreux(racine) {
          ligne est une réplique ou l'attribution d'une citation, et « 9h–18h »
          est un intervalle. Ni l'un ni l'autre ne trahit quoi que ce soit. */
       if (!tue && tiretDeMachine(ligne)) {
-        trouvailles.push(`${cheminLisible(racine, f)}:${i + 1} — tiret long dans une phrase`);
+          trouvailles.push(`${cheminLisible(racine, f)}:${i + 1} · tiret long dans une phrase`);
       }
     }
   }
@@ -599,7 +599,7 @@ async function motsCreux(racine) {
   const reste = trouvailles.length - 8;
   signale(
     false,
-    `${trouvailles.length} ligne(s) de texte à relire — mots creux ou tics d'IA`,
+    `${trouvailles.length} ligne(s) de texte à relire : mots creux ou tics d'IA`,
     apercu +
       (reste > 0 ? `\n      … et ${reste} autre(s)` : "") +
       `\n      une formule volontaire se tait avec un commentaire « mots-creux-ok » sur la ligne ou juste au-dessus.`,
@@ -616,7 +616,7 @@ async function seo(racine) {
   const app = path.join(racine, "app");
   for (const f of ["robots.ts", "sitemap.ts"]) {
     if (!existsSync(path.join(app, f))) {
-      signale(false, `app/${f} absent — les moteurs n'ont ni consigne ni plan du site`, "le socle le fournit ; il a été retiré ?");
+      signale(false, `app/${f} absent : les moteurs n'ont ni consigne ni plan du site`, "le socle le fournit ; il a été retiré ?");
     }
   }
 
@@ -631,7 +631,7 @@ async function seo(racine) {
     }
   }
   if (sansMeta.length > 0) {
-    signale(false, `${sansMeta.length} page(s) sans métadonnées — titre et description manquants pour les moteurs`, sansMeta.join(", "));
+    signale(false, `${sansMeta.length} page(s) sans métadonnées : titre et description manquants pour les moteurs`, sansMeta.join(", "));
   }
 
   const sansAlt = new Map();
@@ -648,7 +648,7 @@ async function seo(racine) {
   if (sansAlt.size > 0) {
     signale(
       false,
-      "image(s) sans attribut alt — un alt vide est permis pour une image décorative, un alt absent ne l'est jamais",
+      "image(s) sans attribut alt : un alt vide est permis pour une image décorative, un alt absent ne l'est jamais",
       [...sansAlt].map(([f, n]) => `${f} (${n})`).join(", "),
     );
   }
@@ -667,7 +667,7 @@ if (!cibleSocle && !cibleProjet) {
 
 if (cibleSocle) {
   const racine = path.join(RACINE_SKILL, "socle");
-  console.log(`Contrôle du socle — ${racine}\n`);
+  console.log(`Contrôle du socle · ${racine}\n`);
   await donneesPersonnelles(racine);
   await couleursNonDefinies(racine);
   await degradesObsoletes(racine);
@@ -677,7 +677,7 @@ if (cibleSocle) {
 
 if (cibleProjet) {
   const racine = path.resolve(cibleProjet === true ? "." : cibleProjet);
-  console.log(`Contrôle du projet — ${racine}${production ? " (avant production)" : ""}\n`);
+  console.log(`Contrôle du projet · ${racine}${production ? " (avant production)" : ""}\n`);
   await couleursNonDefinies(racine);
   await degradesObsoletes(racine);
   await policesDistantes(racine);

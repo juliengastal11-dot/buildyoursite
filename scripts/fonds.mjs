@@ -34,11 +34,11 @@ const opt = (nom, defaut = null) => {
 const drapeau = (nom) => args.includes("--" + nom);
 
 const TYPES = {
-  degrade: "dégradé flou — fond de héros, deux couleurs qui se fondent",
-  vagues: "vagues empilées — séparateur entre deux sections",
-  blob: "forme organique — derrière une image, un portrait, un chiffre",
-  grille: "triangles irréguliers — fond de tarifs ou d'appel à l'action",
-  points: "semis de points — motif discret, faible opacité",
+  degrade: "dégradé flou : fond de héros, deux couleurs qui se fondent",
+  vagues: "vagues empilées : séparateur entre deux sections",
+  blob: "forme organique : derrière une image, un portrait, un chiffre",
+  grille: "triangles irréguliers : fond de tarifs ou d'appel à l'action",
+  points: "semis de points : motif discret, faible opacité",
 };
 
 if (drapeau("lister") || drapeau("help")) {
@@ -81,7 +81,7 @@ async function palette() {
 
   const css = path.join(projet, "app", "globals.css");
   if (!existsSync(css)) {
-    console.error(`✗ ${css} introuvable — passe --couleurs "#123456,#abcdef" ou --projet <chemin>`);
+    console.error(`✗ ${css} introuvable. Passe --couleurs "#123456,#abcdef" ou --projet <chemin>`);
     process.exit(1);
   }
   const texte = await readFile(css, "utf8");
@@ -93,7 +93,7 @@ async function palette() {
   // dégradé entre une couleur et elle-même est un aplat.
   const choisies = [...new Set(ROLES.map((r) => jetons.get(r)).filter(Boolean))];
   if (choisies.length < 2) {
-    console.error("✗ moins de deux couleurs de rôle trouvées dans @theme — passe --couleurs");
+    console.error("✗ moins de deux couleurs de rôle trouvées dans @theme. Passe --couleurs");
     process.exit(1);
   }
   return choisies.slice(0, 3);
@@ -270,7 +270,7 @@ if (!sortie) {
   await mkdir(path.dirname(cible), { recursive: true });
   await writeFile(cible, svg, "utf8");
   const ko = (Buffer.byteLength(svg) / 1024).toFixed(1);
-  console.log(`✓ ${type} — ${path.relative(projet, cible)} (${ko} Ko)`);
+  console.log(`✓ ${type} · ${path.relative(projet, cible)} (${ko} Ko)`);
   console.log(`  couleurs : ${couleurs.join(", ")}`);
   console.log(`  Pose-le en fond de section, DERRIÈRE le contenu, et vérifie que le texte`);
   console.log(`  reste lisible. Deux fonds par site suffisent : au-delà, la page est rapiécée.`);

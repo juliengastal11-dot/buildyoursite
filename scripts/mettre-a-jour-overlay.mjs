@@ -40,7 +40,7 @@ const orange = (t) => `\x1b[33m${t}\x1b[0m`;
 const rouge = (t) => `\x1b[31m${t}\x1b[0m`;
 
 if (!existsSync(path.join(projet, "package.json"))) {
-  console.error(rouge(`✗ ${projet} n'est pas un projet — pas de package.json.`));
+  console.error(rouge(`✗ ${projet} n'est pas un projet : pas de package.json.`));
   process.exit(1);
 }
 
@@ -73,7 +73,7 @@ if (absents.length === FICHIERS.length) {
 }
 
 if (aMettre.length === 0 && absents.length === 0) {
-  console.log(vert("✓ overlay à jour — identique au socle du skill."));
+  console.log(vert("✓ overlay à jour : identique au socle du skill."));
   process.exit(0);
 }
 

@@ -244,7 +244,7 @@ async function chercherTrous(racine) {
 
 function afficherTrous(trous) {
   if (trous.length === 0) return;
-  console.log(`\n${trous.length} donnée(s) « [[À CONFIRMER » encore présente(s) — seront visibles dans le lien partagé :`);
+  console.log(`\n${trous.length} donnée(s) « [[À CONFIRMER » encore présente(s), seront visibles dans le lien partagé :`);
   for (const t of trous) console.log(`  - ${t}`);
   console.log("");
 }
@@ -353,12 +353,12 @@ function terminer(enfant) {
 async function partagerParTunnel(racine, portDemande, sansBuild) {
   const source = siteUrlDefinie(racine);
   if (source) {
-    log(`NEXT_PUBLIC_SITE_URL est définie (${source}) — le site va se déclarer indexable ; retire-la pour ce partage temporaire.`);
+    log(`NEXT_PUBLIC_SITE_URL est définie (${source}), le site va se déclarer indexable ; retire-la pour ce partage temporaire.`);
   }
 
   if (sansBuild) {
     if (!existsSync(path.join(racine, ".next"))) {
-      erreur("--sans-build suppose un .next déjà présent, or il est absent — lance d'abord npm run build, ou retire l'option.");
+      erreur("--sans-build suppose un .next déjà présent, or il est absent. Lance d'abord npm run build, ou retire l'option.");
       process.exit(1);
     }
     log("--sans-build : réutilisation du .next existant, sans recompiler.");
@@ -366,7 +366,7 @@ async function partagerParTunnel(racine, portDemande, sansBuild) {
     log("compilation du site (npm run build)…");
     const code = await executerEtAttendre("npm run build");
     if (code !== 0) {
-      erreur(`le build a échoué (code ${code}) — corrige l'erreur ci-dessus avant de partager.`);
+      erreur(`le build a échoué (code ${code}), corrige l'erreur ci-dessus avant de partager.`);
       process.exit(1);
     }
   }
@@ -374,7 +374,7 @@ async function partagerParTunnel(racine, portDemande, sansBuild) {
   let port = portDemande;
   if (await portOccupe(port)) {
     const libre = await premierPortLibre(port + 1);
-    log(`port ${port} déjà occupé — je démarre sur ${libre} à la place.`);
+    log(`port ${port} déjà occupé, je démarre sur ${libre} à la place.`);
     port = libre;
   }
 
@@ -395,11 +395,11 @@ async function partagerParTunnel(racine, portDemande, sansBuild) {
     for (const e of enfantsActifs) terminer(e);
   };
   process.once("SIGINT", () => {
-    arreterTout("arrêt demandé — fermeture du tunnel et du serveur…");
+    arreterTout("arrêt demandé : fermeture du tunnel et du serveur…");
     process.exit(0);
   });
   process.once("SIGTERM", () => {
-    arreterTout("signal d'arrêt reçu — fermeture du tunnel et du serveur…");
+    arreterTout("signal d'arrêt reçu : fermeture du tunnel et du serveur…");
     process.exit(0);
   });
 
@@ -413,14 +413,14 @@ async function partagerParTunnel(racine, portDemande, sansBuild) {
   suivre(serveur);
   serveur.once("exit", (code) => {
     if (!arretEnCours) {
-      arreterTout(`le serveur s'est arrêté de façon inattendue (code ${code ?? "?"}) — j'arrête aussi le tunnel.`);
+      arreterTout(`le serveur s'est arrêté de façon inattendue (code ${code ?? "?"}), j'arrête aussi le tunnel.`);
       process.exit(1);
     }
   });
 
   const repond = await attendreReponse(port);
   if (!repond) {
-    erreur(`le serveur ne répond toujours pas sur le port ${port} — j'arrête.`);
+    erreur(`le serveur ne répond toujours pas sur le port ${port}, j'arrête.`);
     arreterTout("nettoyage avant sortie…");
     process.exit(1);
   }
@@ -436,7 +436,7 @@ async function partagerParTunnel(racine, portDemande, sansBuild) {
   suivre(tunnel.enfant);
   tunnel.enfant.once("exit", (code) => {
     if (!arretEnCours) {
-      arreterTout(`cloudflared s'est arrêté de façon inattendue (code ${code ?? "?"}) — j'arrête aussi le serveur.`);
+      arreterTout(`cloudflared s'est arrêté de façon inattendue (code ${code ?? "?"}), j'arrête aussi le serveur.`);
       process.exit(1);
     }
   });
@@ -444,7 +444,7 @@ async function partagerParTunnel(racine, portDemande, sansBuild) {
   console.log("");
   console.log(`BUILDYOURSITE_PARTAGE=${tunnel.url}`);
   console.log(tunnel.url);
-  log("le lien vit tant que cette fenêtre reste ouverte — Ctrl+C arrête le tunnel et le serveur.");
+  log("le lien vit tant que cette fenêtre reste ouverte. Ctrl+C arrête le tunnel et le serveur.");
 }
 
 function partagerParHebergeur(utilisateurV, utilisateurN) {
@@ -468,7 +468,7 @@ const racineProjet = process.cwd();
 /* 1. vérifications préalables */
 const cheminPackageJson = path.join(racineProjet, "package.json");
 if (!existsSync(cheminPackageJson)) {
-  erreur("aucun package.json ici — lance ce script depuis la racine d'un projet Next.js.");
+  erreur("aucun package.json ici. Lance ce script depuis la racine d'un projet Next.js.");
   process.exit(1);
 }
 
@@ -476,18 +476,18 @@ let packageJson;
 try {
   packageJson = JSON.parse(readFileSync(cheminPackageJson, "utf8"));
 } catch {
-  erreur("package.json illisible — JSON invalide.");
+  erreur("package.json illisible : JSON invalide.");
   process.exit(1);
 }
 
 const aDependanceNext = Boolean(packageJson.dependencies?.next) || Boolean(packageJson.devDependencies?.next);
 if (!aDependanceNext) {
-  erreur("package.json ne dépend pas de next — ce n'est pas un projet Next.js.");
+  erreur("package.json ne dépend pas de next : ce n'est pas un projet Next.js.");
   process.exit(1);
 }
 
 if (!existsSync(path.join(racineProjet, "app"))) {
-  erreur("dossier app/ absent — ce n'est pas un site.");
+  erreur("dossier app/ absent : ce n'est pas un site.");
   process.exit(1);
 }
 

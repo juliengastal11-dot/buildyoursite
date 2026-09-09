@@ -1,7 +1,7 @@
 {
   "$commentaire": "Modèle de configuration. `scripts/installer.mjs` en fait un config.json, qui reste local et n'est pas versionné.",
   "racineProjets": "",
-  "$racineProjets": "Le dossier où tu ranges tes sites d'habitude — un repère, pas une destination. Le site se crée toujours là où Claude Code est ouvert, dans un sous-dossier à son nom ; cette valeur sert seulement à te prévenir si tu lances le skill ailleurs. Exemples : C:\\Sites  ·  ~/Sites  ·  /Users/moi/Clients",
+  "$racineProjets": "Le dossier où tu ranges tes sites d'habitude, un repère, pas une destination. Le site se crée toujours là où Claude Code est ouvert, dans un sous-dossier à son nom ; cette valeur sert seulement à te prévenir si tu lances le skill ailleurs. Exemples : C:\\Sites  ·  ~/Sites  ·  /Users/moi/Clients",
   "appellation": "",
   "$appellation": "Comment le skill s'adresse à toi dans ses questions. Vide = neutre, sans appellation. Exemples : Boss  ·  Chef  ·  ton prénom",
   "langue": "fr",
@@ -9,7 +9,7 @@
   "portParDefaut": 3000,
   "$portParDefaut": "Port du serveur de dev. Le lanceur se décale automatiquement si celui-ci est déjà pris.",
   "pexelsApiKey": "",
-  "$pexelsApiKey": "Clé API Pexels, gratuite sur pexels.com/api. Facultative : sans elle, les photos provisoires viennent d'Openverse — sur le sujet, mais tirées d'une archive, à vérifier sur la planche-contact. Avec elle, de la photographie de stock.",
+  "$pexelsApiKey": "Clé API Pexels, gratuite sur pexels.com/api. Facultative : sans elle, les photos provisoires viennent d'Openverse, sur le sujet, mais tirées d'une archive, à vérifier sur la planche-contact. Avec elle, de la photographie de stock.",
   "gitNom": "",
   "gitEmail": "",
   "$gitIdentite": "Identité des commits dans les projets générés. Ne sert que si ta configuration git globale est vide : le skill la pose alors en local sur chaque projet, sans quoi le premier commit est refusé. L'installeur la demande quand c'est nécessaire."

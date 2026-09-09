@@ -72,7 +72,7 @@ function transcription() {
     }
   }
   if (!candidats.length) {
-    console.error("✗ aucune conversation trouvée sous ~/.claude/projects — passe --transcription");
+    console.error("✗ aucune conversation trouvée sous ~/.claude/projects. Passe --transcription");
     process.exit(1);
   }
   candidats.sort((a, b) => b.t - a.t);

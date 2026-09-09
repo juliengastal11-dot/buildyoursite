@@ -1,4 +1,4 @@
-# Bibliothèque de design externe, clonée par scripts/installer.mjs — jamais versionnée ici.
+# Bibliothèque de design externe, clonée par scripts/installer.mjs, jamais versionnée ici.
 # Ancré à la racine : un `lib/` nu masquait aussi socle/lib/, et un clone public
 # recevait un socle dont neuf composants importaient un dossier absent.
 /lib/
