@@ -25,7 +25,7 @@ const out = process.argv[3]
 /* ------------------------------ palette -------------------------------- */
 
 /* Repli quand le projet n'a pas encore de thème : anthracite, ardoise, orange,
-   ivoire — une identité neutre, qui n'est celle d'aucun client. */
+   ivoire. Une identité neutre, qui n'est celle d'aucun client. */
 const DEFAUT = {
   background: "#f4f3ee",
   foreground: "#1f1e1d",
@@ -55,7 +55,7 @@ function palette() {
 const echappe = (s) =>
   s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
-/** gras, italique, code, liens, pastilles de couleur — après échappement */
+/** gras, italique, code, liens, pastilles de couleur (après échappement) */
 function enligne(s) {
   return echappe(s)
     .replace(/`([^`]+)`/g, "<code>$1</code>")
@@ -183,7 +183,7 @@ function rendre(md) {
 /* Un squelette est un plan de masse, pas une maquette : on ne montre que la
    forme (hauteur, fond) et trois libellés, pour qu'il se lise en trois
    secondes. Hauteurs croissantes et nettement différentes, pour qu'un
-   bandeau ne se confonde jamais avec un héros — même imprimé en noir et
+   bandeau ne se confonde jamais avec un héros, même imprimé en noir et
    blanc, où la couleur seule ne distingue rien. */
 const HAUTEURS = { bandeau: 34, normal: 72, grand: 110, plein: 150 };
 
@@ -194,7 +194,7 @@ const FONDS = ["background", "card", "muted", "primary", "secondary"];
 
 /** Une ligne "nom | hauteur | fond | contenu | mouvement" → objet tolérant :
     un champ manquant ou une valeur inconnue prend un repli plutôt que de
-    planter — seul le nom est réellement requis, et son absence écarte
+    planter. Seul le nom est réellement requis, et son absence écarte
     simplement la ligne (cf. extraireSquelettes). */
 function analyserSection(ligne) {
   const [nom, hautBrut, fondBrut, contenu, mouvementBrut] = ligne
@@ -212,7 +212,7 @@ function analyserSection(ligne) {
 }
 
 /* Repère les blocs ```squelette, en extrait les pages, et les retire du
-   texte — sans quoi ils se rendraient une seconde fois comme un vulgaire
+   texte, sans quoi ils se rendraient une seconde fois comme un vulgaire
    <pre><code> dans le corps du document. Tolère un bloc non refermé (on
    consomme jusqu'à la fin du fichier plutôt que de boucler) et un bloc vide
    ou entièrement malformé (aucune page n'est ajoutée : rien ne se rend
@@ -232,7 +232,7 @@ function extraireSquelettes(md) {
     i++;
     const brut = [];
     while (i < lignes.length && !/^```/.test(lignes[i])) brut.push(lignes[i++]);
-    i++; // saute la clôture ``` — ou la fin de fichier, si elle manque
+    i++; // saute la clôture ```, ou la fin de fichier, si elle manque
 
     const sections = brut
       .map((l) => l.trim())
@@ -247,7 +247,7 @@ function extraireSquelettes(md) {
 
 /** Un bloc de section : fond nommé, hauteur à l'échelle, nom en gras,
     contenu discret tronqué proprement, mouvement en étiquette dans le coin.
-    Texte clair sur fond primary pour rester lisible — même recette que le
+    Texte clair sur fond primary pour rester lisible. Même recette que le
     ruban plus bas (fond primary, texte bg). */
 function rendreBloc(s) {
   const contenu = s.contenu ? `<span class="bloc-contenu">${echappe(s.contenu)}</span>` : "";
@@ -262,7 +262,7 @@ function rendreBloc(s) {
 
 /* Les squelettes de toutes les pages, côte à côte (une grille qui repasse à
    une colonne quand la largeur manque) : le plan de masse complet du site,
-   embrassé d'un coup d'œil — pour qu'un plan approuvé sur la seule foi de
+   embrassé d'un coup d'œil, pour qu'un plan approuvé sur la seule foi de
    tableaux ne cache plus de surprise (constaté en vrai : un héros à un seul
    téléphone approuvé, alors que le site de référence en montrait trois). */
 function rendreSquelettes(pages) {
@@ -376,7 +376,7 @@ const page = `<!doctype html>
                 white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   /* Centré, et non calé en haut : posée au sommet d'un bloc, l'étiquette se lit
      comme appartenant au bloc PRÉCÉDENT. Vérifié à l'écran sur un squelette de
-     trois pages — c'était la seule chose ambiguë du rendu. */
+     trois pages : c'était la seule chose ambiguë du rendu. */
   .bloc-mvt{flex:0 0 auto;align-self:center;max-width:9rem;
             font:500 .58rem/1.3 "JetBrains Mono",monospace;letter-spacing:.03em;text-transform:uppercase;
             background:var(--bg);color:var(--fg);border:1px solid var(--border);border-radius:4px;

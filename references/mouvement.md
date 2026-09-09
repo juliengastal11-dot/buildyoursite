@@ -1,20 +1,20 @@
-# Le mouvement — quand, quoi, avec quelle primitive
+# Le mouvement : quand, quoi, avec quelle primitive
 
 Le deuxième bootstrap a livré un site plat. Les primitives existaient ; personne ne les avait
 demandées. Ce fichier existe pour que le mouvement soit **décidé au blueprint, écrit dans
-les briefs, et vérifié à la fin** — jamais laissé au hasard d'un agent.
+les briefs, et vérifié à la fin**, jamais laissé au hasard d'un agent.
 
 > **Le mouvement a deux moitiés, et on n'en voyait qu'une.**
 >
-> **L'arrivée** — comment un élément entre en scène. C'est le sujet des six primitives
+> **L'arrivée** : comment un élément entre en scène. C'est le sujet des six primitives
 > ci-dessous, et c'était tout ce que ce fichier couvrait.
 >
-> **La réaction** — comment un élément répond au curseur, au doigt, au clavier. C'est
+> **La réaction** : comment un élément répond au curseur, au doigt, au clavier. C'est
 > l'autre moitié, et elle vit dans `app/globals.css`, sous « LES ÉTATS » : voir la section
 > [Les états](#les-états--ce-qui-répond) à la fin.
 >
 > Vécu au quatrième bootstrap : le site de référence avait trois téléphones cliquables qui
-> se soulevaient au survol. Le relevé l'avait mesuré — `transform, box-shadow, filter,
+> se soulevaient au survol. Le relevé l'avait mesuré : `transform, box-shadow, filter,
 > opacity · 0.55s`, noir sur blanc. Rien, entre le relevé et les briefs, ne transformait
 > cette mesure en consigne. Le site livré avait un téléphone, immobile et sans lien. Ce que
 > l'utilisateur a remarqué en premier, ce n'est pas une apparition manquante : c'est que
@@ -34,14 +34,14 @@ affichent sans animer sous `prefers-reduced-motion`. Ne contourne jamais ça.
 
 ## Les six primitives du socle
 
-Toutes dans `components/ui/`. Elles portent la structure — ce qui bouge, dans quel ordre,
-déclenché par quoi — et lisent leurs valeurs dans `lib/mouvement.ts`.
+Toutes dans `components/ui/`. Elles portent la structure (ce qui bouge, dans quel ordre,
+déclenché par quoi) et lisent leurs valeurs dans `lib/mouvement.ts`.
 
 | Primitive | Pour | Combien par page | Déclencheur |
 |---|---|---|---|
 | `EntreeHero` | le bloc de texte du héros : eyebrow, titre, paragraphe, boutons | **une** | chargement |
-| `Cascade` | une grille — produits, engagements, témoignages, logos | une par grille | entrée dans le viewport |
-| `Reveal` | un bloc isolé — une citation, une image, un paragraphe fort | avec parcimonie | entrée dans le viewport |
+| `Cascade` | une grille : produits, engagements, témoignages, logos | une par grille | entrée dans le viewport |
+| `Reveal` | un bloc isolé : une citation, une image, un paragraphe fort | avec parcimonie | entrée dans le viewport |
 | `Compteur` | un chiffre **vrai et significatif** | deux ou trois, ensemble | entrée dans le viewport |
 | `Defilant` | des mots-clés, des origines, des logos de partenaires | une bande, rarement deux | chargement, en boucle |
 | `Parallaxe` | une photo pleine largeur ou un cadre image | une ou deux | défilement, continu |
@@ -54,14 +54,14 @@ JavaScript, alors qu'une entrée en scène doit rester cachée jusqu'à ce qu'el
 
 | Primitive | Pour quoi | Combien | Déclenché par |
 |---|---|---|---|
-| `Relief` | une carte qui s'incline et s'éclaire sous le curseur | une grille, jamais deux | le curseur — **ignoré sur écran tactile** |
+| `Relief` | une carte qui s'incline et s'éclaire sous le curseur | une grille, jamais deux | le curseur · **ignoré sur écran tactile** |
 | `Progression` | une barre de lecture, en haut de la fenêtre | une, sur un texte long | le défilement |
 | `Rotatif` | un mot qui change dans une accroche | **une par page** | le temps, en boucle |
 
 `Relief` ne s'active que sur `(hover: hover) and (pointer: fine)` : sur un écran tactile, le
 navigateur émule un survol au premier appui et la carte resterait inclinée après le doigt.
 
-`Progression` n'a de sens que sur un texte long — un article, une page légale. Sur une page
+`Progression` n'a de sens que sur un texte long : un article, une page légale. Sur une page
 d'accueil de trois écrans, elle promet une longueur que la page n'a pas.
 
 `Rotatif` garde la phrase serrée : la largeur du bloc suit le mot affiché. Sans JavaScript et
@@ -116,12 +116,12 @@ Au bootstrap, `--motion` donne une direction ; ce fichier la traduit en valeurs.
 
 | Type de site | `--motion` | `duree` | `distance` | `decalage` | `parallaxe` |
 |---|---|---|---|---|---|
-| Vitrine, éditorial | 5 – 7 | 0,9 – 1,1 | 28 – 36 | 0,08 – 0,12 | 0,12 – 0,2 |
-| Boutique | 3 – 4 | 0,7 – 0,9 | 20 – 28 | 0,06 – 0,08 | 0,08 – 0,12 |
-| Application, back-office | 1 – 2 | 0,4 – 0,6 | 12 – 16 | 0,04 | 0 — pas de parallaxe |
+| Vitrine, éditorial | 5–7 | 0,9–1,1 | 28–36 | 0,08–0,12 | 0,12–0,2 |
+| Boutique | 3–4 | 0,7–0,9 | 20–28 | 0,06–0,08 | 0,08–0,12 |
+| Application, back-office | 1–2 | 0,4–0,6 | 12–16 | 0,04 | 0 (pas de parallaxe) |
 
 Puis `--domain gsap` pour le vocabulaire des chorégraphies plus élaborées que Pro Max
-connaît — épinglage, texte découpé, timelines. Ne les écris que si la page le demande ; une
+connaît : épinglage, texte découpé, timelines. Ne les écris que si la page le demande ; une
 vitrine n'a pas besoin de plus que les six primitives.
 
 Retire `<DefilementFluide />` de `app/layout.tsx` sur une application : le défilement natif
@@ -141,7 +141,7 @@ y est préférable.
   freine en fin de course, comme un objet qui se pose.
 - **Rejouer.** Jamais.
 
-## Les états — ce qui répond
+## Les états : ce qui répond
 
 Trois classes dans `app/globals.css`, et on n'en invente pas d'autres. Elles sont en CSS et
 non en JavaScript : un survol n'a pas besoin d'être orchestré, et une transition CSS survit à
@@ -150,10 +150,10 @@ tout, y compris à un script qui plante.
 | Classe | Pour | Ce que ça fait |
 |---|---|---|
 | `carte-reactive` | une carte, une vignette, un bloc **cliquable** | se soulève de 3 px avec une ombre portée, s'enfonce à la pression |
-| `lien-fleche` + `.fleche` sur l'icône | un lien terminé par une flèche — « Découvrir X → » | la flèche avance de 4 px, le texte ne bouge pas |
+| `lien-fleche` + `.fleche` sur l'icône | un lien terminé par une flèche : « Découvrir X → » | la flèche avance de 4 px, le texte ne bouge pas |
 | `zoom-survol` | une photo dans un cadre `overflow-hidden`, avec `group` sur le parent | l'image grandit de 5 % dans son cadre |
 
-Les trois se taisent sous `prefers-reduced-motion` et sur écran tactile — un appui y
+Les trois se taisent sous `prefers-reduced-motion` et sur écran tactile : un appui y
 déclencherait un faux survol, et l'état resterait collé après le doigt.
 
 ### Ce qu'on refuse
@@ -173,10 +173,10 @@ déclencherait un faux survol, et l'état resterait collé après le doigt.
 
 Chaque brief de section dit **ce qui bouge**, puis **ce qui répond**, en une ligne chacun :
 
-> **Ce qui bouge** — Héros : `EntreeHero` sur le bloc de texte. Grille des produits :
+> **Ce qui bouge**. Héros : `EntreeHero` sur le bloc de texte. Grille des produits :
 > `Cascade`. Photo de l'atelier : `Parallaxe`. Le reste est immobile.
 >
-> **Ce qui répond** — les cartes produit sont cliquables : `carte-reactive`. Le lien
+> **Ce qui répond**. Les cartes produit sont cliquables : `carte-reactive`. Le lien
 > « Découvrir » : `lien-fleche`. La photo de l'atelier ne réagit pas, elle ne mène nulle part.
 
 Et rappelle les deux règles : « les valeurs d'arrivée viennent de `lib/mouvement.ts`, n'écris
@@ -194,7 +194,7 @@ dévoilent-elles ? Un chiffre a-t-il compté ? Si rien ne bouge, ce n'est pas de
 c'est un brief qui n'a rien demandé.
 
 **Puis survole.** Passe le curseur sur une carte cliquable, sur un lien à flèche, sur une
-photo. Si rien ne répond, la moitié « réaction » a été oubliée — c'est arrivé, et personne ne
+photo. Si rien ne répond, la moitié « réaction » a été oubliée. C'est arrivé, et personne ne
 l'a vu avant la remise. Un `grep` de `carte-reactive` et `lien-fleche` dans le projet dit en
 une seconde si les classes ont été demandées ou si les agents les ont ignorées : zéro
 occurrence sur un site qui a des cartes cliquables est un défaut, pas un choix.
@@ -207,8 +207,8 @@ matchMedia("(prefers-reduced-motion: reduce)").matches
 ```
 
 Si le panneau ne sait pas l'émuler, relis **chaque** primitive et **chaque** classe d'état
-pour confirmer sa garde — et dis dans ton rapport que c'est une relecture, pas un essai.
+pour confirmer sa garde, et dis dans ton rapport que c'est une relecture, pas un essai.
 « Probablement respecté » n'est pas une vérification.
 
-Si **tout** est invisible, un script a planté avant l'hydratation — la feuille masque
+Si **tout** est invisible, un script a planté avant l'hydratation : la feuille masque
 d'avance ce que GSAP doit dévoiler (`html.js [data-mouvement]`). La console dit lequel.

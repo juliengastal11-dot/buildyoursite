@@ -1,4 +1,4 @@
-# Module `stripe` — paiement
+# Module `stripe` : paiement
 
 À greffer quand le blueprint prévoit une vente. Mode Checkout hébergé : Stripe gère la page
 de paiement, on ne touche jamais aux données de carte.
@@ -59,7 +59,7 @@ model Ligne {
 }
 ```
 
-## 4. Client Stripe — `lib/stripe.ts`
+## 4. Client Stripe : `lib/stripe.ts`
 
 ```ts
 import Stripe from "stripe";
@@ -70,13 +70,13 @@ export const stripe = key ? new Stripe(key) : null;
 export const stripeActif = Boolean(key);
 ```
 
-## 5. Création de session — `lib/actions/paiement.ts`
+## 5. Création de session : `lib/actions/paiement.ts`
 
 Server action qui : lit le panier, **recalcule les prix depuis la base** (jamais depuis le
 client), crée la `Commande` en `en_attente`, ouvre une session Checkout avec
 `success_url` et `cancel_url`, et renvoie l'URL de redirection.
 
-## 6. Webhook — `app/api/stripe/webhook/route.ts`
+## 6. Webhook : `app/api/stripe/webhook/route.ts`
 
 ```ts
 export const runtime = "nodejs";

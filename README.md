@@ -3,8 +3,8 @@
 Un skill Claude Code qui construit un site client complet en une passe, puis vous laisse le
 modifier **en cliquant dessus**.
 
-Vous décrivez le site. Il pose la base full-stack — modèles de données, routes API, pages,
-design system, mouvement, contenus, serveur lancé, aperçu affiché — avec le paiement Stripe
+Vous décrivez le site. Il pose la base full-stack (modèles de données, routes API, pages,
+design system, mouvement, contenus, serveur lancé, aperçu affiché) avec le paiement Stripe
 branché si le site vend. Ensuite vous cliquez sur une zone de la page, vous écrivez ce que
 vous voulez changer, et le code change.
 
@@ -49,29 +49,29 @@ construit.
 
 ## Ce que ça fait vraiment
 
-**Phase 1 — le bootstrap.** Il relève d'abord ce que la machine sait faire — Node, Python,
-git, clé Pexels, générateur d'images connecté quel qu'il soit — et adapte ses questions. Quelques questions, un
+**Phase 1 : le bootstrap.** Il relève d'abord ce que la machine sait faire (Node, Python,
+git, clé Pexels, générateur d'images connecté quel qu'il soit) et adapte ses questions. Quelques questions, un
 blueprint que vous validez si vous le souhaitez, puis la construction : Next.js 15, TypeScript, Tailwind v4, Prisma + SQLite,
 authentification si nécessaire, back-office si nécessaire. Plusieurs sous-agents travaillent
 en parallèle sur des fichiers disjoints. Il ne vous rend la main que quand `npm run build`
-passe et que le serveur tourne. Un audit de sécurité passe avant la remise. Le socle livre ce qu'un lancement exige — robots, plan du
-site, image de partage, favicon, métadonnées et canoniques — et le blueprint liste ce qui ne
+passe et que le serveur tourne. Un audit de sécurité passe avant la remise. Le socle livre ce qu'un lancement exige (robots, plan du
+site, image de partage, favicon, métadonnées et canoniques), et le blueprint liste ce qui ne
 peut venir que de vous, marqué « à confirmer par l'utilisateur ».
 
-**Phase 2 — l'édition visuelle.** Un overlay injecté en développement uniquement. Survol :
+**Phase 2 : l'édition visuelle.** Un overlay injecté en développement uniquement. Survol :
 la zone se surligne. Clic : elle se fige et une bulle s'ouvre. Vous écrivez, vous pouvez
 joindre une image, vous validez. Les commentaires s'empilent avec une pastille numérotée,
-puis partent en lot — une pastille se clique pour corriger ou retirer son commentaire.
+puis partent en lot. Une pastille se clique pour corriger ou retirer son commentaire.
 Après l'envoi, une comète tourne autour de la barre jusqu'à ce que Claude ait pris la main,
 puis il applique.
 
 **S'inspirer d'un site existant.** Donnez une URL : il **mesure** la charte plutôt que de la
-deviner — palette relevée sur les styles calculés, typographie réellement rendue, géométrie
+deviner. Palette relevée sur les styles calculés, typographie réellement rendue, géométrie
 (rotations, rayons, ombres), liens sortants et leurs paramètres, photos et leurs textes
 alternatifs, cadrage, et le mouvement (défilement fluide, parallaxe, apparitions).
 
 Avec un garde-fou : il vous demande d'abord **si le site vous appartient**. Sinon, il ne
-reprend que la forme — jamais les textes, les photos, les liens ni les coordonnées.
+reprend que la forme : jamais les textes, les photos, les liens ni les coordonnées.
 
 ---
 
@@ -81,9 +81,9 @@ reprend que la forme — jamais les textes, les photos, les liens ni les coordon
 |---|---|
 | Node | 20 ou plus |
 | git | pour la bibliothèque de design |
-| Python 3 | utilisé par UI/UX Pro Max — facultatif, mais sans lui vous perdez le moteur de décision design |
+| Python 3 | utilisé par UI/UX Pro Max. Facultatif, mais sans lui vous perdez le moteur de décision design |
 | Claude Code | avec accès au panneau navigateur intégré |
-| Le modèle | **Opus 5 au minimum**, effort `high` — voir ci-dessous |
+| Le modèle | **Opus 5 au minimum**, effort `high` (voir ci-dessous) |
 
 ### Le modèle compte, et ça se voit sur le résultat
 
@@ -94,14 +94,14 @@ jet qu'on jette.
 
 | Modèle et effort | Pour quoi |
 |---|---|
-| **Fable 5.1**, `high` ou `xhigh` | Idéal — boutique, application, tout projet où l'on veut le moins de reprises |
+| **Fable 5.1**, `high` ou `xhigh` | Idéal : boutique, application, tout projet où l'on veut le moins de reprises |
 | **Opus 5**, `xhigh` | Le bon choix par défaut |
-| **Opus 5**, `high` | Le minimum acceptable — c'est le défaut de Claude Code sur les offres Max |
+| **Opus 5**, `high` | Le minimum acceptable : c'est le défaut de Claude Code sur les offres Max |
 | **Sonnet 5**, `xhigh` | Dépannage, sur une vitrine simple, avec plus de supervision |
 | Sonnet en dessous, **Haiku** | Non : un site complet dépasse ce qu'ils peuvent tenir |
 
 Réglez-le avant de lancer : `/model opus` puis `/effort xhigh`. Les sous-agents que le skill
-lance restent sur Sonnet — c'est voulu, leurs briefs sont détaillés et leur travail est de
+lance restent sur Sonnet : c'est voulu, leurs briefs sont détaillés et leur travail est de
 l'exécution.
 
 **Une fois le site créé, Sonnet 5 suffit pour les modifications au clic** : le code existe,
@@ -111,7 +111,7 @@ une décision de structure ou de design plutôt qu'une retouche.
 
 > **N'utilisez pas `ultracode`.** C'est une fausse bonne idée : on choisit le réglage le
 > plus puissant en pensant bien faire, et on obtient l'inverse. `ultracode` monte l'effort
-> à `xhigh` — parfait — **mais il fait aussi orchestrer des workflows dynamiques**, qui
+> à `xhigh` (parfait), **mais il fait aussi orchestrer des workflows dynamiques**, qui
 > lancent leurs propres sous-agents et redécoupent le travail. Or ce skill a déjà son
 > découpage, affiné sur de vraies constructions : qui écrit quoi, avec des périmètres de
 > fichiers exclusifs. Les sous-agents d'`ultracode` ne les connaissent pas et écriraient
@@ -170,8 +170,8 @@ node scripts/installer.mjs --racine "C:\Sites" --appellation "Chef"
 
 ## Utilisation
 
-Ouvrez Claude Code dans le dossier où vous voulez votre site — il sera créé là, dans un
-sous-dossier à son nom — puis :
+Ouvrez Claude Code dans le dossier où vous voulez votre site (il sera créé là, dans un
+sous-dossier à son nom), puis :
 
 ```
 /buildyoursite
@@ -198,7 +198,7 @@ bas à droite sur **Édition** et cliquez sur ce que vous voulez changer.
 
 Trois fichiers valent le détour si vous voulez comprendre l'esprit du projet :
 **`references/releve-complet.js`**, qui mesure les six dimensions d'une charte en un
-passage — palette, typographie, géométrie, liens, photos et leur cadrage, mouvement ; **`scripts/verifier-projet.mjs`**, qui refuse ce qu'aucun build ne signale ; et
+passage (palette, typographie, géométrie, liens, photos et leur cadrage, mouvement) ; **`scripts/verifier-projet.mjs`**, qui refuse ce qu'aucun build ne signale ; et
 **`AMELIORATIONS.md`**, qui raconte chaque erreur commise et la règle qui en est sortie.
 
 ## Ce que ça ne fait pas
@@ -211,7 +211,7 @@ passage — palette, typographie, géométrie, liens, photos et leur cadrage, mo
   En revanche, **vous pouvez envoyer un lien** à un client ou à un associé pendant la
   construction, sans rien héberger : `scripts/partager.mjs` sert votre site compilé derrière
   une adresse publique temporaire, formulaires et back-office compris. Le lien meurt quand
-  vous fermez la fenêtre — c'est un aperçu, pas une publication.
+  vous fermez la fenêtre : c'est un aperçu, pas une publication.
 - **Aucune copie de site tiers.** Le skill refuse de proposer la reproduction fidèle d'un
   site qui ne vous appartient pas.
 - **Aucun prestataire imposé, aucun lien affilié.** Le projet ne pousse ni hébergeur ni
@@ -235,16 +235,16 @@ passage — palette, typographie, géométrie, liens, photos et leur cadrage, mo
   place.
 - **Les pages légales sont des gabarits**, pas des documents prêts. Elles portent des
   marqueurs `[[À CONFIRMER PAR L'UTILISATEUR]]` que le contrôle automatique signale tant qu'ils restent. Rien
-  n'y est inventé — un SIRET plausible serait pire qu'un trou visible.
+  n'y est inventé : un SIRET plausible serait pire qu'un trou visible.
 - **Les photos provisoires viennent d'une archive.** Sans clé Pexels (gratuite), elles sont
   cherchées sur Openverse, qui respecte le sujet mais mélange photographies, gravures et
   scans. Le skill les filtre puis **les regarde** sur une planche-contact avant de les
-  garder — sur onze photos, le premier jet en avait six de fausses, dont le portrait d'une
+  garder : sur onze photos, le premier jet en avait six de fausses, dont le portrait d'une
   personne identifiable. Ce contrôle visuel n'est pas optionnel.
 
 ## Licence et crédits
 
-MIT — voir [LICENSE](LICENSE).
+MIT : voir [LICENSE](LICENSE).
 
 Le moteur de décision design est [UI/UX Pro Max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill)
 de nextlevelbuilder, également sous MIT, cloné localement et volontairement non inclus dans

@@ -12,7 +12,7 @@
    ne se cherchent pas dans un générateur en ligne.
 
    Deux raisons de les fabriquer ici plutôt que de les télécharger. Les couleurs
-   sortent des jetons du thème, donc un fond ne peut pas être hors palette — le
+   sortent des jetons du thème, donc un fond ne peut pas être hors palette, le
    défaut le plus courant. Et le fichier est écrit directement dans le projet :
    rien à ouvrir, rien à téléverser, rien à recadrer.
 
@@ -71,7 +71,7 @@ const sortie = opt("sortie");
 
 /* Les couleurs viennent des jetons `--color-*` du bloc @theme. C'est ce qui
    garantit qu'un fond ne peut pas sortir de la charte : il n'a pas d'autre
-   source. Les jetons de rôle passent avant les couleurs de service — un fond
+   source. Les jetons de rôle passent avant les couleurs de service : un fond
    construit sur `--color-border` serait gris et triste. */
 const ROLES = ["primary", "accent", "secondary", "background", "muted", "card", "foreground"];
 
@@ -187,7 +187,7 @@ function blob(c) {
 
 /* Un motif discret doit rester visible. Le premier jet posait les triangles à
    0,04 d'opacité : mesuré sur le rendu, l'écart avec le fond ne dépassait pas
-   20 sur 765 — invisible. La règle est donc calculée, pas choisie à l'œil :
+   20 sur 765. Invisible. La règle est donc calculée, pas choisie à l'œil :
    on prend dans la palette la couleur la plus éloignée du fond, et l'opacité
    compense un contraste faible. Discret veut dire léger, pas absent. */
 
@@ -215,7 +215,7 @@ function contraste(couleurs, fond) {
   return { couleur: meilleure, ecart };
 }
 
-/** Triangles irréguliers. Un fond, pas un motif — mais un fond qu'on voit. */
+/** Triangles irréguliers. Un fond, pas un motif. Mais un fond qu'on voit. */
 function grille(c) {
   const fond = c[c.length - 1];
   const { couleur, ecart } = contraste(c, fond);
@@ -244,7 +244,7 @@ function grille(c) {
   return entete(out.trimEnd());
 }
 
-/** Semis de points. Discret, donc léger — mais assez dense pour se lire. */
+/** Semis de points. Discret, donc léger. Mais assez dense pour se lire. */
 function points(c) {
   // Un point pour 2 600 px² : à 1440 × 500, environ 280 points. Le premier jet
   // en posait 80, soit un pour cent de la surface : on ne voyait rien.

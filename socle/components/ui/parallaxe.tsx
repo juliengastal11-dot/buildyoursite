@@ -8,7 +8,7 @@ import { MOUVEMENT } from "@/lib/mouvement";
 /* ---------------------------------------------------------------------------
    Parallaxe : l'image glisse un peu moins vite que la page.
 
-   Volontairement à la limite du perceptible — au-delà, ça attire l'œil au
+   Volontairement à la limite du perceptible : au-delà, ça attire l'œil au
    lieu de donner de la profondeur. Sur une ou deux photos par page, pas plus.
 
    L'enfant est agrandi et décalé pour que le glissement ne découvre jamais
@@ -17,14 +17,14 @@ import { MOUVEMENT } from "@/lib/mouvement";
    `yPercent` étant relatif à la couche, la borne vaut `50·i / (1 + i)`.
 
    Le cadre porte lui-même `overflow-hidden` et `relative` : sans eux, la
-   couche déborderait ou se positionnerait n'importe où — une panne
+   couche déborderait ou se positionnerait n'importe où : une panne
    silencieuse, constatée quand ces classes étaient laissées à l'appelant.
 --------------------------------------------------------------------------- */
 
 export type ParallaxeProps = React.ComponentProps<"div"> & {
   /** Débord, en fraction de la hauteur du cadre. 0,12 = discret, 0,25 = marqué. */
   intensite?: number;
-  /** Contenu posé PAR-DESSUS la photo et qui ne bouge pas — badge, légende. */
+  /** Contenu posé PAR-DESSUS la photo et qui ne bouge pas : badge, légende. */
   surcouche?: React.ReactNode;
 };
 

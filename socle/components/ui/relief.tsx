@@ -6,7 +6,7 @@ import { gsap, mouvementReduit } from "@/lib/gsap";
 import { MOUVEMENT } from "@/lib/mouvement";
 
 /* ---------------------------------------------------------------------------
-   Une carte qui répond au curseur — inclinaison légère et tache de lumière.
+   Une carte qui répond au curseur : inclinaison légère et tache de lumière.
 
    C'est une micro-interaction, pas une entrée en scène : la carte est visible
    sans JavaScript et **ne porte pas `data-mouvement`**, sinon la feuille de

@@ -7,7 +7,7 @@ import { MOUVEMENT } from "@/lib/mouvement";
 
 /* ---------------------------------------------------------------------------
    Entrée du héros : ses enfants directs entrent en scène l'un après l'autre,
-   au chargement de la page — pas au défilement.
+   au chargement de la page, pas au défilement.
 
    Une seule par page, sur le bloc de texte du héros : eyebrow, titre,
    paragraphe, boutons. Pas sur la photo de fond, qui doit être là d'emblée.

@@ -7,7 +7,7 @@ import { Parallaxe } from "@/components/ui/parallaxe";
 import { Section } from "@/components/ui/section";
 
 /* ---------------------------------------------------------------------------
-   Page d'attente du socle — remplacée au bootstrap par les vraies pages.
+   Page d'attente du socle, remplacée au bootstrap par les vraies pages.
 
    Elle montre les six primitives de mouvement en situation, pour deux
    raisons : vérifier d'un coup d'œil que le socle bouge après un clone, et

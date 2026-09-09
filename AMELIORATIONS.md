@@ -1,4 +1,4 @@
-# Journal d'améliorations — /buildyoursite
+# Journal d'améliorations · /buildyoursite
 
 Tenu pendant les vrais bootstraps. Chaque entrée dit **ce qui s'est passé**, pas ce qui
 pourrait théoriquement mal tourner.
@@ -9,7 +9,7 @@ pourrait théoriquement mal tourner.
 
 ---
 
-# Bootstrap #1 — site vitrine de coach sportif (2026-09-03)
+# Bootstrap #1 : site vitrine de coach sportif (2026-09-03)
 
 Premier usage réel. Référence imposée par le client, module back-office, entrée admin
 discrète en pied de page, réservation de créneaux de 30 min.
@@ -18,15 +18,15 @@ discrète en pied de page, réservation de créneaux de 30 min.
 
 | # | Problème | Cause | Correction | Détecté par |
 |---|---|---|---|---|
-| 1 | L'overlay postait dans le vide | `app/api/__buildyoursite/` — Next.js **exclut du routage tout dossier commençant par `_`**. La route n'existait pas. | Renommé `/api/buildyoursite` | le build (route absente de la liste) |
+| 1 | L'overlay postait dans le vide | `app/api/__buildyoursite/` : Next.js **exclut du routage tout dossier commençant par `_`**. La route n'existait pas. | Renommé `/api/buildyoursite` | le build (route absente de la liste) |
 | 2 | La page de connexion ne compilait pas | En Next 15, `searchParams` est une **promesse** ; `useSearchParams` exige une frontière `Suspense` | Page serveur + formulaire client séparés | anticipé avant build |
 | 3 | Redirection ouverte | `?suite=` réinjecté tel quel dans `redirectTo` | Seuls les chemins internes sont acceptés (`/…` mais pas `//…`) | relecture |
 | 4 | Inscription publique inutile | Le module auth livrait `/inscription` : n'importe qui pouvait créer un compte | Page retirée du module, action `inscription` supprimée | relecture |
 | 5 | Route protégée fantôme | `middleware.ts` protégeait `/compte`, qui n'existe dans aucun projet | `PROTECTED = ["/admin"]` | relecture |
 | 6 | Deux sous-agents morts | Lancés sur Opus → **529 Overloaded**, deux fois de suite | Sous-agents sur `sonnet` par défaut, règle inscrite dans `SKILL.md` | notification d'échec |
-| 7 | Fichier `.tmp` résiduel | Fausse écriture atomique : `writeFile(tmp)` puis `writeFile(final)` | `rename(tmp, final)` — vraie atomicité, vérifiée sur Windows | test manuel |
+| 7 | Fichier `.tmp` résiduel | Fausse écriture atomique : `writeFile(tmp)` puis `writeFile(final)` | `rename(tmp, final)` : vraie atomicité, vérifiée sur Windows | test manuel |
 
-## Ce qui a marché — à ne pas casser
+## Ce qui a marché, à ne pas casser
 
 Aussi important que les ratés, parce que c'est ce qu'il faut préserver en corrigeant le reste.
 
@@ -44,14 +44,14 @@ Ce qui a produit ce résultat, et qu'il faut garder :
   chercher un hex.
 - **Le périmètre de fichiers exclusif.** C'est ce qui a rendu le conflit visible plutôt que
   silencieux.
-- **Les fichiers-contrats écrits par l'orchestrateur avant le lancement** — thème, schéma,
+- **Les fichiers-contrats écrits par l'orchestrateur avant le lancement** : thème, schéma,
   helpers de date, assemblage. Les agents ont construit contre une cible fixe.
 - **Les formateurs de date centralisés** (`formatJour`, `formatHeure`, `cleJour`), imposés
   dans chaque brief. Personne n'a appelé `toLocaleDateString` à sa sauce, donc aucun risque
   d'erreur d'hydratation serveur/navigateur.
 
 **Les agents ont aussi rattrapé mes trous de brief**, et l'ont dit :
-`<select required>` sans option vide désactivée est toujours valide — donc `required` ne
+`<select required>` sans option vide désactivée est toujours valide, donc `required` ne
 sert à rien ; la variante `outline` disparaît sur fond sombre ; les cartes `bg-card` posées
 sur une section `bg-card` se fondent dans le fond. Trois défauts que je n'avais pas vus.
 Exiger un rapport d'arbitrages en fin de brief n'est pas une formalité : c'est là que ces
@@ -77,7 +77,7 @@ Règle inscrite dans le `SKILL.md` : tuer le serveur → `rm -rf .next` → `npm
 relancer.
 
 **Correction ultérieure :** j'avais d'abord écrit « ou `npx next build --distDir .next-verif`
-pour vérifier sans interrompre la preview ». **Faux** — `next build` n'accepte pas ce drapeau
+pour vérifier sans interrompre la preview ». **Faux** : `next build` n'accepte pas ce drapeau
 en ligne de commande, c'est une option de `next.config`. Le vrai outil de contrôle pendant
 que le serveur vit, c'est `npx tsc --noEmit`, qui ne touche pas à `.next`.
 
@@ -116,7 +116,7 @@ Recette de récupération écrite dans `references/extraction-charte.md`, sectio
 J'avais écrit cette règle dans ce journal, et je l'ai enfreinte vingt minutes plus tard.
 Voyant `contact.tsx` déjà sur le disque, j'ai conclu que l'agent en avait fini et j'y ai
 ajouté une prop `whatsapp`. L'agent tournait toujours : il a détecté la modification
-extérieure, l'a — correctement, selon son brief — annulée, et m'a signalé le conflit dans
+extérieure, l'a (correctement, selon son brief) annulée, et m'a signalé le conflit dans
 son rapport final. Résultat intermédiaire : `page.tsx` passait une prop que le composant
 n'acceptait plus, donc une erreur de type.
 
@@ -127,7 +127,7 @@ Ce qu'il faut retenir, et inscrire dans le `SKILL.md` :
 - Toute correction sur un fichier confié attend cette notification. Sans exception.
 - Si la correction ne peut pas attendre, elle passe par un `SendMessage` à l'agent, pas par
   une édition directe.
-- Le bon réflexe de l'agent — signaler le conflit au lieu de le subir en silence — vient du
+- Le bon réflexe de l'agent, signaler le conflit au lieu de le subir en silence, vient du
   fait que son brief listait un périmètre exclusif. Cette clause n'est pas de la paperasse :
   c'est elle qui a rendu le conflit visible.
 
@@ -137,7 +137,7 @@ Ce qu'il faut retenir, et inscrire dans le `SKILL.md` :
 
 Au départ, L'utilisateur avait choisi « blueprint affiché, mais j'enchaîne ». Le premier vrai
 bootstrap a montré la faille : mon `BLUEPRINT.md` contenait **quatre hypothèses jamais
-validées** — que le site de référence lui appartenait, qu'aucun service d'e-mail n'était
+validées** : que le site de référence lui appartenait, qu'aucun service d'e-mail n'était
 disponible, que les photos seraient des remplaçants, et que les créneaux seraient
 exclusivement de 30 min. Sur un livrable client, une seule de ces quatre peut coûter une
 demi-journée de reprise.
@@ -149,7 +149,7 @@ Quelques lignes qui disent ce qui va se passer et où l'utilisateur peut reprend
 Coût nul, et ça évite de le laisser sans repère pendant vingt minutes de construction.
 
 **2. Une question fixe dans la première salve** : « souhaites-tu valider le blueprint avant
-que je construise ? ». Le choix, et donc la responsabilité, lui reviennent — c'est ce qu'il
+que je construise ? ». Le choix, et donc la responsabilité, lui reviennent : c'est ce qu'il
 a demandé explicitement. Défaut recommandé : oui.
 
 Conséquence à surveiller : la salve d'`AskUserQuestion` est plafonnée à 4 questions, dont
@@ -167,8 +167,8 @@ buté sur la même chose**, indépendamment, en écrivant `reservation-form.tsx`
 occurrences, même cause : un heredoc Git Bash dont le contenu mêle apostrophes françaises
 et guillemets casse le parsing du shell, même en délimiteur cité (`<<'EOF'`).
 
-Règle à inscrire dans le `SKILL.md` : **tout fichier contenant du texte français — code
-commenté, copie, libellés — s'écrit avec l'outil `Write`, jamais par heredoc.** Les heredocs
+Règle à inscrire dans le `SKILL.md` : **tout fichier contenant du texte français (code
+commenté, copie, libellés) s'écrit avec l'outil `Write`, jamais par heredoc.** Les heredocs
 restent bons pour du JSON, des configs et des scripts sans accents.
 
 C'est le genre de détail qui coûte un aller-retour à chaque agent, à chaque projet.
@@ -177,7 +177,7 @@ C'est le genre de détail qui coûte un aller-retour à chaque agent, à chaque 
 
 L'utilisateur m'écrit : « consigne ça pour que si cela se reproduise tu répares automatiquement ».
 
-J'avais écrit une règle — vérifier le port avant, lire la ligne `Local:` après. Une règle
+J'avais écrit une règle : vérifier le port avant, lire la ligne `Local:` après. Une règle
 qu'il faut penser à appliquer n'est pas une réparation. C'est devenu
 `scripts/demarrer-dev.mjs`, appelé à la place de `npm run dev`.
 
@@ -191,17 +191,17 @@ Deux branches, **toutes deux éprouvées en conditions réelles** :
 Testé avec un faux service sur 3001 : le script l'a nommé (`node faux-service.mjs`), ne l'a
 pas tué, et a démarré sur 3002. Le service tournait toujours après.
 
-Il affiche `BUILDYOURSITE_URL=http://localhost:<port>` dès que le serveur répond — c'est
+Il affiche `BUILDYOURSITE_URL=http://localhost:<port>` dès que le serveur répond : c'est
 cette ligne qu'on lit, jamais le port supposé.
 
 **Deux pièges rencontrés en l'écrivant, tous deux consignés :**
 
 `spawn EINVAL` sur Windows. Depuis Node 18.20 / 20.12, `spawn` refuse de lancer un `.cmd`
-— donc `npm.cmd` — sans `shell: true`. Le message d'erreur ne dit rien de la cause.
+(donc `npm.cmd`) sans `shell: true`. Le message d'erreur ne dit rien de la cause.
 
 **Les heredocs de ce shell mangent les antislashs, même entre quotes simples.** Ma regex
 `[\\/\s]` arrivait en `[\/\s]` dans le fichier de test, donc sans les antislashs, donc sans
-matcher les chemins Windows. J'ai cru à une regex fausse et j'ai commencé à la « corriger » —
+matcher les chemins Windows. J'ai cru à une regex fausse et j'ai commencé à la « corriger » :
 elle était juste, c'était le banc de test qui était corrompu. Réécrit avec `Write` : 8 cas
 sur 8, aucun faux positif.
 
@@ -214,7 +214,7 @@ vraie ligne de commande ne contient d'ailleurs pas « next dev » mais
 
 Le test « ne tue pas l'inconnu » a démarré un **second serveur Next sur le même projet**,
 port 3002 pendant que le premier tenait 3000. Cinq minutes plus tard, `/` renvoyait 404
-pendant que `/admin` et `/blueprint` répondaient — et `tsc` était vert.
+pendant que `/admin` et `/blueprint` répondaient, et `tsc` était vert.
 
 **Deux serveurs Next partagent `.next` et se corrompent mutuellement.** Je connaissais la
 version `build` pendant `dev` ; la version `dev` pendant `dev` est identique et je ne l'avais
@@ -224,7 +224,7 @@ qui tombent une à une.
 Deux corrections dans le lanceur, toutes deux nées de cet incident :
 
 **Il tuait n'importe quel serveur Next, y compris celui d'un autre projet.** Beaucoup trop
-agressif — j'aurais coupé le serveur de quelqu'un travaillant à côté. Il compare désormais
+agressif : j'aurais coupé le serveur de quelqu'un travaillant à côté. Il compare désormais
 la ligne de commande à `process.cwd()` : notre projet, on termine ; un autre projet, on
 n'y touche pas et on se décale.
 
@@ -232,14 +232,14 @@ n'y touche pas et on se décale.
 tout serveur de *ce* projet trouvé ailleurs. C'est la garantie qu'on ne peut plus provoquer
 la corruption qu'on vient de subir.
 
-## Garde-fou sur l'appropriation — soulevé par l'utilisateur, appliqué
+## Garde-fou sur l'appropriation : soulevé par l'utilisateur, appliqué
 
 L'utilisateur m'écrit : « si demain un utilisateur te met un site très connu en référence et ne fait pas
 attention, tu risques de coller des liens qui amènent vers tout autre chose. »
 
 Il a raison, et **le problème est plus large que les liens.** Sur ce bootstrap j'ai repris
 du site de référence : les textes mot pour mot, les neuf photos, le numéro de téléphone,
-et les liens. C'était légitime — le site est le sien. Sur le site d'un tiers, les photos et
+et les liens. C'était légitime : le site est le sien. Sur le site d'un tiers, les photos et
 les textes seraient une contrefaçon, et les liens enverraient les visiteurs du client vers
 le WhatsApp d'un inconnu.
 
@@ -249,18 +249,18 @@ chez le client.
 
 Deux questions ajoutées en phase 0.c, posées **avant** de relever quoi que ce soit :
 
-1. **Ce site t'appartient-il ?** — gouverne tout le reste.
-2. **Je reprends les liens sortants ?** — posée même quand le site est le sien : il peut
+1. **Ce site t'appartient-il ?** Gouverne tout le reste.
+2. **Je reprends les liens sortants ?** Posée même quand le site est le sien : il peut
    vouloir un autre compte, un autre numéro, ou pas de réseaux sur ce site-là.
 
 Et un tableau qui tranche élément par élément : palette, typo, géométrie et **plan de page**
-se reprennent toujours — un langage visuel et un squelette de page ne s'approprient pas.
+se reprennent toujours. Un langage visuel et un squelette de page ne s'approprient pas.
 Textes, photos, liens, coordonnées, nom et marque, jamais d'un site tiers.
 
 La règle en une phrase : **d'un site qui n'est pas le sien, on reprend la forme, jamais ce
 qui identifie son propriétaire ni ce qui lui appartient.**
 
-## Socle complété — les points 4, 4 bis et 5 sont réglés
+## Socle complété : les points 4, 4 bis et 5 sont réglés
 
 Les quatre agents avaient buté sur les mêmes manques et les avaient contournés chacun à sa
 façon. Ajouté au socle, vérifié sur le premier bootstrap :
@@ -271,7 +271,7 @@ façon. Ajouté au socle, vérifié sur le premier bootstrap :
 | `shape="pill"` | Les `cn(buttonVariants(...), "rounded-full")` répétés à chaque usage |
 | `variant="onDark"` / `onDarkSolid` | Le recoloriage manuel de `outline`, invisible sur un héros sombre |
 | `Input`, `Textarea`, `Select` | Les classes `champ` réinventées en dur dans chaque formulaire. Styles partagés via `champStyles`, un seul endroit à ajuster |
-| `Select` avec `placeholder` | L'oubli de l'option vide désactivée, sans laquelle `required` ne sert à rien — le piège que l'agent du bas de page avait repéré seul |
+| `Select` avec `placeholder` | L'oubli de l'option vide désactivée, sans laquelle `required` ne sert à rien : le piège que l'agent du bas de page avait repéré seul |
 | `Field` | Le placeholder-en-guise-de-libellé. Le `<label>` est obligatoire, et `id` / `aria-invalid` / `aria-describedby` sont câblés automatiquement |
 | `Section` | Les `py-20` / `py-24` / `py-32` divergents d'une section à l'autre, et l'`aria-labelledby` que tout le monde oublie |
 
@@ -286,7 +286,7 @@ de navigation a profité des nouvelles variantes sans être retouché, l'agent a
 **Reste sur le socle** : `CONTEXTE.md` généré au bootstrap (point 8 ci-dessous), qui
 économiserait aux agents la relecture de `globals.css`, `button.tsx` et `package.json`.
 
-## À faire — priorité haute
+## À faire : priorité haute
 
 ### 1. Pro Max ne parle qu'anglais
 Ma requête `"prise de rendez-vous creneaux horaires"` a renvoyé **0 résultat**. La même en
@@ -296,23 +296,23 @@ toujours en anglais**, quelle que soit la langue du projet.
 ### 2. La phase 0.5 a besoin de deux branches
 Le skill dit « Pro Max est ta source de vérité design ». C'est faux quand le client dit
 « garde les couleurs et la mise en page ». Il faut :
-- **branche A — pas de référence** : `--design-system` décide tout, comme aujourd'hui.
-- **branche B — référence fournie** : la charte extraite de la référence fait loi ; Pro Max
+- **branche A, pas de référence** : `--design-system` décide tout, comme aujourd'hui.
+- **branche B, référence fournie** : la charte extraite de la référence fait loi ; Pro Max
   n'intervient plus que sur les parties **nouvelles** (ici la réservation) et sur les
   guidelines de qualité (`--domain ux`).
 
 ### 3. Écrire une recette d'extraction de charte
 J'ai improvisé une chaîne entière, alors que c'est reproductible. À figer dans
 `references/extraction-charte.md` :
-1. `WebFetch` échoue sur une SPA — on récupère « Loading… ». Ne pas s'arrêter là.
+1. `WebFetch` échoue sur une SPA : on récupère « Loading… ». Ne pas s'arrêter là.
 2. Passer par le navigateur intégré, laisser 4-10 s de rendu.
 3. Si le DOM est vide : le site est dans une **iframe**. Lister les iframes en JS.
 4. Iframe cross-origin → trouver le vrai domaine. Les plateformes d'aperçu empilent
    souvent deux shells avant le vrai site, servi par un sous-domaine dédié ; charger cette
    URL au niveau supérieur.
-5. Lire les **styles calculés** (`getComputedStyle`) des éléments clés — c'est la seule
+5. Lire les **styles calculés** (`getComputedStyle`) des éléments clés : c'est la seule
    source fiable. Les variables CSS `:root` mentent : ici, les tokens shadcn annonçaient
-   une couleur d'accent qu'aucun CTA n'utilisait — la leur était posée en valeur arbitraire.
+   une couleur d'accent qu'aucun CTA n'utilisait. La leur était posée en valeur arbitraire.
 6. Récupérer les polices réellement appliquées, pas celles importées.
 
 ### 4. Le socle manque de composants de formulaire
@@ -340,23 +340,23 @@ improvisés, trois occasions d'incohérence entre sections.
 
 ### 4 ter. Tailwind 4.3 a renommé les classes de dégradé
 `bg-gradient-*` est devenu `bg-linear-*` en v4. L'agent, ne pouvant pas lancer de build pour
-vérifier, a préféré des dégradés en `style` inline — prudent et correct, mais le socle
+vérifier, a préféré des dégradés en `style` inline. Prudent et correct, mais le socle
 devrait simplement documenter les bons noms de classes pour la version qu'il embarque.
 
 ### 5. Le socle manque un composant `Section`
 Chaque agent refait son propre rythme vertical (`py-20`, `py-24`, `py-32`…). Incohérence
 garantie entre sections. Un `<Section id eyebrow titre>` réglerait le rythme une fois.
 
-### 6. `.claude/settings.json` dans le socle — **à vérifier, pas observé**
+### 6. `.claude/settings.json` dans le socle : **à vérifier, pas observé**
 J'avais noté « chaque commande npm redemande une permission ». **C'est faux dans ce test** :
 les réglages globaux de l'utilisateur sont en `bypassPermissions`, je n'ai eu aucune interruption.
-L'intérêt d'un `settings.json` dans le socle est donc ailleurs — projet ouvert depuis une
+L'intérêt d'un `settings.json` dans le socle est donc ailleurs : projet ouvert depuis une
 session cloud, une autre machine, ou par quelqu'un d'autre. Priorité basse, à trancher.
 
-## À faire — priorité moyenne
+## À faire : priorité moyenne
 
 ### 7. npm 11 bloque les scripts d'installation
-`npm install` affiche `allow-scripts` et n'exécute pas les postinstall — dont celui de
+`npm install` affiche `allow-scripts` et n'exécute pas les postinstall, dont celui de
 Prisma. `npx prisma generate` rattrape le coup, mais c'est un piège silencieux. Soit un
 `.npmrc` dans le socle, soit une note explicite dans le `SKILL.md`.
 
@@ -368,7 +368,7 @@ risque de collision est visible d'un coup d'œil.
 ### 8 bis. Le blueprint doit aussi figer le contrat de données
 Cas vécu : le réglage `whatsapp`, éditable par le coach en admin, **n'aurait rien changé au
 site**. L'agent chargé du contact avait choisi de déduire le lien `wa.me` du téléphone
-affiché — une solution propre en soi, mais qui ignorait le réglage prévu. Résultat : un
+affiché, une solution propre en soi, mais qui ignorait le réglage prévu. Résultat : un
 bouton d'administration sans effet, le pire des bugs parce qu'il est invisible.
 
 Le blueprint doit donc porter un tableau **section → réglages consommés → nom de la prop**.
@@ -397,18 +397,18 @@ chemins.
 
 | Agent | Durée | Tokens | Appels d'outils |
 |---|---|---|---|
-| Haut de page — 4 sections, Sonnet | 14 min | 179 k | 24 |
-| Bas de page — 4 sections + formulaire, Sonnet | 17 min | 201 k | 37 |
+| Haut de page · 4 sections, Sonnet | 14 min | 179 k | 24 |
+| Bas de page · 4 sections + formulaire, Sonnet | 17 min | 201 k | 37 |
 
-Avec quatre agents en parallèle, la phase de génération se joue autour de **15-20 minutes**
-— plus lent qu'un générateur en ligne, le même ordre de grandeur. Le coût réel
+Avec quatre agents en parallèle, la phase de génération se joue autour de **15-20 minutes** :
+plus lent qu'un générateur en ligne, le même ordre de grandeur. Le coût réel
 tient surtout au fait que chaque agent relit le socle pour se situer : `globals.css`,
 `button.tsx`, `utils.ts`, `package.json`. Un fichier `CONTEXTE.md` généré au bootstrap,
 listant tokens et composants disponibles, économiserait probablement un tiers de ces lectures.
 
 ## Limite assumée
 
-`component` et `source` restent `null` pour tout ce qui vient d'un Server Component — la
+`component` et `source` restent `null` pour tout ce qui vient d'un Server Component : la
 fibre React n'existe pas côté navigateur. La localisation passe donc par les classes
 Tailwind et le texte visible, ce qui fonctionne, mais reste un `Grep` et non un pointeur.
 Un plugin SWC injectant `data-src="fichier:ligne"` sur chaque élément JSX le règlerait
@@ -417,22 +417,22 @@ vraiment. Chantier à part entière, à décider.
 
 ---
 
-# Bootstrap #2 — boutique en ligne, sans site de référence (2026-09-04)
+# Bootstrap #2 : boutique en ligne, sans site de référence (2026-09-04)
 
 Torréfacteur artisanal : catalogue, panier, paiement, comptes clients, back-office.
-Choisi pour traverser les branches jamais parcourues — identité décidée par le design
+Choisi pour traverser les branches jamais parcourues : identité décidée par le design
 system, module Stripe jamais exécuté, blueprint sans validation.
 
 ## Corrigé à chaud
 
 | # | Défaut | Trouvé par |
 |---|---|---|
-| **Données du client précédent dans le socle** — téléphone, e-mail, Instagram, ville dans `reglages.ts` | en copiant le socle |
-| **`text-terracotta` non défini** dans `Section` — couleur fantôme, rendu invisible | agent éditorial |
-| **`Parallaxe` ne posait pas sa propre classe** — panne totalement silencieuse | agent catalogue |
+| **Données du client précédent dans le socle** : téléphone, e-mail, Instagram, ville dans `reglages.ts` | en copiant le socle |
+| **`text-terracotta` non défini** dans `Section` : couleur fantôme, rendu invisible | agent éditorial |
+| **`Parallaxe` ne posait pas sa propre classe** : panne totalement silencieuse | agent catalogue |
 | **Aucun `not-found.tsx`** dans le socle | agent éditorial |
-| **`bg-gradient-to-*`** sur quatre dégradés — syntaxe Tailwind 3, ne rend rien en v4 | le contrôle automatique |
-| **Contrat de server action** — une action qui renvoie un état ne peut pas être branchée nue sur `<form action>` | le typecheck |
+| **`bg-gradient-to-*`** sur quatre dégradés : syntaxe Tailwind 3, ne rend rien en v4 | le contrôle automatique |
+| **Contrat de server action** : une action qui renvoie un état ne peut pas être branchée nue sur `<form action>` | le typecheck |
 
 Les trois premiers partagent une racine : **une valeur propre à un projet remontée dans le
 socle**, ou une déclaration CSS déplacée sans mettre le composant à jour. Le premier cas
@@ -441,26 +441,26 @@ n'avais vérifié que les données.
 
 ## Ce qui a été construit en réponse
 
-**`scripts/verifier-projet.mjs`** — le garde-fou. Cinq contrôles, chacun né d'un défaut
+**`scripts/verifier-projet.mjs`** : le garde-fou. Cinq contrôles, chacun né d'un défaut
 réel : données personnelles dans le socle, couleurs utilisées sans être définies, dégradés
 en syntaxe obsolète, trous `[[À COMPLÉTER]]` des pages légales, photos provisoires restées
 en place.
 
 Sa première exécution réelle a trouvé **cinq bugs silencieux** qu'aucun build n'avait
-signalés. Sa première version en avait aussi produit **huit faux positifs** — `text-sm`,
+signalés. Sa première version en avait aussi produit **huit faux positifs** : `text-sm`,
 `border-b`, `ring-offset-2` ne sont pas des couleurs. Un garde qui crie à tort est pire que
 pas de garde : la détection ne retient plus qu'un mot d'au moins quatre lettres, sans
 chiffre, absent des mots-clés Tailwind, et hors commentaire.
 
-**`references/structures.md`** — quelles pages doivent exister, par type de site. Né du
+**`references/structures.md`** : quelles pages doivent exister, par type de site. Né du
 manque le plus grave de ce bootstrap : une boutique livrée **sans mentions légales, sans
 CGV, sans politique de confidentialité**. Elle buildait parfaitement et était inexploitable.
 Personne ne l'avait demandé, moi compris.
 
-**`modules/legal/`** — les gabarits de ces pages, avec des marqueurs `[[À COMPLÉTER]]` à
+**`modules/legal/`** : les gabarits de ces pages, avec des marqueurs `[[À COMPLÉTER]]` à
 chaque valeur inconnue. Rien n'y est inventé : un SIRET plausible se publie, un trou se voit.
 
-**`scripts/photos-provisoires.mjs`** — de vraies photos barrées d'un bandeau diagonal
+**`scripts/photos-provisoires.mjs`** : de vraies photos barrées d'un bandeau diagonal
 « PHOTO PROVISOIRE ». Un site livré avec des aplats de couleur ne donne pas envie même quand
 le code est parfait ; le bandeau garantit que personne ne les publiera par mégarde. Le
 marqueur est aussi écrit dans l'EXIF, pour survivre à un recadrage.
@@ -470,7 +470,7 @@ marqueur est aussi écrit dans l'EXIF, pour survivre à un recadrage.
 **Trois agents ont contourné le même composant cassé, séparément**, chacun croyant faire un
 choix isolé. Le troisième a remarqué que les deux autres l'avaient fait et s'est aligné.
 Un défaut du socle se propage donc en plusieurs contournements avant que quiconque le
-signale — d'où la nouvelle étape de contrôle : **quels composants du socle sont restés
+signale, d'où la nouvelle étape de contrôle : **quels composants du socle sont restés
 inutilisés, et pourquoi ?**
 
 **Le fichier de sortie d'un agent n'est pas un indicateur d'avancement.** J'ai tué un agent
@@ -485,7 +485,7 @@ Aucun n'avait tort seul : le brief disait ce que l'action renvoie, pas comment l
 
 ## Ce qu'on a appris sur Pro Max
 
-Interrogé avec le brief traduit tel quel — « artisan coffee roastery, warm craft brand » —
+Interrogé avec le brief traduit tel quel (« artisan coffee roastery, warm craft brand »),
 il a rendu un **entonnoir de conversion en trois étapes**, une palette **verte et rose
 floral**, et une police manuscrite. Les mots « artisan / craft » l'envoient vers le bien-être
 et le bio.
@@ -494,7 +494,7 @@ Deux règles en sont sorties. **Nommer le métier, pas l'ambiance.** Et **relire
 avant de l'appliquer** : si le motif ne correspond pas au type de site, ce n'est pas la base
 qui a tort, c'est la requête.
 
-Sa base ne contient par ailleurs **aucune structure de boutique** — `landing.csv` ne couvre
+Sa base ne contient par ailleurs **aucune structure de boutique** : `landing.csv` ne couvre
 que des pages de conversion. Sur une boutique ou une application, la structure vient de la
 fonction, pas du design system.
 
@@ -515,7 +515,7 @@ sémantique, et relire tout fichier contenant une expression régulière non tri
 
 ---
 
-# Reprise du bootstrap #2 — les photos, les pages légales (2026-09-04)
+# Reprise du bootstrap #2 : les photos, les pages légales (2026-09-04)
 
 Retour sur la boutique du bootstrap #2 pour appliquer tout ce que le test avait fait remonter.
 Trois corrections prévues, une leçon imprévue.
@@ -549,12 +549,12 @@ regarder onze d'un coup coûte une image. La vérification visuelle devient une
 étape du bootstrap, pas une bonne intention.
 
 **Un tri des candidats**, dans le générateur : refus des personnes, des scènes
-de presse et de cérémonie, et des œuvres graphiques — gravure, dessin technique,
-affiche, scan de livre. Openverse est **une archive**, pas une banque d'images :
+de presse et de cérémonie, et des œuvres graphiques (gravure, dessin technique,
+affiche, scan de livre). Openverse est **une archive**, pas une banque d'images :
 son `category=photograph` a laissé passer un dessin de brevet.
 
 **Une cascade de filtres qui ne descend jamais sous `category=photograph`.**
-Mieux vaut une belle photo hors sujet — le repli générique — qu'une gravure
+Mieux vaut une belle photo hors sujet (le repli générique) qu'une gravure
 victorienne sur une fiche produit. Le mauvais réflexe serait d'élargir la
 recherche pour « trouver quelque chose ».
 
@@ -567,10 +567,10 @@ C'est la troisième fois que le même schéma se répète, et il vaut d'être no
 
 > Un outil qui rapporte un succès rapporte que **son travail** s'est bien passé,
 > pas que **le résultat** est bon. `curl` a réussi, la couleur est appliquée,
-> l'image est écrite — aucun ne dit que c'est ce qu'il fallait.
+> l'image est écrite. Aucun ne dit que c'est ce qu'il fallait.
 
 Les deux occurrences précédentes : un journal réseau lu comme un état, et un
-fichier vide pris pour un agent bloqué. La parade est toujours la même —
+fichier vide pris pour un agent bloqué. La parade est toujours la même :
 **regarder la chose elle-même**, et se donner un outil qui rend ce regard bon
 marché.
 
@@ -582,7 +582,7 @@ par le gérant**. Il pouvait le passer à 60 € depuis son back-office et voir 
 page d'accueil continuer d'annoncer 45.
 
 Le tunnel de commande, lui, aurait appliqué 60. Un site qui se contredit sur un
-prix est pire qu'un site muet — et sur des CGV, c'est un engagement contractuel.
+prix est pire qu'un site muet, et sur des CGV, c'est un engagement contractuel.
 
 Règle inscrite : **un chiffre qui existe comme réglage se lit, ne se recopie
 pas.** Avant de figer un montant, un horaire ou une adresse dans une phrase,
@@ -599,7 +599,7 @@ Les gabarits ne rendaient qu'un `<main>` : ni barre de navigation, ni pied de
 page. On arrivait sur les CGV depuis le pied de page, et on ne pouvait plus en
 repartir autrement qu'avec le bouton « précédent ».
 
-Aucun contrôle ne voit ça — la page répond 200, le build est vert. Il faut
+Aucun contrôle ne voit ça : la page répond 200, le build est vert. Il faut
 l'ouvrir. Consigné dans le module : après la copie, habiller les pages du
 chrome du site, et prévoir la place de la barre fixe.
 
@@ -608,7 +608,7 @@ site collecte, le schéma de données le dit ; les cookies posés, le code les
 montre ; Stripe est dans les dépendances. Laisser ces rubriques en
 `[[À COMPLÉTER]]` alors que la réponse est sous les yeux, c'est de la paresse
 déguisée en prudence. Ce qui reste un trou, en revanche, le reste : SIRET,
-raison sociale, hébergeur, médiateur — personne ne les déduit du code.
+raison sociale, hébergeur, médiateur. Personne ne les déduit du code.
 
 ## Le garde-fou, corrigé par son propre usage
 
@@ -626,7 +626,7 @@ que trois photos avant de résumer.
 ## L'entrée du gérant, invisible
 
 Signalée par l'utilisateur au test précédent : « pas de lien admin ». Il y en
-avait un — en bas à droite, à 50 % d'opacité, sans repère visuel. Discret au
+avait un : en bas à droite, à 50 % d'opacité, sans repère visuel. Discret au
 point que le gérant lui-même ne le trouvait pas.
 
 **Discret et introuvable sont deux choses différentes.** Un cadenas et un
@@ -635,19 +635,19 @@ contraste lisible suffisent à faire la différence, sans rien exposer.
 ## Le dépôt public livrait un socle sans `lib/`
 
 Trouvé en relisant le dépôt à la demande de l'utilisateur, avant un troisième test.
-`.gitignore` contenait `lib/` — écrit pour exclure la bibliothèque de design clonée dans
+`.gitignore` contenait `lib/`, écrit pour exclure la bibliothèque de design clonée dans
 `lib/ui-ux-pro-max`. Non ancré, le motif exclut **tout dossier nommé `lib`** :
 `socle/lib/` (utilitaires, réglages, base de données) et `modules/auth/files/lib/` n'ont
 jamais été versionnés. Neuf composants du socle importent `@/lib/utils`. Un clone public
 recevait un socle qui ne compilait pas, et un module d'authentification amputé.
 
-Localement, tout marchait — les fichiers étaient sur le disque. C'est le cas le plus
+Localement, tout marchait : les fichiers étaient sur le disque. C'est le cas le plus
 sournois : **le dépôt et le dossier de travail divergent sans qu'aucun test local ne le
 voie.** Le seul contrôle qui l'attrape : cloner le dépôt dans un dossier vide et builder le
 socle depuis là. À faire avant chaque publication, pas après.
 
 Corrigé : `/lib/` ancré à la racine, les deux dossiers versionnés. Et un doublon retiré au
-passage — `scripts/update-promax.ps1` refaisait ce que l'installeur fait déjà.
+passage : `scripts/update-promax.ps1` refaisait ce que l'installeur fait déjà.
 
 ## Le clone-test a payé dans la minute
 
@@ -668,7 +668,7 @@ publication.
 ## On publie un historique, pas une arborescence
 
 Dernier contrôle demandé par l'utilisateur avant la mise en ligne du dépôt : « vérifie
-qu'il ne reste rien du premier site ». L'arborescence était propre — le code, les docs,
+qu'il ne reste rien du premier site ». L'arborescence était propre : le code, les docs,
 le socle. Mais un dépôt git publié emporte **tous ses commits**, et l'audit de
 l'historique a trouvé le nom du premier client **138 fois** dans d'anciennes versions
 des docs, plus cinq messages de commit qui le citaient. Des données retirées depuis
@@ -676,8 +676,8 @@ longtemps du fichier courant, toujours lisibles dans `git log -p`.
 
 Deux constats.
 
-**Les vraies coordonnées n'ont jamais été commitées** — téléphone, e-mail, réseaux,
-ville : zéro occurrence dans tout l'historique. Elles vivaient dans `socle/lib/`, que le
+**Les vraies coordonnées n'ont jamais été commitées** (téléphone, e-mail, réseaux,
+ville) : zéro occurrence dans tout l'historique. Elles vivaient dans `socle/lib/`, que le
 `.gitignore` excluait par accident. Le bug qui rendait le socle incompilable est aussi ce
 qui a empêché la fuite. On ne compte pas là-dessus deux fois.
 
@@ -686,13 +686,13 @@ client et rattache le dépôt public à son site. Le seuil n'est pas « données
 personnelles » mais « ce qui permet de remonter à quelqu'un ».
 
 Ce qui en sort : avant toute publication, **auditer l'historique et les messages de
-commit, pas seulement l'arborescence** — `git grep` sur chaque commit de `git rev-list
+commit, pas seulement l'arborescence**. `git grep` sur chaque commit de `git rev-list
 --all`, et `git log --all --format=%B`. Et quand l'historique est atteint, ne pas le
 réécrire : le dépôt n'ayant jamais été publié, une branche orpheline d'un seul commit,
 construite depuis l'arborescence propre, part seule. L'historique reste en local, où il
 n'a jamais posé de problème.
 
-## Piste ouverte — le mouvement dès le premier jet
+## Piste ouverte : le mouvement dès le premier jet
 
 Constat de l'utilisateur après le deuxième bootstrap : « le site est plat ». Le socle a
 pourtant Lenis, `Reveal`, `Parallaxe`. Mais rien n'oblige un agent à s'en servir, et rien
@@ -703,13 +703,13 @@ Une bibliothèque de plus ne changerait pas ça. Ce qui manque, c'est **une éta
 
 Proposition, à trancher avant le troisième bootstrap :
 
-1. **Une seule bibliothèque d'animation dans le socle** — GSAP avec `@gsap/react`, gratuit
+1. **Une seule bibliothèque d'animation dans le socle** : GSAP avec `@gsap/react`, gratuit
    depuis 2025, ScrollTrigger compris. Pro Max a déjà un domaine `gsap`. Préférée à Framer
    Motion parce que la chorégraphie au défilement est le langage des vitrines, et c'est là
    qu'elle est la plus forte. Tailwind, lui, est déjà dans le socle.
 2. **Des primitives de mouvement dans le socle**, qui portent la structure et jamais
    l'identité : révélation en cascade, compteur, bandeau défilant, parallaxe, entrée du
-   héros — sur GSAP, à la place des versions CSS `animation-timeline`, dont le support
+   héros. Sur GSAP, à la place des versions CSS `animation-timeline`, dont le support
    navigateur reste partiel.
 3. **Une étape « mouvement » en phase 1** : Pro Max `--motion` et `--domain gsap`, puis dans
    chaque brief d'agent la liste de ce qui bouge et comment, `prefers-reduced-motion`
@@ -720,7 +720,7 @@ Ce n'est pas contraire à D1 : D1 refuse des dépôts de *connaissance* en plus 
 pas une dépendance de code dans le socle.
 
 **Décidé le jour même**, sur la piste ci-dessus : GSAP dans le socle, six primitives, l'étape
-« mouvement » dans `SKILL.md` et `references/mouvement.md` — voir D7. La page d'attente du
+« mouvement » dans `SKILL.md` et `references/mouvement.md`. Voir D7. La page d'attente du
 socle montre les six primitives en situation : après un clone, on voit d'un coup d'œil si ça
 bouge. Reste à éprouver sur le troisième bootstrap ; la mesure du succès, c'est un premier
 jet qui bouge sans qu'on le demande.
@@ -731,14 +731,14 @@ jet qui bouge sans qu'on le demande.
 
 Avec un jour de recul, ce que le site plat avait en commun avec les autres défauts du
 bootstrap : **chaque fois, c'est l'utilisateur qui a vu.** Le CSS cassé, les photos
-absentes, les sept pages sans navigation, le site plat — aucune de ces choses n'était
+absentes, les sept pages sans navigation, le site plat : aucune de ces choses n'était
 difficile à voir. Elles n'ont pas été regardées.
 
 Et une seconde chose : les questions manquantes. Personne n'avait demandé ce que le client
 avait comme photos, ni comment parlent ses clients, ni ce que le site devait dire de ses
 visuels. Les réponses auraient changé le blueprint.
 
-Une troisième, plus discrète : la palette. Crème, serif, terre cuite — ce que tout
+Une troisième, plus discrète : la palette. Crème, serif, terre cuite : ce que tout
 générateur rend dès qu'il entend « artisan ». Pro Max l'a rendue, et personne n'a tenu de
 direction par-dessus.
 
@@ -751,7 +751,7 @@ troisième bootstrap.
 
 ---
 
-# Bootstrap #3 — site de référence de l'utilisateur, Higgsfield connecté (2026-09-05)
+# Bootstrap #3 : site de référence de l'utilisateur, Higgsfield connecté (2026-09-05)
 
 Premier passage des branches ajoutées après le deuxième bootstrap : relevé des capacités,
 question des actifs, mots des clients, `CONTENU.md`, direction, mouvement GSAP, auto-test.
@@ -760,7 +760,7 @@ Onze remontées de l'utilisateur, notées pendant le test, corrigées en lot apr
 ## La cause commune de deux remontées
 
 « Je n'ai pas pu modifier le blueprint en mode édition » et « le mode édition ne marche pas
-pendant les dernières vérifications — puis il a tout envoyé d'un coup à la fin ». Deux
+pendant les dernières vérifications, puis il a tout envoyé d'un coup à la fin ». Deux
 symptômes, une cause : **le watcher qui réveille Claude n'était armé qu'à l'étape 10**, la
 dernière du bootstrap. L'overlay, lui, fonctionnait depuis le lancement du serveur : chaque
 envoi écrivait bien son lot sur le disque. Personne n'écoutait. À la fin, tout est arrivé
@@ -768,30 +768,30 @@ ensemble.
 
 Corrigé à la racine : le watcher s'arme **dès que le serveur tourne** (phase 0.55), le
 blueprint s'annote au clic comme n'importe quelle page, et un lot reçu pendant la
-construction obtient une réponse dans la minute — appliqué, ou « reçu, j'applique dès que
+construction obtient une réponse dans la minute : appliqué, ou « reçu, j'applique dès que
 l'agent a fini ».
 
 ## Ce qui ressemblait à une panne et n'en était pas une
 
 Entre l'envoi et le réveil de Claude, cinq à dix secondes sans rien. L'utilisateur : « on
-dirait que ça bug ». Il avait raison sur l'effet, tort sur la cause — et c'est l'effet qui
+dirait que ça bug ». Il avait raison sur l'effet, tort sur la cause, et c'est l'effet qui
 compte. Trois choses en sortent : un statut `en_cours` que Claude écrit **dès son réveil,
 avant de travailler** ; l'overlay qui interroge le serveur tant qu'un lot est `pending` ; et
 **une comète** qui tourne autour de la barre jusqu'à ce que le statut change. L'attente est
 la même, elle est visible.
 
-Même famille, en vue mobile : « la surbrillance au survol ne marche pas ». Normal — un
+Même famille, en vue mobile : « la surbrillance au survol ne marche pas ». Normal : un
 écran tactile n'a pas de survol, et le panneau l'émule fidèlement. Le geste de remplacement :
 le doigt posé surligne, le relâchement sélectionne.
 
 ## Ce qui manquait à l'overlay
 
-Une pastille se clique et rouvre son commentaire, texte et images en place — on corrige ou
+Une pastille se clique et rouvre son commentaire, texte et images en place : on corrige ou
 on retire. La zone de saisie grandit avec le texte et se tire à la main.
 
 ## Deux questions qui changent le chemin
 
-**« Quel modèle ? » arrivait trop tard** — après le début du travail, quand changer voulait
+**« Quel modèle ? » arrivait trop tard** : après le début du travail, quand changer voulait
 dire tout relancer. Le premier message se termine maintenant par « On y va ? » avec l'option
 de régler le modèle avant, et un utilisateur sous Sonnet reçoit l'avertissement avant la
 liste des étapes, pas après.
@@ -804,17 +804,17 @@ va chercher comme inspiration. Une landing prend désormais un chemin court. Voi
 
 Un site fini n'est pas un site prêt à publier. Vingt points ont été triés selon qui s'en
 charge : le socle fournit robots, sitemap, image de partage, favicon, métadonnées et
-canoniques ; le bootstrap pose un titre, une description et un `alt` par page et par image
-— le garde-fou le vérifie ; le reste — URL publique, données de l'entreprise, analytics et
-le bandeau qu'il imposerait — ne peut venir que du propriétaire et porte le marqueur
+canoniques ; le bootstrap pose un titre, une description et un `alt` par page et par image,
+le garde-fou le vérifie ; le reste (URL publique, données de l'entreprise, analytics et
+le bandeau qu'il imposerait) ne peut venir que du propriétaire et porte le marqueur
 `[[À CONFIRMER PAR L'UTILISATEUR : …]]`, qui remplace « À COMPLÉTER » : il dit à qui revient
 la réponse.
 
 ## Trouvé en corrigeant : le lanceur devant deux projets
 
 Pendant ces corrections, un serveur du troisième projet tenait le port 3000. Le lanceur a
-dit « libre », Next 15.5 a refusé de démarrer — avec `-p` explicite, il ne bascule plus en
-silence sur le port suivant, il échoue avec `EADDRINUSE` — **et il est sorti avec le code
+dit « libre », Next 15.5 a refusé de démarrer (avec `-p` explicite, il ne bascule plus en
+silence sur le port suivant, il échoue avec `EADDRINUSE`) **et il est sorti avec le code
 0**. Le lanceur a donc terminé « proprement » sur un serveur jamais démarré.
 
 Deux corrections : la sonde interroge IPv4, IPv6 et la table des sockets du système avant
@@ -827,18 +827,18 @@ La feuille de style de la comète vit dans une chaîne, à l'intérieur du compo
 contrôle des couleurs y a lu `border-radius` et a réclamé un jeton « radius » dans le thème.
 Les propriétés CSS écrites en toutes lettres rejoignent la liste des mots que ce contrôle
 ignore. Et la chaîne de commit s'arrête désormais sur son verdict : ce jour-là, elle ne
-l'a pas fait, et le commit est passé par-dessus un bloquant — corrigé par le commit suivant.
+l'a pas fait, et le commit est passé par-dessus un bloquant. Corrigé par le commit suivant.
 
 ---
 
-# Audit de publication — ce que le dépôt public emporte (2026-09-05)
+# Audit de publication : ce que le dépôt public emporte (2026-09-05)
 
 Relecture ligne à ligne des deux dépôts avant de les rendre publics. La question posée à
 chaque fichier : **est-ce que ça appartient à quelqu'un d'autre que le lecteur ?**
 
 ## Ce qui était déjà propre
 
-Aucune donnée d'un client, nulle part — ni dans l'arbre, ni dans les fichiers suivis. La
+Aucune donnée d'un client, nulle part : ni dans l'arbre, ni dans les fichiers suivis. La
 bibliothèque de design, clonée par l'installeur, est hors de git depuis qu'un `/lib/` ancré
 a remplacé le `lib/` nu. Un clone neuf de la branche publique reçoit 80 fichiers, un seul
 commit, et rien d'autre.
@@ -854,15 +854,15 @@ hébergeur, ce qui le rend d'ailleurs plus utile.
 **Le socle nommait ses outils dans des commentaires livrés au client.** `globals.css` et
 `lib/mouvement.ts` expliquaient d'où venaient leurs valeurs, en citant la bibliothèque de
 design. Ces deux fichiers finissent dans le dépôt du client : il y lisait le nom de nos
-outils. Les commentaires disent désormais ce qu'il faut savoir — ne pas renommer les
-variables — sans nommer ce qui les a produites.
+outils. Les commentaires disent désormais ce qu'il faut savoir (ne pas renommer les
+variables) sans nommer ce qui les a produites.
 
 **Le `.gitignore` du socle laissait passer les commentaires d'édition.** Il écartait les
 images jointes mais pas `comments.json` : le site livré aurait versionné les annotations de
 travail. C'est tout `.buildyoursite/` qui sort du git du client.
 
 **`/overlay` ne s'installait pas seul.** Son README renvoyait à l'autre skill par un chemin
-relatif — mort dès que les deux dépôts sont séparés — et n'expliquait pas comment
+relatif (mort dès que les deux dépôts sont séparés) et n'expliquait pas comment
 l'installer. Il le dit maintenant en une commande, et l'identité git se demande quand la
 configuration de l'autre skill n'est pas là.
 
@@ -890,7 +890,7 @@ répond `no-store` ; il n'existe qu'une seule copie de chaque skill sur la machi
 fichiers sur le disque portaient bien l'heure des corrections.
 
 **Ce qui était vrai : le skill était à jour, le site non.** Un site emporte sa copie de
-l'overlay au moment de sa construction — le composant et la route qui reçoit les
+l'overlay au moment de sa construction : le composant et la route qui reçoit les
 commentaires. Ce qu'on améliore ensuite dans le socle ne le rejoint jamais. Le site testé
 datait de la veille : 23 657 octets contre 30 186, sans comète, sans pastille cliquable,
 avec une route qui ne savait pas répondre à la question du statut.
@@ -903,8 +903,8 @@ ensemble.
 touche à rien. Les deux skills appellent le contrôle avant d'ouvrir le panneau sur un site
 qui existait déjà.
 
-**La leçon générale.** Tout ce que le bootstrap **copie** dans un projet — l'overlay
-aujourd'hui, les primitives de mouvement ou les composants du socle demain — se fige à la
+**La leçon générale.** Tout ce que le bootstrap **copie** dans un projet (l'overlay
+aujourd'hui, les primitives de mouvement ou les composants du socle demain) se fige à la
 date de la copie. Ce n'est pas un défaut en soi : un site livré doit être stable. Mais
 quand l'outil sert aussi à revenir sur d'anciens projets, il lui faut un chemin de mise à
 niveau explicite, sinon la première impression est celle d'une panne.
@@ -932,7 +932,7 @@ manifestes sont validés contre les schémas officiels avant chaque publication.
 
 **Et un message qui supposait un dossier courant.** Quand la bibliothèque de design manque,
 le relevé disait « lance l'installeur : node scripts/installer.mjs ». Utile depuis le
-dossier du skill, inutile ailleurs — et installé en plugin, le skill vit dans un cache dont
+dossier du skill, inutile ailleurs, et installé en plugin, le skill vit dans un cache dont
 personne ne connaît le chemin. Le message donne maintenant le chemin absolu.
 
 ---
@@ -978,7 +978,7 @@ yeux de Claude, à côté des autres.
 ## Ce qu'un script peut voir, et ce qu'il ne peut pas
 
 Premier réflexe : lire la configuration des connecteurs depuis le terminal. Vérifié sur une
-vraie machine — il n'y a rien à lire. Aucun serveur n'est déclaré dans les fichiers de
+vraie machine : il n'y a rien à lire. Aucun serveur n'est déclaré dans les fichiers de
 configuration ; ils viennent du compte ou des plugins et n'existent que dans la session.
 **Le seul observateur possible, c'est Claude lui-même**, qui a la liste de ses outils sous
 les yeux. Le script ne peut que lui dire quoi chercher.
@@ -986,14 +986,14 @@ les yeux. Le script ne peut que lui dire quoi chercher.
 ## Chercher une capacité, pas une marque
 
 Écarté : une liste des dix services les plus connus, interrogés un par un. Une liste de
-marques est déjà fausse le jour où on l'écrit — chacun a son fournisseur — et périmée six
+marques est déjà fausse le jour où on l'écrit (chacun a son fournisseur) et périmée six
 mois plus tard, à chaque nouveau service. Elle contredit aussi ce qu'on vient de décider
 pour la publication : aucun prestataire nommé, aucune préférence glissée dans le projet.
 
 À la place, trois signatures : un outil qui fabrique une image ou une vidéo à partir d'un
 texte, un outil de solde ou de quota sur le même connecteur, un outil de déploiement. Le
 premier décide si les visuels manquants peuvent être générés. Le deuxième décide si un prix
-peut être annoncé avant chaque image — et quand il manque, on le dit au lieu d'inventer un
+peut être annoncé avant chaque image, et quand il manque, on le dit au lieu d'inventer un
 tarif. Le troisième ne change rien, on ne déploie pas.
 
 Le connecteur trouvé est **nommé dans le relevé sous son vrai nom**, quel qu'il soit, et
@@ -1018,20 +1018,20 @@ Google, c'est le mauvais sens.
 
 « Mobile ou ordinateur ? » laisse croire qu'on choisit l'un contre l'autre. C'est faux : le
 site s'adapte aux deux, toujours, et les deux largeurs restent vérifiées. On demande donc
-**d'où arrivent les visiteurs** — un lien Instagram, une fiche Google, une recherche depuis
-un bureau — et on en déduit l'écran qu'on compose en premier.
+**d'où arrivent les visiteurs** (un lien Instagram, une fiche Google, une recherche depuis
+un bureau) et on en déduit l'écran qu'on compose en premier.
 
 ## Ce que la réponse change, sinon la question est décorative
 
 Composer à 375 px puis élargir n'est pas composer à 1280 px puis replier. Le premier impose
 une action par écran, peu de colonnes, du texte court avant la ligne de flottaison, des
-coordonnées transformées en gestes — appeler, ouvrir un itinéraire — et un budget de
+coordonnées transformées en gestes (appeler, ouvrir un itinéraire) et un budget de
 mouvement et d'images plus serré, parce qu'un défilement chorégraphié coûte cher sur un
 réseau mobile. Le second autorise des grilles denses, des tableaux, une navigation dépliée
 et du contenu long.
 
 L'auto-test suit la même priorité : l'écran principal doit être irréprochable, l'autre
-correct. **Aucune largeur n'est facultative pour autant** — les grilles cassent à 375 px, y
+correct. **Aucune largeur n'est facultative pour autant** : les grilles cassent à 375 px, y
 compris sur un site pensé pour le bureau, et une page cassée sur téléphone reste cassée
 même quand le téléphone est minoritaire.
 
@@ -1046,7 +1046,7 @@ quatre-vingts pour cent ne se pose pas à froid, elle se propose.
 
 ---
 
-# Quatrième bootstrap — vitrine avec back-office (2026-09-06) : remontées
+# Quatrième bootstrap · vitrine avec back-office (2026-09-06) : remontées
 
 Consignées au fil du test, corrigées en lot après la remise. Une ligne par remontée,
 avec ce qui s'est passé et ce que ça devrait devenir.
@@ -1056,13 +1056,13 @@ avec ce qui s'est passé et ce que ça devrait devenir.
    du socle ne la définit nulle part : les surtitres se rendaient en texte ordinaire, sans
    capitales ni espacement. Corrigé dans le projet par un `@utility eyebrow` ; à porter dans
    le socle. C'est exactement le cas « un composant du socle que tous les agents
-   contournent » — sauf qu'ici personne ne l'a vu parce que le texte s'affichait quand même.
+   contournent », sauf qu'ici personne ne l'a vu parce que le texte s'affichait quand même.
 
 2. **« Glisse-les dans le chat » ne donne pas de fichier.** L'utilisateur a collé son logo
    dans le chat : l'image arrive à l'écran de Claude, jamais sur le disque, et rien ne peut
    la copier dans `public/`. Il a fallu une question de plus pour obtenir l'URL du site où
    les fichiers vivaient. La salve des actifs doit demander **un chemin, un dossier ou une
-   URL**, pas un glisser-déposer — et dire pourquoi en une ligne.
+   URL**, pas un glisser-déposer, et dire pourquoi en une ligne.
 
 3. **Les deux questions fixes se sont fait sauter.** Posées dans la même salve qu'une
    question à réponse libre (« où sont les fichiers ? »), inspiration et validation du
@@ -1073,13 +1073,13 @@ avec ce qui s'est passé et ce que ça devrait devenir.
 4. **Le serveur de dev doit vivre toute la session, et le skill ne dit pas comment.** Un
    `Bash` en arrière-plan porte un délai maximal ; un `Monitor` persistant convient, à
    condition de filtrer sa sortie (`BUILDYOURSITE_URL|Network|EADDRINUSE|rror|⨯`) pour
-   ne remonter que l'URL et les erreurs — le journal brut de Next produirait un événement par
+   ne remonter que l'URL et les erreurs : le journal brut de Next produirait un événement par
    requête. À écrire dans la phase 0.55, avec la commande.
 
 5. **Le module `legal` copie les CGV même quand le site ne vend pas.** `files/` contient
    `app/cgv/page.tsx` ; sur une vitrine il faut le supprimer après la copie, sinon la page
    existe et n'est reliée nulle part. Le MODULE.md devrait dire « copie seulement les pages
-   retenues » — ou ranger les CGV à part.
+   retenues », ou ranger les CGV à part.
 
 6. **Le relevé d'un site propre à l'utilisateur, avec sa page d'aide et ses guides, vaut
    une phase 0.58 à lui seul.** Sur ce bootstrap, la FAQ et les pages guides du site de référence
@@ -1117,12 +1117,12 @@ avec ce qui s'est passé et ce que ça devrait devenir.
     Le relecteur l'a trouvée : un visiteur arrivé par un lien cassé ou un QR code mal
     recopié tombait sur une impasse à un seul bouton, alors que « chaque page hors tunnel
     rend Nav et PiedDePage ». Le socle ne peut pas les importer (il doit compiler seul), donc
-    c'est au bootstrap de le faire — au même moment que les pages légales. À ajouter à la
+    c'est au bootstrap de le faire, au même moment que les pages légales. À ajouter à la
     phase 1 : « habille aussi `app/not-found.tsx` », et à `verifier-projet.mjs`, qui ne la
     comptait pas parmi les pages sans navigation.
 
 12. **Le marqueur `[[À CONFIRMER PAR L'UTILISATEUR]]` se lit comme une note de chantier sur
-    une page publique.** C'est voulu — un trou visible vaut mieux qu'une valeur inventée —
+    une page publique.** C'est voulu (un trou visible vaut mieux qu'une valeur inventée),
     mais le relecteur l'a classé défaut numéro un des mentions légales. Deux améliorations
     possibles sans renoncer au principe : lui donner un habillage reconnaissable (un encadré
     « à compléter avant la mise en ligne » plutôt que des crochets bruts), et le dire à la
@@ -1142,25 +1142,25 @@ avec ce qui s'est passé et ce que ça devrait devenir.
 > **Démenti, le 2026-09-08.** Cette leçon était fausse. Une image collée est écrite en
 > base64 dans le fichier de session et se récupère : `scripts/images-du-chat.mjs` le fait,
 > vérifié sur les captures mêmes où le skill affirmait le contraire. Ce qui avait manqué,
-> ce n'était pas le fichier — il était là — c'était l'idée d'aller le chercher. **Une limite
+> ce n'était pas le fichier (il était là), c'était l'idée d'aller le chercher. **Une limite
 > qu'on n'a pas essayé de franchir n'est pas une limite, c'est une hypothèse.** Le journal
 > du premier bootstrap disait déjà exactement ça, à propos des photos d'un site de
 > référence déclarées indisponibles sans un `curl`. La même erreur est revenue trois
 > bootstraps plus tard, sur un autre sujet, et a été répétée avec assurance deux fois de
 > plus au cinquième.
 
-# Rétrospective du quatrième bootstrap — ce que le site livré ne dit pas (2026-09-06)
+# Rétrospective du quatrième bootstrap : ce que le site livré ne dit pas (2026-09-06)
 
 Les treize remontées ci-dessus ont été notées pendant la construction. Celles-ci viennent
-d'après : de la question posée à la remise — « pourquoi n'as-tu pas repris les téléphones qui
-bougent ? » — et de la relecture complète du déroulé qu'elle a déclenchée. Elles sont plus
+d'après : de la question posée à la remise (« pourquoi n'as-tu pas repris les téléphones qui
+bougent ? ») et de la relecture complète du déroulé qu'elle a déclenchée. Elles sont plus
 profondes, parce qu'aucune n'était visible pendant le travail.
 
 ## 14. Un élément de la référence peut disparaître sans laisser de trace
 
 La référence avait, dans son héros, **trois téléphones** : le produit principal au premier
 plan, les deux autres derrière, atténués. Chacun était un lien vers sa page de marque, et
-tous les trois se soulevaient au survol — le relevé l'avait mesuré, noir sur blanc :
+tous les trois se soulevaient au survol, le relevé l'avait mesuré, noir sur blanc :
 `transform, box-shadow, filter, opacity · 0.55s`. Elle avait aussi un **bouton WhatsApp
 flottant**, en bas à droite, sur chaque page, avec son message pré-rempli.
 
@@ -1178,12 +1178,12 @@ pas le voir venir.
 **La perte de l'interaction n'était pas un choix, c'est un oubli.** Le relevé avait les
 transitions et les trois `href`. Rien, entre le relevé et les briefs d'agent, ne transforme
 une transition relevée en consigne. Le tableau du blueprint disait « Mouvement : apparitions
-via les primitives du socle » — et les primitives du socle ne savent faire que des
+via les primitives du socle », et les primitives du socle ne savent faire que des
 apparitions.
 
-**Ce qu'il faut changer.** Le relevé doit produire un **inventaire des éléments interactifs**
-— un par ligne : ce que c'est, où c'est, ce que ça fait au survol, où ça mène. Et le blueprint
-doit donner à chaque ligne un verdict : *reproduit*, *réinterprété*, *abandonné* — avec la
+**Ce qu'il faut changer.** Le relevé doit produire un **inventaire des éléments interactifs**,
+un par ligne : ce que c'est, où c'est, ce que ça fait au survol, où ça mène. Et le blueprint
+doit donner à chaque ligne un verdict : *reproduit*, *réinterprété*, *abandonné*, avec la
 raison quand c'est abandonné. Un élément qui disparaît sans sa ligne est un défaut, pas une
 décision. La colonne « Repris : oui/non » actuelle ne suffit pas : elle disait « liens
 sortants : oui », ce qui était vrai (ils sont dans les réglages) et faux en même temps (le
@@ -1191,7 +1191,7 @@ bouton flottant avait disparu).
 
 ## 15. Le mouvement du socle est un vocabulaire d'apparition, pas de réaction
 
-Les six primitives — `EntreeHero`, `Cascade`, `Reveal`, `Compteur`, `Defilant`, `Parallaxe` —
+Les six primitives (`EntreeHero`, `Cascade`, `Reveal`, `Compteur`, `Defilant`, `Parallaxe`)
 répondent toutes à la même question : **comment cet élément arrive-t-il ?** Aucune ne répond
 à l'autre moitié : **comment répond-il quand on s'approche ?**
 
@@ -1207,7 +1207,7 @@ tout. Trois décisions isolées là où il faudrait un système.
 vocabulaire court et des valeurs dans `lib/mouvement.ts` : ce que fait une carte cliquable au
 survol, ce que fait un bouton à la pression, ce que fait un élément au focus clavier. Et une
 ligne de plus dans chaque brief, à côté de « ce qui bouge » : **« ce qui répond »**. Avec la
-même retenue que le reste — tout ne réagit pas, seulement ce qui est cliquable.
+même retenue que le reste : tout ne réagit pas, seulement ce qui est cliquable.
 
 ## 16. Le blueprint ne montre rien, et on lui demande de valider un design
 
@@ -1221,23 +1221,23 @@ après la construction, là où elles coûtent cher, au lieu d'avant, où elles 
 **Ce qu'il faut ajouter.** `blueprint-html.mjs` a déjà, dans le fichier qu'il rend, le tableau
 section par section de chaque page. De quoi dessiner un **squelette** : une colonne de blocs
 étiquetés, à l'échelle approximative, un par section, avec son nom, ce qu'elle contient et ce
-qui bouge. Ce n'est pas une maquette, et ça ne doit pas essayer de l'être — c'est un plan de
+qui bouge. Ce n'est pas une maquette, et ça ne doit pas essayer de l'être : c'est un plan de
 masse. Il aurait fait poser la question des téléphones avant la construction plutôt qu'après.
 
 ## 17. La phase 0.c n'a pas eu lieu, et je ne m'en suis pas aperçu
 
-Les trois questions de la phase 0.c — *ce site t'appartient-il ?*, *je reprends les liens
-sortants ?*, *reproduction fidèle ou nouvelle création ?* — **n'ont jamais été posées**.
+Les trois questions de la phase 0.c (*ce site t'appartient-il ?*, *je reprends les liens
+sortants ?*, *reproduction fidèle ou nouvelle création ?*) **n'ont jamais été posées**.
 
 À la place : le nom du site m'a fait deviner l'adresse, je l'ai ouverte, relevée, et j'ai
 téléchargé sept fichiers image. Les réponses sont devenues des hypothèses dans le blueprint
-(H1, H2), c'est-à-dire des affirmations que l'utilisateur pouvait corriger — mais après le
+(H1, H2), c'est-à-dire des affirmations que l'utilisateur pouvait corriger, mais après le
 relevé, pas avant.
 
 Ça s'est bien terminé : le site lui appartient. Mais le garde-fou existe exactement pour le
 cas où il n'appartiendrait pas, et il n'a pas fonctionné. La cause est la remontée n° 3
 ci-dessus : les questions fixes noyées dans une salve avec une question libre reviennent
-vides. Ce que je n'avais pas mesuré, c'est la **conséquence en chaîne** — une question sautée
+vides. Ce que je n'avais pas mesuré, c'est la **conséquence en chaîne** : une question sautée
 n'a pas seulement manqué, elle a annulé toute une phase, et j'ai comblé le vide en devinant au
 lieu de reposer la question.
 
@@ -1248,20 +1248,20 @@ lieu de reposer la question.
 ## 18. Les agents de construction ne devraient pas toucher au navigateur
 
 Quatre agents ont piloté le même panneau en parallèle. Résultat : deux clics en timeout pour
-l'un — « rebuilds Fast Refresh très fréquents déclenchés par d'autres agents », dit son
-rapport —, des navigations inattendues pour un autre, et trois d'entre eux qui ont dépensé du
+l'un (« rebuilds Fast Refresh très fréquents déclenchés par d'autres agents », dit son
+rapport), des navigations inattendues pour un autre, et trois d'entre eux qui ont dépensé du
 budget à vérifier visuellement ce que l'orchestrateur revérifie de toute façon dans son
 auto-test.
 
 **Ce qu'il faut changer.** Le brief d'un agent de construction dit : tu écris, tu vérifies
 avec `npx tsc --noEmit`, **tu n'ouvres pas le navigateur**. La vérification visuelle appartient
-à l'orchestrateur, seul, après. Le relecteur, lui, garde son onglet — il travaille quand plus
+à l'orchestrateur, seul, après. Le relecteur, lui, garde son onglet : il travaille quand plus
 personne n'écrit, et je lui avais déjà demandé d'ouvrir le sien.
 
 ## 19. Un fichier-contrat qui mélange base de données et helpers purs est un piège
 
 `lib/reglages.ts` porte `lireReglages()`, qui lit la base, **et** `formatPrix()`, qui ne fait
-que formater un nombre. Le simulateur de tarifs — composant client — importe `lib/formules.ts`
+que formater un nombre. Le simulateur de tarifs (composant client) importe `lib/formules.ts`
 pour ses calculs, qui importe `formatPrix`, qui importe le fichier, qui importe Prisma.
 
 Ça compilait. Jusqu'à ce que j'ajoute une ligne `import path from "node:path"` dans `lib/db.ts`
@@ -1275,12 +1275,12 @@ client qui a besoin d'un formatage ne doit pas pouvoir tirer la base derrière l
 
 À la dernière exécution : deux faux positifs et un faux négatif.
 
-- **Faux positif** — `app/connexion/page.tsx` signalée « page sans navigation ». C'est voulu :
+- **Faux positif** : `app/connexion/page.tsx` signalée « page sans navigation ». C'est voulu :
   une page de connexion est nue par nature, comme le tunnel de commande.
-- **Faux positif** — cinq « mots creux » sur « au service de ». C'est la signature déposée du
+- **Faux positif** : cinq « mots creux » sur « au service de ». C'est la signature déposée du
   client, reprise mot pour mot de son propre site. Trois des cinq sont dans `BLUEPRINT.md` et
   `CONTENU.md`, qui ne sont pas des fichiers livrés.
-- **Faux négatif** — `app/not-found.tsx` n'était pas comptée parmi les pages sans navigation,
+- **Faux négatif** : `app/not-found.tsx` n'était pas comptée parmi les pages sans navigation,
   alors qu'elle n'en avait pas. C'est le relecteur qui l'a trouvée, et il l'a classée deuxième
   défaut du site.
 
@@ -1291,7 +1291,7 @@ pages légitimement nues ; inclure la 404 dans la règle « chaque page rend Nav
 
 Le blueprint en portait dix-sept, toutes présentées pareil. L'utilisateur a répondu aux quatre
 questions ouvertes et n'en a contesté aucune. Deux lectures possibles, et je ne sais pas
-laquelle est la bonne — ce qui est déjà le problème.
+laquelle est la bonne, ce qui est déjà le problème.
 
 **Ce qu'il faut changer.** Les trier par **coût de l'erreur** : d'abord les deux ou trois dont
 la correction imposerait de reconstruire (le mode fidèle ou réinterprété, la structure de
@@ -1300,7 +1300,7 @@ l'offre, qui parle dans le héros), ensuite le reste. Une liste de trois se lit.
 ## 22. Ce que je n'ai pas vérifié, et que j'ai laissé passer
 
 - **`prefers-reduced-motion`** : jamais testé. J'ai supposé, à la lecture du code, que les
-  primitives le respectaient. C'est probablement vrai — elles sont écrites pour —, mais
+  primitives le respectaient. C'est probablement vrai (elles sont écrites pour), mais
   « probablement » n'est pas une vérification, et la liste de contrôle demande explicitement
   de regarder.
 - **Le clavier** : ordre de tabulation et pièges de focus jamais parcourus, alors que le site
@@ -1309,13 +1309,13 @@ l'offre, qui parle dans le héros), ensuite le reste. Une liste de trois se lit.
   écartées comme du bruit sans être identifiées. Elles l'étaient peut-être. Je n'en sais rien,
   et c'est ça le défaut : **une 404 inexpliquée s'identifie, elle ne se balaye pas.**
 - **L'image de partage** : générée, jamais regardée. C'est pourtant la première chose qu'un
-  client voit quand on lui envoie le lien — voir la section suivante.
+  client voit quand on lui envoie le lien. Voir la section suivante.
 
 ## 23. Le back-office a coûté le plus gros poste, pour l'usage le plus incertain
 
 L'agent du back-office est de loin le plus lourd des quatre : 155 appels d'outils, 33 minutes,
 et la plus grosse part du budget de la construction. Il a produit sept écrans complets,
-propres, sécurisés — pour un espace que le propriétaire ouvrira peut-être trois fois par an.
+propres, sécurisés. Pour un espace que le propriétaire ouvrira peut-être trois fois par an.
 
 Ce n'est pas du gaspillage en soi : c'était au blueprint, et le module a été demandé. Mais la
 question n'a jamais été posée à la bonne granularité. Entre « pas de back-office » et « un
@@ -1323,21 +1323,21 @@ back-office complet sur sept modèles », il y a **« les textes et les messages
 qui couvre l'essentiel de ce qu'un gérant modifie vraiment.
 
 **Ce qu'il faut changer.** Quand le module `admin` est retenu, une question de plus : quels
-écrans ? Avec trois réponses — *textes et messages* · *plus l'offre et les tarifs* ·
+écrans ? Avec trois réponses : *textes et messages* · *plus l'offre et les tarifs* ·
 *tout ce que le blueprint prévoit*.
 
 ## 24. Ce qui a marché, et qu'il ne faut pas casser en corrigeant le reste
 
-- **`CONTENU.md`** — deuxième bootstrap consécutif sans un seul mauvais texte, sur quatre-vingts
+- **`CONTENU.md`** : deuxième bootstrap consécutif sans un seul mauvais texte, sur quatre-vingts
   fichiers écrits par quatre agents. Aucun n'a reformulé, aucun n'a inventé. La règle « le
   texte est décidé avant, la construction ne fait que le poser » est ce qui tient le mieux
   dans tout le skill.
-- **Les périmètres de fichiers exclusifs** — quatre agents en parallèle, zéro conflit, zéro
+- **Les périmètres de fichiers exclusifs** : quatre agents en parallèle, zéro conflit, zéro
   écrasement, et `tsc` propre chez les quatre à l'arrivée.
-- **Le relecteur sans contexte** — douze observations, sept corrections. Il a trouvé la 404
+- **Le relecteur sans contexte** : douze observations, sept corrections. Il a trouvé la 404
   sans navigation et le marqueur « À CONFIRMER » publié tel quel, deux choses que ni le
   garde-fou ni moi n'avions vues.
-- **Les valeurs par défaut en code, surchargées en base** — `lib/textes.ts` et `lib/reglages.ts`
+- **Les valeurs par défaut en code, surchargées en base** : `lib/textes.ts` et `lib/reglages.ts`
   portent le contenu d'origine ; la base ne stocke que ce qui a été modifié. Le site fonctionne
   avant même le premier seed, et « rétablir le texte d'origine » est une suppression de ligne.
   À généraliser explicitement dans le socle : c'est un patron, pas un hasard.
@@ -1353,11 +1353,11 @@ regarde, sans parler d'hébergement définitif.
 
 Elle a échoué, et proprement : le site tel qu'il est **ne se déploie pas** sur un hébergement
 sans serveur. Base SQLite posée sur le disque, actions serveur qui écrivent dedans, session
-d'authentification — trois choses qui supposent un disque inscriptible et un processus qui
+d'authentification : trois choses qui supposent un disque inscriptible et un processus qui
 dure. Sur Vercel ou Netlify, le disque est en lecture seule.
 
-Les contournements existent — reconstruire la base au build, tolérer l'écriture qui échoue,
-servir les images depuis ailleurs — mais je les ai improvisés à la fin, sous contrainte, et
+Les contournements existent (reconstruire la base au build, tolérer l'écriture qui échoue,
+servir les images depuis ailleurs), mais je les ai improvisés à la fin, sous contrainte, et
 c'est exactement le moment où l'on prend de mauvaises décisions.
 
 **Le constat.** Savoir qu'un lien devra être partagé change des décisions prises au blueprint.
@@ -1369,11 +1369,11 @@ Ce n'est donc pas une étape à ajouter à la fin : c'est une question à poser 
 
 | | Le lien éphémère | Le lien qui tient |
 |---|---|---|
-| **Pour** | « regarde ça, maintenant » — un associé, un ami, soi-même sur un autre appareil | « je t'envoie ça, réponds quand tu peux » — un client, un devis en cours |
+| **Pour** | « regarde ça, maintenant » : un associé, un ami, soi-même sur un autre appareil | « je t'envoie ça, réponds quand tu peux » : un client, un devis en cours |
 | **Comment** | un tunnel au-dessus du site, compilé en production et servi en local | un déploiement sur un hébergeur |
 | **Délai** | une trentaine de secondes | quelques minutes, la première fois |
 | **Compte** | aucun | une connexion, dans le navigateur, que seul l'utilisateur peut faire |
-| **Ce qui marche** | **tout** — formulaires, back-office, écritures en base | la lecture ; les écritures échouent |
+| **Ce qui marche** | **tout** : formulaires, back-office, écritures en base | la lecture ; les écritures échouent |
 | **Durée de vie** | tant que la fenêtre reste ouverte | des semaines |
 
 Le tunnel est la bonne réponse par défaut, et c'est celle à laquelle je n'ai pas pensé en
@@ -1388,14 +1388,14 @@ Sa limite est franche et se dit en une phrase : **le lien meurt quand tu fermes.
 **Au début, dans la salve 2**, une question de plus, à un clic :
 
 > **Faudra-t-il pouvoir envoyer un lien à quelqu'un pendant la construction ?**
-> - *Oui, un lien à partager* — je prépare de quoi le faire à tout moment
-> - *Non, je regarde sur ma machine* — rien à installer
+> - *Oui, un lien à partager* : je prépare de quoi le faire à tout moment
+> - *Non, je regarde sur ma machine* : rien à installer
 
 Et si la réponse est oui, **l'installation ou la connexion se fait pendant `npm install`**.
 C'est du temps mort qui existe déjà, où l'utilisateur attend sans rien faire ; c'est le seul
 moment de tout le bootstrap où lui demander une action ne coûte rien. À la fin, la même
-demande arrive quand tout le monde veut voir le résultat, et elle est vécue comme un obstacle
-— c'est précisément ce qui s'est passé.
+demande arrive quand tout le monde veut voir le résultat, et elle est vécue comme un obstacle.
+C'est précisément ce qui s'est passé.
 
 ## Ce qu'il faut écrire
 
@@ -1405,8 +1405,8 @@ Un `scripts/partager.mjs` qui ne pose aucune question et fait ce qu'il peut :
    commande d'hébergeur déjà connectée ?
 2. Il choisit le plus simple des deux, sans demander.
 3. Il compile en production, sert le résultat, ouvre le lien, et **l'affiche seul, en clair**.
-4. Il force le refus d'indexation tant que l'adresse publique définitive n'est pas renseignée
-   — une copie de travail ne doit jamais concurrencer le vrai site dans les moteurs.
+4. Il force le refus d'indexation tant que l'adresse publique définitive n'est pas renseignée :
+   une copie de travail ne doit jamais concurrencer le vrai site dans les moteurs.
 5. Si rien n'est disponible, il n'échoue pas : il imprime **la seule commande à lancer**, et
    rien d'autre.
 
@@ -1433,40 +1433,40 @@ D12 à D15.
 
 | # | Remontée | Où c'est corrigé |
 |---|---|---|
-| 1 | `eyebrow` non définie | `socle/app/globals.css` — `@utility eyebrow` ; vérifié compilé dans le CSS d'un build réel |
-| 2 | Actifs demandés par glisser-déposer | phase 0.b — on demande un chemin, un dossier ou une adresse ; le piège est aussi dans « Pièges connus » |
-| 3 | Questions fixes noyées dans une salve | phase 0.b — salve 4, seules, avec l'avertissement et la règle « une question fixe vide se repose » |
-| 4 | Serveur de dev à tenir toute la session | phase 0.55 — commande `Monitor` persistante avec son filtre, et l'arrêt avant chaque build |
-| 5 | Module legal copiant les CGV sans vente | phase 0.55 — « un module ne se copie pas en bloc » |
-| 6 | Voix des clients : partir du site du client | phase 0.58 — son site d'abord, le web ensuite |
-| 7 | `get_page_text` partiel | phase 0.c et `extraction-charte.md` §5 — recette `sitemap.xml` + `curl` |
-| 8 | Pro Max interrogé pour rien | phase 0.5 — pas de `--design-system` quand la référence appartient à l'utilisateur |
-| 10 | Overlay promis sur `/blueprint` | phase 0.55, phase 0.6 et `overlay.md` — la promesse est retirée et l'explication écrite |
+| 1 | `eyebrow` non définie | `socle/app/globals.css` : `@utility eyebrow` ; vérifié compilé dans le CSS d'un build réel |
+| 2 | Actifs demandés par glisser-déposer | phase 0.b : on demande un chemin, un dossier ou une adresse ; le piège est aussi dans « Pièges connus » |
+| 3 | Questions fixes noyées dans une salve | phase 0.b : salve 4, seules, avec l'avertissement et la règle « une question fixe vide se repose » |
+| 4 | Serveur de dev à tenir toute la session | phase 0.55 : commande `Monitor` persistante avec son filtre, et l'arrêt avant chaque build |
+| 5 | Module legal copiant les CGV sans vente | phase 0.55 : « un module ne se copie pas en bloc » |
+| 6 | Voix des clients : partir du site du client | phase 0.58 : son site d'abord, le web ensuite |
+| 7 | `get_page_text` partiel | phase 0.c et `extraction-charte.md` §5 : recette `sitemap.xml` + `curl` |
+| 8 | Pro Max interrogé pour rien | phase 0.5 : pas de `--design-system` quand la référence appartient à l'utilisateur |
+| 10 | Overlay promis sur `/blueprint` | phase 0.55, phase 0.6 et `overlay.md` : la promesse est retirée et l'explication écrite |
 | 11 | 404 sans navigation | `socle/app/not-found.tsx` (avertissement en tête), phase 1, et `verifier-projet.mjs` qui la compte |
 | 12 | Marqueurs « À CONFIRMER » | `verifier-projet.mjs` donne fichier + ligne + texte, sépare code livré et préparation, bloque en `--production` ; redits à la remise |
-| 14 | Élément de référence disparu sans trace | `releve-complet.js` §8, `extraction-charte.md` §0, phase 0.c — un verdict par élément |
+| 14 | Élément de référence disparu sans trace | `releve-complet.js` §8, `extraction-charte.md` §0, phase 0.c : un verdict par élément |
 | 15 | Pas de vocabulaire de réaction | `socle/app/globals.css` « LES ÉTATS », `mouvement.md`, et la ligne « ce qui répond » dans chaque brief |
 | 16 | Blueprint qui ne montre rien | bloc `squelette` + rendu dans `blueprint-html.mjs` ; regardé à l'écran, étiquette de mouvement recentrée |
 | 17 | Phase 0.c jamais exécutée | avertissement bloquant en tête de la phase 0.c, trois règles |
-| 18 | Agents se disputant le navigateur | phase 1 — interdiction dans chaque brief, sauf le relecteur qui ouvre son propre onglet |
+| 18 | Agents se disputant le navigateur | phase 1 : interdiction dans chaque brief, sauf le relecteur qui ouvre son propre onglet |
 | 19 | Pur et serveur mélangés | `socle/lib/formats.ts` créé, `reglages.ts` allégé, règle en phase 1 et dans « Pièges connus » |
-| 20 | Garde-fou faux positifs et faux négatif | `verifier-projet.mjs` — pages nues tolérées, 404 incluse, `.md` de préparation ignorés, échappatoire `mots-creux-ok` |
-| 21 | Hypothèses toutes au même niveau | phase 0.6 — deux groupes, « on reconstruit » et « on corrige » |
-| 22 | Vérifications manquées | `verifier-le-rendu.md` — survol, mouvement réduit testé, clavier, image de partage, et la règle sur les erreurs de console |
-| 23 | Back-office trop gros par défaut | phase 0.b salve 3 — trois niveaux d'écrans |
+| 20 | Garde-fou faux positifs et faux négatif | `verifier-projet.mjs` : pages nues tolérées, 404 incluse, `.md` de préparation ignorés, échappatoire `mots-creux-ok` |
+| 21 | Hypothèses toutes au même niveau | phase 0.6 : deux groupes, « on reconstruit » et « on corrige » |
+| 22 | Vérifications manquées | `verifier-le-rendu.md` : survol, mouvement réduit testé, clavier, image de partage, et la règle sur les erreurs de console |
+| 23 | Back-office trop gros par défaut | phase 0.b salve 3 : trois niveaux d'écrans |
 | — | Mise en ligne | `scripts/partager.mjs`, `lancement.md`, question en salve 3, connexion pendant `npm install` |
 
 ## Non appliqué, et pourquoi
 
-- **N° 9 — l'onglet du panneau épinglé par un fichier SVG.** Défaut de l'environnement, pas
+- **N° 9 : l'onglet du panneau épinglé par un fichier SVG.** Défaut de l'environnement, pas
   du skill. Rien à corriger ici ; le contournement est d'ouvrir un nouvel onglet.
-- **N° 13 — le relecteur.** Aucune correction nécessaire : l'étape fonctionne. Elle est
-  seulement mieux décrite — il ouvre son propre onglet, et on lui demande aussi ce qui ne
+- **N° 13 : le relecteur.** Aucune correction nécessaire : l'étape fonctionne. Elle est
+  seulement mieux décrite : il ouvre son propre onglet, et on lui demande aussi ce qui ne
   répond pas au curseur.
 
 ## Ce qui reste à éprouver
 
-`scripts/partager.mjs` a depuis été éprouvé de bout en bout — voir la section suivante. Il
+`scripts/partager.mjs` a depuis été éprouvé de bout en bout. Voir la section suivante. Il
 reste deux zones non couvertes : l'échec de compilation pendant un partage, et le chemin
 « hébergeur déjà connecté ».
 
@@ -1486,10 +1486,10 @@ neuf tiré du socle.
 | Adresse publique lue dans la sortie de l'outil | trouvée, et rendue en `BUILDYOURSITE_PARTAGE=` |
 | Réponse depuis l'extérieur | `HTTP 200` en 0,42 s |
 | Contenu servi | le vrai site compilé, 23 795 octets, titre correct, classe `eyebrow` rendue |
-| Overlay d'édition | **absent** — la compilation de production le retire, comme annoncé |
+| Overlay d'édition | **absent** : la compilation de production le retire, comme annoncé |
 | Seconde page (`/robots.txt`) | `HTTP 200` |
 | Après arrêt | aucun `cloudflared` résiduel, aucun `node` résiduel, port libéré |
-| Le lien après arrêt | `HTTP 530` — mort, comme promis |
+| Le lien après arrêt | `HTTP 530` : mort, comme promis |
 
 ## Le piège trouvé en installant l'outil
 
@@ -1500,7 +1500,7 @@ réclamer, on relance le script, et il répond encore « rien n'est disponible �
 devine qu'il faut rouvrir une session.
 
 `trouverCloudflared()` regarde donc aussi les emplacements d'installation par défaut, et se
-sert du chemin complet quand il l'y trouve — en le citant, parce qu'il contient des espaces
+sert du chemin complet quand il l'y trouve, en le citant, parce qu'il contient des espaces
 sous Windows.
 
 C'est un défaut qui ne pouvait apparaître qu'en installant l'outil pour de vrai. Écrire le
@@ -1512,7 +1512,7 @@ script sans pouvoir l'exécuter l'aurait laissé passer.
   été provoqués.
 - **Le chemin hébergeur** (b), qui demande une interface en ligne de commande déjà connectée.
 - **`Ctrl+C` tapé à la main** : l'arrêt a été déclenché par la fin du processus parent, et le
-  résultat observable est le bon — rien ne survit, le port est rendu. Le gestionnaire de
+  résultat observable est le bon : rien ne survit, le port est rendu. Le gestionnaire de
   signal lui-même n'a donc pas été isolé de ce qui l'entoure.
 
 ---
@@ -1527,8 +1527,8 @@ question du partage ?*
 J'avais mis la question au début, en salve 3, avec cette justification : « ce n'est pas une
 commodité de fin de parcours, c'est une contrainte d'architecture ».
 
-La contrainte est réelle — un site dont la base vit sur le disque et dont les actions
-écrivent dedans ne se déploie pas sur un hébergement sans serveur — **mais elle n'appartient
+La contrainte est réelle (un site dont la base vit sur le disque et dont les actions
+écrivent dedans ne se déploie pas sur un hébergement sans serveur), **mais elle n'appartient
 qu'au lien hébergé.** Le tunnel, lui, sert le site tel qu'il est, depuis la machine, avec sa
 vraie base et ses écritures qui fonctionnent. Il n'impose rien au blueprint.
 
@@ -1544,11 +1544,11 @@ transporte la contrainte de l'un à l'autre sans la retester.
 
 Trois moments, et **un seul est une question** :
 
-1. **Relevé de capacités**, phase 0.a — `cloudflared` présent ou non, une ligne, `✓` ou `✗`.
+1. **Relevé de capacités**, phase 0.a : `cloudflared` présent ou non, une ligne, `✓` ou `✗`.
    Une information, comme la clé Pexels.
-2. **Pendant `npm install`**, phase 0.55 — s'il manque, une ligne avec la commande, à lancer
+2. **Pendant `npm install`**, phase 0.55 : s'il manque, une ligne avec la commande, à lancer
    pendant l'attente. Aucune réponse attendue : s'il ne fait rien, on continue.
-3. **À la remise**, une fois qu'il a dit que le site lui plaît — *« Tu veux un lien à envoyer,
+3. **À la remise**, une fois qu'il a dit que le site lui plaît : *« Tu veux un lien à envoyer,
    pour le montrer à quelqu'un ? »*
 
 Le signalement du milieu garde sa raison d'être : c'est du temps mort qui existe déjà, le seul
@@ -1570,7 +1570,7 @@ n'intégrer que ce qui s'atteint depuis le terminal, sans que l'utilisateur ouvr
 ## Deux couches sur quatre étaient déjà chez nous
 
 Le générateur de sites, c'est ce skill. La bibliothèque d'animations, c'est GSAP et nos
-primitives — apparition, cascade, compteur, bandeau défilant couvrent quatre des dix effets
+primitives : apparition, cascade, compteur, bandeau défilant couvrent quatre des dix effets
 de leur catalogue. Restaient le décor et l'agencement.
 
 ## Le décor : fabriqué, pas téléchargé
@@ -1587,7 +1587,7 @@ courant quand on télécharge une image faite ailleurs.
 ## Mesurer au lieu de juger
 
 Premier jet : triangles à 0,04 d'opacité, 80 points sur 1 440 × 500. Le panneau navigateur
-n'a rien montré. Piège connu — il ne repeint pas toujours sous la ligne de flottaison — donc
+n'a rien montré. Piège connu (il ne repeint pas toujours sous la ligne de flottaison), donc
 j'ai rendu les cinq fonds en pixels et mesuré l'écart avec la couleur de fond. Verdict : un
 écart de 20 sur 765 pour les triangles, un pour cent de couverture pour le semis. Invisibles.
 
@@ -1596,7 +1596,7 @@ fond en luminance, et l'opacité compense un écart faible. Après correction, �
 pour les triangles, pics à 184 pour le semis.
 
 **Et une leçon sur l'instrument.** Mon premier indicateur comparait chaque pixel au coin
-supérieur gauche — lequel est lui-même recouvert d'un triangle. La grille corrigée paraissait
+supérieur gauche, lequel est lui-même recouvert d'un triangle. La grille corrigée paraissait
 donc encore ratée. Un instrument mal choisi condamne un travail correct : la deuxième mesure
 partait de la vraie couleur de fond, déclarée, pas devinée.
 
@@ -1626,7 +1626,7 @@ construction.
 # Trois primitives de réponse, et quatre pièges d'environnement (2026-09-06)
 
 Nos six primitives faisaient toutes la même chose : faire entrer un élément. Manquaient les
-mouvements qui **répondent** — au curseur, au défilement, au temps. `Relief` incline et
+mouvements qui **répondent** : au curseur, au défilement, au temps. `Relief` incline et
 éclaire une carte sous la souris, `Progression` trace une barre de lecture, `Rotatif` fait
 tourner un mot dans une accroche. Tout en GSAP, aucune dépendance de plus.
 
@@ -1642,7 +1642,7 @@ navigateur émule un survol au premier appui et la carte resterait inclinée apr
 ## Un vrai défaut, vu à l'écran
 
 `Rotatif` empilait ses mots dans une même cellule de grille pour que la phrase ne saute pas.
-Résultat visible sur la capture : « Un site pour votre atelier          . » — la grille se
+Résultat visible sur la capture : « Un site pour votre atelier          . » La grille se
 cale sur le mot le plus long et la ponctuation reste échouée à droite. La largeur du bloc
 suit maintenant le mot affiché, animée avec la bascule.
 
@@ -1663,7 +1663,7 @@ J'ai conclu deux fois qu'un composant était cassé. Les deux fois, c'était l'i
 | Les classes Tailwind arbitraires manquent | Le compilateur n'avait pas rescanné le fichier créé après le démarrage du serveur |
 
 **Le signe qui tranche : `gsap.ticker.frame`.** À zéro, rien ne peut bouger et tout diagnostic
-d'animation est nul. On avance alors l'horloge à la main — `ticker.tick()` pour un effet
+d'animation est nul. On avance alors l'horloge à la main : `ticker.tick()` pour un effet
 court, `gsap.updateRoot(t)` pour parcourir une chronologie. C'est ainsi que les trois
 primitives ont été vérifiées : rotation 3D mesurée sur la carte, progression 0,5 à mi-course,
 largeurs 174 → 275 → 107 sur le mot qui tourne.
@@ -1671,7 +1671,7 @@ largeurs 174 → 275 → 107 sur le mot qui tourne.
 **Et une leçon d'honnêteté.** J'avais écrit dans le code que la formulation précédente de la
 barre « donnait une plage nulle, constaté sur le socle ». C'était faux : la plage était juste,
 c'est l'horloge qui dormait. Un commentaire qui invente une cause est pire qu'un commentaire
-absent — il fait perdre du temps à celui qui le lira dans six mois. Corrigé pour ne dire que
+absent : il fait perdre du temps à celui qui le lira dans six mois. Corrigé pour ne dire que
 ce qui a été mesuré.
 
 ---
@@ -1680,7 +1680,7 @@ ce qui a été mesuré.
 
 Question partie d'une phrase d'un guide écrit pour un autre outil : « charge les typos depuis
 Google Fonts et déclare-les dans le CSS global ». Appliquée à notre socle, elle serait une
-régression — et elle a révélé un trou.
+régression, et elle a révélé un trou.
 
 ## Le trou : personne ne disait comment poser une police
 
@@ -1692,7 +1692,7 @@ de trou qui ne se voit pas dans une relecture, parce qu'il n'y a rien à relire.
 ## Pourquoi coller l'import serait un défaut, et d'abord un défaut juridique
 
 Un import vers `fonts.googleapis.com` fait contacter Google par le navigateur du visiteur,
-donc transmet son adresse IP à un tiers hors Union européenne — sans nécessité, puisque la
+donc transmet son adresse IP à un tiers hors Union européenne, sans nécessité, puisque la
 police peut être servie par le site. Un tribunal allemand a condamné un éditeur sur ce seul
 motif en janvier 2022, et la CNIL va dans le même sens.
 
@@ -1703,13 +1703,13 @@ Cette ligne rendrait cette affirmation fausse. **Une phrase de doc écrite pour 
 
 Trois raisons techniques suivent, et vont dans le même sens : `next/font` calcule les
 métriques de la police de secours et supprime le saut de mise en page, télécharge les
-fichiers à la construction, et transforme la police en variable CSS — donc en jeton du thème,
+fichiers à la construction, et transforme la police en variable CSS, donc en jeton du thème,
 changeable à un seul endroit, comme les couleurs.
 
 ## Écrit dans le déroulé, et vérifié par le garde-fou
 
 L'étape du thème porte maintenant le patron exact, `next/font` branché sur `--font-sans` et
-`--font-display`. Et le garde-fou refuse un import vers un CDN de polices — bloquant, pas
+`--font-display`. Et le garde-fou refuse un import vers un CDN de polices : bloquant, pas
 avertissement. Testé sur un faux projet : il attrape la ligne et nomme le fichier.
 
 **La leçon générale.** Une bonne pratique lue ailleurs se traduit dans notre contexte avant
@@ -1733,7 +1733,7 @@ lit.
 
 Le blueprint porte maintenant une section **Relevé de design** : la requête exacte, la date,
 ce que le moteur a rendu ligne par ligne, ce qu'on garde, ce qu'on écarte et pourquoi. Le
-garde-fou refuse un projet dont le blueprint ne l'a pas — testé dans les deux sens.
+garde-fou refuse un projet dont le blueprint ne l'a pas, testé dans les deux sens.
 
 Elle existe même quand le moteur n'a pas été interrogé, par exemple sur une marque qui
 appartient déjà au client : elle dit alors « non interrogé, et pourquoi ». **Une trace qui
@@ -1749,13 +1749,13 @@ Sans site de référence, l'utilisateur a le moins de mots pour dire ce qu'il ve
 possible était « non, mais je ne sais pas dire pourquoi ».
 
 Le moteur est maintenant interrogé **trois fois sur la même requête métier**, en ne faisant
-varier que l'audace. On obtient trois identités réelles — pas trois variantes imaginées — et
+varier que l'audace. On obtient trois identités réelles (pas trois variantes imaginées) et
 l'utilisateur choisit. Chacune porte un nom court tiré du métier : « Grain et cuivre » se
 choisit, « moderne et épuré » ne se choisit pas.
 
 **« Aucune ne me plaît » est le renseignement le plus utile de l'échange** : ce qu'on rejette
 dit ce qu'on veut mieux que ce qu'on demanderait. Une reformulation, une seconde proposition,
-puis on tranche — ce skill ne bloque pas sur une question de goût.
+puis on tranche : ce skill ne bloque pas sur une question de goût.
 
 ## Un détail qui change le choix
 
@@ -1775,7 +1775,7 @@ distribue une mise à jour que lorsque ce numéro change.** Sans numéro, Claude
 sur l'empreinte du dernier commit et livre chaque publication.
 
 Nos manifestes portaient `"version": "1.0.0"`, écrit une fois et jamais touché. Dix-neuf
-publications plus tard, **personne installé en plugin n'aurait rien reçu** — et rien ne
+publications plus tard, **personne installé en plugin n'aurait rien reçu**, et rien ne
 l'aurait signalé, ni de leur côté ni du nôtre. Le champ est retiré des quatre manifestes.
 
 ## Trois modes, trois comportements
@@ -1787,24 +1787,24 @@ l'aurait signalé, ni de leur côté ni du nôtre. Le champ est retiré des quat
 | Plugin depuis la place de marché | rafraîchissement en arrière-plan, à chaque publication |
 
 **La branche publiée devient donc la branche de sortie.** Ce qui y est poussé part chez tout
-le monde au prochain rafraîchissement. C'est cohérent avec la façon dont on travaille — on
-n'y pousse que du volontaire, jamais du travail en cours — mais c'est une responsabilité de
+le monde au prochain rafraîchissement. C'est cohérent avec la façon dont on travaille (on
+n'y pousse que du volontaire, jamais du travail en cours), mais c'est une responsabilité de
 plus : plus de filet entre un commit et les machines des autres.
 
 **Le jour où il faudra des versions**, on remettra le champ et on l'incrémentera à chaque
 sortie. Tant qu'on itère vite et seul, la mise à jour continue vaut mieux qu'un numéro qu'on
-oublierait de changer — c'est exactement ce qui vient d'arriver.
+oublierait de changer : c'est exactement ce qui vient d'arriver.
 
 ---
 
 # Cinquième bootstrap : une page et une réservation (2026-09-08)
 
-Site d'une page pour un coach sportif indépendant, dans sa ville — le même client que le premier
+Site d'une page pour un coach sportif indépendant, dans sa ville, le même client que le premier
 bootstrap, refait avec nouvelle création à partir de son site actuel. Orchestrateur Fable 5.1,
 cinq assistants Sonnet en parallèle, vingt minutes de construction, build vert du premier coup.
 Ce qui a été trouvé par la mesure, et ce que le skill doit en garder.
 
-## Le survol des cartes ne marchait pas — et n'avait jamais marché
+## Le survol des cartes ne marchait pas, et n'avait jamais marché
 
 `Cascade` et `Reveal` laissaient un `transform: translate(0px, 0px)` en ligne à la fin de
 leur tween. Un style en ligne l'emporte sur `.carte-reactive:hover { transform:
@@ -1813,19 +1813,19 @@ précédents. Le build ne le dit pas, une capture ne le montre pas, et le survol
 au quatrième bootstrap l'a été sur une carte hors cascade.
 
 Corrigé dans le socle : `clearProps: "transform"` sur les deux primitives. On ne vide que
-le `transform` — `opacity` et `visibility` restent en ligne, sinon la feuille
+le `transform` : `opacity` et `visibility` restent en ligne, sinon la feuille
 `html.js [data-mouvement]` remasquerait l'élément.
 
 **La leçon de méthode** : un état de survol se vérifie sur un élément qui a fini d'entrer en
 scène, pas sur un élément immobile. La mesure qui tranche : `el.getAttribute("style")` après
-la révélation — s'il contient `transform`, le survol est mort.
+la révélation. S'il contient `transform`, le survol est mort.
 
-## L'aqua sur du sable — l'accent d'une marque n'est pas toujours une couleur de texte
+## L'aqua sur du sable : l'accent d'une marque n'est pas toujours une couleur de texte
 
 `Section` posait l'eyebrow en `text-accent` quel que soit le fond. Ici l'accent est un aqua
 clair (#37e5fd) : 1,5:1 sur sable, 3,2:1 sur bleu vague, illisible en 12 px. Le socle choisit
-maintenant la couleur de l'eyebrow selon le fond — `text-accent` sur `primary` et
-`secondary`, `text-primary` ailleurs — et les gabarits du module legal ne posent plus
+maintenant la couleur de l'eyebrow selon le fond (`text-accent` sur `primary` et
+`secondary`, `text-primary` ailleurs) et les gabarits du module legal ne posent plus
 `text-accent` sur leurs liens. Les consignes aux assistants le disent en toutes lettres :
 pas de texte aqua sur fond clair.
 
@@ -1833,7 +1833,7 @@ pas de texte aqua sur fond clair.
 
 Le panneau intégré était masqué pendant tout l'auto-test. Conséquences, toutes constatées :
 pas de `requestAnimationFrame` donc GSAP figé, captures d'écran figées après le premier
-défilement (des pages entièrement sable), et `setTimeout` bridé à la seconde — un script
+défilement (des pages entièrement sable), et `setTimeout` bridé à la seconde : un script
 qui attend 40 ms cent fois dépasse les 45 s de l'outil.
 
 - **Mesurer au lieu de regarder** : débordements, ancres, images, cibles tactiles, tout
@@ -1853,21 +1853,21 @@ qui attend 40 ms cent fois dépasse les 45 s de l'outil.
 
 « sérieusement, » en Syne 800 à 36 px fait 401 px dans une boîte de 327. Le script de
 débordement ne l'a pas vu : le héros porte `overflow-hidden`, donc le filtre « masqué par un
-parent » l'a écarté — le mot était coupé net à l'écran. La mesure qui l'attrape, à ajouter à
+parent » l'a écarté. Le mot était coupé net à l'écran. La mesure qui l'attrape, à ajouter à
 l'auto-test : `canvas.measureText(motLePlusLong)` avec la police calculée du `h1`, à
 comparer à `h1.clientWidth`. Corrigé à `text-[1.75rem]` sur mobile ; à 72 px sur bureau il
 fallait aussi élargir le bloc (`max-w-4xl`).
 
-## Une image collée se lit — et se récupère, contrairement à ce que je répétais
+## Une image collée se lit et se récupère, contrairement à ce que je répétais
 
 Le tableau des prix est arrivé collé dans le chat : cinq lignes, trois colonnes, deux modes
-de paiement, encodés dans `lib/tarifs.ts` sans une seule question. Les cinq photos aussi —
+de paiement, encodés dans `lib/tarifs.ts` sans une seule question. Les cinq photos aussi,
 et j'ai dit deux fois à l'utilisateur qu'une image collée « n'arrive jamais sur mon disque »,
 comme le skill l'écrivait. C'était faux depuis qu'un `scripts/images-du-chat.mjs` existe,
 non versionné et non cité par le skill : il décode les images du `.jsonl` de la session.
 Essayé après coup sur cette conversation : six images retrouvées, dimensions comprises.
 
-Les photos ont été prises sur son site par `curl`, à la même définition — rien de perdu
+Les photos ont été prises sur son site par `curl`, à la même définition : rien de perdu
 cette fois. Le skill dit maintenant : « glisse-les dans le chat », avec la réserve de la
 définition que le script affiche. Une consigne fausse répétée avec assurance coûte une
 question de plus à chaque bootstrap ; celle-ci en avait déjà coûté deux.
@@ -1875,7 +1875,7 @@ question de plus à chaque bootstrap ; celle-ci en avait déjà coûté deux.
 ## Higgsfield, trois choses apprises sur pièces
 
 - `get_cost` ne valide pas les paramètres : le devis de la vidéo est passé, la génération a
-  échoué en 422 — `seedance_2_5` exige `mode: "omni_reference"` dès qu'on lui donne une
+  échoué en 422 : `seedance_2_5` exige `mode: "omni_reference"` dès qu'on lui donne une
   image de départ.
 - Une vidéo 1080p de 8 s pèse 17,5 Mo : impossible en fond de héros, surtout sur le
   téléphone qu'on a promis de soigner. `ffmpeg-static` installé dans le scratchpad (pas dans
@@ -1902,24 +1902,24 @@ autre personne, le mot en terre cuite trop sombre sur la photo du héros, un men
 ne couvrait pas la page. Cinq corrections en un script, vingt minutes.
 
 Sa fausse alerte vaut la leçon : « aucun retour au survol nulle part, captures identiques au
-pixel ». Son onglet était en arrière-plan ; le `:hover` s'applique dans le DOM — mesuré avant
-lui, `scale(1.05)` sur l'image survolée — mais la capture d'un onglet caché ne le montre pas.
+pixel ». Son onglet était en arrière-plan ; le `:hover` s'applique dans le DOM (mesuré avant
+lui, `scale(1.05)` sur l'image survolée), mais la capture d'un onglet caché ne le montre pas.
 Un relecteur qui rapporte une absence de réaction depuis un onglet en arrière-plan rapporte
 son instrument, pas le site : on vérifie au style calculé avant de corriger.
 
 Il a été coupé une première fois par la limite de session (429 sur Sonnet) et relancé tel
-quel une fois la limite levée — une saturation, pas un défaut de brief.
+quel une fois la limite levée : une saturation, pas un défaut de brief.
 
 ## Ce qui a bien marché, à garder
 
-Un fichier `.buildyoursite/consignes-agents.md` — règles, thème, API du socle, formats — lu
+Un fichier `.buildyoursite/consignes-agents.md` (règles, thème, API du socle, formats) lu
 par les cinq assistants avant leur brief propre : pas un texte inventé, pas une couleur en
 dur, deux `[[À CONFIRMER]]` en tout, et des rapports qui signalent d'eux-mêmes les
 ambiguïtés. Les briefs individuels tenaient alors en une page chacun.
 
 ---
 
-# Cinquième bootstrap, second regard — ce que le rapport a confirmé, et ce qu'il a ajouté (2026-09-08)
+# Cinquième bootstrap, second regard : ce que le rapport a confirmé, et ce qu'il a ajouté (2026-09-08)
 
 Deux sessions ont travaillé ce bootstrap : l'une l'a construit et a écrit un rapport de
 fin, l'autre a suivi les captures de l'utilisateur en direct et a préparé les correctifs.
@@ -1938,7 +1938,7 @@ su deux. Un échec qui touche au livrable se dit désormais dans le fil, en une 
 qu'on fait ensuite.
 
 **La liste de onze points.** Trois réponses à côté, un point sans réponse, et un mot de
-rédacteur — « parcours » — là où il fallait un mot de coach. Les réponses libres se
+rédacteur (« parcours ») là où il fallait un mot de coach. Les réponses libres se
 collectent dans un bloc à copier, idée de l'utilisateur. Décision D17.
 
 **Les photos collées.** Le skill a répété deux fois qu'une image collée « n'arrive jamais sur
@@ -1947,25 +1947,25 @@ démenti est posé sous l'entrée qui l'affirmait.
 
 **L'intention manquée.** L'utilisateur voulait ses photos animées ; le skill a généré une
 image nouvelle, puis en a « refait une sans logo, 2 crédits de plus » dans le message même
-qui signalait le logo. Le connecteur sait animer une image fournie — vérifié dans son
-schéma — et le skill ne le savait pas. `references/video.md` écrit la chaîne : la photo du
+qui signalait le logo. Le connecteur sait animer une image fournie (vérifié dans son
+schéma) et le skill ne le savait pas. `references/video.md` écrit la chaîne : la photo du
 client d'abord, l'image inventée en repli, et jamais sans question.
 
 ## Ce que le rapport a ajouté, et qu'on garde
 
-- **Un fichier de consignes commun aux agents** — cinq briefs d'une page au lieu de quatre,
+- **Un fichier de consignes commun aux agents** : cinq briefs d'une page au lieu de quatre,
   pas un texte inventé, pas une couleur en dur. Gabarit dans `references/consignes-agents.md`.
 - **Le survol des cartes ne marchait pas, sur quatre bootstraps** : le `transform` en ligne
   laissé par GSAP l'emportait sur `:hover`. Aucune capture ne l'a jamais montré ; la mesure
   l'a trouvé. `clearProps` sur deux primitives.
 - **L'espace privé qu'on ne peut pas ouvrir** : la règle de sécurité interdit de taper un mot
-  de passe. Ça se dit à la remise, et l'audit de sécurité — promis au premier message,
-  automatisé pour ce qui peut l'être — couvre le reste.
+  de passe. Ça se dit à la remise, et l'audit de sécurité (promis au premier message,
+  automatisé pour ce qui peut l'être) couvre le reste.
 - **Le genre « landing + réservation »**, avec ses deux questions et une unicité de créneau
   qui survit aux annulations.
 - **Une application rendue côté client** se relève dans son bundle de développement, pas dans
   son HTML vide.
-- **Un panneau navigateur masqué fige tout** — l'autre session est tombée dans le même piège
+- **Un panneau navigateur masqué fige tout** : l'autre session est tombée dans le même piège
   le même jour, et a laissé la même parade : avancer l'horloge de GSAP à la main. Elle est
   maintenant dans le socle, en développement seulement.
 
@@ -1979,8 +1979,8 @@ aller-retour.
 
 Une session qui construit ne voit pas ce qu'elle fait mal : elle a suivi sa règle à la
 lettre et dépensé sans demander. Une session qui regarde les captures voit le défaut mais
-pas sa cause. Il a fallu les deux — et un rapport écrit pour l'autre, avec les chaînes
-exactes — pour que la correction porte sur le texte fautif et non sur l'exécution. C'est
+pas sa cause. Il a fallu les deux (et un rapport écrit pour l'autre, avec les chaînes
+exactes) pour que la correction porte sur le texte fautif et non sur l'exécution. C'est
 la première fois qu'un bootstrap est relu à quatre yeux ; ce ne devrait plus être la
 dernière.
 
@@ -1990,7 +1990,7 @@ Le dossier `lib` figurait dans la liste des dossiers ignorés, depuis l'époque 
 bibliothèque de design vivait dans `<skill>/lib`. Elle a déménagé ; l'exclusion est restée.
 Conséquence, sur tous les bootstraps : aucun jeton, aucun secret, aucune action serveur du
 `lib/` d'un projet n'a jamais été contrôlé. Le premier test du contrôle des actions
-d'administration l'a révélé — l'action piégée est passée sans un mot, parce que son fichier
+d'administration l'a révélé : l'action piégée est passée sans un mot, parce que son fichier
 n'était pas lu. Exclusion retirée ; le socle reste propre avec `lib/` inclus.
 
 ## Le tiret long, signature de la machine

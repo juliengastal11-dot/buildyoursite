@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { SITE, urlAbsolue } from "@/lib/site";
 
 /* Servi sur /sitemap.xml. Les pages fixes viennent de lib/site.ts ; les pages
-   lues en base — fiches produit, articles — s'ajoutent ici au bootstrap :
+   lues en base (fiches produit, articles) s'ajoutent ici au bootstrap :
 
      const produits = await db.produit.findMany({ where: { actif: true } });
      entrees.push(...produits.map((p) => ({ url: urlAbsolue(`/cafes/${p.slug}`) })));

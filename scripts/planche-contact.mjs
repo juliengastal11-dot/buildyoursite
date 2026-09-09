@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /* ---------------------------------------------------------------------------
-   Planche-contact — toutes les photos d'un projet sur une seule image.
+   Planche-contact : toutes les photos d'un projet sur une seule image.
 
    Pourquoi ça existe. Une source d'images peut renvoyer un fichier
    parfaitement valide, sur le bon mot-clé, et complètement hors sujet : une
@@ -11,7 +11,7 @@
    une seule, légendée, qu'on inspecte d'un coup d'œil. C'est l'équivalent de
    la planche-contact du photographe : on choisit avant de tirer.
 
-   Usage — depuis la racine du projet :
+   Usage. Depuis la racine du projet :
      node <skill>/scripts/planche-contact.mjs
      node <skill>/scripts/planche-contact.mjs --dossier public/photos --sortie /tmp/planche.jpg
 --------------------------------------------------------------------------- */

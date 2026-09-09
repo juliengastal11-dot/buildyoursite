@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /* ---------------------------------------------------------------------------
-   Contrôles automatiques — ce que la relecture humaine a manqué deux fois.
+   Contrôles automatiques : ce que la relecture humaine a manqué deux fois.
 
      node <skill>/scripts/verifier-projet.mjs --socle
      node <skill>/scripts/verifier-projet.mjs --projet .          (avant remise)
@@ -10,7 +10,7 @@
 
    · données d'un client précédent laissées dans le socle, prêtes à être
      copiées chez tous les suivants ;
-   · classe de couleur utilisée sans être définie — invisible, elle ne rend
+   · classe de couleur utilisée sans être définie : invisible, elle ne rend
      simplement rien ;
    · trous `[[À COMPLÉTER]]` des pages légales, oubliés à la remise ;
    · photos provisoires parties en production.
@@ -35,7 +35,7 @@ const aDrapeau = (n) => args.includes("--" + n);
 
 // `lib` n’y est plus : il y figurait pour la bibliothèque de design, qui vit
 // désormais hors du skill. Le laisser rendait le contrôle aveugle sur tout le
-// dossier lib/ des projets — actions serveur, jetons, secrets. Constaté quand
+// dossier lib/ des projets : actions serveur, jetons, secrets. Constaté quand
 // une action d’administration sans contrôle de session est passée sans un mot.
 const IGNORE = new Set(["node_modules", ".next", ".git", "dist", "build", ".buildyoursite"]);
 
@@ -118,11 +118,11 @@ async function couleursNonDefinies(racine) {
   if (definis.size === 0) return;
 
   /* Les prefixes ci-dessous acceptent AUSSI des valeurs qui ne sont pas des
-     couleurs — `text-sm`, `border-b`, `ring-offset-2`. Une premiere version
+     couleurs : `text-sm`, `border-b`, `ring-offset-2`. Une premiere version
      les signalait toutes : huit faux positifs, aucun vrai. On ne retient donc
      qu'un nom qui ressemble a un JETON DE ROLE : un mot d'au moins quatre
      lettres, sans chiffre, absent de la liste des mots-cles Tailwind.
-     C'est exactement la forme du defaut reel qu'on cherche — `terracotta`. */
+     C'est exactement la forme du defaut reel qu'on cherche : `terracotta`. */
   const MOTS_CLES = new Set([
     // tailles et graisses
     "base", "auto", "none", "full", "thin", "light", "normal", "medium", "semibold",
@@ -141,7 +141,7 @@ async function couleursNonDefinies(racine) {
     // degrades : ce ne sont pas des couleurs. La forme obsolete `gradient-*`
     // est traitee par son propre controle, avec un message juste.
     "linear", "radial", "conic", "gradient",
-    // proprietes CSS ecrites en toutes lettres dans une chaine de style —
+    // proprietes CSS ecrites en toutes lettres dans une chaine de style :
     // `border-radius`, `text-decoration`, `stroke-width`. Vu sur la feuille
     // de la comete de l'overlay : « couleur radius absente de @theme ».
     "radius", "width", "style", "color", "image", "spacing", "sizing", "align",
@@ -156,7 +156,7 @@ async function couleursNonDefinies(racine) {
     for (const [i, ligne] of texte.split("\n").entries()) {
       // Une classe citée dans un commentaire n'est pas une classe utilisée.
       // Sans ce filtre, un commentaire qui explique un bug le signale comme
-      // s'il existait encore — constaté.
+      // s'il existait encore. Constaté.
       const t = ligne.trimStart();
       if (t.startsWith("//") || t.startsWith("*") || t.startsWith("/*")) continue;
 
@@ -181,12 +181,12 @@ async function couleursNonDefinies(racine) {
 }
 
 /* ===========================================================================
-   2 quinquies. L'audit de sécurité — ce qui s'automatise
+   2 quinquies. L'audit de sécurité : ce qui s'automatise
    Promis au premier message, fait avant la remise. Quatre contrôles qu'un
    script attrape mieux qu'une relecture : un secret qui traîne dans le code,
    le fichier d'environnement suivi par git, du HTML injecté sans raison
    écrite, une action serveur d'administration sans contrôle de session.
-   Le reste — validation côté serveur, redirections, débit — se relit.
+   Le reste (validation côté serveur, redirections, débit) se relit.
    =========================================================================== */
 async function securite(racine) {
   // .env suivi par git : la clé de tout le monde.
@@ -211,7 +211,7 @@ async function securite(racine) {
     const client = /^\s*["']use client["']/m.test(texte);
 
     for (const [i, ligne] of lignes.entries()) {
-      // Une clé en clair, où que ce soit — et pire dans un fichier client.
+      // Une clé en clair, où que ce soit, et pire dans un fichier client.
       if (SECRET.test(ligne) && !/process\.env\./.test(ligne)) {
         signale(true, "une clé en clair dans le code", `${rel}:${i + 1} — passe par une variable d'environnement${client ? " ; ce fichier est CLIENT, la clé partirait dans le navigateur" : ""}`);
       }
@@ -245,7 +245,7 @@ async function securite(racine) {
 /* ===========================================================================
    2 quater. Le blueprint doit dire d'où vient son identité visuelle
    Une palette inventée de tête et une palette relevée se ressemblent dans un
-   document. Seule la trace les distingue — et sans elle, personne ne peut
+   document. Seule la trace les distingue, et sans elle, personne ne peut
    vérifier que le moteur de design a seulement été ouvert.
    =========================================================================== */
 async function traceDesign(racine) {
@@ -330,14 +330,14 @@ async function valeursEnDur(racine) {
 }
 
 /* ===========================================================================
-   4. Trous des pages légales — bloquant en production, dans le code livré
+   4. Trous des pages légales : bloquant en production, dans le code livré
    =========================================================================== */
 /**
  * Retire commentaires de bloc et de ligne, en conservant le nombre de lignes.
  *
  * Sans le premier filtre, l'en-tête d'un gabarit qui EXPLIQUE la convention
  * `[[À COMPLÉTER]]` était compté comme un trou. Un garde qui compte faux se
- * fait ignorer, et un garde ignoré ne sert à rien — c'est la leçon des huit
+ * fait ignorer, et un garde ignoré ne sert à rien : c'est la leçon des huit
  * premiers faux positifs.
  *
  * Effacer un commentaire de bloc d'un coup aurait aussi décalé tous les
@@ -350,8 +350,8 @@ function sansCommentaires(texte) {
     .replace(/^\s*\/\/.*$/gm, "");
 }
 
-// Capture le texte demandé après les deux points, sur une ou plusieurs lignes
-// — vu en vrai dans les CGV, une exception listée juste après le marqueur.
+// Capture le texte demandé après les deux points, sur une ou plusieurs lignes.
+// Vu en vrai dans les CGV, une exception listée juste après le marqueur.
 // Sans deux points (l'ancienne forme `[[À COMPLÉTER]]` seule), le groupe
 // capturé est vide, et c'est très bien : rien à afficher après le tiret.
 const RE_A_CONFIRMER = /\[\[À (?:COMPLÉTER|CONFIRMER)[^:\]]*:?\s*([^\]]*)\]\]/g;
@@ -360,7 +360,7 @@ async function trousLegaux(racine, production) {
   // Un marqueur publié tel quel dans les mentions légales a été classé
   // défaut le plus sérieux du site par un relecteur humain : le total seul
   // ne disait pas où regarder. Regroupés par fichier, et distingués selon
-  // ce qui part vraiment en ligne — app/, components/, lib/ — de ce qui
+  // ce qui part vraiment en ligne (app/, components/, lib/) de ce qui
   // reste dans les fichiers de préparation.
   const codeLivre = new Map();
   const preparation = new Map();
@@ -399,7 +399,7 @@ async function trousLegaux(racine, production) {
 }
 
 /* ===========================================================================
-   5. Photos provisoires — bloquant en production
+   5. Photos provisoires : bloquant en production
    =========================================================================== */
 async function photosProvisoires(racine, production) {
   const dossier = path.join(racine, "public");
@@ -418,7 +418,7 @@ async function photosProvisoires(racine, production) {
   /* Avant remise, les photos provisoires sont l'état NORMAL : en lister
      onze noyait les vrais avertissements sous du bruit attendu. On n'en
      nomme donc que trois. En production, chacune est bloquante et mérite
-     sa ligne — c'est le moment où on veut savoir laquelle. */
+     sa ligne : c'est le moment où on veut savoir laquelle. */
   if (production) {
     for (const f of trouvees) signale(true, "photo provisoire en production", f);
     return;
@@ -433,19 +433,19 @@ async function photosProvisoires(racine, production) {
 }
 
 /* ===========================================================================
-   6. Pages sans navigation — avertissement
+   6. Pages sans navigation : avertissement
    Sept pages sur vingt-deux n'avaient ni en-tête ni pied de page : catalogue,
    fiche produit, compte, pages légales. Elles répondaient 200, le build était
    vert, et on y arrivait sans pouvoir en repartir. Trouvé par l'utilisateur,
    qui a demandé « un bouton retour ».
 
-   Le tunnel de commande — panier, commande, connexion — a le droit d'être
+   Le tunnel de commande (panier, commande, connexion) a le droit d'être
    dépouillé. C'est pour ça que ce n'est qu'un avertissement : la liste est là
    pour qu'on tranche page par page, pas pour qu'on obéisse.
    =========================================================================== */
 // Le tunnel de commande a le droit d'être nu : connexion, inscription,
 // panier, commande, paiement. Sans cette liste, `app/connexion/page.tsx`
-// remontait comme un défaut à chaque contrôle alors que c'est voulu — une
+// remontait comme un défaut à chaque contrôle alors que c'est voulu : une
 // page de connexion est nue par nature, comme le tunnel de commande.
 const CHEMINS_SANS_NAV_TOLERES = /^(connexion|inscription|commande|panier|paiement)(\/|$)/;
 
@@ -456,7 +456,7 @@ async function pagesSansNavigation(racine) {
     const base = path.basename(f);
     // La 404 est une page comme une autre : un visiteur arrivé par un lien
     // cassé ou un QR code mal recopié doit pouvoir repartir. Elle ne
-    // s'appelle pas `page.tsx`, et échappait donc à ce contrôle — trouvée
+    // s'appelle pas `page.tsx`, et échappait donc à ce contrôle, trouvée
     // par un relecteur humain sur une 404 réduite à un unique bouton, pas
     // par ce script.
     if (base !== "page.tsx" && base !== "not-found.tsx") continue;
@@ -477,7 +477,7 @@ async function pagesSansNavigation(racine) {
 }
 
 /* ===========================================================================
-   7. Mots creux et tics d'IA dans le texte — avertissement
+   7. Mots creux et tics d'IA dans le texte : avertissement
    Une rédaction longue dérive vers la langue corporate même quand le brief
    demande le contraire. Ce contrôle liste ce qui a dérivé ; il ne tranche
    pas : une expression peut être voulue par la marque. Le lecteur décide.
@@ -552,9 +552,9 @@ async function motsCreux(racine) {
   const trouvailles = [];
   for (const f of await fichiers(racine, [".tsx", ".ts", ".md"])) {
     if (f.includes("node_modules") || f.includes("verifier-projet")) continue;
-    // Les fichiers de préparation à la racine — BLUEPRINT.md, CONTENU.md,
+    // Les fichiers de préparation à la racine (BLUEPRINT.md, CONTENU.md,
     // AMELIORATIONS.md, DECISIONS.md, README.md, ou tout autre .md posé à la
-    // racine — ne sont jamais livrés au visiteur. Trois lignes signalées sur
+    // racine) ne sont jamais livrés au visiteur. Trois lignes signalées sur
     // cinq, un jour, venaient de là : ce contrôle porte sur ce que le
     // visiteur lit, le code des pages et des composants.
     if (path.dirname(f) === racine && f.toLowerCase().endsWith(".md")) continue;
@@ -607,7 +607,7 @@ async function motsCreux(racine) {
 }
 
 /* ===========================================================================
-   8. SEO de base — avertissement
+   8. SEO de base : avertissement
    Ce qu'un moteur ou un réseau social voit du site. Le socle fournit robots,
    sitemap, image de partage et métadonnées par défaut ; chaque page doit
    poser les siennes, et chaque image dire ce qu'elle montre.

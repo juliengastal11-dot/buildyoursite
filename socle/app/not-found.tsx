@@ -5,13 +5,13 @@ import { Button } from "@/components/ui/button";
 
 /* ---------------------------------------------------------------------------
    Page 404 à la charte du site. Sans elle, un slug inexistant retombe sur la
-   404 générique de Next — fond blanc, police système, aucun moyen de repartir.
+   404 générique de Next : fond blanc, police système, aucun moyen de repartir.
 
    ⚠️ À HABILLER AU BOOTSTRAP, comme les pages du module legal.
 
    Telle quelle, cette page n'a ni en-tête ni pied de page : le socle ne peut
    pas importer `Nav` et `PiedDePage`, qui n'existent pas encore quand il est
-   copié. C'est donc au bootstrap de le faire — au même moment que les pages
+   copié. C'est donc au bootstrap de le faire, au même moment que les pages
    légales, et pas plus tard.
 
    Vécu : livrée nue, elle a été classée deuxième défaut du site par un

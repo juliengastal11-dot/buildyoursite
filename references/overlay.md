@@ -1,4 +1,4 @@
-# Overlay d'édition visuelle — mécanique
+# Overlay d'édition visuelle : mécanique
 
 ## Ce qui se passe côté navigateur
 
@@ -17,8 +17,8 @@ d'une page à l'autre, l'utilisateur bascule en Navigation.
 Images : bouton 📎 ou **Ctrl+V** directement dans la bulle. Quatre maximum par commentaire.
 
 Deux modes d'envoi, réglables dans la barre flottante :
-- **Groupé** (défaut) — les commentaires s'empilent, le bouton « Envoyer — N » les envoie ensemble
-- **Envoi immédiat** — chaque validation part seule
+- **Groupé** (défaut) : les commentaires s'empilent, le bouton « Envoyer · N » les envoie ensemble
+- **Envoi immédiat** : chaque validation part seule
 
 ## Ce qui arrive sur le disque
 
@@ -70,14 +70,14 @@ fonctionne pas ».
 
 ## Le watcher
 
-**À armer dès que le serveur de dev tourne — phase 0.55 —, pas en fin de bootstrap.** Le
+**À armer dès que le serveur de dev tourne (phase 0.55), pas en fin de bootstrap.** Le
 troisième bootstrap l'a payé : armé à la dernière étape, il a laissé les commentaires envoyés
 pendant les vérifications s'empiler sans réponse, puis les a livrés d'un coup à la fin.
 Persistant, il reste armé toute la session ; réarme-le seulement s'il est mort.
 Outil `Monitor`, `persistent: true`, depuis la racine du projet :
 
 > **L'overlay ne fonctionne pas sur `/blueprint`.** Cette page est servie telle quelle par
-> `app/blueprint/route.ts` — le HTML autonome de `blueprint-html.mjs`, hors du layout de
+> `app/blueprint/route.ts` : le HTML autonome de `blueprint-html.mjs`, hors du layout de
 > l'application, donc sans aucun script. Vérifié : `document.scripts` y est vide. Sur le
 > blueprint, l'utilisateur relit et répond dans le chat ; ne lui promets pas le contraire.
 
@@ -100,18 +100,18 @@ les lots dont `status` vaut `pending`.
 
 Par ordre d'usage :
 
-1. **`srcFile`** — le fichier source, lu sur le `data-src` de l'ancêtre le plus proche.
+1. **`srcFile`** : le fichier source, lu sur le `data-src` de l'ancêtre le plus proche.
    **C'est le handle principal.** Il transforme « je cherche dans tout le projet » en
    « je cherche dans un fichier de 80 lignes ». Fonctionne pour les Server Components,
    contrairement à tout ce qui vient de React.
-2. **`classes`** — la liste de classes Tailwind. Un `Grep` **à l'intérieur de `srcFile`**
+2. **`classes`** : la liste de classes Tailwind. Un `Grep` **à l'intérieur de `srcFile`**
    tombe directement sur la bonne ligne. `text-5xl font-semibold tracking-tight` n'apparaît
    qu'une fois dans un fichier.
-3. **`text`** — le texte visible. Excellent pour les titres, boutons et libellés.
+3. **`text`** : le texte visible. Excellent pour les titres, boutons et libellés.
    Inutile pour une image ou un conteneur vide.
-4. **`selector`** — le chemin DOM. Sert à départager deux éléments identiques
+4. **`selector`** : le chemin DOM. Sert à départager deux éléments identiques
    (deux cartes, deux boutons) et à situer l'élément dans la page.
-5. **`component`** / **`source`** — cadeau quand ils sont là, jamais une dépendance.
+5. **`component`** / **`source`** : cadeau quand ils sont là, jamais une dépendance.
    Ils viennent de la fibre React et n'existent que pour les composants clients
    (`"use client"`). Un Server Component arrive dans le DOM sans fibre côté navigateur.
 
@@ -135,7 +135,7 @@ J'ai voulu l'injecter avec un codemod « premier élément après le `return` »
 sur dix étaient faux** : l'un avait un composant auxiliaire déclaré avant le principal,
 l'autre un retour anticipé. La racine réelle n'est pas devinable mécaniquement.
 
-C'est donc au **brief de l'agent** de l'exiger — il connaît la racine de ce qu'il écrit.
+C'est donc au **brief de l'agent** de l'exiger : il connaît la racine de ce qu'il écrit.
 Le composant `Section` du socle a une prop `src` prévue pour ça.
 
 Croise-en deux quand un seul est ambigu. Ne demande pas de précision à l'utilisateur :
@@ -143,7 +143,7 @@ prends la lecture la plus probable, il corrigera d'un autre clic si tu te trompe
 
 ## À chaque réveil
 
-1. **D'abord** passer les lots `pending` à `"status": "en_cours"` — la comète s'arrête.
+1. **D'abord** passer les lots `pending` à `"status": "en_cours"`. La comète s'arrête.
 2. Lire les commentaires, retrouver le code, appliquer. Si un fichier visé est confié à un
    agent encore en vie : ne pas y toucher, dire « reçu, j'applique dès que l'agent a fini »,
    et le faire à sa notification.

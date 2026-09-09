@@ -1,11 +1,11 @@
 /* ---------------------------------------------------------------------------
-   Réglages du mouvement — un fichier-contrat, comme le thème.
+   Réglages du mouvement : un fichier-contrat, comme le thème.
 
    Les primitives de `components/ui/` (Reveal, Cascade, Compteur, Defilant,
    EntreeHero, Parallaxe, Relief, Progression, Rotatif) portent la STRUCTURE
    d'un mouvement : ce qui bouge,
    dans quel ordre, déclenché par quoi. Elles ne portent aucune valeur. Les
-   valeurs sont ici, et c'est ici — une seule fois, au bootstrap — qu'on les
+   valeurs sont ici, et c'est ici (une seule fois, au bootstrap) qu'on les
    cale sur la direction de mouvement décidée pour ce site.
 
    Repères : une vitrine supporte des durées longues et des distances franches ;
@@ -13,7 +13,7 @@
 
    Toutes les durées sont en secondes, les distances en pixels.
 
-   ⚠️ Ce fichier ne couvre que le mouvement d'ARRIVÉE — comment un élément entre
+   ⚠️ Ce fichier ne couvre que le mouvement d'ARRIVÉE : comment un élément entre
    en scène. Ce qui RÉPOND au curseur, au doigt et au clavier vit dans
    `app/globals.css`, sous « LES ÉTATS » : c'est du CSS, pas du JavaScript, et
    ça n'a donc pas besoin de valeurs partagées. Les deux moitiés se décident

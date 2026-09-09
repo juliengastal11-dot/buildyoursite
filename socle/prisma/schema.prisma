@@ -7,7 +7,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// Modèle d'exemple — remplacé au bootstrap par le schéma du blueprint.
+// Modèle d'exemple, remplacé au bootstrap par le schéma du blueprint.
 model Contact {
   id        String   @id @default(cuid())
   nom       String
@@ -17,7 +17,7 @@ model Contact {
 }
 
 // Conservé à CHAQUE bootstrap, quel que soit le schéma du blueprint :
-// `lib/reglages.ts` en dépend. Le socle doit compiler seul — ce qu'un de ses
+// `lib/reglages.ts` en dépend. Le socle doit compiler seul : ce qu'un de ses
 // fichiers suppose, un autre le déclare. Trouvé par un clone dans un dossier
 // vide : chaque projet réparait cette contradiction sans le savoir.
 model Reglage {

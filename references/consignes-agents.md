@@ -1,4 +1,4 @@
-# Consignes communes aux agents — gabarit
+# Consignes communes aux agents : gabarit
 
 À écrire dans `.buildyoursite/consignes-agents.md` du projet, **avant de lancer le moindre
 agent**, et à faire lire en premier par chacun. Le brief individuel ne porte alors que ce
@@ -14,7 +14,7 @@ Remplace tout ce qui est entre accolades. Ne laisse aucune accolade dans le fich
 ---
 
 ```markdown
-# Consignes communes — {nom du site}
+# Consignes communes : {nom du site}
 
 Tu construis une partie d'un site Next.js 15 déjà en marche. Lis ce fichier en entier, puis
 ton brief. En cas de désaccord entre les deux, ton brief l'emporte sur le périmètre, ce
@@ -32,7 +32,7 @@ fichier l'emporte sur tout le reste.
 - **Importer `gsap` directement.** Le mouvement passe par les primitives du socle.
 - **Utiliser un placeholder comme libellé**, un emoji, ni « lorem ipsum ».
 
-## Le thème — les seules classes de couleur autorisées
+## Le thème : les seules classes de couleur autorisées
 
 {la liste des jetons de `app/globals.css`, telle quelle :}
 `bg-background` `text-foreground` `bg-card` `bg-primary` `text-on-primary` `bg-secondary`
@@ -42,7 +42,7 @@ fichier l'emporte sur tout le reste.
 
 Polices : `font-sans` pour le texte, `font-display` pour les titres. Rien d'autre.
 
-## Le socle — ce qui existe déjà, à importer comme si c'était là
+## Le socle : ce qui existe déjà, à importer comme si c'était là
 
 | Import | Sert à |
 |---|---|
@@ -51,7 +51,7 @@ Polices : `font-sans` pour le texte, `font-display` pour les titres. Rien d'autr
 | `@/components/ui/photo` | toute image : réserve, `alt`, `data-photo-slot` |
 | `@/components/ui/reveal`, `cascade`, `entree-hero`, `compteur`, `defilant`, `parallaxe` | ce qui entre en scène |
 | `@/components/ui/relief`, `progression`, `rotatif` | ce qui répond |
-| `@/lib/formats` | dates, heures, prix — jamais `toLocaleDateString` en direct |
+| `@/lib/formats` | dates, heures, prix. Jamais `toLocaleDateString` en direct |
 | {les fichiers-contrats du projet : `lib/site.ts`, `lib/tarifs.ts`, …} | {ce qu'ils exposent} |
 
 `Nav` et `PiedDePage` existent : importe-les, ne les réécris pas.
@@ -62,14 +62,14 @@ Polices : `font-sans` pour le texte, `font-display` pour les titres. Rien d'autr
 - Un mot français long en display déborde toujours du palier le plus bas : prévois-le.
 - Tout élément cliquable porte `cursor-pointer`, un focus visible, et une classe d'état
   (`carte-reactive`, `lien-fleche`, `zoom-survol`).
-- Chaque image passe par `Photo` avec un `alt` — vide seulement si décorative et dit.
+- Chaque image passe par `Photo` avec un `alt` : vide seulement si décorative et dit.
 - Chaque fichier que tu crées commence par `// data-src` ? Non : chaque composant de
   section porte `data-src="{chemin}"` sur sa racine, pour l'overlay.
 - Téléphone en `tel:`, e-mail en `mailto:`, WhatsApp en lien direct.
 
 ## Ce qui bouge, et combien
 
-Direction du site : {la ligne de `lib/mouvement.ts` — vitrine ample / boutique sobre /
+Direction du site : {la ligne de `lib/mouvement.ts`, vitrine ample / boutique sobre /
 application immobile}. Les valeurs sont dans `lib/mouvement.ts` ; tu ne les changes pas.
 Une primitive d'entrée par section au plus. Le texte de paragraphe ne s'anime jamais.
 

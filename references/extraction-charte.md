@@ -10,14 +10,14 @@ Procédure éprouvée sur un aperçu hébergé qui empilait deux iframes (premie
 >
 > | # | Dimension | L'oubli que ça évite |
 > |---|---|---|
-> | 1 | **Palette** — styles calculés, jamais les variables `:root` | Les tokens annonçaient une couleur d'accent ; les CTA en portaient une autre |
-> | 2 | **Typographie** — polices rendues + leurs licences | Embarquer une fonderie commerciale sans licence web |
-> | 3 | **Géométrie** — rotations, rayons, ombres, grilles, overflow | Le bandeau incliné livré plat |
-> | 4 | **Liens sortants** — et leurs paramètres d'URL | L'icône Instagram reproduite en décoration, sans lien |
-> | 5 | **Photos** — fichiers et textes alternatifs | Des dégradés à la place de photos qui étaient téléchargeables |
-> | 6 | **Cadrage** — ratios, coins, `object-position` | Des cadres tous identiques là où la référence alternait |
-> | 7 | **Mouvement** — défilement fluide, parallaxe, apparitions | Un site figé alors que la référence glissait |
-> | 8 | **Inventaire interactif** — un élément par ligne : ce que c'est, où ça mène, comment ça réagit | Trois téléphones cliquables qui se soulevaient, devenus un téléphone mort ; un bouton flottant disparu |
+> | 1 | **Palette** : styles calculés, jamais les variables `:root` | Les tokens annonçaient une couleur d'accent ; les CTA en portaient une autre |
+> | 2 | **Typographie** : polices rendues + leurs licences | Embarquer une fonderie commerciale sans licence web |
+> | 3 | **Géométrie** : rotations, rayons, ombres, grilles, overflow | Le bandeau incliné livré plat |
+> | 4 | **Liens sortants**, et leurs paramètres d'URL | L'icône Instagram reproduite en décoration, sans lien |
+> | 5 | **Photos** : fichiers et textes alternatifs | Des dégradés à la place de photos qui étaient téléchargeables |
+> | 6 | **Cadrage** : ratios, coins, `object-position` | Des cadres tous identiques là où la référence alternait |
+> | 7 | **Mouvement** : défilement fluide, parallaxe, apparitions | Un site figé alors que la référence glissait |
+> | 8 | **Inventaire interactif**, un élément par ligne : ce que c'est, où ça mène, comment ça réagit | Trois téléphones cliquables qui se soulevaient, devenus un téléphone mort ; un bouton flottant disparu |
 >
 > **Les huit ont été oubliés au moins une fois, et chaque fois trouvés par l'utilisateur.**
 > Cette liste n'est pas une précaution théorique : c'est l'inventaire de mes manques.
@@ -36,8 +36,8 @@ Procédure éprouvée sur un aperçu hébergé qui empilait deux iframes (premie
 > et reprend-on les liens sortants ?
 >
 > **Si le site n'est pas le sien**, les sections 5 (contenu), 6 ter (liens) et 8 (photos) de
-> cette recette **ne s'appliquent pas**. Tu relèves la forme — palette, polices, géométrie,
-> rythme — et rien d'autre. Textes rédigés par toi, photos remplacées par des dégradés,
+> cette recette **ne s'appliquent pas**. Tu relèves la forme (palette, polices, géométrie,
+> rythme) et rien d'autre. Textes rédigés par toi, photos remplacées par des dégradés,
 > aucun lien, aucune coordonnée, aucun nom.
 >
 > **Si les liens ont été refusés**, tu poses la structure sans `href` et tu listes les liens
@@ -46,7 +46,7 @@ Procédure éprouvée sur un aperçu hébergé qui empilait deux iframes (premie
 > Rien de tout cela ne se voit à la relecture du code. Ça se voit en production, chez le
 > client, quand un visiteur clique sur Instagram et arrive chez un inconnu.
 
-## 0. Le verdict par élément — la règle qui rend un abandon visible
+## 0. Le verdict par élément : la règle qui rend un abandon visible
 
 Le relevé rend un **inventaire des éléments interactifs** : un lien, un bouton, une carte
 cliquable par ligne, avec sa destination, sa zone et sa réaction au survol. Le blueprint
@@ -64,22 +64,22 @@ sans phrase d'explication n'en est pas un.
 **Pourquoi cette table existe.** Sans elle, le blueprint décrit ce qu'on construit et jamais
 ce qu'on laisse. L'utilisateur valide un plan complet et cohérent, sans pouvoir voir qu'un
 élément de son site a disparu en route. Il ne le découvre qu'à la livraison, et il doit
-poser la question lui-même — c'est exactement ce qui s'est passé au quatrième bootstrap, avec
+poser la question lui-même. C'est exactement ce qui s'est passé au quatrième bootstrap, avec
 les téléphones du héros.
 
 La colonne « Repris : oui/non » du tableau des dimensions ne suffit pas : elle disait
-« liens sortants : repris — oui », ce qui était vrai (ils étaient dans les réglages) et faux
+« liens sortants : repris · oui », ce qui était vrai (ils étaient dans les réglages) et faux
 en même temps (le bouton flottant avait disparu). Un verdict porte sur un élément, pas sur
 une catégorie.
 
 **Et ce qui réagit se reporte dans les briefs.** Une ligne d'inventaire qui porte une
-transition au survol devient une ligne « ce qui répond » dans le brief de l'agent — voir
+transition au survol devient une ligne « ce qui répond » dans le brief de l'agent : voir
 `mouvement.md`, section « Les états ». Une réaction relevée mais jamais transmise est une
 réaction perdue.
 
 ## 1. `WebFetch` ne suffit pas
 
-Sur toute application rendue côté client — c'est-à-dire à peu près tout aujourd'hui —
+Sur toute application rendue côté client (c'est-à-dire à peu près tout aujourd'hui),
 `WebFetch` renvoie le HTML initial, soit « Loading… » et rien d'autre.
 **Ne conclus pas que la page est vide.** Passe au navigateur.
 
@@ -109,7 +109,7 @@ JSON.stringify({
 Tu ne peux pas lire son DOM, et **scroller la page parente ne scrolle pas l'iframe**.
 Il faut charger l'URL réelle au niveau supérieur.
 
-Le `src` de l'iframe te le donne — parfois en deux sauts. Cas rencontré : la racine servait
+Le `src` de l'iframe te le donne, parfois en deux sauts. Cas rencontré : la racine servait
 un shell de chargement qui embarquait un second shell, lequel embarquait à son tour le vrai
 site sur un sous-domaine dédié :
 
@@ -124,18 +124,18 @@ Charge cette dernière URL. Tu as alors le DOM, le texte et le scroll.
 ## 5. Le contenu
 
 `get_page_text` d'un coup. Tu récupères la navigation, tous les titres, tous les paragraphes
-et les libellés de boutons — c'est-à-dire la structure **et** la copie.
+et les libellés de boutons, c'est-à-dire la structure **et** la copie.
 
 > **`get_page_text` peut ne rendre qu'un morceau.** Sur un site où il a trouvé un `<article>`,
-> il n'a renvoyé que le contenu de cette balise — une seule carte au lieu de la page entière —
+> il n'a renvoyé que le contenu de cette balise (une seule carte au lieu de la page entière),
 > sans rien signaler. Le symptôme : un texte anormalement court pour une page qu'on vient de
 > voir remplie à l'écran.
 >
-> **Sur une application rendue côté client, le sitemap et le HTML sont vides — mais le
+> **Sur une application rendue côté client, le sitemap et le HTML sont vides, mais le
 > bundle de développement ne l'est pas.** `curl` le `bundle.js` cité par la coquille ; s'il
 > n'est pas minifié, ses modules `./src/**` se découpent sur les marqueurs
 > `/***/ "./src/…":` (un `awk` suffit) et donnent les textes, les classes et les `alt` au
-> mot près — plus fiables que `get_page_text`. Vécu au cinquième bootstrap sur un aperçu
+> mot près, plus fiables que `get_page_text`. Vécu au cinquième bootstrap sur un aperçu
 > no-code : le `sitemap.xml` renvoyait un `<div id="root">` et rien d'autre.
 >
 > **Sur un site statique, prends le HTML directement.** C'est plus fiable, c'est le texte au
@@ -148,22 +148,22 @@ et les libellés de boutons — c'est-à-dire la structure **et** la copie.
 >
 > Puis un petit script HTML → texte dans ton dossier de travail : on récupère toutes les
 > pages en un passage, avec les `alt`, les `href` et les titres, au lieu de naviguer page à
-> page dans le panneau. Le navigateur reste indispensable pour tout le reste — couleurs
-> calculées, géométrie, mouvement, inventaire interactif — qui n'existe pas dans le HTML.
+> page dans le panneau. Le navigateur reste indispensable pour tout le reste (couleurs
+> calculées, géométrie, mouvement, inventaire interactif) qui n'existe pas dans le HTML.
 
 > **La structure se reprend toujours, la copie seulement si le site est le sien.**
-> D'un site tiers, retiens le *squelette* — combien de sections, dans quel ordre, quel type
-> de contenu à chaque étage, quelle longueur de paragraphe — et **rédige les textes**.
+> D'un site tiers, retiens le *squelette* (combien de sections, dans quel ordre, quel type
+> de contenu à chaque étage, quelle longueur de paragraphe) et **rédige les textes**.
 > Un plan de page n'appartient à personne ; une accroche, si.
 
-## 6. Les couleurs — depuis les styles calculés, jamais depuis les variables
+## 6. Les couleurs : depuis les styles calculés, jamais depuis les variables
 
 **Le piège central.** Les variables CSS `:root` ne disent pas la vérité : un build Tailwind
 garde les tokens du starter tout en peignant l'interface avec des valeurs arbitraires
 écrites dans les classes.
 
-Cas vécu : les tokens annonçaient une couleur d'accent qu'**aucun CTA du site n'utilisait**
-— leur vraie couleur, absente des variables, était posée en valeur arbitraire dans les
+Cas vécu : les tokens annonçaient une couleur d'accent qu'**aucun CTA du site n'utilisait**.
+Leur vraie couleur, absente des variables, était posée en valeur arbitraire dans les
 classes. Se fier aux tokens aurait donné un site de la mauvaise couleur.
 
 Lis donc les styles réellement appliqués :
@@ -186,7 +186,7 @@ JSON.stringify({
 Tu obtiens : fond de page, couleur de texte, fond de chaque section, fond et texte de chaque
 CTA, couleur du mot accentué dans le titre, rayons, et les polices **réellement rendues**.
 
-Le CSS compilé reste utile en complément — les hex les plus fréquents et les
+Le CSS compilé reste utile en complément. Les hex les plus fréquents et les
 `font-family` déclarés donnent la profondeur de la palette :
 
 ```bash
@@ -196,7 +196,7 @@ grep -oE 'font-family: *[^;}]{1,80}' palette.css | sort -u
 grep -oE '\-\-[a-zA-Z0-9-]+: *[^;}]{1,60}' palette.css | sort -u
 ```
 
-## 6 bis. La géométrie — l'étape que j'avais oubliée
+## 6 bis. La géométrie : l'étape que j'avais oubliée
 
 **Le trou le plus coûteux de la première version de cette recette.** Je relevais les
 couleurs, les polices et le contenu, et **jamais la forme**. Résultat sur le premier bootstrap : le
@@ -226,7 +226,7 @@ JSON.stringify(sections.map((el) => {
 
 **Le champ `cls` est le plus précieux** : un build Tailwind conserve les classes en clair.
 `relative z-10 -rotate-1 bg-aqua py-5 border-y border-forest/15 shadow-[0_20px_50px_-20px_rgba(15,76,99,0.35)]`
-se recopie presque tel quel — il suffit de traduire les noms de couleurs maison
+se recopie presque tel quel : il suffit de traduire les noms de couleurs maison
 (`aqua` → `accent`, `forest` → `foreground`).
 
 ### Trois pièges de la géométrie
@@ -240,9 +240,9 @@ seul renvoie `none` et fait croire à l'absence de rotation. Relève **les deux*
 **Mesure à deux largeurs, pas une.** Le conteneur d'une image peut être
 `hidden lg:block` chez toi et pleine largeur chez la référence : à 1280 px les deux se
 ressemblent, à 375 px l'une a disparu. C'est comme ça que la photo du coach s'est volatilisée
-sur le premier bootstrap — elle était dans le code, masquée sous `lg`.
+sur le premier bootstrap : elle était dans le code, masquée sous `lg`.
 
-## 6 quinquies. Le cadrage — le travail qu'on croit décoratif
+## 6 quinquies. Le cadrage : le travail qu'on croit décoratif
 
 Relevé sur la référence, et à ne pas confondre avec « mettre un rayon partout ». Le système
 tenait en trois motifs :
@@ -253,24 +253,24 @@ tenait en trois motifs :
 | Cartes de service | `h-48`, hauteur fixe | aucun |
 | Portraits | `aspect-[4/5]` | `rounded-[2rem]` + **un** coin à `6rem` |
 
-**Le coin surdimensionné alterne d'une photo à l'autre** — bas-droite, puis haut-gauche,
+**Le coin surdimensionné alterne d'une photo à l'autre** : bas-droite, puis haut-gauche,
 puis bas-droite. C'est ce rythme qui fait l'élégance ; trois cadres au rayon uniforme
 paraissent plats à côté, même avec les bonnes photos.
 
 Deux détails qui séparent un cadrage travaillé d'un `object-cover` posé partout :
 
 **`object-position` recalé photo par photo.** Sur la référence, une seule image portait
-`50% 72%` — celle d'un groupe placé bas dans le cadre. Toutes les autres restaient centrées.
+`50% 72%`, celle d'un groupe placé bas dans le cadre. Toutes les autres restaient centrées.
 Cherche les valeurs différentes de `50% 50%` : chacune est une décision.
 
 **Image plus haute que son cadre** (`h-[118%] -top-[9%]`) : ce n'est pas une erreur de
 mise en page, c'est la réserve nécessaire à la parallaxe. Une image à `h-full` ne peut pas
 glisser sans découvrir un bord.
 
-## 6 quater. Le mouvement — la dimension qu'une capture ne montre pas
+## 6 quater. Le mouvement : la dimension qu'une capture ne montre pas
 
 **Troisième trou de cette recette, après la géométrie.** Les couleurs se lisent sur une
-image, la géométrie sur une mesure statique — le mouvement, lui, n'existe que dans le temps.
+image, la géométrie sur une mesure statique. Le mouvement, lui, n'existe que dans le temps.
 Sur le premier bootstrap réel, j'ai livré un site figé alors que la référence glissait. C'est l'utilisateur qui l'a vu,
 pas moi.
 
@@ -304,7 +304,7 @@ const ecart = 250 - (r1 - img.getBoundingClientRect().top);
 // ecart > 3px → parallaxe. Sur le premier bootstrap : 8px sur 250, soit ~3 % de retard.
 ```
 
-### Mesurer les apparitions — et ne pas conclure trop vite
+### Mesurer les apparitions, et ne pas conclure trop vite
 
 **Recharge la page avant de mesurer.** Une apparition déclenchée « une seule fois » a déjà
 joué si tu as parcouru la page pendant ton relevé, et tu conclurais qu'il n'y en a pas.
@@ -315,7 +315,7 @@ viewport**, avant et après l'y avoir amené.
 Sur le premier bootstrap cette mesure a donné un résultat contre-intuitif : **aucune apparition.**
 Tout était à `opacity: 1` dès le chargement. Ce que l'utilisateur percevait venait du
 défilement fluide et de la parallaxe. Je l'ai dit, puis j'ai ajouté une apparition **parce
-qu'il la voulait** — en annonçant que c'était un ajout, pas une reproduction.
+qu'il la voulait**, en annonçant que c'était un ajout, pas une reproduction.
 
 ### Ce qu'on réintègre
 
@@ -370,7 +370,7 @@ const grotesk = Space_Grotesk({ subsets: ["latin"], weight: ["500","700"], varia
 --font-display: var(--font-grotesk), ui-sans-serif, sans-serif;
 ```
 
-## 8. Les photos — récupère-les, ne les remplace pas par des dégradés
+## 8. Les photos : récupère-les, ne les remplace pas par des dégradés
 
 **Erreur commise au premier bootstrap :** j'ai posé des dégradés en écrivant dans le
 blueprint « je n'ai pas les photos ». Elles étaient servies par le site, en clair, et il a
@@ -398,7 +398,7 @@ JSON.stringify(out, null, 1)
 ```
 
 `querySelectorAll("img")` seul ne suffit pas : beaucoup de visuels sont des fonds CSS.
-Et `currentSrc` plutôt que `src` — c'est lui qui donne la variante réellement chargée.
+Et `currentSrc` plutôt que `src` : c'est lui qui donne la variante réellement chargée.
 
 ### Les télécharger
 

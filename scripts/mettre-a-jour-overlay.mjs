@@ -6,7 +6,7 @@
 
    Un site emporte une copie de l'overlay au moment de sa construction. Les
    améliorations apportées au socle ensuite ne le rejoignent jamais : on ouvre
-   un ancien projet, on retrouve l'overlay de sa date de naissance. Vécu — deux
+   un ancien projet, on retrouve l'overlay de sa date de naissance. Vécu : deux
    essais de suite sur un site construit la veille, sans la comète ni les
    pastilles cliquables, alors que le skill, lui, était à jour.
 

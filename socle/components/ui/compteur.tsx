@@ -7,7 +7,7 @@ import { MOUVEMENT } from "@/lib/mouvement";
 /* ---------------------------------------------------------------------------
    Compteur : un chiffre qui monte jusqu'à sa valeur quand il entre à l'écran.
 
-   Seulement sur un chiffre VRAI et significatif — années d'existence, clients,
+   Seulement sur un chiffre VRAI et significatif : années d'existence, clients,
    cafés torréfiés. Un compteur sur « 3 étapes » ou sur un prix est un gadget
    qui attire l'œil sur rien.
 
@@ -23,7 +23,7 @@ export type CompteurProps = {
   decimales?: number;
   prefixe?: string;
   suffixe?: string;
-  /** Locale du formatage — séparateur de milliers, virgule décimale. */
+  /** Locale du formatage : séparateur de milliers, virgule décimale. */
   locale?: string;
   className?: string;
 };

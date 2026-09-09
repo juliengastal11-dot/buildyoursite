@@ -6,14 +6,14 @@ import { gsap, mouvementReduit } from "@/lib/gsap";
 import { MOUVEMENT } from "@/lib/mouvement";
 
 /* ---------------------------------------------------------------------------
-   Apparition au défilement — surfaces marketing uniquement.
+   Apparition au défilement : surfaces marketing uniquement.
    Ne fais jamais ça sur une interface fonctionnelle visitée tous les jours.
 
    Le dévoilement se joue **une seule fois**. Le rejouer à chaque passage est
    une interface qui se bat avec son lecteur.
 
    Deux modes : `fondu` (monte et apparaît) et `masque` (se dévoile de haut en
-   bas, comme derrière un volet). Les valeurs — durée, distance, courbe —
+   bas, comme derrière un volet). Les valeurs (durée, distance, courbe)
    viennent de `lib/mouvement.ts`, jamais d'ici.
 
    L'élément est masqué par la feuille de style tant que JavaScript n'a pas

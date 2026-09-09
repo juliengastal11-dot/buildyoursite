@@ -15,7 +15,7 @@ import { MOUVEMENT } from "@/lib/mouvement";
 
    - **La phrase qui saute.** Les mots sont empilés dans une même cellule de
      grille : ils ne se poussent jamais. La largeur du bloc, elle, est animée
-     vers celle du mot affiché — sinon la grille se cale sur le plus long et la
+     vers celle du mot affiché : sinon la grille se cale sur le plus long et la
      ponctuation qui suit reste échouée à droite. Vu à l'écran, corrigé.
    - **Le mot sortant qui déborde.** Il glisse vers le haut en s'effaçant ;
      sans `overflow-hidden`, on le voit passer au-dessus de la ligne.
@@ -23,7 +23,7 @@ import { MOUVEMENT } from "@/lib/mouvement";
      autres sont `aria-hidden`, et l'ensemble est `aria-live="off"` : une
      accroche décorative n'interrompt pas une lecture en cours.
 
-   **Sans JavaScript, et en mouvement réduit, seul le premier mot existe** —
+   **Sans JavaScript, et en mouvement réduit, seul le premier mot existe** :
    l'attribut `hidden` retire les autres de la mise en page, donc pas de blanc
    réservé, pas de saut. Le texte est juste dans tous les cas.
 --------------------------------------------------------------------------- */
@@ -90,7 +90,7 @@ export function Rotatif({ mots, pause = MOUVEMENT.rotatif.pause, className, ...p
           hidden={i > 0 || undefined}
           aria-hidden={i > 0 || undefined}
           // Même cellule pour tous : ils s'empilent au lieu de se pousser.
-          // `justify-self-start` est indispensable — sans lui, un élément de
+          // `justify-self-start` est indispensable : sans lui, un élément de
           // grille s'étire à la largeur de sa cellule et chaque mot mesurerait
           // la largeur du plus long. L'animation de largeur serait alors nulle,
           // et la ponctuation resterait échouée à droite.

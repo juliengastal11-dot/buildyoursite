@@ -1,16 +1,16 @@
 #!/usr/bin/env node
 /* ---------------------------------------------------------------------------
-   Envoie un lien de prévisualisation du site à quelqu'un — un client, un
-   associé — sans l'héberger pour de bon : le site reste sur cette machine,
+   Envoie un lien de prévisualisation du site à quelqu'un (un client, un
+   associé) sans l'héberger pour de bon : le site reste sur cette machine,
    l'hébergement définitif se choisira plus tard.
 
    Il ne pose aucune question. Il regarde ce qui est déjà disponible sur la
    machine et choisit tout seul, dans cet ordre :
 
-     1. un tunnel cloudflared — aucun compte, une trentaine de secondes, et
+     1. un tunnel cloudflared : aucun compte, une trentaine de secondes, et
         c'est le vrai site (formulaires et back-office compris) puisqu'on
         sert une compilation de production depuis cette machine ;
-     2. sinon, un hébergeur déjà connecté (Vercel ou Netlify) — il donne
+     2. sinon, un hébergeur déjà connecté (Vercel ou Netlify) : il donne
         juste la commande à lancer, il ne publie jamais lui-même ;
      3. sinon rien, et il dit précisément quoi installer.
 
@@ -62,7 +62,7 @@ if (!Number.isInteger(PORT) || PORT <= 0 || PORT > 65535) {
 
 /* ------------------------------ sonde de port -----------------------------------
    Adapté de demarrer-dev.mjs : trois avis plutôt qu'un (IPv4, IPv6, table des
-   sockets du système), pour la même raison — un serveur qui n'écoute que sur
+   sockets du système), pour la même raison : un serveur qui n'écoute que sur
    `::`, ou qui refuse une connexion pendant son démarrage, ne doit pas passer
    pour un port libre. Contrairement à demarrer-dev.mjs, on ne tue personne
    ici : ce serveur de prévisualisation est nouveau, on lui cherche juste un
@@ -129,7 +129,7 @@ function outilDisponible(nom) {
    script, et il répond encore « rien n'est disponible ». L'installateur écrit
    bien le chemin dans le PATH de la machine, mais un terminal DÉJÀ OUVERT
    garde l'environnement qu'il avait à son démarrage. Il faudrait rouvrir une
-   session — ce que personne ne devine.
+   session, ce que personne ne devine.
 
    On regarde donc aussi les emplacements d'installation par défaut, et on se
    sert du chemin complet quand on l'y trouve.
@@ -151,7 +151,7 @@ function trouverCloudflared() {
 }
 
 /** `vercel whoami` répond le nom d'utilisateur sur stdout et sort en erreur
- *  si personne n'est connecté — exactement ce que `silencieux` réduit à
+ *  si personne n'est connecté, exactement ce que `silencieux` réduit à
  *  null. `--no-install` est essentiel : un relevé n'installe rien. */
 function connecteVercel() {
   return silencieux("npx --no-install vercel whoami", 6000);
@@ -163,7 +163,7 @@ function connecteVercel() {
 function connecteNetlify() {
   const sortie = silencieux("npx --no-install netlify status", 6000);
   if (!sortie) return null;
-  // Radical seul (« connect »), sans l'accord — « pas connecté » et « pas
+  // Radical seul (« connect »), sans l'accord : « pas connecté » et « pas
   // connectée » doivent tous les deux être reconnus, et un [ée] en classe de
   // caractères ne matcherait qu'une seule lettre, pas la séquence « ée ».
   if (/not\s+logged\s+in|pas\s+connect/i.test(sortie)) return null;
@@ -174,12 +174,12 @@ function connecteNetlify() {
 function commandeInstallationCloudflared() {
   if (WINDOWS) return "winget install --id Cloudflare.cloudflared";
   if (process.platform === "darwin") return "brew install cloudflared";
-  return null; // Linux : les paquets varient selon la distribution — mieux vaut renvoyer vers la doc que d'inventer une commande.
+  return null; // Linux : les paquets varient selon la distribution. Mieux vaut renvoyer vers la doc que d'inventer une commande.
 }
 
 /* ------------------------------- garde-fous ---------------------------------------
    Deux précautions qui ne se discutent pas : ni l'une ni l'autre n'empêche le
-   partage, elles préviennent seulement — la décision reste à l'utilisateur.
+   partage, elles préviennent seulement. La décision reste à l'utilisateur.
 --------------------------------------------------------------------------------- */
 
 /** NEXT_PUBLIC_SITE_URL pousse le site à se déclarer indexable (robots,
@@ -220,7 +220,7 @@ async function fichiers(racine, exts) {
 }
 
 /** Un `[[À CONFIRMER` est un pense-bête tant qu'il reste local. Sur un lien
- *  envoyé à un client, c'est une note de chantier publiée — on liste, on
+ *  envoyé à un client, c'est une note de chantier publiée. On liste, on
  *  n'empêche rien. */
 async function chercherTrous(racine) {
   const trouvailles = [];
@@ -288,7 +288,7 @@ function demarrerServeurProd(port) {
 }
 
 /** Le message « Ready » annonce que Next a appelé listen(), mais on préfère
- *  vérifier pour de vrai avant d'ouvrir un tunnel dessus — une sonde TCP est
+ *  vérifier pour de vrai avant d'ouvrir un tunnel dessus : une sonde TCP est
  *  bon marché et enlève tout doute. */
 async function attendreReponse(port, delaiMaxMs = 15000) {
   const debut = Date.now();
@@ -333,7 +333,7 @@ function lancerTunnel(port) {
   });
 }
 
-/** Termine un processus enfant proprement — et toute son arborescence sous
+/** Termine un processus enfant proprement, et toute son arborescence sous
  *  Windows. `spawn(..., { shell: true })` place un cmd.exe entre nous et le
  *  vrai processus (npm, puis node, puis next) : un simple `.kill()` ne
  *  toucherait que ce cmd.exe, le vrai processus survivrait, garderait le
@@ -341,7 +341,7 @@ function lancerTunnel(port) {
  *  referme toute l'arborescence d'un coup. */
 function terminer(enfant) {
   // `exitCode` reste null si le processus est mort par signal (c'est alors
-  // `signalCode` qui est renseigné) — les deux sont vérifiés pour ne pas
+  // `signalCode` qui est renseigné). Les deux sont vérifiés pour ne pas
   // tenter de terminer un enfant déjà mort.
   if (!enfant || enfant.exitCode !== null || enfant.signalCode !== null || enfant.killed) return;
   if (WINDOWS && enfant.pid) silencieux(`taskkill /PID ${enfant.pid} /T /F`, 5000);
@@ -379,7 +379,7 @@ async function partagerParTunnel(racine, portDemande, sansBuild) {
   }
 
   // Les deux enfants (serveur, tunnel) sont suivis ici pour pouvoir les
-  // arrêter ensemble — que l'arrêt vienne de Ctrl+C ou de l'un des deux qui
+  // arrêter ensemble, que l'arrêt vienne de Ctrl+C ou de l'un des deux qui
   // s'arrête tout seul. Les laisser vivants tiendrait le port pour rien.
   const enfantsActifs = new Set();
   const suivre = (enfant) => {
@@ -491,7 +491,7 @@ if (!existsSync(path.join(racineProjet, "app"))) {
   process.exit(1);
 }
 
-/* 2. le relevé — on s'arrête au premier qui répond, pas la peine d'attendre
+/* 2. le relevé : on s'arrête au premier qui répond, pas la peine d'attendre
       npx pour rien une fois qu'on sait qu'on prendra le tunnel. */
 const CLOUDFLARED = trouverCloudflared();
 let utilisateurV = null;
@@ -501,7 +501,7 @@ if (!CLOUDFLARED) {
   utilisateurN = connecteNetlify();
 }
 
-/* 3. les trous restants — pense-bête en local, note de chantier publiée une
+/* 3. les trous restants : pense-bête en local, note de chantier publiée une
       fois le lien envoyé. Affiché avant toute décision : qu'on partage par
       tunnel, par un hébergeur, ou pas du tout, la liste reste la même
       information utile, et rien n'empêche le partage pour autant. */

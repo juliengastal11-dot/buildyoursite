@@ -38,7 +38,7 @@ async function saveAttachment(name: string, dataUrl: string): Promise<string | n
 /**
  * L'état des lots, pour l'overlay. Il interroge ici toutes les 1,5 s après un
  * envoi : tant qu'un lot est `pending`, une comète tourne autour de sa barre.
- * Claude passe le lot à `en_cours` dès qu'il se réveille — avant de travailler —
+ * Claude passe le lot à `en_cours` dès qu'il se réveille (avant de travailler),
  * puis à `done` : c'est le passage à `en_cours` qui arrête la comète, pour que
  * les secondes de réveil ne ressemblent pas à une panne.
  */

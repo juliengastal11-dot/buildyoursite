@@ -4,7 +4,7 @@ import { db } from "@/lib/db";
    Réglages éditables par le propriétaire du site, depuis le back-office.
 
    Ce fichier du socle ne contient QUE des clés génériques, avec des valeurs
-   vides. Chaque projet ajoute les siennes au bootstrap — frais de port,
+   vides. Chaque projet ajoute les siennes au bootstrap : frais de port,
    horaires, zone d'intervention, réseaux sociaux.
 
    ⚠️ N'y laisse jamais les valeurs d'un projet réel. Le socle est copié tel
@@ -12,7 +12,7 @@ import { db } from "@/lib/db";
    tous les clients suivants. C'est arrivé.
 
    ⚠️ CE FICHIER TOUCHE LA BASE. Il n'est donc importable que depuis du code
-   serveur. Le formatage — dates, montants, listes — vit dans `lib/formats.ts`,
+   serveur. Le formatage (dates, montants, listes) vit dans `lib/formats.ts`,
    qui ne dépend de rien : c'est celui-là qu'un composant client importe. La
    séparation n'est pas cosmétique, elle a été payée par un build cassé ; la
    raison est écrite en tête de `lib/formats.ts`.
@@ -41,7 +41,7 @@ export const LIBELLES_REGLAGES: Record<CleReglage, string> = {
 /**
  * Source unique de la liste des réglages. Les énumérer à la main dans le
  * formulaire et dans la server action garantissait qu'un réglage ajouté ici
- * n'apparaîtrait nulle part — un contrôle invisible, donc jamais détecté.
+ * n'apparaîtrait nulle part : un contrôle invisible, donc jamais détecté.
  */
 export const CLES_REGLAGES = Object.keys(REGLAGES_DEFAUT) as CleReglage[];
 
@@ -58,7 +58,7 @@ export async function lireReglages(): Promise<Reglages> {
   return valeurs;
 }
 
-/* Le formatage — dates, heures, montants, listes — est dans `lib/formats.ts`.
+/* Le formatage (dates, heures, montants, listes) est dans `lib/formats.ts`.
    Ne le réimporte pas ici pour le réexporter : la commodité rétablirait le
    piège que la séparation vient de supprimer. Chaque fichier importe
    `@/lib/formats` directement. */

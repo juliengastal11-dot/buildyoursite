@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 /* ---------------------------------------------------------------------------
-   Relevé des capacités de la machine — à lancer avant la première question.
+   Relevé des capacités de la machine : à lancer avant la première question.
 
    Une question dont la réponse est sur la machine ne se pose pas. Ce script
    vérifie lui-même, jamais sur parole : Node, Python, la bibliothèque de
    design et sa fraîcheur, l'identité git, la clé Pexels.
 
    Ce qu'il ne peut pas voir : les connecteurs. Ils ne sont pas déclarés dans
-   un fichier lisible d'ici — ils viennent du compte ou des plugins — et seul
+   un fichier lisible d'ici (ils viennent du compte ou des plugins) et seul
    Claude les a sous les yeux. Le script rappelle donc en dernière ligne quelle
    CAPACITÉ chercher, jamais quelle marque : chacun a son fournisseur, et une
    liste de noms serait fausse le jour où on l'écrit.
@@ -90,7 +90,7 @@ else
 
 /* --- de quoi donner un lien à partager ---------------------------------
    Une information, pas une question. Elle ne change rien à ce qu'on
-   construit — le tunnel sert le site tel quel depuis cette machine — mais
+   construit (le tunnel sert le site tel quel depuis cette machine), mais
    elle dit si le lien sera disponible d'un mot à la fin, ou s'il faudra
    installer quelque chose. Autant le savoir pendant l'installation des
    dépendances plutôt qu'au moment où l'on veut montrer le résultat.
@@ -122,7 +122,7 @@ else {
 /* --- le dossier de la session : c'est LÀ que le site sera créé ---------
    Les outils de Claude Code sont autorisés dans le dossier où la session est
    ouverte, et demandent une permission à chaque écriture en dehors. Le site
-   se crée donc ici, dans un sous-dossier à son nom — et ce contrôle dit si
+   se crée donc ici, dans un sous-dossier à son nom, et ce contrôle dit si
    « ici » est un endroit raisonnable. */
 const normaliser = (p) => {
   const r = path.resolve(p);

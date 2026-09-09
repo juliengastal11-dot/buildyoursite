@@ -4,7 +4,7 @@
    connues au lieu de les subir.
 
    Le piège qu'il supprime : quand le port est pris, Next ne refuse pas de
-   démarrer — il bascule en silence sur le port suivant. On ouvre alors
+   démarrer. Il bascule en silence sur le port suivant. On ouvre alors
    localhost:3000, on tombe sur le serveur zombie d'une session précédente,
    et on conclut que le site est cassé.
 
@@ -87,7 +87,7 @@ function tuer(pid) {
 }
 
 /**
- * Un serveur de dev Next abandonné — le seul cas qu'on s'autorise à tuer.
+ * Un serveur de dev Next abandonné : le seul cas qu'on s'autorise à tuer.
  *
  * La ligne de commande réelle ne contient pas « next dev » mais le chemin du
  * module : `node ...\node_modules\next\dist\server\lib\start-server.js`.
@@ -106,7 +106,7 @@ function estServeurNext(cmd) {
  * La distinction est vitale. Deux serveurs Next sur le même projet partagent
  * `.next` et se corrompent mutuellement : le site perd son CSS ou renvoie 404
  * sur des pages qui marchaient, sans qu'aucune erreur ne remonte. Arrivé pour
- * de vrai — c'est un test de ce script qui l'a provoqué.
+ * de vrai : c'est un test de ce script qui l'a provoqué.
  *
  * Donc : un serveur de CE projet est un doublon, on le termine. Un serveur
  * d'un AUTRE projet appartient à quelqu'un d'autre, on n'y touche pas.
@@ -175,7 +175,7 @@ for (let p = 3000; p <= 3010; p++) {
  * la sonde.
  *
  * Avec `-p` explicite, Next 15.5 ne bascule plus en silence sur le port
- * suivant : il échoue avec EADDRINUSE — et, piège, sort avec le code 0. Sans
+ * suivant : il échoue avec EADDRINUSE. Et, piège, sort avec le code 0. Sans
  * cette relance, le lanceur se terminait « proprement » sur un serveur qui
  * n'avait jamais démarré, et l'orchestrateur attendait une URL qui ne venait
  * pas. Vécu avec deux projets ouverts en même temps.
@@ -200,7 +200,7 @@ function lancer(port, essais = 0) {
       sortie.write(texte);
       if (!annonce && /Ready in|Local:/.test(texte)) {
         annonce = true;
-        // Ligne à lire par l'orchestrateur — jamais supposer le port.
+        // Ligne à lire par l'orchestrateur. Jamais supposer le port.
         console.log(`BUILDYOURSITE_URL=http://localhost:${port}`);
       }
       if (/EADDRINUSE/.test(texte)) portPris = true;

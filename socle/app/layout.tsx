@@ -29,7 +29,7 @@ export const metadata: Metadata = {
 /* Pose `html.js` avant le premier rendu. La feuille de style s'en sert pour
    masquer ce que le mouvement va dévoiler (`html.js [data-mouvement]`) : sans
    JavaScript, rien n'est masqué et tout est visible. `suppressHydrationWarning`
-   parce que le serveur, lui, n'a pas cette classe — c'est voulu. */
+   parce que le serveur, lui, n'a pas cette classe. C'est voulu. */
 const SCRIPT_JS = "document.documentElement.classList.add('js')";
 
 export default function RootLayout({

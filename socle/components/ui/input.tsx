@@ -1,7 +1,7 @@
 import * as React from "react";
 import { cn } from "@/lib/utils";
 
-/** Styles partagés par input, textarea et select — un seul endroit à ajuster. */
+/** Styles partagés par input, textarea et select : un seul endroit à ajuster. */
 export const champStyles = [
   "w-full rounded-lg border border-border bg-background px-3 text-sm text-foreground",
   "placeholder:text-muted-foreground/70",

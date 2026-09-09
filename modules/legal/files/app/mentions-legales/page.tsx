@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { lireReglages } from "@/lib/reglages";
 
 /* ---------------------------------------------------------------------------
-   Mentions légales — obligatoires pour tout site professionnel.
+   Mentions légales, obligatoires pour tout site professionnel.
 
    Les valeurs inconnues portent un marqueur `[[À CONFIRMER PAR L'UTILISATEUR : … ]]`.
    Ne les remplace JAMAIS par une valeur plausible : un SIRET inventé se publie,
@@ -66,7 +66,7 @@ export default async function MentionsLegales() {
 
       <Bloc titre="Propriété intellectuelle">
         <p>
-          L&apos;ensemble des contenus de ce site — textes, images, logo, structure — est
+          L&apos;ensemble des contenus de ce site (textes, images, logo, structure) est
           protégé par le droit d&apos;auteur. Toute reproduction, même partielle, est
           soumise à l&apos;autorisation préalable de l&apos;éditeur.
         </p>

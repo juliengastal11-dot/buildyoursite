@@ -5,7 +5,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
    Point d'entrée unique de GSAP.
 
    Le plugin ScrollTrigger doit être enregistré une fois, côté navigateur, avant
-   le premier usage. Tous les composants de mouvement importent GSAP d'ici — pas
+   le premier usage. Tous les composants de mouvement importent GSAP d'ici : pas
    de `gsap` nu ailleurs, sinon l'enregistrement se retrouve dupliqué ou oublié.
 
    Importable depuis un Server Component sans casser le rendu : l'enregistrement

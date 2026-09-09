@@ -8,7 +8,7 @@ import { MOUVEMENT } from "@/lib/mouvement";
 /* ---------------------------------------------------------------------------
    Barre de progression de lecture, en haut de la fenêtre.
 
-   Utile sur un texte long — un article, une page légale, une documentation.
+   Utile sur un texte long : un article, une page légale, une documentation.
    **Inutile et bruyante sur une page d'accueil de trois écrans** : elle promet
    une longueur que la page n'a pas.
 
@@ -20,7 +20,7 @@ import { MOUVEMENT } from "@/lib/mouvement";
    le doigt remonte, la barre remonte.
 
    Mouvement réduit : la barre reste, elle ne s'anime simplement plus au
-   défilement fluide. C'est une information de position, pas une décoration —
+   défilement fluide. C'est une information de position, pas une décoration :
    la supprimer priverait le lecteur d'un repère.
 --------------------------------------------------------------------------- */
 
@@ -53,7 +53,7 @@ export function Progression({
          que la traversée d'un élément. `maxScroll` ne dépend d'aucune hauteur
          portée par un élément, donc d'aucune feuille de style : c'est la
          formulation qui a le moins de façons d'être fausse. Vérifié sur le
-         socle avec Lenis actif — plage 0 à 2300, progression 0,5 à mi-course. */
+         socle avec Lenis actif : plage 0 à 2300, progression 0,5 à mi-course. */
       const bornes = zone
         ? { trigger: zone, start: "top top", end: "bottom bottom" }
         : { start: 0, end: () => ScrollTrigger.maxScroll(window), invalidateOnRefresh: true };

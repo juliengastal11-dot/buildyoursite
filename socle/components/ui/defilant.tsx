@@ -11,7 +11,7 @@ import { MOUVEMENT } from "@/lib/mouvement";
    Pour des mots-clés, des logos de partenaires, des noms d'origines. Jamais
    pour du texte qu'on doit lire en entier : on ne lit pas ce qui bouge.
 
-   Le contenu est dupliqué — la copie est cachée aux lecteurs d'écran — et la
+   Le contenu est dupliqué (la copie est cachée aux lecteurs d'écran) et la
    piste se déplace d'exactement une copie, puis recommence : l'œil ne voit
    jamais le raccord. L'espace entre les éléments est porté par chaque moitié,
    pas par la piste, sinon le raccord tomberait à côté d'un demi-espace.

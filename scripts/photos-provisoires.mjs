@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /* ---------------------------------------------------------------------------
-   Photos provisoires — de vraies images, barrées d'un bandeau « PROVISOIRE ».
+   Photos provisoires : de vraies images, barrées d'un bandeau « PROVISOIRE ».
 
    Pourquoi ça existe. Un site livré avec des aplats de couleur à la place des
    photos ne donne pas envie, même quand le code est impeccable. L'effet à la
@@ -11,7 +11,7 @@
    Le client voit à quoi ressemblera son site ; personne ne peut les publier
    par inadvertance.
 
-   Usage — depuis la racine du projet :
+   Usage. Depuis la racine du projet :
      node <skill>/scripts/photos-provisoires.mjs --manifeste photos.json
      node <skill>/scripts/photos-provisoires.mjs --sujet "coffee roastery" \
           --sortie public/images/hero.jpg --largeur 1600 --hauteur 1000
@@ -30,7 +30,7 @@ import { pathToFileURL, fileURLToPath } from "node:url";
 
 /* `sharp` est une dépendance du PROJET, pas du skill. Ce script vivant dans le
    skill, un `import "sharp"` chercherait à côté de lui et échouerait. On le
-   résout donc depuis le dossier courant — la racine du projet Next. */
+   résout donc depuis le dossier courant : la racine du projet Next. */
 let sharp;
 try {
   const requireProjet = createRequire(path.join(process.cwd(), "package.json"));
@@ -55,13 +55,13 @@ const opt = (n, d = null) => {
 /* ------------------------------- sources ---------------------------------
    Trois sources, essayées dans l'ordre, jusqu'à ce qu'une image arrive :
 
-   1. **Pexels** — photos professionnelles, licence permissive sans
+   1. **Pexels** : photos professionnelles, licence permissive sans
       attribution obligatoire. Demande une clé gratuite : l'accès anonyme
       renvoie 401 dès qu'on l'utilise vraiment.
-   2. **Openverse** — le moteur de recherche d'œuvres sous Creative Commons
+   2. **Openverse** : le moteur de recherche d'œuvres sous Creative Commons
       de la Wikimedia Foundation. Aucune clé, et surtout **il respecte le
       sujet demandé**. C'est ce qui le place devant le repli générique.
-   3. **Picsum** — dernier recours. Belles photos, sujet aléatoire : mieux
+   3. **Picsum** : dernier recours. Belles photos, sujet aléatoire : mieux
       qu'un aplat de couleur, moins bien qu'une photo choisie.
 
    Chaque source rend une LISTE de candidats : un lien mort ne fait pas
@@ -71,7 +71,7 @@ const opt = (n, d = null) => {
 /**
  * Clé Pexels, facultative mais fortement recommandee.
  *
- * Sans clé, l'API repond parfois — puis renvoie 401 des qu'on l'utilise
+ * Sans clé, l'API repond parfois, puis renvoie 401 des qu'on l'utilise
  * vraiment : l'acces anonyme est limite. Verifie en conditions reelles.
  * Avec une cle gratuite (pexels.com/api, deux minutes), les photos sont
  * fiables et sur le sujet ; sans elle, on tombe sur des images generiques.
@@ -178,7 +178,7 @@ function acceptable(i, sujet) {
 }
 
 /**
- * Openverse — la source sans clé qui respecte quand même le sujet.
+ * Openverse : la source sans clé qui respecte quand même le sujet.
  *
  * `license_type=commercial` écarte les licences non commerciales. Les
  * résultats restent sous Creative Commons : le crédit est donc obligatoire,
@@ -188,7 +188,7 @@ async function chercherOpenverse(sujet, rang, largeur, hauteur) {
   const proportion = largeur / hauteur;
   const forme = proportion > 1.25 ? "wide" : proportion < 0.85 ? "tall" : "square";
 
-  /* Filtres PROGRESSIFS, du plus exigeant au plus large — mais qui ne
+  /* Filtres PROGRESSIFS, du plus exigeant au plus large, mais qui ne
      descendent JAMAIS sous `category=photograph`.
 
      Mesuré sur onze photos réelles : sans ce garde-fou, Openverse rend des
@@ -197,7 +197,7 @@ async function chercherOpenverse(sujet, rang, largeur, hauteur) {
      `category=photograph` écarte l'illustration et l'œuvre numérisée ; les
      sources `stocksnap` et `rawpixel` sont, elles, de la photographie de stock.
 
-     Mieux vaut tomber sur le repli générique — une belle photo hors sujet —
+     Mieux vaut tomber sur le repli générique (une belle photo hors sujet)
      que servir une gravure de chien victorien sur la fiche produit d'un
      torréfacteur. C'est pour ça que la cascade s'arrête là où elle s'arrête.
 

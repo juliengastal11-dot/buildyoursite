@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { lireReglages } from "@/lib/reglages";
 
 /* ---------------------------------------------------------------------------
-   Conditions générales de vente — obligatoires pour toute vente en ligne à des
+   Conditions générales de vente, obligatoires pour toute vente en ligne à des
    particuliers.
 
    Les rubriques ci-dessous sont le minimum : prix, livraison, paiement,
@@ -31,7 +31,7 @@ function Article({
   return (
     <section className="mt-10">
       <h2 className="font-display text-xl sm:text-2xl">
-        <span className="font-mono text-sm text-accent">Art. {numero}</span> — {titre}
+        <span className="font-mono text-sm text-accent">Art. {numero}</span> · {titre}
       </h2>
       <div className="mt-3 space-y-2 text-muted-foreground">{children}</div>
     </section>
@@ -108,14 +108,14 @@ export default async function CGV() {
           récupération du produit.
         </p>
         <p className="rounded-card border border-border bg-card p-4 text-sm">
-          <strong>Formulaire type de rétractation</strong> — à recopier :<br />
+          <strong>Formulaire type de rétractation</strong>, à recopier :<br />
           « Je vous notifie par la présente ma rétractation du contrat portant sur la vente
           du bien ci-dessous : [désignation], commandé le [date], reçu le [date].
           Nom, adresse, date, signature. »
         </p>
         <p>
-          [[À CONFIRMER PAR L'UTILISATEUR : préciser les éventuelles exceptions légales — denrées périssables,
-          produits personnalisés, produits descellés]]
+          [[À CONFIRMER PAR L'UTILISATEUR : préciser les éventuelles exceptions légales (denrées périssables,
+          produits personnalisés, produits descellés)]]
         </p>
       </Article>
 
@@ -134,7 +134,7 @@ export default async function CGV() {
         </p>
         <p>[[À CONFIRMER PAR L'UTILISATEUR : nom, adresse et site du médiateur souscrit]]</p>
         <p>
-          Une plateforme européenne de règlement en ligne est également disponible —{" "}
+          Une plateforme européenne de règlement en ligne est également disponible :{" "}
           <a
             href="https://ec.europa.eu/consumers/odr"
             target="_blank"

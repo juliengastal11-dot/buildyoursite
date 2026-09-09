@@ -1,12 +1,12 @@
 /* ---------------------------------------------------------------------------
-   Formatage — dates, heures, montants. Aucun accès à la base, aucun module
+   Formatage : dates, heures, montants. Aucun accès à la base, aucun module
    Node : ce fichier doit rester importable depuis un composant navigateur.
 
    POURQUOI IL EXISTE SÉPARÉMENT.
 
    Ces fonctions vivaient dans `lib/reglages.ts`, à côté de `lireReglages()`
    qui interroge la base. C'était commode et c'était un piège : un composant
-   client — un simulateur de prix — importait `formatPrix`, et tirait derrière
+   client (un simulateur de prix) importait `formatPrix`, et tirait derrière
    lui la chaîne complète jusqu'à Prisma dans le paquet du navigateur.
 
    Ça compilait. Jusqu'au jour où une ligne `import path from "node:path"` est
@@ -14,8 +14,8 @@
    d'erreur qui remontait jusqu'au simulateur, à quatre fichiers de là.
 
    LA RÈGLE : on sépare par nature, pas par sujet.
-   · `lib/<sujet>.ts`          — pur, importable partout, serveur comme client
-   · `lib/<sujet>-serveur.ts`  — touche la base, le disque ou l'environnement
+   · `lib/<sujet>.ts`          : pur, importable partout, serveur comme client
+   · `lib/<sujet>-serveur.ts`  : touche la base, le disque ou l'environnement
 
    Un composant client qui a besoin d'un formatage ne doit jamais pouvoir
    traîner la base derrière lui.
@@ -54,7 +54,7 @@ export function formatJourHeure(d: Date): string {
   return `${formatJour(d)} à ${formatHeure(d)}`;
 }
 
-/** « 6 septembre 2026 » — pour un article, une actualité, une facture. */
+/** « 6 septembre 2026 » : pour un article, une actualité, une facture. */
 export function formatDate(d: Date): string {
   return new Intl.DateTimeFormat(LOCALE, {
     day: "numeric",
@@ -90,7 +90,7 @@ export function formatPrix(centimes: number, devise = "EUR"): string {
   }).format(centimes / 100);
 }
 
-/** « 5 000 » — un nombre à la française, séparateurs compris. */
+/** « 5 000 » : un nombre à la française, séparateurs compris. */
 export function formatNombre(n: number): string {
   return new Intl.NumberFormat(LOCALE).format(n);
 }

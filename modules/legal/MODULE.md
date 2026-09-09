@@ -1,4 +1,4 @@
-# Module `legal` — mentions légales, CGV, confidentialité
+# Module `legal` : mentions légales, CGV, confidentialité
 
 **À greffer sur tout site professionnel.** Ce n'est pas un module optionnel comme `stripe`
 ou `admin` : sans ces pages, un site professionnel français ne peut pas être mis en ligne.
@@ -15,7 +15,7 @@ elle, n'est jamais défendable.
 | Page | Quand |
 |---|---|
 | `mentions-legales` | **Tout site professionnel** |
-| `confidentialite` | **Tout site** qui collecte la moindre donnée — un formulaire de contact suffit |
+| `confidentialite` | **Tout site** qui collecte la moindre donnée : un formulaire de contact suffit |
 | `cgv` | **Toute vente en ligne** à des particuliers |
 | `cookies` | Seulement s'il y a des traceurs. Un site sans analytics n'en a pas besoin |
 
@@ -38,7 +38,7 @@ Copier `files/` à la racine du projet. Chaque page est un Server Component qui 
 coordonnées dans les réglages quand elles existent, et laisse un marqueur sinon.
 
 **Les gabarits ne rendent qu'un `<main>` nu.** Après la copie, habille-les de l'en-tête et
-du pied de page du site — ils portent des noms propres au projet, le module ne peut pas les
+du pied de page du site : ils portent des noms propres au projet, le module ne peut pas les
 importer à ta place. Sans ça, on arrive sur les CGV par le pied de page et on ne peut plus
 en repartir autrement qu'avec le bouton « précédent ». Pense aussi à l'espace en haut : une
 barre de navigation fixe recouvre le titre si la page ne le prévoit pas.
@@ -62,11 +62,11 @@ cherche, et c'est là qu'ils doivent être.
 **Tout chiffre déjà présent dans les réglages se lit, ne se recopie pas.** Frais de port,
 seuil de gratuité, adresse, e-mail : les écrire en toutes lettres dans les CGV crée un
 document qui contredira le tunnel de commande dès la première modification du gérant. Les
-gabarits lisent déjà ce qu'ils peuvent — vérifie qu'ils lisent tout ce que ce projet
+gabarits lisent déjà ce qu'ils peuvent. Vérifie qu'ils lisent tout ce que ce projet
 expose.
 
 **Ce que tu peux honnêtement combler toi-même**, sans rien inventer : ce que le site
 collecte réellement (le schéma de données le dit), les cookies qu'il pose (le code le dit),
-les sous-traitants visibles dans les dépendances — Stripe pour le paiement, par exemple. Ce
+les sous-traitants visibles dans les dépendances (Stripe pour le paiement, par exemple). Ce
 qui doit rester un trou : raison sociale, SIRET, TVA, RCS, directeur de publication,
 hébergeur, transporteur, médiateur. Personne ne peut les déduire du code.

@@ -1,12 +1,12 @@
 import { ImageResponse } from "next/og";
 import { SITE } from "@/lib/site";
 
-/* L'image qui apparaît quand un lien du site est partagé — messagerie, réseaux,
+/* L'image qui apparaît quand un lien du site est partagé : messagerie, réseaux,
    moteur. Générée à la demande, aux couleurs de lib/site.ts : pas de fichier à
    dessiner, et elle suit le nom du site.
 
    Une page peut avoir la sienne en posant son propre opengraph-image.tsx dans
-   son dossier — une fiche produit avec sa photo, par exemple. */
+   son dossier : une fiche produit avec sa photo, par exemple. */
 
 export const alt = SITE.nom;
 export const size = { width: 1200, height: 630 };

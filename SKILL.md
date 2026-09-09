@@ -1,6 +1,6 @@
 ---
 name: buildyoursite
-description: Crée un site web client complet de zéro — bootstrap full-stack Next.js (backend + frontend + base de données + design system + serveur lancé + preview), puis bascule en mode édition visuelle où l'utilisateur clique sur une zone de la page pour la modifier. Déclenché par /buildyoursite, ou quand l'utilisateur demande de créer un nouveau site, une landing page, un site vitrine, une app ou un projet client.
+description: "Crée un site web client complet de zéro : bootstrap full-stack Next.js (backend + frontend + base de données + design system + serveur lancé + preview), puis bascule en mode édition visuelle où l'utilisateur clique sur une zone de la page pour la modifier. Déclenché par /buildyoursite, ou quand l'utilisateur demande de créer un nouveau site, une landing page, un site vitrine, une app ou un projet client."
 ---
 
 # /buildyoursite
@@ -12,30 +12,30 @@ en mode édition visuelle où l'utilisateur pilote au clic.
 
 1. **Tu ne rends jamais la main sur un projet qui ne build pas.** Le bootstrap se termine
    quand `npm run build` passe, que le serveur de dev tourne, **et que l'utilisateur a
-   regardé le résultat et l'a dit** — voir « Ce que fini veut dire ». Pas avant.
-2. **En phase 2, tes réponses font UNE ligne.** « Fait — bouton en bleu. » Pas de
+   regardé le résultat et l'a dit** (voir « Ce que fini veut dire »). Pas avant.
+2. **En phase 2, tes réponses font UNE ligne.** « Fait : bouton en bleu. » Pas de
    récapitulatif, pas d'explication, pas de liste. Tu ne développes que si quelque chose casse.
 
 ## Philosophie
 
 La première génération est un **brouillon à 90 %**, pas une livraison. Ne t'acharne pas au
 bootstrap : l'utilisateur repassera derrière en phase 2, c'est prévu. Vise une base solide,
-cohérente et qui tourne — pas la perfection.
+cohérente et qui tourne. Pas la perfection.
 
 ## Configuration
 
-**Avant tout, lis `~/.claude/buildyoursite/config.json`** — sous Windows,
-`%USERPROFILE%\.claude\buildyoursite\config.json`. Les données du skill vivent **hors de
+**Avant tout, lis `~/.claude/buildyoursite/config.json`** (sous Windows,
+`%USERPROFILE%\.claude\buildyoursite\config.json`). Les données du skill vivent **hors de
 son dossier**, pour survivre à une mise à jour qui remplacerait celui-ci. Si tu ne l'y
 trouves pas, regarde `<skill>/config.json` : une installation antérieure au déménagement
 l'y porte encore, et l'installeur le déplacera au prochain passage.
 
-`<skill>` est le dossier de base annoncé au lancement — ne code jamais ce chemin en dur, il
+`<skill>` est le dossier de base annoncé au lancement. Ne code jamais ce chemin en dur, il
 diffère chez chaque utilisateur.
 
 | Clé | Usage |
 |---|---|
-| `racineProjets` | Le dossier habituel des sites — un **conseil**, pas une destination. Le site se crée là où la session est ouverte ; cette valeur sert à prévenir quand c'est ailleurs |
+| `racineProjets` | Le dossier habituel des sites, un **conseil**, pas une destination. Le site se crée là où la session est ouverte ; cette valeur sert à prévenir quand c'est ailleurs |
 | `appellation` | Comment t'adresser à l'utilisateur dans tes questions. **Vide = aucune appellation**, tu formules neutrement |
 | `langue` | Langue des questions, du blueprint et des contenus |
 | `portParDefaut` | Port du serveur de dev |
@@ -47,8 +47,8 @@ diffère chez chaque utilisateur.
 > Le skill n'est pas encore installé. Lance `node "<skill>/scripts/installer.mjs"` dans un
 > terminal : il vérifie les prérequis et récupère la bibliothèque de design.
 
-Et ne crée jamais un site ailleurs que dans le dossier où la session est ouverte — voir la
-phase 0.55.
+Et ne crée jamais un site ailleurs que dans le dossier où la session est ouverte (voir la
+phase 0.55).
 
 ## Chemins
 
@@ -56,11 +56,11 @@ phase 0.55.
 |---|---|
 | Socle Next.js | `<skill>/socle` |
 | Modules | `<skill>/modules/{auth,stripe,admin,legal}` |
-| Références | `<skill>/references/` — dont `structures.md`, `mouvement.md`, `decor.md`, `video.md` et `lancement.md`, à lire avant tout blueprint ; `consignes-agents.md` avant de lancer les agents |
-| Scripts | `<skill>/scripts/` — dont `partager.mjs`, qui donne un lien à envoyer sans rien héberger |
-| Données du skill | `~/.claude/buildyoursite` — `config.json` et la bibliothèque de design, hors du skill |
+| Références | `<skill>/references/`, dont `structures.md`, `mouvement.md`, `decor.md`, `video.md` et `lancement.md`, à lire avant tout blueprint ; `consignes-agents.md` avant de lancer les agents |
+| Scripts | `<skill>/scripts/`, dont `partager.mjs`, qui donne un lien à envoyer sans rien héberger |
+| Données du skill | `~/.claude/buildyoursite` : `config.json` et la bibliothèque de design, hors du skill |
 | Pro Max | `~/.claude/buildyoursite/ui-ux-pro-max` |
-| Le site en cours | `<dossier de la session>/<nom-du-site>` — jamais ailleurs, voir phase 0.55 |
+| Le site en cours | `<dossier de la session>/<nom-du-site>`, jamais ailleurs, voir phase 0.55 |
 
 **Le relevé de capacités imprime ces deux chemins** en fin de sortie, résolus pour cette
 machine. Prends-les là plutôt que de les reconstruire : une installation d'avant le
@@ -80,10 +80,10 @@ l'à-peu-près : un modèle qui saute une vérification livre un site qui build 
 
 | | Orchestrateur (toi) | Verdict |
 |---|---|---|
-| **Fable 5.1**, effort `high` ou `xhigh` | Le plus capable sur le travail long et autonome | **Idéal** — pour une boutique, une application, ou un projet où l'on veut le moins de reprises |
+| **Fable 5.1**, effort `high` ou `xhigh` | Le plus capable sur le travail long et autonome | **Idéal** : pour une boutique, une application, ou un projet où l'on veut le moins de reprises |
 | **Opus 5**, effort `xhigh` | Ce que la documentation recommande pour le codage et l'agentique exigeants | **Le bon choix par défaut** |
 | **Opus 5**, effort `high` | Le défaut de Claude Code sur les offres Max | **Le minimum acceptable** |
-| **Sonnet 5**, effort `xhigh` | Tient une vitrine simple, demande plus de supervision | **Dépannage** — le dire à l'utilisateur |
+| **Sonnet 5**, effort `xhigh` | Tient une vitrine simple, demande plus de supervision | **Dépannage** : le dire à l'utilisateur |
 | **Sonnet 5** en dessous de `xhigh`, **Haiku** | Contexte et profondeur insuffisants pour un bootstrap complet | **Non** |
 
 **Les sous-agents restent sur `sonnet`**, et ce n'est pas une économie : leurs briefs sont
@@ -96,7 +96,7 @@ orchestrateur fort avec des exécutants Sonnet donne un meilleur résultat que l
 activé.** C'est le piège classique : on cherche le réglage le plus puissant en pensant bien
 faire, et on obtient l'inverse.
 
-`ultracode` fait deux choses : il monte l'effort à `xhigh` — ça, c'est bon — **et** il fait
+`ultracode` fait deux choses : il monte l'effort à `xhigh` (ça, c'est bon) **et** il fait
 orchestrer des workflows dynamiques, qui lancent leurs propres sous-agents et redécoupent le
 travail à leur façon. Or ce skill **a déjà son découpage**, écrit noir sur blanc et affiné
 sur deux constructions réelles : qui écrit quoi, des périmètres de fichiers exclusifs, des
@@ -104,7 +104,7 @@ briefs qui portent le texte final et les règles de mouvement, des rapports d'ar
 
 Deux orchestrations superposées ne s'additionnent pas, elles se marchent dessus. Les
 sous-agents d'`ultracode` ne connaissent ni les périmètres exclusifs ni les
-fichiers-contrats : ils écriraient là où les nôtres travaillent — la panne exacte que nos
+fichiers-contrats : ils écriraient là où les nôtres travaillent, la panne exacte que nos
 périmètres existent pour rendre impossible, et qui a déjà coûté un conflit sur le premier
 bootstrap.
 
@@ -116,7 +116,7 @@ orchestrateur. Si l'utilisateur est en `ultracode`, une ligne suffit :
 
 **Une fois le site créé, Sonnet 5 suffit.** La phase 2 est un autre métier que la phase 1 :
 le code existe, le commentaire dit quoi changer, le fichier visé est souvent déjà nommé dans
-le lot. C'est du codage courant sur un périmètre connu — exactement ce pour quoi Sonnet 5
+le lot. C'est du codage courant sur un périmètre connu, exactement ce pour quoi Sonnet 5
 est positionné, et il garde le même contexte d'un million de jetons qu'Opus. `/model sonnet`
 après le bootstrap, à son effort par défaut, va plus vite et coûte deux fois et demie moins.
 
@@ -127,7 +127,7 @@ structure ou de design plutôt qu'une retouche, repasse sur Opus le temps de ce 
 critère est simple : *est-ce que je remplace du texte et des classes, ou est-ce que je
 décide quelque chose ?*
 
-### Dis-le à l'utilisateur — au premier message, et une seule fois
+### Dis-le à l'utilisateur : au premier message, et une seule fois
 
 Tu connais ton modèle ; tu ne connais pas forcément ton effort. Lui ne connaît peut-être ni
 l'un ni l'autre, et surtout pas ce que ça change. **Le texte à écrire est en phase 0.a**, à
@@ -138,7 +138,7 @@ Sonnet.
 Ce qui compte ici, et qu'aucune reformulation ne doit perdre :
 
 - **le dire avant tout travail**, parce qu'après il faut tout relancer ;
-- **dire ce que ça change**, pas seulement quel réglage viser — « effort `high` minimum » ne
+- **dire ce que ça change**, pas seulement quel réglage viser : « effort `high` minimum » ne
   décide personne, « sinon tu paieras la différence en allers-retours » décide ;
 - **ne jamais y revenir**. Le sujet est clos après le premier message. Pas de rappel au
   blueprint, pas de confirmation avant de construire.
@@ -148,29 +148,29 @@ en premier. Deux lignes, une action, et on continue.
 
 ---
 
-## Phase 0.a — Annonce le déroulé, avant toute question
+## Phase 0.a : Annonce le déroulé, avant toute question
 
 **Première chose que tu écris, systématiquement.** Celui qui lit découvre peut-être Claude
 Code aujourd'hui : des mots que n'importe qui comprend, aucun jargon, et une liste qu'on
 peut suivre du doigt. Reprends-la telle quelle, en remplaçant `{appellation}` selon
-`config.json` — ou en l'omettant si elle est vide :
+`config.json`, ou en l'omettant si elle est vide :
 
 > {appellation}, voici comment ça va se passer, étape par étape.
 >
-> 1. **Je regarde d'abord ce que ta machine sait faire** — les outils installés, ce qui
->    est connecté — pour ne te poser que les questions utiles.
+> 1. **Je regarde d'abord ce que ta machine sait faire** (les outils installés, ce qui
+>    est connecté) pour ne te poser que les questions utiles.
 > 2. **Je te pose mes questions**, toutes au début, par petites séries où tu n'as qu'à
 >    cliquer sur une réponse : qui est le client, ce que le site doit faire, ce que tu as
->    déjà — un logo, des photos, un site qui t'appartient.
+>    déjà (un logo, des photos, un site qui t'appartient).
 > 3. **Je prépare le terrain** : l'identité visuelle, une direction claire, et je vais
 >    lire comment les clients de ce métier parlent, pour écrire le site dans leurs mots.
-> 4. **Je t'écris le plan complet** — les pages, les textes, mes hypothèses numérotées.
+> 4. **Je t'écris le plan complet** : les pages, les textes, mes hypothèses numérotées.
 >    C'est le moment où tu reprends la main : tu relis, tu corriges, et rien ne se
 >    construit avant ton accord.
 > 5. **Je construis**, avec plusieurs assistants qui travaillent en même temps. Ça prend
 >    un moment ; je te le dis quand ça commence, et je ne te dérange pas pendant.
 > 6. **Je vérifie tout avant de te montrer** : chaque page, sur mobile aussi, chaque
->    bouton, chaque formulaire, le mouvement, **un audit de sécurité** — et je fais relire
+>    bouton, chaque formulaire, le mouvement, **un audit de sécurité**, et je fais relire
 >    par un regard neuf.
 > 7. **Tu regardes**, sur ton écran et sur ton téléphone, et tu me dis si ça ressemble à
 >    ce que tu imaginais. Tant que tu ne l'as pas dit, ce n'est pas fini.
@@ -182,7 +182,7 @@ peut suivre du doigt. Reprends-la telle quelle, en remplaçant `{appellation}` s
 >
 > Je pilote l'ingénierie et la technique, tu supervises le design et l'identité visuelle.
 
-**Enchaîne, dans le même message, sur le modèle — expliqué, pas seulement annoncé.** C'est
+**Enchaîne, dans le même message, sur le modèle : expliqué, pas seulement annoncé.** C'est
 le réglage qui change le plus le résultat, et celui que personne ne pense à vérifier.
 Écris-le en clair, avec ce qu'il change concrètement :
 
@@ -192,7 +192,7 @@ le réglage qui change le plus le résultat, et celui que personne ne pense à v
 > heures de travail suivi, plusieurs assistants à piloter en parallèle, des dizaines de
 > décisions de design, et des textes qui doivent rester cohérents d'une page à l'autre.
 >
-> **Un modèle trop léger ne plante pas** — c'est bien le problème. Il livre un site qui
+> **Un modèle trop léger ne plante pas**, c'est bien le problème. Il livre un site qui
 > fonctionne et qui déçoit : des consignes plus courtes aux assistants, des détails
 > arbitrés à la va-vite, le mouvement oublié, et des allers-retours que tu paieras en
 > temps à la fin.
@@ -203,18 +203,18 @@ le réglage qui change le plus le résultat, et celui que personne ne pense à v
 >
 > **Si tu as accès à Fable 5.1, prends-le** : c'est le modèle qui tient le mieux sur la
 > longueur, et sur un site complet la différence se voit. Sinon, Opus 5 fait très bien le
-> travail — ne change rien.
+> travail. Ne change rien.
 
-**Puis arrête-toi. C'est maintenant qu'on change de modèle, pas plus tard** — après, il
+**Puis arrête-toi. C'est maintenant qu'on change de modèle, pas plus tard** : après, il
 faudrait tout relancer. Termine ce premier message par une question à un clic :
 
 > **On y va ?**
 > - *C'est parti* → tu enchaînes sur le relevé des capacités
 > - *Je règle d'abord le modèle ou l'effort* → tu réponds : « Tape `/model fable` (ou
->   `opus`), puis `/effort xhigh`, et dis-moi « continue » — je reprends exactement ici,
+>   `opus`), puis `/effort xhigh`, et dis-moi « continue » : je reprends exactement ici,
 >   rien n'est perdu. » Et tu attends.
 
-**Si tu tournes sous la barre** — Sonnet ou moins — le même bloc passe **avant** la liste
+**Si tu tournes sous la barre**, Sonnet ou moins, le même bloc passe **avant** la liste
 des étapes, ouvert par un avertissement franc plutôt que par « un mot sur le modèle », et
 l'option « je change de modèle » est proposée en premier. Quelqu'un qui ignore sur quel
 modèle il tourne doit pouvoir corriger d'un clic, pas découvrir le problème en lisant le
@@ -227,16 +227,16 @@ et le sujet est clos. Vécu au troisième bootstrap : l'information arrivait apr
 travail, donc trop tard pour servir à quoi que ce soit.
 
 **Une seule exception, et c'est une phrase, jamais une question** : à la remise du site, tu
-peux signaler qu'un modèle plus léger suffit pour les modifications au clic — voir « Modèle
-et effort ». Ça arrive à un autre moment, pour une autre raison, et ça n'appelle pas de
+peux signaler qu'un modèle plus léger suffit pour les modifications au clic (voir « Modèle
+et effort »). Ça arrive à un autre moment, pour une autre raison, et ça n'appelle pas de
 réponse.
 
 Ça ne coûte rien à écrire, et ça change tout pour la personne en face : elle sait où elle
 en est pendant vingt minutes de construction, elle sait qu'elle pourra intervenir à
 l'étape 4, et elle sait que l'étape 7 lui appartient. Ne raccourcis pas cette liste pour
-gagner du temps — c'est elle qui fait qu'un novice se sent accompagné plutôt que dépassé.
+gagner du temps : c'est elle qui fait qu'un novice se sent accompagné plutôt que dépassé.
 
-### Puis relève ce que la machine sait faire — avant la première question
+### Puis relève ce que la machine sait faire, avant la première question
 
 Une question dont la réponse est sur la machine ne se pose pas. Lance :
 
@@ -244,39 +244,39 @@ Une question dont la réponse est sur la machine ne se pose pas. Lance :
 node "<skill>/scripts/capacites.mjs"
 ```
 
-Il vérifie lui-même — jamais sur parole — Node, Python, la bibliothèque de design et sa
+Il vérifie lui-même (jamais sur parole) Node, Python, la bibliothèque de design et sa
 fraîcheur, l'identité git, la clé Pexels.
 
 **Puis complète depuis tes propres outils ce qu'aucun script ne peut voir : les
-connecteurs.** Ils ne sont pas déclarés dans un fichier que le terminal saurait lire — ils
-viennent du compte ou des plugins — et toi seul les as sous les yeux. Alors **regarde ta
+connecteurs.** Ils ne sont pas déclarés dans un fichier que le terminal saurait lire (ils
+viennent du compte ou des plugins) et toi seul les as sous les yeux. Alors **regarde ta
 propre liste d'outils, et cherche une capacité, jamais une marque** :
 
 | Ce que tu cherches | Comment tu le reconnais | Ce que ça change |
 |---|---|---|
-| **Un générateur d'images ou de vidéo** | un outil qui fabrique une image ou une vidéo à partir d'un texte — noms fréquents : `generate_image`, `generate_video`, `text_to_image` — souvent accompagné de retouche : détourage, agrandissement, remplacement de fond | les visuels manquants peuvent être **générés dans l'univers du site** au lieu d'être provisoires |
+| **Un générateur d'images ou de vidéo** | un outil qui fabrique une image ou une vidéo à partir d'un texte (noms fréquents : `generate_image`, `generate_video`, `text_to_image`), souvent accompagné de retouche : détourage, agrandissement, remplacement de fond | les visuels manquants peuvent être **générés dans l'univers du site** au lieu d'être provisoires |
 | **De quoi en connaître le coût** | sur le même connecteur, un outil de solde, de crédits, de quota ou de facturation | tu peux annoncer un prix avant chaque image ; sans lui, dis que le coût n'est pas mesurable d'ici |
-| **Un animateur d'image** | un outil de génération vidéo qui accepte **une image en entrée** — un rôle `image` dans ses médias | **animer les vraies photos du client** en boucles de quelques secondes. Mieux qu'un visuel inventé : il garde son lieu et ses gens. Voir `references/video.md` |
+| **Un animateur d'image** | un outil de génération vidéo qui accepte **une image en entrée**, un rôle `image` dans ses médias | **animer les vraies photos du client** en boucles de quelques secondes. Mieux qu'un visuel inventé : il garde son lieu et ses gens. Voir `references/video.md` |
 | **Un hébergeur** | un outil de déploiement, de domaine ou de serveur | rien. Note-le sans rien en faire, on ne déploie pas |
 
 **N'écris jamais de liste de services connus dans ce skill.** Une liste de marques est déjà
-fausse le jour où on l'écrit — chacun a son fournisseur — et périmée six mois plus tard. La
+fausse le jour où on l'écrit (chacun a son fournisseur) et périmée six mois plus tard. La
 capacité, elle, ne vieillit pas. Nomme dans le relevé **le connecteur que tu as réellement
 trouvé**, quel qu'il soit, et sers-t'en ensuite sous ce nom.
 
 Recopie le tout en une checklist, une ligne par capacité, et dis ce que chaque ✗ change.
-Exemple, avec un générateur appelé ici `X` — le tien portera un autre nom :
+Exemple, avec un générateur appelé ici `X`, le tien portera un autre nom :
 
 > ✓ Node 22 · ✓ Python 3.12 · ✓ Pro Max, à jour il y a 3 jours · ✓ identité git
-> ✗ clé Pexels — photos provisoires via Openverse, à vérifier sur la planche
-> ✓ X connecté, solde 80 crédits — les visuels manquants peuvent être générés
-> ✗ aucun connecteur d'hébergement — sans effet, on ne déploie pas
+> ✗ clé Pexels : photos provisoires via Openverse, à vérifier sur la planche
+> ✓ X connecté, solde 80 crédits : les visuels manquants peuvent être générés
+> ✗ aucun connecteur d'hébergement : sans effet, on ne déploie pas
 
 Ce relevé décide de la forme des questions qui suivent : on ne demande jamais « as-tu tel
-service ? », on demande ce que sa présence rend possible. Et un ✗ n'est pas un reproche —
-c'est une information, sans lien, sans insistance.
+service ? », on demande ce que sa présence rend possible. Et un ✗ n'est pas un reproche.
+C'est une information, sans lien, sans insistance.
 
-## Phase 0.b — Brief
+## Phase 0.b : Brief
 
 Lis le prompt de l'utilisateur. **Ne pose que les questions dont la réponse change
 l'architecture.** S'il a été précis, tu ne poses presque rien. Tout ce que tu peux déduire,
@@ -285,15 +285,15 @@ déduis-le et inscris-le dans le blueprint comme hypothèse.
 ### La première question : quel genre de site ?
 
 Avant tout le reste, en un clic. C'est la réponse qui décide des pages, des modules, de
-l'ampleur du mouvement, du nombre d'agents — et de ce que tu iras chercher comme
+l'ampleur du mouvement, du nombre d'agents, et de ce que tu iras chercher comme
 inspiration. Sans elle, on construit une boutique comme une vitrine, ou une landing comme un
 site complet.
 
 > **Quel genre de site ?**
-> - *Une landing page ou une page produit* — une page, une action
-> - *Un site vitrine* — quelques pages qui présentent une activité
-> - *Une boutique* — catalogue, panier, paiement
-> - *Une application* — comptes, données, espace client
+> - *Une landing page ou une page produit* : une page, une action
+> - *Un site vitrine* : quelques pages qui présentent une activité
+> - *Une boutique* : catalogue, panier, paiement
+> - *Une application* : comptes, données, espace client
 
 | Genre | Ce que ça décide |
 |---|---|
@@ -301,7 +301,7 @@ site complet.
 | **Vitrine** | Le chemin standard des deux premiers bootstraps. Pro Max décide la structure. |
 | **Boutique** | Modules auth, stripe, admin, legal complet avec CGV. La structure vient de la fonction, Pro Max ne donne que l'identité. **Dis-lui tout de suite qu'il lui faudra un compte Stripe** : la vérification d'identité et les coordonnées bancaires prennent parfois plusieurs jours, et il peut l'ouvrir pendant qu'on construit. |
 | **Application** | Blueprint centré sur les modèles et les écrans, mouvement au minimum, pas de défilement fluide, Pro Max en `--motion 1-2`. |
-| **Landing + réservation** | Le chemin court de la landing pour la page, le parcours « Réservation » de `structures.md` pour l'agenda — base, unicité du créneau qui survit aux annulations, confirmation lue en base — et un espace privé minimal : créneaux, réservations. Trois à cinq agents. **Deux questions à clic de plus** : la durée du rendez-vous (30 / 45 / 60 min) et son lieu (chez le client, chez le professionnel, en visio, à convenir). Décidées seules au cinquième bootstrap, elles ont fini en hypothèses. |
+| **Landing + réservation** | Le chemin court de la landing pour la page, le parcours « Réservation » de `structures.md` pour l'agenda (base, unicité du créneau qui survit aux annulations, confirmation lue en base) et un espace privé minimal : créneaux, réservations. Trois à cinq agents. **Deux questions à clic de plus** : la durée du rendez-vous (30 / 45 / 60 min) et son lieu (chez le client, chez le professionnel, en visio, à convenir). Décidées seules au cinquième bootstrap, elles ont fini en hypothèses. |
 
 La question suivante s'adapte : on ne demande pas « ce qui doit vivre en base » à quelqu'un
 qui veut une landing page.
@@ -317,16 +317,16 @@ Le genre de site donne déjà une réponse probable. **Propose-la, et laisse cor
 clic** plutôt que de poser la question à froid :
 
 > **Tes visiteurs arriveront surtout d'où ?**
-> - *Du téléphone* — un lien depuis Instagram, une fiche Google, un QR code sur une carte
-> - *De l'ordinateur* — une recherche depuis un bureau, un lien reçu par e-mail au travail
-> - *Les deux autant* — je compose pour le téléphone et je vérifie l'ordinateur de près
+> - *Du téléphone* : un lien depuis Instagram, une fiche Google, un QR code sur une carte
+> - *De l'ordinateur* : une recherche depuis un bureau, un lien reçu par e-mail au travail
+> - *Les deux autant* : je compose pour le téléphone et je vérifie l'ordinateur de près
 >
 > Dans tous les cas le site s'adapte aux deux ; ça change seulement ce que je soigne en
 > premier.
 
 | Réponse | Ce que ça change vraiment |
 |---|---|
-| **Téléphone d'abord** | Je compose à 375 px et j'élargis. Une action par écran, peu de colonnes, du texte court au-dessus de la ligne de flottaison. Les coordonnées deviennent des actions : appeler en un geste, itinéraire, messagerie. Mouvement plus sobre et images plus légères — un défilement chorégraphié coûte cher sur un réseau mobile. L'auto-test commence par 375 px. |
+| **Téléphone d'abord** | Je compose à 375 px et j'élargis. Une action par écran, peu de colonnes, du texte court au-dessus de la ligne de flottaison. Les coordonnées deviennent des actions : appeler en un geste, itinéraire, messagerie. Mouvement plus sobre et images plus légères : un défilement chorégraphié coûte cher sur un réseau mobile. L'auto-test commence par 375 px. |
 | **Ordinateur d'abord** | Je compose à 1280 px et je replie. Grilles plus denses, tableaux et comparatifs possibles, navigation dépliée, contenu plus long assumé. Le mouvement au défilement a de la place pour respirer. L'auto-test commence par 1280 px, **et 375 px reste obligatoire** : c'est là que les colonnes cassent. |
 | **Les deux** | Composition à 375 px, parce que remonter est plus sûr que redescendre, et vérification serrée aux deux largeurs plutôt qu'à l'une. |
 
@@ -340,10 +340,10 @@ choix qui gouverne la mise en page mérite d'être relu, pas deviné une deuxiè
 agents. Et à l'étape 7, demande-lui de regarder **son écran prioritaire en premier**.
 
 Ce que tu dois savoir avant de continuer :
-- **le nom du site** — c'est le nom de son dossier — et pour qui il est
+- **le nom du site** (c'est le nom de son dossier) et pour qui il est
 - **les modules** à greffer : auth ? paiement ? back-office ?
 - **la nature du contenu** : combien de pages, quoi dessus
-- **les actifs** : ce qu'il a — logo, photos, captures — ce qui manque, et ce qu'on fait du
+- **les actifs** : ce qu'il a (logo, photos, captures), ce qui manque, et ce qu'on fait du
   manque
 
 **Pose toutes tes questions au début, sans te rationner.** Mieux vaut huit questions
@@ -355,14 +355,14 @@ Découpage qui fonctionne :
 
 | Salve | Contenu |
 |---|---|
-| 1 — le projet | **le genre de site**, **l’écran prioritaire**, le nom du site, pour qui il est, les modules à greffer |
-| 2 — le contenu et les actifs | pages attendues, ce qui doit vivre en base, ce que le propriétaire doit pouvoir modifier lui-même, **les actifs — logo, photos, captures : leur chemin ou leur adresse** — et, si un générateur d'images est connecté, générés ou provisoires |
-| 3 — le back-office | seulement si le module `admin` est retenu : **quels écrans** |
-| 4 — les deux fixes, seules | l'inspiration, puis la validation du blueprint — **et rien d'autre dans cette salve** |
+| 1 · le projet | **le genre de site**, **l’écran prioritaire**, le nom du site, pour qui il est, les modules à greffer |
+| 2 · le contenu et les actifs | pages attendues, ce qui doit vivre en base, ce que le propriétaire doit pouvoir modifier lui-même, **les actifs (logo, photos, captures) : leur chemin ou leur adresse**, et, si un générateur d'images est connecté, générés ou provisoires |
+| 3 · le back-office | seulement si le module `admin` est retenu : **quels écrans** |
+| 4 · les deux fixes, seules | l'inspiration, puis la validation du blueprint, **et rien d'autre dans cette salve** |
 
 > ⚠️ **Les deux questions fixes vont dans leur propre salve, sans aucune question à réponse
 > libre à côté.** Vécu : posées dans la même salve qu'un « où sont tes fichiers ? »,
-> l'utilisateur a tapé sa réponse libre et validé l'ensemble — les deux questions fixes sont
+> l'utilisateur a tapé sa réponse libre et validé l'ensemble : les deux questions fixes sont
 > revenues vides, et il a fallu les reposer.
 >
 > **La conséquence a été bien plus grave que la question manquante** : l'inspiration revenue
@@ -374,12 +374,12 @@ Découpage qui fonctionne :
 N'invente jamais pour t'épargner une question. Une hypothèse non posée finit dans le
 blueprint, et si personne ne le lit, elle finit dans le code.
 
-### Quand plusieurs réponses libres manquent — le bloc à copier
+### Quand plusieurs réponses libres manquent : le bloc à copier
 
 Le clic reste la règle partout où la réponse est un choix. Mais un nom, un tarif, un numéro,
 une adresse ne se cliquent pas. **Dès que trois réponses libres ou plus manquent, ne les
 demande pas en prose** : écris un bloc de code que la personne copie, colle dans le chat et
-complète à côté de chaque ligne. Le bloc a un bouton de copie — un clic, un collage, on
+complète à côté de chaque ligne. Le bloc a un bouton de copie : un clic, un collage, on
 écrit. C'est la seule forme qui ne lui demande aucun effort d'organisation.
 
 ```
@@ -391,7 +391,7 @@ dans le blueprint, tu la corrigeras là.
 2. Phrase d'accroche, ce que tu dirais à quelqu'un qui hésite :
 3. Tes formules et leurs prix (ex. suivi individuel 60 €/séance) :
 4. Zone où tu te déplaces (ex. ta ville et 20 km) :
-5. Infos légales — statut, SIRET, adresse (facultatif) :
+5. Infos légales · statut, SIRET, adresse (facultatif) :
 ```
 
 Les règles qui vont avec, et qui font la différence entre un formulaire et une corvée :
@@ -406,21 +406,21 @@ Les règles qui vont avec, et qui font la différence entre un formulaire et une
 - **Ce qui est facultatif le dit** sur sa propre ligne.
 - **Deux lignes d'en-tête maximum** : quoi faire, et quoi faire quand on ne sait pas.
 - **Rien de ce qui a déjà été répondu** dans les salves à clic.
-- **Texte brut à l'intérieur** : ni gras, ni tableau, ni lien — ça doit se coller proprement.
+- **Texte brut à l'intérieur** : ni gras, ni tableau, ni lien. Ça doit se coller proprement.
 
 **Et un message qui dit « je récapitule » est le récapitulatif.** Jamais l'annonce d'une
 liste sans la liste. Au cinquième bootstrap, « je récapitule tout ce qu'il me manque : site
 de référence, phrase d'accroche, nom, photos… » a laissé l'utilisateur devant onze mots
-sans savoir quoi faire — et trois réponses sont arrivées à côté.
+sans savoir quoi faire, et trois réponses sont arrivées à côté.
 
-### La question des actifs — quatre réponses, quatre plans
+### La question des actifs : quatre réponses, quatre plans
 
 Dans la salve 2, demande-le tel quel : **« Tu as un logo, des photos, des captures d'écran,
 une vidéo ? Glisse-les dans le chat, ou donne-moi le chemin du dossier où ils sont, ou
 l'adresse du site qui les héberge. »**
 
 > **Une image collée dans le chat se récupère sur le disque.** Le skill a longtemps dit le
-> contraire — et je l'ai encore dit au cinquième bootstrap, deux fois, alors que le script
+> contraire, et je l'ai encore dit au cinquième bootstrap, deux fois, alors que le script
 > existait. La conversation est écrite dans un `.jsonl` où les images vivent en base64 :
 >
 > ```bash
@@ -428,10 +428,10 @@ l'adresse du site qui les héberge. »**
 > node "<skill>/scripts/images-du-chat.mjs" --sortie public/photos
 > ```
 >
-> Il ne retient que les images collées par l'utilisateur — jamais tes propres captures du
-> panneau, soixante contre cinq dans une session ordinaire — les dédoublonne et les remet
+> Il ne retient que les images collées par l'utilisateur (jamais tes propres captures du
+> panneau, soixante contre cinq dans une session ordinaire), les dédoublonne et les remet
 > dans l'ordre. Vérifié sur six images collées : toutes retrouvées, avec leurs dimensions. **La réserve à
-> dire quand elle compte** : la définition peut avoir été réduite à l'envoi — le script le
+> dire quand elle compte** : la définition peut avoir été réduite à l'envoi. Le script le
 > signale sous 1 600 px de large. Sans importance pour un logo, une capture ou une
 > référence ; pour une photo de héros pleine largeur, demande l'original.
 >
@@ -444,11 +444,11 @@ visuel :
 | Situation | Ce que ça change |
 |---|---|
 | **Un vrai commerce avec ses photos** | Elles remplacent les provisoires dès le bootstrap. Le relevé de cadrage s'applique à elles. |
-| **Un vrai commerce sans photo exploitable** — le cas le plus courant | Le nom et l'histoire sont vrais, les visuels sont provisoires ou générés. Pose une question de plus, à voix haute : *le site dit-il que ses visuels sont provisoires ou générés, ou prévoit-on de les remplacer par de vraies photos ?* Les deux réponses conviennent ; la seule erreur est de ne pas trancher. |
-| **Une marque inventée** — un test, une démo | Tout est généré ou provisoire, et **le pied de page dit que la marque est fictive**. Un visiteur ne doit jamais pouvoir croire qu'il commande chez quelqu'un qui n'existe pas. |
+| **Un vrai commerce sans photo exploitable** : le cas le plus courant | Le nom et l'histoire sont vrais, les visuels sont provisoires ou générés. Pose une question de plus, à voix haute : *le site dit-il que ses visuels sont provisoires ou générés, ou prévoit-on de les remplacer par de vraies photos ?* Les deux réponses conviennent ; la seule erreur est de ne pas trancher. |
+| **Une marque inventée** : un test, une démo | Tout est généré ou provisoire, et **le pied de page dit que la marque est fictive**. Un visiteur ne doit jamais pouvoir croire qu'il commande chez quelqu'un qui n'existe pas. |
 | **Un logiciel avec des captures** | Les captures se posent telles quelles, nettes, jamais retouchées ni régénérées : l'interface est le produit. Le héros, lui, peut être abstrait. |
 
-Pour un produit qu'on écoute ou qu'on essaie — application, musique, jeu — demande aussi
+Pour un produit qu'on écoute ou qu'on essaie (application, musique, jeu), demande aussi
 les démos : un extrait, un enregistrement d'écran. C'est la preuve la plus forte qu'une page
 puisse porter, et elle ne s'invente pas.
 
@@ -456,30 +456,30 @@ puisse porter, et elle ne s'invente pas.
 avec son nom et ses chiffres :
 
 > **Pour les visuels qui manquent :**
-> - *Générés dans l'univers du site* — par {le connecteur trouvé}, il te reste {solde}.
+> - *Générés dans l'univers du site* : par {le connecteur trouvé}, il te reste {solde}.
 >   **Je te demanderai ton accord avant chaque dépense**, avec le prix exact et ce qu'il
->   restera — ce choix dit quel genre de visuel, pas quel budget
-> - *Provisoires sous licence* — gratuits, barrés d'un bandeau, à remplacer par les siens
+>   restera. Ce choix dit quel genre de visuel, pas quel budget
+> - *Provisoires sous licence* : gratuits, barrés d'un bandeau, à remplacer par les siens
 
 Le coût par image dépend du service : **relève-le sur place** plutôt que de l'annoncer de
 mémoire, et si tu ne peux pas le connaître, dis-le au lieu de l'inventer.
 
 **Sans générateur, ne pose pas la question** : les provisoires, et une seule ligne pour dire
 que la génération serait possible avec un connecteur d'images. Ne nomme aucun service, ne
-mets aucun lien, n'insiste pas — ce n'est pas à ce skill de vendre un abonnement.
+mets aucun lien, n'insiste pas : ce n'est pas à ce skill de vendre un abonnement.
 
-### La salve 3 — les écrans du back-office
+### La salve 3 : les écrans du back-office
 
 Une seule question, et seulement si le module `admin` est retenu.
 
-> **Ne demande rien ici sur le partage d'un lien.** La question ne se pose qu'à la remise —
-> voir « Ce que fini veut dire ». Le tunnel sert le site tel qu'il est, depuis la machine de
+> **Ne demande rien ici sur le partage d'un lien.** La question ne se pose qu'à la remise
+> (voir « Ce que fini veut dire »). Le tunnel sert le site tel qu'il est, depuis la machine de
 > l'utilisateur, avec sa vraie base : **il ne change rien à ce qu'on construit**, donc il n'y
 > a rien à décider au début.
 >
 > J'avais mis cette question ici, en la justifiant par une contrainte d'architecture. La
-> contrainte est réelle — un site dont la base vit sur le disque ne se déploie pas sur un
-> hébergement sans serveur — mais elle ne concerne **que le lien hébergé**, pas le tunnel.
+> contrainte est réelle (un site dont la base vit sur le disque ne se déploie pas sur un
+> hébergement sans serveur), mais elle ne concerne **que le lien hébergé**, pas le tunnel.
 > Poser au début une question dont la conséquence n'arrive qu'à la fin, c'est du bruit dans
 > le moment où l'utilisateur pense à son contenu.
 >
@@ -489,13 +489,13 @@ Une seule question, et seulement si le module `admin` est retenu.
 **Les écrans du back-office** :
 
 > **Que doit-il pouvoir modifier lui-même ?**
-> - *Les textes et les messages reçus* — l'essentiel, et de loin le plus utilisé
-> - *Plus l'offre et les tarifs* — quand les prix bougent
-> - *Tout ce que le blueprint prévoira* — un écran par modèle métier
+> - *Les textes et les messages reçus* : l'essentiel, et de loin le plus utilisé
+> - *Plus l'offre et les tarifs* : quand les prix bougent
+> - *Tout ce que le blueprint prévoira* : un écran par modèle métier
 
 Entre « pas de back-office » et « sept écrans complets », il y a une marche que personne ne
-proposait. Vécu : l'agent du back-office a été le plus lourd des quatre — 155 appels d'outils,
-la plus grosse part du budget de construction — pour un espace que le propriétaire ouvrira
+proposait. Vécu : l'agent du back-office a été le plus lourd des quatre (155 appels d'outils,
+la plus grosse part du budget de construction) pour un espace que le propriétaire ouvrira
 peut-être trois fois par an.
 
 Les deux questions ci-dessous sont **obligatoires et passent en dernier** :
@@ -507,16 +507,16 @@ Les deux questions ci-dessous sont **obligatoires et passent en dernier** :
 > - *Non, compose l'identité de zéro* → UI/UX Pro Max décide tout
 
 `{appellation}` vient de `config.json`. Vide, la question devient simplement
-« Souhaites-tu que je m'inspire d'un site déjà existant ? » — n'invente jamais d'appellation.
+« Souhaites-tu que je m'inspire d'un site déjà existant ? ». N'invente jamais d'appellation.
 
 > **Souhaites-tu valider le blueprint avant que je construise ?**
 > - *Oui, montre-le-moi* (recommandé) → tu t'arrêtes en phase 0.6 et tu attends
 > - *Non, enchaîne* → tu affiches et tu continues sans pause
 
-La seconde question existe pour que le choix — et la responsabilité — soient les siens.
+La seconde question existe pour que le choix (et la responsabilité) soient les siens.
 Ne la saute jamais, même quand tu penses connaître sa préférence.
 
-## Phase 0.c — Si une référence est donnée, ou trouvée
+## Phase 0.c : Si une référence est donnée, ou trouvée
 
 Trois questions de plus, **posées avant de relever quoi que ce soit**. Elles ne coûtent rien
 et elles évitent une contrefaçon.
@@ -526,7 +526,7 @@ et elles évitent une contrefaçon.
 > Vécu au quatrième bootstrap. Le nom du site m'a fait **deviner** son adresse. Je l'ai
 > ouverte, relevée, et j'ai téléchargé sept fichiers image. Les trois questions ci-dessous
 > n'ont jamais été posées : leurs réponses sont devenues des hypothèses dans le blueprint,
-> c'est-à-dire des affirmations corrigeables — mais **après** le relevé, pas avant.
+> c'est-à-dire des affirmations corrigeables, mais **après** le relevé, pas avant.
 >
 > Ça s'est bien terminé : le site appartenait à l'utilisateur. Le garde-fou existe exactement
 > pour le cas contraire, et il n'a pas fonctionné.
@@ -545,27 +545,27 @@ et elles évitent une contrefaçon.
 > Si la question 1 n'a pas de réponse, tu n'as pas de référence. Tu construis sans, et c'est
 > tout.
 
-**Question 1 — elle gouverne tout le reste.**
+**Question 1 : elle gouverne tout le reste.**
 
 > **Ce site t'appartient-il ?**
 > - *Oui, c'est le mien* → tu peux tout reprendre, et la question 3 se pose
 > - *Non, c'est une inspiration* → langage visuel uniquement, **et tu sautes la question 3**
 
-**Question 2 — toujours posée.**
+**Question 2 : toujours posée.**
 
-> **Je reprends les liens sortants du site — Instagram, WhatsApp, LinkedIn, e-mail ?**
+> **Je reprends les liens sortants du site : Instagram, WhatsApp, LinkedIn, e-mail ?**
 > - *Oui* → tu les recopies tels quels
 > - *Non* → tu poses la structure sans `href`, et tu les listes pour qu'il les remplisse
 
 Elle se pose **même quand le site lui appartient** : il peut vouloir un nouveau compte, un
 autre numéro, ou ne pas afficher ses réseaux sur ce site-là.
 
-**Question 3 — seulement si le site lui appartient.**
+**Question 3 : seulement si le site lui appartient.**
 
 > **Reproduction fidèle, ou nouvelle création inspirée de ce site ?**
 > - *Fidèle* → mêmes polices, mêmes photos, mêmes textes, même géométrie. Pro Max
 >   n'intervient que sur les sections **nouvelles**, absentes de la référence.
-> - *Nouvelle création* → tu gardes l'ADN — palette, esprit, ton — et **Pro Max redéfinit**
+> - *Nouvelle création* → tu gardes l'ADN (palette, esprit, ton) et **Pro Max redéfinit**
 >   la structure, le rythme et les partis pris. Textes réécrits, photos reprises seulement
 >   si elles restent pertinentes.
 
@@ -574,7 +574,7 @@ autre numéro, ou ne pas afficher ses réseaux sur ce site-là.
 **Proposer la reproduction fidèle d'un site tiers reviendrait à proposer une contrefaçon.**
 Trois couches se cumulent : le droit d'auteur protège textes, photos, logo et code dès leur
 création ; le droit des marques protège le nom et le logo ; et le parasitisme sanctionne la
-reproduction d'une apparence au point de créer une confusion — **même en refaisant tout
+reproduction d'une apparence au point de créer une confusion, **même en refaisant tout
 soi-même, sans copier une ligne**.
 
 Quand la réponse à la question 1 est « non », dis-le en une phrase et passe en mode nouvelle
@@ -583,7 +583,7 @@ création. Ne présente pas l'autre option.
 Ce qui reste libre, et que tu reprends dans tous les cas : les idées, les fonctionnalités,
 une structure de page banale (héros → services → témoignages → contact), une couleur prise
 isolément. Pour les polices, ce n'est pas l'usage qui compte mais **la licence** : une Google
-Font est libre, une fonderie commerciale demande une licence web — vérifie avant d'embarquer
+Font est libre, une fonderie commerciale demande une licence web. Vérifie avant d'embarquer
 une police non libre.
 
 ### Les trois modes qui en découlent
@@ -592,16 +592,16 @@ une police non libre.
 |---|---|---|
 | Le sien | **Fidèle** | Charte, géométrie, textes, photos, liens repris. Pro Max sur les sections nouvelles seulement. |
 | Le sien | **Nouvelle création** | Palette et esprit conservés. Pro Max redéfinit structure et rythme. Textes réécrits. |
-| Un tiers | **Nouvelle création** — seul mode possible | Langage visuel et plan de page. Tout le reste est neuf. |
+| Un tiers | **Nouvelle création** : seul mode possible | Langage visuel et plan de page. Tout le reste est neuf. |
 
 ### Ce qui se reprend, et ce qui ne se reprend jamais
 
 | | Son site | Le site d'un tiers |
 |---|---|---|
-| Palette, typo, rayons, ombres, rythme | oui | **oui** — un langage visuel ne s'approprie pas |
+| Palette, typo, rayons, ombres, rythme | oui | **oui** : un langage visuel ne s'approprie pas |
 | Disposition, grille, inclinaisons | oui | **oui** |
-| Textes, slogans, accroches | oui, mot pour mot | **jamais** — tu les rédiges |
-| Photos, illustrations, logo | oui, téléchargées | **jamais** — dégradé + `data-photo-slot` |
+| Textes, slogans, accroches | oui, mot pour mot | **jamais** : tu les rédiges |
+| Photos, illustrations, logo | oui, téléchargées | **jamais** : dégradé + `data-photo-slot` |
 | Liens sortants, réseaux sociaux | **seulement s'il l'a confirmé** | **jamais** |
 | Téléphone, e-mail, adresse | oui | **jamais** |
 | Nom, marque, mentions légales | oui | **jamais** |
@@ -616,14 +616,14 @@ code : ça se voit en production, chez le client.
 **Si l'URL est manifestement celle d'une grande marque et qu'il affirme qu'elle est la
 sienne**, dis-le une fois, clairement, puis suis sa réponse. C'est sa décision, pas la tienne.
 
-### Puis relève la charte — en un seul passage, jamais de mémoire
+### Puis relève la charte, en un seul passage, jamais de mémoire
 
 Atteins la page (`references/extraction-charte.md` §1-4 : SPA, iframe, sous-domaine
 `.static.`), puis **colle `references/releve-complet.js` dans `javascript_tool`.**
 
 Huit dimensions en une fois : palette, typographie, géométrie, liens, photos, cadrage,
-mouvement, et **l'inventaire des éléments interactifs**. Le script mesure — il ne suppose
-pas — et il rend sa propre liste à cocher.
+mouvement, et **l'inventaire des éléments interactifs**. Le script mesure (il ne suppose
+pas) et il rend sa propre liste à cocher.
 
 **N'improvise pas un relevé partiel.** Ma recette a grossi par couches, et à chaque
 bootstrap j'ai oublié la couche la plus récente : les couleurs sans la géométrie, puis la
@@ -631,15 +631,15 @@ géométrie sans le mouvement, puis les liens. **Chaque oubli a été trouvé pa
 pas par moi.** Le script existe pour rendre l'oubli impossible.
 
 **Relance-le à deux largeurs**, 375 puis 1280. Un `hidden lg:block` est indiscernable de la
-référence à l'une et invisible à l'autre — c'est comme ça qu'une photo a disparu.
+référence à l'une et invisible à l'autre : c'est comme ça qu'une photo a disparu.
 
 **Recharge la page avant de relever le mouvement.** Une apparition jouée « une fois » a déjà
 joué si tu as parcouru la page, et tu conclurais qu'il n'y en a pas. Le script te prévient
 quand la page n'est plus en haut.
 
 **Sur un site statique, prends aussi le HTML directement.** `get_page_text` peut ne rendre
-qu'un morceau : sur une page contenant un `<article>`, il n'a renvoyé que cette balise — une
-carte au lieu de la page entière — sans rien signaler. Le `sitemap.xml` donne la liste des
+qu'un morceau : sur une page contenant un `<article>`, il n'a renvoyé que cette balise (une
+carte au lieu de la page entière), sans rien signaler. Le `sitemap.xml` donne la liste des
 pages, `curl` les récupère toutes en un passage, et le texte est au mot près. Le navigateur
 reste indispensable pour tout le reste : couleurs calculées, géométrie, mouvement, inventaire
 interactif. Recette dans `references/extraction-charte.md` §5.
@@ -648,7 +648,7 @@ interactif. Recette dans `references/extraction-charte.md` §5.
 
 L'inventaire rendu par le script liste, une ligne par élément : ce que c'est, où ça mène,
 comment ça réagit au survol, et s'il est flottant. **Le blueprint donne à chaque ligne l'un de
-trois verdicts** — *reproduit*, *réinterprété*, *abandonné* — avec la raison quand ce n'est
+trois verdicts** (*reproduit*, *réinterprété*, *abandonné*) avec la raison quand ce n'est
 pas « reproduit ».
 
 **Vécu, et c'est la remarque que l'utilisateur a faite en découvrant son site.** La référence
@@ -656,14 +656,14 @@ avait trois téléphones dans son héros : chacun un lien vers sa page de marque
 se soulevant au survol, et un bouton flottant sur chaque page. Le site livré a eu **un**
 téléphone, immobile, sans lien, et plus de bouton flottant.
 
-Passer de trois téléphones à un était un vrai choix — un héros porte une promesse et une
+Passer de trois téléphones à un était un vrai choix : un héros porte une promesse et une
 action. Mais il n'apparaissait nulle part **comme un écart** : le tableau des sections décrit
 ce qu'on construit, jamais ce qu'on laisse. Et la perte de l'interaction, elle, n'était pas un
 choix du tout : le relevé avait les transitions, rien ne les transformait en consigne.
 
 **Un élément qui disparaît sans sa ligne est un défaut, pas une décision.** Et une ligne qui
-porte une réaction au survol devient une ligne « ce qui répond » dans le brief de l'agent —
-voir `references/mouvement.md`, section « Les états ».
+porte une réaction au survol devient une ligne « ce qui répond » dans le brief de l'agent
+(voir `references/mouvement.md`, section « Les états »).
 
 ### Le blueprint porte le relevé
 
@@ -676,13 +676,13 @@ de rester entre toi et toi-même :
 | Palette | anthracite #1F1E1D, ardoise #2B2A28, orange #D97757, ivoire #F4F3EE | oui |
 | Typographie | Space Grotesk 700 / Inter / JetBrains Mono | oui, licences libres |
 | Géométrie | cartes `rounded-[1.25rem]`, ombre douce, aucune rotation | oui |
-| Liens sortants | Instagram, LinkedIn, `mailto:` | oui — confirmé phase 0.c |
-| Photos | 6 fichiers + leurs `alt` | oui — site du client |
+| Liens sortants | Instagram, LinkedIn, `mailto:` | oui, confirmé phase 0.c |
+| Photos | 6 fichiers + leurs `alt` | oui, site du client |
 | Mouvement | défilement natif, apparitions au scroll, aucune parallaxe | oui, + parallaxe **ajoutée** sur le héros |
 
 (Valeurs fictives, pour la forme du tableau. Les tiennes viennent du relevé.)
 
-## Phase 0.5 — Design system
+## Phase 0.5 : Design system
 
 ```
 python "<moteur de design>" "<requête>" --design-system --stack nextjs
@@ -697,8 +697,8 @@ renvoie zéro résultat, même sur un sujet qu'elle couvre très bien. Traduis l
 Molettes : `--variance 1-10` (sage → audacieux), `--motion 1-10`, `--density 1-10`
 (aéré → dense). Recherches ciblées : `--domain style|color|typography|landing|ux|icons|react|gsap`
 
-**Le mouvement se décide ici, pas plus tard.** `--motion` selon le type de site — vitrine
-5 à 7, boutique 3 à 4, application 1 à 2 — puis `--domain gsap` si la page demande plus que
+**Le mouvement se décide ici, pas plus tard.** `--motion` selon le type de site (vitrine
+5 à 7, boutique 3 à 4, application 1 à 2), puis `--domain gsap` si la page demande plus que
 les primitives du socle. Reporte la direction dans **`lib/mouvement.ts`** (durées, distances,
 décalages) : c'est un fichier-contrat, réglé une fois, comme le thème. Le deuxième bootstrap
 a livré un site plat parce que cette décision n'avait jamais été prise. Barème et emplois
@@ -722,10 +722,10 @@ le bien-être et le bio.
 
 Puis **vérifie deux choses avant d'appliquer** : le motif de page correspond-il au type de
 site, la palette correspond-elle au métier ? Si non, **ce n'est pas la base qui a tort,
-c'est la requête**. Reformule et cible par domaine — `--domain color`, `--domain typography`.
+c'est la requête**. Reformule et cible par domaine : `--domain color`, `--domain typography`.
 Ne t'entête pas sur la première réponse, et ne la contourne pas de tête non plus.
 
-### Le relevé de design — la trace qui rend la consultation vérifiable
+### Le relevé de design : la trace qui rend la consultation vérifiable
 
 **Rien ne prouve qu'un moteur a été interrogé, sauf ce qu'on en garde.** Une palette
 inventée de tête et une palette relevée se ressemblent dans un blueprint. Le blueprint porte
@@ -754,13 +754,13 @@ Six mois plus tard, on sait quelle requête a produit ce site et on peut la rejo
 bootstrap, sorti en crème et terre cuite sans que personne puisse dire si c'était une
 décision ou un réflexe.
 
-**Quand le moteur n'a pas été interrogé** — référence qui appartient à l'utilisateur, par
-exemple — la section existe quand même et dit pourquoi. Une trace qui dit « non interrogé,
+**Quand le moteur n'a pas été interrogé** (référence qui appartient à l'utilisateur, par
+exemple), la section existe quand même et dit pourquoi. Une trace qui dit « non interrogé,
 la marque du client fait loi » est une trace. Le silence n'en est pas une.
 
 **Le garde-fou refuse un projet dont le blueprint n'a pas cette section.**
 
-### La barre de direction — ce qui sépare un site fait par une IA d'un site fait pour quelqu'un
+### La barre de direction : ce qui sépare un site fait par une IA d'un site fait pour quelqu'un
 
 Pro Max rend une palette et des motifs ; il ne rend pas une direction. C'est à toi de la
 tenir, et de l'écrire dans le blueprint :
@@ -768,7 +768,7 @@ tenir, et de l'écrire dans le blueprint :
 - **Une direction, tirée du monde du métier**, qui gouverne ensemble la palette, la
   typographie, le mouvement et l'image. Une torréfaction vit dans le grain, la fumée, le
   cuivre ; un cabinet d'avocats dans le papier, l'encre, l'ordre.
-- **Un élément signature**, propre à ce site, où va toute l'audace — une forme, un motif,
+- **Un élément signature**, propre à ce site, où va toute l'audace : une forme, un motif,
   une interaction. Le reste se tait pour qu'il se lise. Le test : *si on le retirait, la
   page changerait-elle ?* Si à peine, ce n'est pas une signature.
 - **Deux sections voisines ne partagent jamais le même squelette.** Eyebrow, titre, texte,
@@ -778,7 +778,7 @@ tenir, et de l'écrire dans le blueprint :
   voit partout a cessé d'accentuer.
 - **Le fond n'est jamais `#000` ni `#fff` purs.** Teinte-le vers le monde du sujet.
 
-Et **les palettes-réflexes** — celles qu'un générateur rend dès qu'il entend un mot, et
+Et **les palettes-réflexes** : celles qu'un générateur rend dès qu'il entend un mot, et
 qu'on reconnaît à dix mètres comme « fait par une IA ». « Artisan » donne crème, serif et
 terre cuite. « Tech » donne noir profond et vert acide. « Premium » ou « sombre » donne noir
 profond, ambre chaud et serif contrastée. « Studio » donne des filets fins sur fond nu.
@@ -794,12 +794,12 @@ cuite. Une partie de « le site est plat » venait de là.
 
 | Type de site | Qui décide la structure |
 |---|---|
-| **Vitrine, éditorial, contenu** | Pro Max — c'est son terrain |
+| **Vitrine, éditorial, contenu** | Pro Max, c'est son terrain |
 | **Boutique, réservation, application** | **La fonction.** Voir `references/structures.md` |
 
 Sa base ne contient que des motifs de page de conversion : `--domain landing` sur une
 requête e-commerce rend « Bento Grid Showcase » et « Product Demo », des pages marketing.
-Une boutique, elle, se structure par son parcours — catalogue, fiche, panier, tunnel,
+Une boutique, elle, se structure par son parcours : catalogue, fiche, panier, tunnel,
 confirmation. Sur ces sites-là, on ne demande à Pro Max que la palette, la typographie, les
 effets, le mouvement et les guidelines de qualité.
 
@@ -807,7 +807,7 @@ effets, le mouvement et les guidelines de qualité.
 
 Ils découlent directement des réponses de la phase 0.c.
 
-**Aucune référence** — le moteur décide, l'utilisateur arbitre. Sa sortie (motif de page,
+**Aucune référence** : le moteur décide, l'utilisateur arbitre. Sa sortie (motif de page,
 sections, stratégie de CTA, palette en variables CSS, typographie, effets, à éviter,
 checklist) **est ta source de vérité design**. Ne l'invente pas dans ton coin.
 
@@ -818,17 +818,17 @@ réponse possible serait « non, mais je ne sais pas dire pourquoi ».
 
 ### Trois directions, tirées du moteur, pas inventées
 
-Interroge le moteur **trois fois**, en faisant varier une seule molette à chaque fois —
-`--variance` sage, moyenne, audacieuse — sur la même requête métier. Tu obtiens trois
+Interroge le moteur **trois fois**, en faisant varier une seule molette à chaque fois
+(`--variance` sage, moyenne, audacieuse) sur la même requête métier. Tu obtiens trois
 identités réelles, pas trois variantes imaginées. Puis présente-les :
 
 > **Trois directions pour {le nom du site}. Laquelle te parle ?**
 >
 > | | Palette | Typographie | Ce que ça dit |
 > |---|---|---|---|
-> | **A — {nom court}** | #2b1d16 #c98a5b #f4efe6 | Fraunces / Inter | établi, chaleureux, artisanal |
-> | **B — {nom court}** | #101418 #4ade80 #f8fafc | Space Grotesk / Inter | net, technique, contemporain |
-> | **C — {nom court}** | #1c1f2a #e0b25c #faf7f2 | Syne / Karla | affirmé, éditorial, un peu rare |
+> | **A · {nom court}** | #2b1d16 #c98a5b #f4efe6 | Fraunces / Inter | établi, chaleureux, artisanal |
+> | **B · {nom court}** | #101418 #4ade80 #f8fafc | Space Grotesk / Inter | net, technique, contemporain |
+> | **C · {nom court}** | #1c1f2a #e0b25c #faf7f2 | Syne / Karla | affirmé, éditorial, un peu rare |
 >
 > - *A, B ou C* → je pars là-dessus
 > - *Un mélange* → dis-moi ce que tu gardes de l'une et de l'autre
@@ -836,20 +836,20 @@ identités réelles, pas trois variantes imaginées. Puis présente-les :
 
 **Les couleurs s'affichent en pastilles** dans le blueprint rendu par
 `scripts/blueprint-html.mjs` : trois directions côte à côte se jugent d'un coup d'œil, sans
-lire un seul hexadécimal. Écris-les donc en toutes lettres — `#2b1d16` — et non « brun
+lire un seul hexadécimal. Écris-les donc en toutes lettres (`#2b1d16`) et non « brun
 foncé ».
 
 **Un nom court par direction**, tiré du monde du métier et non de l'ambiance : « Grain et
 cuivre » se choisit, « moderne et épuré » ne se choisit pas.
 
 **« Aucune » n'est pas un échec, c'est un renseignement.** Ce qu'il rejette dit ce qu'il veut
-mieux que ce qu'il demanderait. Reformule la requête avec, et propose à nouveau — une fois.
+mieux que ce qu'il demanderait. Reformule la requête avec, et propose à nouveau. Une fois.
 Au troisième aller-retour, tranche toi-même et dis-le : on corrigera au clic en phase 2.
 
 **Si l'utilisateur ne veut pas choisir**, il le dira. Prends la direction du milieu et
 avance : ce skill ne bloque pas sur une question de goût.
 
-**Référence + reproduction fidèle** — c'est la charte extraite qui fait loi, pas Pro Max.
+**Référence + reproduction fidèle** : c'est la charte extraite qui fait loi, pas Pro Max.
 Suis `references/extraction-charte.md`, puis n'appelle Pro Max que sur :
 - les sections **nouvelles**, absentes de la référence (`--domain landing`, `--domain ux`)
 - les guidelines de qualité, toujours utiles (`--domain ux`)
@@ -858,7 +858,7 @@ Ne laisse jamais `--design-system` écraser une charte qu'il t'a demandé de gar
 
 > **Quand la référence appartient à l'utilisateur, n'appelle pas `--design-system` du tout.**
 > Sa marque existe : elle a une palette, des polices, un logo, une géométrie. Le moteur, lui,
-> répond à une requête, pas à une marque — sur un éditeur de logiciel pour collectivités, il a
+> répond à une requête, pas à une marque : sur un éditeur de logiciel pour collectivités, il a
 > rendu un motif d'une seule page et une palette grise générique, l'un et l'autre à jeter. Le
 > temps passé à formuler la requête, puis à écarter sa réponse, est du temps perdu deux fois.
 >
@@ -866,21 +866,21 @@ Ne laisse jamais `--design-system` écraser une charte qu'il t'a demandé de gar
 > `--domain ux` pour les garde-fous de qualité, `--domain gsap` si la page demande une
 > chorégraphie. La palette et la typographie viennent du relevé.
 
-**Référence + nouvelle création** — le partage est inverse. Tu relèves quand même la charte,
+**Référence + nouvelle création** : le partage est inverse. Tu relèves quand même la charte,
 mais tu n'en gardes que **l'ADN** : palette, esprit, ton, densité. Puis
 `--design-system` reprend la main sur la structure, le rythme et les partis pris. Passe-lui
-la direction relevée en entrée, et cale les molettes dessus — `--variance` selon l'audace de
+la direction relevée en entrée, et cale les molettes dessus : `--variance` selon l'audace de
 la référence, `--density` selon son aération.
 
 Le résultat doit être reconnaissable comme parent de la référence, sans en être la copie.
 Textes réécrits, sections réagencées.
 
-## Phase 0.55 — Préparer le terrain
+## Phase 0.55 : Préparer le terrain
 
 Avant le blueprint, parce que son affichage a besoin du serveur :
 
 1. **Le site se crée dans le dossier où la session est ouverte**, dans un sous-dossier à
-   son nom : `<dossier de la session>/<nom-du-site>`. Jamais ailleurs — les outils de
+   son nom : `<dossier de la session>/<nom-du-site>`. Jamais ailleurs : les outils de
    Claude Code sont autorisés dans ce dossier et demandent une permission à chaque
    écriture en dehors, ce qui transformerait la construction en avalanche de questions.
    `racineProjets` ne décide de rien : le relevé des capacités s'en sert pour prévenir
@@ -904,7 +904,7 @@ Avant le blueprint, parce que son affichage a besoin du serveur :
    `git config --local user.name "…"` puis `user.email`. Vécu : un commit refusé pour
    « Author identity unknown » sur une machine sans configuration globale, découvert
    seulement au moment de committer.
-2. `npm install` **en arrière-plan** — ça dure une minute, autant qu'elle serve.
+2. `npm install` **en arrière-plan** : ça dure une minute, autant qu'elle serve.
 3. Applique le thème dans `app/globals.css`, règle `lib/mouvement.ts`, écris le schéma
    Prisma, `npx prisma db push`, `npx prisma generate`.
 
@@ -951,8 +951,8 @@ Avant le blueprint, parce que son affichage a besoin du serveur :
    node "<skill>/scripts/demarrer-dev.mjs"
    ```
 
-   Il répare tout seul le cas courant — un serveur Next resté en vie après la fermeture
-   d'une session — et **refuse de tuer un processus qu'il ne reconnaît pas** : il se décale
+   Il répare tout seul le cas courant (un serveur Next resté en vie après la fermeture
+   d'une session) et **refuse de tuer un processus qu'il ne reconnaît pas** : il se décale
    alors sur le port suivant en nommant le coupable.
 
    **Lis la ligne `BUILDYOURSITE_URL=…` qu'il affiche** et sers-toi de cette URL partout
@@ -961,7 +961,7 @@ Avant le blueprint, parce que son affichage a besoin du serveur :
 
    **Le serveur doit vivre toute la session, et un appel ordinaire ne le permet pas** : une
    commande lancée en arrière-plan porte un délai maximal, au bout duquel le site s'éteint au
-   milieu du travail. Passe par l'outil `Monitor`, `persistent: true`, en filtrant sa sortie —
+   milieu du travail. Passe par l'outil `Monitor`, `persistent: true`, en filtrant sa sortie,
    sinon le journal de Next produit un événement par requête et noie la session :
 
    ```bash
@@ -972,11 +972,11 @@ Avant le blueprint, parce que son affichage a besoin du serveur :
    `description` : `serveur de dev <projet>`. Le filtre garde l'URL, l'adresse réseau et les
    erreurs, et rien d'autre.
 
-   **Il faut l'arrêter avant chaque `npm run build`**, puis le relancer — les deux écrivent
+   **Il faut l'arrêter avant chaque `npm run build`**, puis le relancer : les deux écrivent
    dans `.next` et se corrompent mutuellement. `TaskStop` sur la tâche du Monitor, et un
    nouveau Monitor après.
 
-   **Si le relevé a dit que `cloudflared` manque, c'est maintenant qu'on le signale** —
+   **Si le relevé a dit que `cloudflared` manque, c'est maintenant qu'on le signale**,
    pendant que `npm install` tourne, en **une ligne, sans question et sans attendre de
    réponse** :
 
@@ -989,11 +989,11 @@ Avant le blueprint, parce que son affichage a besoin du serveur :
    voir le résultat, et elle est vécue comme un obstacle. Mais **ce n'est pas une question** :
    s'il ne répond pas, on continue, et le script le lui redira le moment venu.
 
-5. **Arme le watcher maintenant** — pas en fin de bootstrap (voir `references/overlay.md`).
+5. **Arme le watcher maintenant** : pas en fin de bootstrap (voir `references/overlay.md`).
    L'overlay fonctionne sur toute page rendue par l'application dès que le serveur tourne, et
    l'utilisateur commente pendant que tu construis : si le watcher n'écoute pas, les
    commentaires s'empilent sur le disque sans réponse. Vécu au troisième bootstrap : armé à la
-   dernière étape, il a livré d'un coup, à la fin, tout ce que l'utilisateur avait envoyé — et
+   dernière étape, il a livré d'un coup, à la fin, tout ce que l'utilisateur avait envoyé, et
    lui a fait croire que le mode édition ne marchait pas.
 
    > ⚠️ **L'overlay ne fonctionne PAS sur `/blueprint`.** Cette page est servie telle quelle
@@ -1003,12 +1003,12 @@ Avant le blueprint, parce que son affichage a besoin du serveur :
    >
    > **Ne promets donc jamais « tu peux annoter le blueprint au clic ».** Je l'ai annoncé à
    > l'utilisateur sur la foi de ce fichier, et c'était faux. Sur le blueprint, il relit et il
-   > répond dans le chat — c'est très bien ainsi.
+   > répond dans le chat. C'est très bien ainsi.
 
-## Phase 0.58 — Les mots des clients
+## Phase 0.58 : Les mots des clients
 
 Avant d'écrire une ligne du blueprint sur le chemin « nouvelle création », va lire comment
-les clients de ce métier parlent. Pas le client — *ses* clients.
+les clients de ce métier parlent. Pas le client : *ses* clients.
 
 Trois à six recherches suffisent : avis en ligne du métier et de la ville, forums, les
 questions qu'on pose avant d'acheter, les raisons pour lesquelles on renonce. Relève **les
@@ -1022,9 +1022,9 @@ de coller quelques avis, ou de nommer les objections qu'il entend le plus.
 > entend **vraiment**, écrites par quelqu'un qui les a entendues cent fois. Elles valent mieux
 > que trois recherches génériques, et elles sont déjà dans sa langue.
 >
-> Vécu : les cinq objections de la FAQ du site de référence — « ça va remplacer nos agents »,
+> Vécu : les cinq objections de la FAQ du site de référence (« ça va remplacer nos agents »,
 > « l'IA se trompe », « où vont les données », « faut-il un marché public », « et les frais
-> cachés » — ont nourri toute la voix du nouveau site. Le web n'a servi qu'à confirmer.
+> cachés ») ont nourri toute la voix du nouveau site. Le web n'a servi qu'à confirmer.
 >
 > L'ordre est donc : **son site d'abord, le web ensuite pour compléter et vérifier.**
 
@@ -1035,7 +1035,7 @@ Ce que ça donne, et ce que ça interdit :
 - **Une page, une action**, et chaque section donne une raison de descendre vers elle.
 - **La FAQ répond aux vraies objections** trouvées, pas à des questions inventées pour
   remplir.
-- **Quand le sujet du site est une personne** — l'artisan, le chef, le coach — le héros
+- **Quand le sujet du site est une personne** (l'artisan, le chef, le coach), le héros
   parle *dans sa voix*, avec assurance, et la douleur des clients travaille plus bas dans
   la page. Une accroche qui énonce cette douleur au-dessus du visage de quelqu'un ne se lit
   pas comme sa promesse : elle se lit comme un reproche qu'on lui adresse.
@@ -1046,13 +1046,13 @@ Ce que ça donne, et ce que ça interdit :
 Écris le relevé dans le blueprint, sous **« Voix des clients »**, avec les sources. C'est
 ce qui nourrit `CONTENU.md` à l'étape suivante.
 
-## Phase 0.6 — Blueprint
+## Phase 0.6 : Blueprint
 
 **Ouvre `references/structures.md` avant d'écrire une ligne.** Il donne, par type de site,
-les pages qui doivent exister — dont **les pages légales, qui ne se discutent pas**.
+les pages qui doivent exister, dont **les pages légales, qui ne se discutent pas**.
 
 Vécu : une boutique complète livrée sans mentions légales, sans CGV, sans politique de
-confidentialité. Elle buildait parfaitement et était inexploitable — pour une vente à des
+confidentialité. Elle buildait parfaitement et était inexploitable : pour une vente à des
 particuliers en France, ces pages sont obligatoires. Je ne les avais ni demandées ni
 mentionnées. La liste de contrôle existe pour que ça n'arrive plus.
 
@@ -1063,7 +1063,7 @@ fichier → agent responsable**, **le tableau section → réglages consommés �
 et tes hypothèses explicites.
 
 **Il porte une section « SEO et lancement »** : ce que le socle assure tout seul, ce que tu
-fais au bootstrap, et ce qui reste à confirmer par l'utilisateur — l'URL publique, les
+fais au bootstrap, et ce qui reste à confirmer par l'utilisateur : l'URL publique, les
 données de l'entreprise, l'analytics et le bandeau qu'il imposerait, **l'hébergement, et le
 compte Stripe si le site vend**. Le tableau complet est dans `references/lancement.md` ; le
 blueprint en reprend les lignes qui concernent ce projet. Un site dont le référencement est
@@ -1078,18 +1078,18 @@ les rappelle.
 connais, le modèle des sous-agents, et la date. Quand un site est repris six mois plus tard
 et qu'on trouve le premier jet inégal, cette ligne dit s'il a été construit dans de bonnes
 conditions ou en dépannage. Exemple : `Construit avec Opus 5 (effort xhigh), sous-agents
-Sonnet 5 — 2026-09-04.`
+Sonnet 5 · 2026-09-04.`
 
 **Numérote tes hypothèses (`H1`, `H2`…) et tes sections (`§1`, `§2`…).** C'est ce qui permet
 à l'utilisateur de dire « H5 non, et §3 ajoute ceci » au lieu de décrire ce qu'il vise.
 
 **Et trie-les par coût de l'erreur, en deux groupes.** D'abord **« Si je me trompe ici, on
-reconstruit »** : deux ou trois hypothèses, pas plus — le mode fidèle ou réinterprété, la
+reconstruit »** : deux ou trois hypothèses, pas plus, le mode fidèle ou réinterprété, la
 structure de l'offre, qui parle dans le héros. Ensuite **« Si je me trompe ici, on
 corrige »** : tout le reste.
 
 Vécu : dix-sept hypothèses présentées au même niveau, aucune contestée. Soit elles étaient
-toutes justes, soit la liste était trop longue pour être auditée — et ne pas savoir laquelle
+toutes justes, soit la liste était trop longue pour être auditée, et ne pas savoir laquelle
 est déjà le problème. **Une liste de trois se lit.**
 
 ### Le blueprint doit MONTRER, pas seulement décrire
@@ -1105,7 +1105,7 @@ regardable.**
 ````
 ```squelette Accueil /
 Nav | bandeau | secondary | Logo, 5 liens, 2 boutons
-Héros | grand | background | Devise, titre, trait tricolore, 2 boutons — téléphone 22:47 à droite | EntreeHero, Reveal
+Héros | grand | background | Devise, titre, trait tricolore, 2 boutons · téléphone 22:47 à droite | EntreeHero, Reveal
 Bandeau de confiance | bandeau | secondary | 4 faits en ligne | Cascade
 22h47 | normal | primary | Chiffre géant, 3 compteurs, conclusion | Compteur, Reveal
 Pied de page | normal | secondary | 4 colonnes, mentions légales
@@ -1114,13 +1114,13 @@ Pied de page | normal | secondary | 4 colonnes, mentions légales
 
 Cinq champs séparés par `|` : **nom**, **hauteur** (`bandeau`, `normal`, `grand`, `plein`),
 **fond** (les fonds du composant `Section` : `background`, `card`, `muted`, `primary`,
-`secondary`), **contenu** en une phrase, et **mouvement** — facultatif, les primitives
+`secondary`), **contenu** en une phrase, et **mouvement** : facultatif, les primitives
 utilisées.
 
 `blueprint-html.mjs` en fait un **plan de masse** : une colonne de blocs étiquetés, à
 l'échelle, aux couleurs du projet, toutes les pages côte à côte. Ce n'est pas une maquette et
 ça ne doit pas essayer de l'être. Ça se lit en trois secondes, et ça fait poser les bonnes
-questions **avant** la construction — là où une correction coûte une phrase — plutôt qu'après,
+questions **avant** la construction (là où une correction coûte une phrase) plutôt qu'après,
 où elle coûte une reprise.
 
 **Le squelette est le seul endroit où l'on voit une section absente.** Une page qui devrait
@@ -1128,9 +1128,9 @@ respirer et qui s'affiche en six blocs serrés se remarque immédiatement ; le t
 sections, lui, paraîtra toujours complet.
 
 **Le blueprint porte le texte.** Écris `CONTENU.md` à la racine du projet, avant de lancer
-le moindre agent : chaque ligne que le visiteur lira — titres, accroches, paragraphes,
+le moindre agent : chaque ligne que le visiteur lira (titres, accroches, paragraphes,
 libellés de boutons, questions et réponses de la FAQ, microcopie des formulaires, états
-vides, messages de succès — dans le registre de la marque, avec la langue relevée en 0.58.
+vides, messages de succès) dans le registre de la marque, avec la langue relevée en 0.58.
 En mode fidèle, ce sont les textes du client, mot pour mot. Les agents **câblent ces lignes
 telles quelles** et n'en reformulent aucune.
 
@@ -1172,7 +1172,7 @@ ni sur les notes internes de ce skill, écrites avant la règle et jamais lues p
 `verifier-projet.mjs` le signale avec les mots creux ; un tiret voulu se tait avec le
 commentaire `mots-creux-ok`, comme une formule voulue.
 
-Puis **affiche-le dans le panneau navigateur** — l'utilisateur ne doit jamais avoir à quitter
+Puis **affiche-le dans le panneau navigateur**, l'utilisateur ne doit jamais avoir à quitter
 le terminal :
 
 ```
@@ -1192,20 +1192,20 @@ Toujours par le serveur de dev.
 
 Puis, selon sa réponse en phase 0.b :
 
-**S'il a demandé à valider** — présente le blueprint et **arrête-toi**.
+**S'il a demandé à valider** : présente le blueprint et **arrête-toi**.
 
 Écris-le **dans le chat**, pas seulement dans un fichier : c'est là qu'il te répondra. Ouvre
 par une ligne qui se repère d'un coup d'œil, toujours la même, pour qu'il sache
 immédiatement que c'est à lui de jouer :
 
-> **▸ À toi — relis le blueprint et dis-moi ce qui cloche. Rien ne démarre avant ton accord.**
+> **▸ À toi : relis le blueprint et dis-moi ce qui cloche. Rien ne démarre avant ton accord.**
 
 Puis, dans l'ordre : le résumé en quelques lignes, **tes hypothèses numérotées**, et tes
-questions ouvertes. Le tout **en une seule fois** — une interruption, pas trois. Envoie
+questions ouvertes. Le tout **en une seule fois** : une interruption, pas trois. Envoie
 aussi le fichier avec `SendUserFile` et laisse-le affiché sur `/blueprint`, pour qu'il
 puisse le parcourir en grand s'il le souhaite.
 
-**Sur le blueprint, il répond dans le chat** — le mode Édition n'y fonctionne pas, la page est
+**Sur le blueprint, il répond dans le chat** : le mode Édition n'y fonctionne pas, la page est
 servie hors de l'application et ne porte aucun script. Ne lui promets pas le contraire : je
 l'ai fait, et c'était faux. Les sections et hypothèses numérotées (`§1`, `H5`) sont ce qui
 rend sa réponse écrite aussi précise qu'un clic.
@@ -1216,28 +1216,28 @@ Une affirmation se corrige, une question vague s'ignore.
 
 Ne lance rien avant son accord.
 
-**S'il a demandé à enchaîner** — affiche-le et continue immédiatement, sans pause. Il le lit
+**S'il a demandé à enchaîner** : affiche-le et continue immédiatement, sans pause. Il le lit
 pendant que tu construis, et le commit git juste avant permet de revenir en arrière s'il
 t'interrompt.
 
 Dans les deux cas, les hypothèses sont **écrites dans le fichier**. C'est ce qui les rend
 opposables plus tard, quand personne ne se souvient de ce qui avait été supposé.
 
-## Phase 1 — Construction
+## Phase 1 : Construction
 
 Le terrain est prêt depuis la phase 0.55 : projet créé, dépendances installées, thème
 appliqué, base poussée, serveur de dev en marche. Il reste à écrire le site.
 
 **Un échec d'outil qui touche au livrable se dit dans le fil, en une ligne, avec ce que tu
-fais ensuite** — réessayer, contourner, ou renoncer et le noter dans le blueprint. Une photo
+fais ensuite** : réessayer, contourner, ou renoncer et le noter dans le blueprint. Une photo
 qui ne se convertit pas, un fichier qui ne s'écrit pas, une génération refusée. Au cinquième
 bootstrap, quinze appels ont échoué ; l'utilisateur en a su deux. Un échec qu'on ne dit pas
 est un défaut qu'on livre.
 
 1. **Écris toi-même les fichiers-contrats**, avant de lancer le moindre agent : `lib/formats.ts`
-   (formatage — pur), `lib/reglages.ts` (lecture des réglages — serveur), `lib/site.ts` — nom,
+   (formatage, pur), `lib/reglages.ts` (lecture des réglages, serveur), `lib/site.ts` (nom,
    description en une phrase, pages publiques, couleurs de partage : tout ce que les moteurs
-   et les réseaux verront —, `layout.tsx`, `page.tsx` d'assemblage, `seed.ts`. Les agents
+   et les réseaux verront), `layout.tsx`, `page.tsx` d'assemblage, `seed.ts`. Les agents
    doivent construire contre une cible fixe.
 
    **Les réglages sont un contrat, pas une documentation.** Un chiffre qui vit dans les
@@ -1245,34 +1245,34 @@ est un défaut qu'on livre.
    la promesse de la page d'accueil et dans les CGV, alors qu'il est modifiable depuis le
    back-office : le gérant pouvait le changer et voir son site continuer d'annoncer
    l'ancien montant. Une page qui contredit le tunnel de commande coûte plus cher qu'une
-   page absente. Avant de figer un montant, un horaire ou une adresse dans une phrase —
-   ou de laisser un agent le faire — vérifie s'il existe déjà comme réglage, et lis-le.
+   page absente. Avant de figer un montant, un horaire ou une adresse dans une phrase
+   (ou de laisser un agent le faire), vérifie s'il existe déjà comme réglage, et lis-le.
 
    **L'en-tête s'appelle `Nav` (`components/sections/nav.tsx`), le pied de page
    `PiedDePage`**, et chaque page hors tunnel de commande rend les deux. Le contrôle
    automatique compte sur ces noms pour repérer les pages sans navigation.
 
-   **`app/not-found.tsx` en fait partie.** Le socle la livre nue — il ne peut pas importer
-   des composants qui n'existent pas encore — et c'est à toi de l'habiller, au même moment
+   **`app/not-found.tsx` en fait partie.** Le socle la livre nue (il ne peut pas importer
+   des composants qui n'existent pas encore) et c'est à toi de l'habiller, au même moment
    que les pages légales. Livrée telle quelle, elle a été classée deuxième défaut du site par
    un relecteur : un visiteur arrivé par un lien cassé ou un QR code mal recopié se retrouve
    dans une impasse à un seul bouton. Pense aussi à passer son `min-h-dvh` en `min-h-[60dvh]`,
    sinon elle pousse le pied de page hors de l'écran.
 
-   **Sépare le pur du serveur.** `lib/formats.ts` — dates, montants, listes — ne dépend de
+   **Sépare le pur du serveur.** `lib/formats.ts` (dates, montants, listes) ne dépend de
    rien et s'importe partout ; `lib/reglages.ts` touche la base et ne s'importe que côté
    serveur. Ne les refusionne jamais « pour la commodité », et ne réexporte pas l'un depuis
    l'autre. Vécu : les deux vivaient dans le même fichier, un composant client a importé un
-   formateur de prix, et il a traîné Prisma dans le paquet du navigateur — invisible jusqu'au
+   formateur de prix, et il a traîné Prisma dans le paquet du navigateur, invisible jusqu'au
    jour où un `import` de module Node a fait échouer le build, avec une trace qui remontait à
    quatre fichiers de là. La règle vaut pour tout fichier-contrat que tu écris :
    **`<sujet>.ts` pur, `<sujet>-serveur.ts` pour ce qui touche la base, le disque ou
    l'environnement.**
-   **Et un fichier de consignes commun, lu en premier par chaque agent** —
+   **Et un fichier de consignes commun, lu en premier par chaque agent**,
    `.buildyoursite/consignes-agents.md` : les règles, le thème lu de `globals.css`, l'API du
    socle, les fichiers-contrats, les formats, les mots interdits, le rapport attendu. Le
    brief individuel ne porte alors que le périmètre, les props, la mise en page section par
-   section, ce qui bouge et ce qui répond — une page au lieu de quatre. Gabarit :
+   section, ce qui bouge et ce qui répond, une page au lieu de quatre. Gabarit :
    `references/consignes-agents.md`. Éprouvé au cinquième bootstrap : cinq agents, pas un
    texte inventé, pas une couleur en dur, et des rapports qui signalent d'eux-mêmes leurs
    ambiguïtés.
@@ -1293,7 +1293,7 @@ est un défaut qu'on livre.
    > Écris chaque fichier dès qu'il est prêt, sans attendre d'avoir tout exploré.
 
    Sans ça, un agent peut travailler une heure et demie sans rien poser sur le disque, et
-   tu n'as **aucun moyen de savoir s'il avance ou s'il est bloqué** — son fichier de sortie
+   tu n'as **aucun moyen de savoir s'il avance ou s'il est bloqué** : son fichier de sortie
    reste vide dans les deux cas. Vécu : j'ai tué un agent qui avait sept fichiers sur huit
    prêts et les écrivait au moment où je l'ai arrêté.
 
@@ -1306,40 +1306,40 @@ est un défaut qu'on livre.
    chacun du code correct et incompatible parce que le brief ne disait pas qui appelait
    qui. Écris-le :
 
-   > L'action renvoie `{ succes, message }`. Côté formulaire, enveloppe-la —
-   > `action={async (fd) => { const r = await action(fd); setRetour(r); }}` — ou passe par
+   > L'action renvoie `{ succes, message }`. Côté formulaire, enveloppe-la
+   > (`action={async (fd) => { const r = await action(fd); setRetour(r); }}`) ou passe par
    > `useActionState`. Ne la branche jamais nue sur `action={…}`.
 
    **Le texte vient de `CONTENU.md`, posé tel quel.** Chaque brief cite les lignes de sa
-   section et dit : « ces lignes sont finales — ne les reformule pas, ne complète pas avec
+   section et dit : « ces lignes sont finales : ne les reformule pas, ne complète pas avec
    du texte de ton cru ; s'il manque une ligne, laisse `[[À CONFIRMER PAR L'UTILISATEUR : …]]` et signale-le
    dans ton rapport ».
 
-   **Chaque page exporte ses `metadata`** — `title`, `description`, `alternates.canonical` —
+   **Chaque page exporte ses `metadata`** (`title`, `description`, `alternates.canonical`)
    et chaque image porte un `alt`, vide seulement si elle est décorative et que le brief le
-   dit. Le socle fournit le reste du référencement — robots, sitemap, image de partage,
-   gabarit de titre — mais ces deux-là ne peuvent venir que de celui qui écrit la page. Le
+   dit. Le socle fournit le reste du référencement (robots, sitemap, image de partage,
+   gabarit de titre), mais ces deux-là ne peuvent venir que de celui qui écrit la page. Le
    garde-fou signale ce qui manque.
 
    **Dis à chaque agent ce qui bouge, puis ce qui répond.** Deux lignes, pas une :
 
-   > **Ce qui bouge** — Héros : `EntreeHero` sur le bloc de texte. Grille des produits :
+   > **Ce qui bouge** · Héros : `EntreeHero` sur le bloc de texte. Grille des produits :
    > `Cascade`. Photo de l'atelier : `Parallaxe`. Le reste est immobile. Les valeurs viennent
-   > de `lib/mouvement.ts` — aucune durée ni distance en dur.
+   > de `lib/mouvement.ts`, aucune durée ni distance en dur.
    >
-   > **Ce qui répond** — les cartes produit sont cliquables : `carte-reactive`. Le lien
+   > **Ce qui répond** · les cartes produit sont cliquables : `carte-reactive`. Le lien
    > « Découvrir » : `lien-fleche`, avec la classe `fleche` sur l'icône. La photo de l'atelier
    > ne réagit pas, elle ne mène nulle part. N'écris aucun `hover:` à la main : les états
    > viennent des classes de `globals.css`.
 
    Une entrée de héros par page, une cascade par grille, un compteur seulement sur un vrai
    chiffre, une parallaxe sur une ou deux photos. Un brief qui ne dit rien du mouvement
-   produit une section immobile — trois agents sur quatre l'ont prouvé.
+   produit une section immobile : trois agents sur quatre l'ont prouvé.
 
    **Et un brief qui ne dit rien de la seconde ligne produit une page morte sous la souris.**
    Vécu au quatrième bootstrap : la référence avait des cartes qui se soulevaient au survol, le
    relevé l'avait mesuré, aucun brief ne l'a demandé. Ça n'a d'effet ni sur le build ni sur
-   aucune capture d'écran — et c'est la première chose que l'utilisateur a remarquée en
+   aucune capture d'écran, et c'est la première chose que l'utilisateur a remarquée en
    essayant son site. Le vocabulaire complet est dans `references/mouvement.md`, « Les états ».
 
    **Interdis le navigateur aux agents de construction.** Dans chaque brief :
@@ -1347,8 +1347,8 @@ est un défaut qu'on livre.
    > Le serveur de dev tourne déjà : ne le lance pas, **n'ouvre pas le navigateur**. Tu
    > vérifies ton travail avec `npx tsc --noEmit`.
 
-   Quatre agents pilotant le même panneau, c'est deux clics en timeout — « rebuilds très
-   fréquents déclenchés par d'autres agents », dit le rapport de l'un d'eux —, des navigations
+   Quatre agents pilotant le même panneau, c'est deux clics en timeout (« rebuilds très
+   fréquents déclenchés par d'autres agents », dit le rapport de l'un d'eux), des navigations
    inattendues chez les autres, et du budget dépensé à vérifier ce que ton auto-test
    revérifiera de toute façon. La vérification visuelle t'appartient, seul, après. Le
    relecteur est la seule exception : il travaille quand plus personne n'écrit, et il ouvre
@@ -1365,11 +1365,11 @@ est un défaut qu'on livre.
    attribut par fichier suffit. Le composant `Section` du socle a une prop `src` pour ça.
 
    **Ne l'injecte pas après coup par script** : « premier élément après le `return` » s'est
-   trompé sur deux fichiers sur dix — composant auxiliaire déclaré avant le principal,
+   trompé sur deux fichiers sur dix : composant auxiliaire déclaré avant le principal,
    retour anticipé. L'agent connaît sa racine, pas un codemod.
 
    **Toujours `model: "sonnet"`.** Les briefs sont détaillés, le travail est de l'exécution :
-   Sonnet suffit, va plus vite, et — vérifié en production — reste disponible quand Opus
+   Sonnet suffit, va plus vite, et (vérifié en production) reste disponible quand Opus
    renvoie des 529. Garde Opus pour toi : l'architecture, le blueprint, les arbitrages.
 
    **Donne à chaque agent sa liste de fichiers exclusive** et la consigne de ne toucher à
@@ -1379,7 +1379,7 @@ est un défaut qu'on livre.
    saturation serveur, pas une erreur de brief : ne réécris pas la consigne.
 
    **Ne touche jamais un fichier confié à un agent encore en vie.** Le voir apparaître sur
-   le disque ne signifie pas qu'il a fini — il itère peut-être encore dessus, et il annulera
+   le disque ne signifie pas qu'il a fini : il itère peut-être encore dessus, et il annulera
    ta modification. Le seul signal de fin est la notification. Si une correction ne peut pas
    attendre, passe par `SendMessage` à l'agent, jamais par une édition directe.
 3. Pendant qu'ils travaillent, **fais ta part** : lance le seed, relis les fichiers livrés
@@ -1387,12 +1387,12 @@ est un défaut qu'on livre.
 
    **Des commentaires peuvent arriver pendant la construction.** L'utilisateur regarde
    l'aperçu se remplir et clique. Le watcher te réveille : réponds dans la minute. D'abord
-   passe le lot à `en_cours` — c'est ce qui arrête la comète de l'overlay et lui dit que tu
+   passe le lot à `en_cours` : c'est ce qui arrête la comète de l'overlay et lui dit que tu
    as vu. Puis une ligne sur ce que tu en fais : appliqué tout de suite si le fichier visé
-   n'est confié à aucun agent en vie ; sinon « reçu — j'applique dès que l'agent des sections
+   n'est confié à aucun agent en vie ; sinon « reçu : j'applique dès que l'agent des sections
    a fini », et tu le fais à sa notification. Un lot laissé `pending` sans un mot, c'est
    exactement ce qui donne l'impression que rien ne marche.
-4. Quand tous ont notifié leur fin : `npx tsc --noEmit` d'abord — il isole les erreurs de
+4. Quand tous ont notifié leur fin : `npx tsc --noEmit` d'abord. Il isole les erreurs de
    type sans le bruit du bundler.
 5. **Boucle d'auto-débogage** : `npm run build` → lis les erreurs → corrige → relance.
    Trois passes maximum. Si ça résiste encore, arrête-toi et explique précisément quoi.
@@ -1411,10 +1411,10 @@ est un défaut qu'on livre.
    fichiers de section produits par deux agents. Réserve `npm run build` à la vérification
    finale, une fois le serveur arrêté.
 
-   (`next build` n'accepte **pas** de `--distDir` en ligne de commande — vérifié. C'est une
+   (`next build` n'accepte **pas** de `--distDir` en ligne de commande, vérifié. C'est une
    option de `next.config`, pas un drapeau. Il n'existe donc pas de build « à côté » sans
    toucher à la configuration.)
-6. **Pose les photos provisoires** — jamais d'aplats de couleur à la place des images.
+6. **Pose les photos provisoires** : jamais d'aplats de couleur à la place des images.
 
    ```bash
    node "<skill>/scripts/photos-provisoires.mjs" --manifeste photos.json
@@ -1428,7 +1428,7 @@ est un défaut qu'on livre.
 
    Pour les afficher, **le composant `Photo` du socle** (`components/ui/photo.tsx`) : il
    porte le `data-photo-slot` que lit l'overlay, garde le dégradé de la charte *derrière*
-   l'image — si le fichier manque, la mise en page tient — et remplacer une photo revient à
+   l'image (si le fichier manque, la mise en page tient) et remplacer une photo revient à
    écraser un fichier dans `public/photos/`, sans toucher au code. Exige-le dans les briefs
    plutôt que de laisser chaque agent réinventer un `<Image fill>`.
 
@@ -1437,32 +1437,32 @@ est un défaut qu'on livre.
    visages :
    - **aucune génération sans un oui explicite, et un oui par génération.** Annoncer n'est
      pas demander. Pour chaque image et chaque vidéo, sans exception : le même appel est
-     d'abord lancé avec `get_cost: true` — il ne consomme rien et rend le prix exact. C'est
+     d'abord lancé avec `get_cost: true`, il ne consomme rien et rend le prix exact. C'est
      la première moitié de toute génération, pas une précaution ; sans ce chiffre il n'y a
      pas de question à poser, donc pas de génération. Puis tu écris le prix, le solde avant
      et après, et **tu t'arrêtes et tu attends** :
 
-     > **{ce que c'est} — {coût} crédits. Il t'en reste {solde}, il t'en restera {reste}.
+     > **{ce que c'est} : {coût} crédits. Il t'en reste {solde}, il t'en restera {reste}.
      > Je lance ?**
      > - *Oui* · *Non, garde la photo telle quelle*
 
      Une étape préparatoire est une génération : si animer une photo exige de l'élargir
      d'abord, ça se chiffre et ça se demande séparément. Une reprise après un ratage, une
-     variante : pareil. **L'utilisateur peut élargir son accord, jamais toi** — « oui pour
+     variante : pareil. **L'utilisateur peut élargir son accord, jamais toi** : « oui pour
      les trois » couvre les trois parce que c'est lui qui l'a dit. Le choix « générés » fait
      au brief dit quel genre de visuel, pas quel budget : il n'autorise aucune dépense.
      Laisse `use_unlim` absent de l'appel : si une réserve gratuite couvre le modèle, le
      serveur ne soumet rien et rend la question à lui poser. Et un `get_cost` accepté ne
      valide pas les paramètres : un modèle vidéo avec une image de départ a échoué en 422
-     après un devis accepté — non facturé, mais à prévoir ;
+     après un devis accepté, non facturé, mais à prévoir ;
    - **dis ce qui a été dépensé** une fois la génération passée : ce que c'était, combien,
      le nouveau solde. Sans ça, personne ne peut vérifier l'annonce ;
    - **ses photos passent avant toute image inventée.** Quand il a fourni des photos, un
-     repli vers la génération se demande — « il me manque un visuel pour cette section et
-     aucune de tes photos ne convient : j'en génère un, ou je mets une provisoire ? » — il ne
+     repli vers la génération se demande (« il me manque un visuel pour cette section et
+     aucune de tes photos ne convient : j'en génère un, ou je mets une provisoire ? »), il ne
      se décide pas seul. Au cinquième bootstrap, une image inventée s'est posée sur le site
      d'un vrai client qui voulait ses propres photos animées ;
-   - **une image se regarde avant d'être posée** — planche-contact, marques et logos glissés
+   - **une image se regarde avant d'être posée** : planche-contact, marques et logos glissés
      par le modèle, anatomie, et la cohérence avec la marque : un détail dans la mauvaise
      couleur trahit la marque auprès de ceux qui la connaissent.
 
@@ -1472,13 +1472,13 @@ est un défaut qu'on livre.
      question). Un contrôle qui échoue déclenche un rapport, jamais une dépense. Au
      cinquième bootstrap, un logo inventé sur une chaussure a été « refait sans, 2 crédits
      de plus » dans le message même qui le signalait ;
-   - **jamais un visage** sans la photo de la personne elle-même et son accord — le modèle
+   - **jamais un visage** sans la photo de la personne elle-même et son accord : le modèle
      ne connaît pas le gérant ;
    - les images générées ne portent pas de bandeau : elles sont un livrable choisi. Elles
-     portent en revanche la décision de la salve 2 — dire qu'elles sont générées, ou
+     portent en revanche la décision de la salve 2 : dire qu'elles sont générées, ou
      prévoir leur remplacement.
 
-   **Puis REGARDE-LES. C'est une étape, pas une précaution — et elle vaut pour toute photo,
+   **Puis REGARDE-LES. C'est une étape, pas une précaution, et elle vaut pour toute photo,
    provisoire, fournie ou générée.** `planche-contact.mjs` sur `public/photos` : c'est là
    qu'on voit un visage de tiers, un texte incrusté, un logo de marque sur une chaussure
    générée. Au cinquième bootstrap, sans photo provisoire, l'étape entière a été sautée, et
@@ -1489,7 +1489,7 @@ est un défaut qu'on livre.
    ```
 
    Toutes les photos sur une seule image légendée. Sur onze photos réelles, le premier jet
-   en a produit six inutilisables — une montgolfière sur « contrôle en tasse », une gravure
+   en a produit six inutilisables : une montgolfière sur « contrôle en tasse », une gravure
    victorienne sur « emballage », un dessin de brevet sur « torréfaction », et **le portrait
    d'une personne identifiable** en héros d'une boutique. Tous les fichiers étaient valides,
    tous venaient du bon mot-clé, le script annonçait onze succès.
@@ -1517,16 +1517,16 @@ est un défaut qu'on livre.
 
    **Et fais défiler : est-ce que ça bouge ?** Le héros est-il entré, les grilles se
    dévoilent-elles, un chiffre a-t-il compté ? Un site qui ne bouge pas n'est pas sobre, il
-   est plat — et c'est un brief qui n'a rien demandé. Si *tout* est invisible, un script a
+   est plat, et c'est un brief qui n'a rien demandé. Si *tout* est invisible, un script a
    planté avant l'hydratation : la feuille masque d'avance ce que GSAP doit dévoiler.
 
    **Puis ouvre chaque page, pas seulement l'accueil.** Sept pages sur vingt-deux n'avaient
-   ni en-tête ni pied de page — catalogue, fiche produit, compte, pages légales. Elles
+   ni en-tête ni pied de page : catalogue, fiche produit, compte, pages légales. Elles
    répondaient 200, le build était vert, et on y arrivait sans pouvoir en repartir. C'est
    l'utilisateur qui l'a vu, en demandant « un bouton retour ». Seul le tunnel de commande
    a le droit d'être dépouillé, et c'est un choix à écrire dans le blueprint.
 
-   **Puis le décor, une fois la structure et le mouvement en place** — jamais avant, on
+   **Puis le décor, une fois la structure et le mouvement en place** : jamais avant, on
    décorerait des sections qu'on va supprimer. Un site dont chaque section est un rectangle
    sur un aplat se reconnaît au premier coup d'œil. Deux fonds suffisent à le corriger :
 
@@ -1540,13 +1540,13 @@ est un défaut qu'on livre.
 
    **Et si l'agencement d'une section te manque**, le socle déclare un registre de composants
    que tu peux lire depuis le terminal, sans navigateur : `npx shadcn@latest view
-   @watermelon/<nom>`. **Tu lis la composition, tu ne colles pas le code** — il porte des
+   @watermelon/<nom>`. **Tu lis la composition, tu ne colles pas le code** : il porte des
    couleurs en dur, du texte de démonstration et une seconde bibliothèque de mouvement.
    Rejoue l'agencement avec nos jetons et nos primitives. Les trois raisons, détaillées :
    `references/decor.md`.
 
    **Puis l'audit de sécurité, promis au premier message.** Le garde-fou en automatise une
-   partie — `.env` suivi par git, une clé en clair dans le code, `dangerouslySetInnerHTML`
+   partie : `.env` suivi par git, une clé en clair dans le code, `dangerouslySetInnerHTML`
    sans justification, une action serveur d'administration sans contrôle de session. Le
    reste se relit : chaque formulaire validé côté serveur, aucune requête construite depuis
    une entrée utilisateur, un paramètre `?suite=` qui ne redirige que vers un chemin interne,
@@ -1555,31 +1555,31 @@ est un défaut qu'on livre.
 
    **L'espace privé se vérifie sans mot de passe tapé par toi** : la règle de sécurité te
    l'interdit. Vérifie la redirection (`curl -o /dev/null -w "%{http_code} %{redirect_url}"
-   /admin`), relis chaque action serveur — `exigeAdmin()` en tête — teste-les par script si
+   /admin`), relis chaque action serveur (`exigeAdmin()` en tête), teste-les par script si
    besoin, et **dis à la remise que l'interface de l'espace privé est à tester par
    l'utilisateur**. Le taire, c'est livrer un écran que personne n'a ouvert.
 
    **Puis l'auto-test, avant de montrer quoi que ce soit.** Chaque point se vérifie, aucun
-   ne se suppose — la liste complète est dans `references/verifier-le-rendu.md`. **Commence
+   ne se suppose : la liste complète est dans `references/verifier-le-rendu.md`. **Commence
    par l'écran prioritaire du blueprint**, puis fais l'autre : c'est le premier qui doit
    être irréprochable, le second seulement correct. Aucune largeur n'est facultative pour
-   autant — les colonnes cassent à 375 px, y compris sur un site pensé pour le bureau.
+   autant : les colonnes cassent à 375 px, y compris sur un site pensé pour le bureau.
    Chaque page à 375 px de large ; chaque bouton et chaque lien cliqués ; **le survol de ce qui
-   est cliquable** ; le formulaire jusqu'à son état de succès ; la console vide — **une erreur
+   est cliquable** ; le formulaire jusqu'à son état de succès ; la console vide : **une erreur
    inexpliquée s'identifie, elle ne se balaye pas** ; le mouvement réduit, **testé et non
    supposé** ; le parcours au clavier ; **l'image de partage, ouverte et regardée** ; les
    queues des lettres (g, y, p) dans tout texte masqué. Ce que tu trouves, tu le corriges et
    tu le dis. Sur les deux premiers bootstraps, c'est l'utilisateur qui a trouvé le CSS cassé,
-   les photos absentes, les pages sans navigation, le site plat — chaque fois une vérification
+   les photos absentes, les pages sans navigation, le site plat. Chaque fois une vérification
    que je n'avais pas faite. Au quatrième, j'ai écarté huit erreurs de console comme « du
    bruit » sans jamais les nommer.
 
-   **Puis le relecteur.** Lance un agent Sonnet **sans aucun contexte** — trois lignes de
+   **Puis le relecteur.** Lance un agent Sonnet **sans aucun contexte**, trois lignes de
    brief : voici l'URL et la liste des pages ; ouvre **ton propre onglet** avec `tabs_create`
    et n'en change pas ; rapporte ce qui flotte sans explication, ce qui est inégal entre
    éléments parallèles, ce qui sent le remplissage, ce qui ne bouge pas et ce qui ne répond
    pas au curseur. Il ne corrige rien. Il voit ce que tu ne vois plus après trois heures
-   dedans — pas ce qu'il ne peut pas voir.
+   dedans, pas ce qu'il ne peut pas voir.
 
    **Son onglet est en arrière-plan** : une capture qui ne montre aucun changement au survol
    rapporte l'instrument, pas le site. Il vérifie au style calculé (`getComputedStyle`) avant
@@ -1587,7 +1587,7 @@ est un défaut qu'on livre.
    saturation, pas un défaut de brief.
 
    C'est l'étape la mieux rentabilisée du bootstrap : douze observations au quatrième, dont
-   sept ont donné une correction — y compris la page 404 sans navigation et un marqueur
+   sept ont donné une correction, y compris la page 404 sans navigation et un marqueur
    « À CONFIRMER » publié tel quel, que ni le garde-fou ni moi n'avions vus.
 
    **L'œil neuf, en dernier.** Pose la liste et regarde la page comme un visiteur qui
@@ -1598,9 +1598,9 @@ est un défaut qu'on livre.
 9. **Regarde quels composants du socle sont restés inutilisés.** Un composant que tous les
    agents ont contourné n'est pas ignoré par hasard : il est cassé. Trois agents ont
    réécrit à la main un en-tête que `Section` savait faire, chacun croyant faire un choix
-   isolé — parce qu'une couleur non définie le rendait inutilisable. Même contrôle pour les
+   isolé, parce qu'une couleur non définie le rendait inutilisable. Même contrôle pour les
    primitives de mouvement : `Cascade`, `EntreeHero`, `Compteur`, `Defilant`, `Parallaxe`,
-   `Reveal` — celles qui n'apparaissent nulle part n'ont pas été demandées.
+   `Reveal`. Celles qui n'apparaissent nulle part n'ont pas été demandées.
 
    **Et pour les états**, le même `grep` en une ligne :
 
@@ -1611,7 +1611,7 @@ est un défaut qu'on livre.
    Zéro sur un site plein de cartes cliquables et de liens « Découvrir → » n'est pas de la
    sobriété : c'est une moitié du mouvement qui n'a jamais été demandée dans les briefs.
 
-10. Vérifie que le watcher est toujours armé — il l'est depuis la phase 0.55 ; réarme-le
+10. Vérifie que le watcher est toujours armé : il l'est depuis la phase 0.55 ; réarme-le
     seulement s'il est mort (voir `references/overlay.md`).
 11. Commit `bootstrap: base complète`.
 
@@ -1623,26 +1623,26 @@ même en délimiteur cité. Constaté deux fois, sur deux agents différents.
 
 Le bootstrap n'est pas fini quand le build est vert. Il est fini quand :
 
-- le build passe et le serveur tourne — le minimum, pas la fin ;
+- le build passe et le serveur tourne (le minimum, pas la fin) ;
 - chaque page a été ouverte, et ça bouge ;
 - l'auto-test est passé, ses trouvailles corrigées ;
 - **l'utilisateur l'a regardé, aussi sur son téléphone**, et a dit que ça ressemble à ce
-  qu'il imaginait — c'est lui qui le dit, pas toi ;
+  qu'il imaginait (c'est lui qui le dit, pas toi) ;
 - il sait que la prochaine modification est à un clic.
 
 Rends la main en **quatre lignes** : ce qui a été construit, l'URL locale, **l'adresse
-réseau** que le lanceur affiche — c'est celle qu'il tape sur son téléphone, sur le même
-Wi-Fi — et la question : « regarde-le, sur ton téléphone aussi : est-ce que ça ressemble à
+réseau** que le lanceur affiche (c'est celle qu'il tape sur son téléphone, sur le même
+Wi-Fi) et la question : « regarde-le, sur ton téléphone aussi : est-ce que ça ressemble à
 ce que tu imaginais ? ». Puis attends sa réponse avant de considérer le bootstrap terminé.
 
 **Plus une cinquième ligne s'il reste des trous.** `verifier-projet.mjs` liste les
 `[[À CONFIRMER PAR L'UTILISATEUR : … ]]` avec leur fichier et leur ligne : redis-les, un par
 un, en distinguant ceux qui sont **visibles par un visiteur** (dans `app/`, `components/`,
 `lib/`) de ceux qui dorment dans un fichier de préparation. Sur sa machine c'est un
-pense-bête ; sur un lien envoyé à un client c'est une note de chantier publiée — un relecteur
+pense-bête ; sur un lien envoyé à un client c'est une note de chantier publiée : un relecteur
 en a fait le défaut le plus sérieux d'un site par ailleurs propre.
 
-**Puis la question du lien, une fois qu'il a dit que le site lui plaît** — c'est ici qu'elle
+**Puis la question du lien, une fois qu'il a dit que le site lui plaît**, c'est ici qu'elle
 se pose, et nulle part avant :
 
 > **Tu veux un lien à envoyer, pour le montrer à quelqu'un ?**
@@ -1654,24 +1654,24 @@ node "<skill>/scripts/partager.mjs"
 ```
 
 Dis en une phrase ce que le lien est, et n'en cache pas la limite : **le vrai site**,
-formulaires et back-office compris, servi depuis sa machine — et **il meurt quand il ferme la
+formulaires et back-office compris, servi depuis sa machine, et **il meurt quand il ferme la
 fenêtre**. Ce n'est pas un hébergement, et il ne faut jamais le laisser croire.
 
 Si `cloudflared` manque encore, le script imprime lui-même la commande d'installation et
 s'arrête proprement : une trentaine de secondes, puis on relance. Ne fais pas l'installation
-à sa place — c'est un logiciel sur sa machine.
+à sa place : c'est un logiciel sur sa machine.
 
-### Quand il a dit oui — ce qui lui reste
+### Quand il a dit oui : ce qui lui reste
 
 Le bootstrap s'arrête là, et une chose se dit **une seule fois**, à ce moment précis :
 
 > **L'hébergement est à toi.** On ne met pas en ligne : le code est chez toi, dans ton
 > dépôt, et tu le publies où tu veux. Ce skill est open source et ne prend aucune
-> commission — aucun hébergeur, aucun prestataire, aucun lien affilié n'est glissé dans le
+> commission : aucun hébergeur, aucun prestataire, aucun lien affilié n'est glissé dans le
 > projet. Tu choisis, et tu paies qui tu veux.
 
-**Si le site vend**, une ligne de plus : **Stripe est déjà branché**, en Checkout hébergé —
-la page de paiement est chez Stripe, le site ne voit jamais un numéro de carte. Il ne manque
+**Si le site vend**, une ligne de plus : **Stripe est déjà branché**, en Checkout hébergé.
+La page de paiement est chez Stripe, le site ne voit jamais un numéro de carte. Il ne manque
 que ses clés, laissées vides dans `.env`, qu'il copie depuis son tableau de bord. Le compte
 et les frais sont les siens.
 
@@ -1679,7 +1679,7 @@ et les frais sont les siens.
 comme un manque : « si un jour tu veux vendre, le module Stripe se greffe sans reconstruire
 le site ». N'en dis pas plus : il n'a rien à faire aujourd'hui.
 
-**Et une dernière phrase, sur le modèle** — la seule fois où tu en reparles depuis le
+**Et une dernière phrase, sur le modèle**, la seule fois où tu en reparles depuis le
 premier message :
 
 > Pour la suite, les modifications au clic, un modèle plus léger suffit : `/model sonnet`
@@ -1690,7 +1690,7 @@ C'est une information, pas une question. Il n'a rien à répondre.
 
 Ça se dit à la remise, pas à chaque modification de la phase 2.
 
-## Phase 2 — Itération visuelle
+## Phase 2 : Itération visuelle
 
 L'utilisateur annote la page dans le navigateur. Ses commentaires arrivent dans
 `.buildyoursite/comments.json` à la racine du projet, avec pour chacun le fichier source, la ligne,
@@ -1712,20 +1712,20 @@ le sélecteur, sa consigne, et d'éventuelles images jointes dans `.buildyoursit
 Le watcher te réveille quand un lot est envoyé. Alors :
 
 1. Lis `.buildyoursite/comments.json`, prends les lots `pending` **et passe-les tout de
-   suite à `en_cours`** — avant de lire quoi que ce soit. C'est ce qui arrête la comète de
+   suite à `en_cours`**, avant de lire quoi que ce soit. C'est ce qui arrête la comète de
    l'overlay et dit à l'utilisateur que tu as vu.
 2. Commit de sécurité avant de toucher quoi que ce soit.
 3. Applique **tous** les commentaires du lot.
-4. Vérifie que ça build — `npx tsc --noEmit` suffit tant que le serveur de dev tourne. Si
+4. Vérifie que ça build : `npx tsc --noEmit` suffit tant que le serveur de dev tourne. Si
    c'est cassé, corrige avant de répondre.
 5. Marque les commentaires `done`. Le watcher persistant reste armé ; ton passage à `done`
-   le réveille une fois à vide — c'est normal, vérifie qu'il n'y a rien de `pending` et
+   le réveille une fois à vide. C'est normal, vérifie qu'il n'y a rien de `pending` et
    passe.
 6. Réponds **en une ligne**. Si le commentaire a révélé un défaut plus large que la
-   demande — sept pages sans navigation derrière « un bouton retour » — une seconde ligne
+   demande (sept pages sans navigation derrière « un bouton retour »), une seconde ligne
    pour le dire, et une question courte pour le périmètre. Pas plus.
 
-Si un commentaire est ambigu, prends la lecture la plus probable et applique-la — l'utilisateur
+Si un commentaire est ambigu, prends la lecture la plus probable et applique-la : l'utilisateur
 corrigera d'un autre clic, c'est plus rapide qu'une question.
 
 ## Checkpoints
@@ -1741,25 +1741,25 @@ un aller-retour.
 
 **Le répertoire courant du shell se réinitialise entre deux appels** (« Shell cwd was
 reset ») : chemins absolus, ou `cd` en tête de chaque commande. Un `verifier-projet.mjs
---projet .` lancé après un `cd` dans le skill contrôle le skill — résultat sans valeur.
+--projet .` lancé après un `cd` dans le skill contrôle le skill, résultat sans valeur.
 
 **`sharp` qui réécrit son propre fichier d'entrée échoue sous Windows** (`UNKNOWN`, errno
 -4094) : écris un `.tmp` puis `renameSync`.
 
-**Le port déjà pris — réparé automatiquement, ne le refais pas à la main.**
+**Le port déjà pris : réparé automatiquement, ne le refais pas à la main.**
 `scripts/demarrer-dev.mjs` s'en charge. Le piège qu'il supprime : quand 3000 est occupé,
 Next ne refuse pas de démarrer, il **bascule en silence** sur 3001. On ouvre alors
 `localhost:3000`, on tombe sur le serveur zombie d'une session précédente qui renvoie 404,
 et on conclut que le site est cassé. Arrivé pour de vrai après un redémarrage de session.
 
 Le script distingue deux cas : un serveur Next abandonné, qu'il termine ; et un processus
-inconnu, qu'il **ne touche pas** — il se décale et le nomme. La reconnaissance porte sur le
+inconnu, qu'il **ne touche pas** : il se décale et le nomme. La reconnaissance porte sur le
 chemin du module (`…\node_modules\next\…`), pas sur une sous-chaîne : un `includes("next")`
 tuerait un `nextcloud`.
 
 Deux choses de plus, vues au troisième bootstrap, quand un autre projet tenait 3000 : la
 sonde qui déclare un port « libre » interroge IPv4, IPv6 **et** la table des sockets du
-système — l'un des trois voit ce que les deux autres ratent pendant un redémarrage. Et avec
+système : l'un des trois voit ce que les deux autres ratent pendant un redémarrage. Et avec
 un `-p` explicite, Next 15.5 ne bascule plus : il échoue sur `EADDRINUSE` **en sortant avec
 le code 0**. Le script lit donc la sortie de Next, pas son code de sortie, et relance sur le
 port suivant. Si tu vois `EADDRINUSE` à l'écran, c'est lui qui a parlé : attends la ligne
@@ -1776,7 +1776,7 @@ mais s'y ajoutent les chemins longs de Windows et les scripts qui oublient de ci
 Propose `nom-du-site` en minuscules sans accent ni espace, et laisse l'utilisateur refuser.
 
 **npm 11 bloque les scripts d'installation.** `npm install` affiche `allow-scripts` et
-n'exécute pas les `postinstall` — dont celui de Prisma. Lance donc **toujours**
+n'exécute pas les `postinstall`, dont celui de Prisma. Lance donc **toujours**
 `npx prisma generate` explicitement après l'install : il rattrape le coup. Si un paquet à
 binaire natif se plaint malgré tout, `npm approve-scripts <paquet>`.
 
@@ -1786,9 +1786,9 @@ sera jamais générée.
 
 **Impose trois paliers de taille sur chaque titre** dans les briefs d'agent, jamais deux. Et
 dans tes propres exemples : un `className` littéral à deux paliers dans un brief l'emporte sur
-la règle — deux agents l'ont suivi à la lettre et l'ont signalé. Trois paliers partout, ou dis
+la règle : deux agents l'ont suivi à la lettre et l'ont signalé. Trois paliers partout, ou dis
 que le `h3` peut en avoir deux.
-Un mot français long en police display déborde toujours du palier le plus bas — sur le
+Un mot français long en police display déborde toujours du palier le plus bas : sur le
 premier bootstrap, un adverbe en display 800 faisait 523 px dans une boîte de 477.
 
 Formule-le comme une **règle assortie d'un exemple**, jamais comme une valeur : « trois
@@ -1797,15 +1797,15 @@ pour un titre de bloc ». Sans le « par exemple », un agent l'a lu comme une t
 et a contourné un composant du socle qui respectait pourtant la règle.
 
 **Donne la liste des classes de couleur en la lisant du thème**, jamais de mémoire. Un
-oubli de rédaction — `text-secondary` absent de la liste alors qu'il existe — met l'agent
+oubli de rédaction (`text-secondary` absent de la liste alors qu'il existe) met l'agent
 en doute sur une classe parfaitement valable.
 
 **Les séquences d'échappement se font transformer en silence, et pas seulement par le
 shell.** Un agent a vu sa plage Unicode `̀-ͯ` devenir des caractères combinants
 littéraux ; le contrôle automatique que j'écrivais pour attraper ce genre de chose s'est
 retrouvé avec de vrais caractères de retour arrière à la place de ses `\b`, et ne matchait
-plus rien. Deux parades : **préférer un échappement sémantique** — `\p{Diacritic}` plutôt
-qu'une plage numérique, aucune classe `\b` quand l'alternance suffit — et **relire le
+plus rien. Deux parades : **préférer un échappement sémantique** (`\p{Diacritic}` plutôt
+qu'une plage numérique, aucune classe `\b` quand l'alternance suffit) et **relire le
 fichier écrit** dès qu'il contient une expression régulière non triviale.
 
 **Le journal réseau et le journal console sont des historiques, pas des états.** Une erreur
@@ -1813,32 +1813,32 @@ qui y figure peut avoir été résolue depuis. Avant de conclure à un bug, refa
 
 **Mais une erreur inexpliquée s'identifie, elle ne se balaye pas.** Le corollaire du piège
 précédent, et je suis tombé dedans : huit `404` en console, un coup d'œil au journal réseau,
-« du bruit », et on passe. Elles l'étaient peut-être — on n'en sait rien, et c'est ça le
+« du bruit », et on passe. Elles l'étaient peut-être, on n'en sait rien, et c'est ça le
 défaut. `read_network_requests` avec un `urlPattern` retrouve la requête fautive en un appel.
 Nomme-la, **puis** écarte-la.
 
-**Une image collée dans le chat existe bien sur le disque — dans le transcript.**
+**Une image collée dans le chat existe bien sur le disque, dans le transcript.**
 `scripts/images-du-chat.mjs` la décode depuis le `.jsonl` de la session. Ne redis plus
 « elle n'arrive jamais sur mon disque » : c'était vrai avant le script, et je l'ai répété deux
 fois au cinquième bootstrap après qu'il existait. La seule réserve est la définition, que le
 script affiche.
 
-**Le panneau navigateur masqué fige tout — GSAP, les captures et les timers.** Sans
+**Le panneau navigateur masqué fige tout : GSAP, les captures et les timers.** Sans
 `requestAnimationFrame`, le mouvement ne joue pas ; les captures après un défilement
 restent figées sur la première peinture ; `setTimeout` est bridé à la seconde et un script
 qui attend en boucle dépasse les 45 s de l'outil. Mesure en JavaScript synchrone, avance
 l'horloge avec `window.__gsap` (`ticker.tick()` puis `updateRoot(time + 3)`), et pour
-regarder le rendu défilé, passe par le connecteur Chrome — qui capture même en
+regarder le rendu défilé, passe par le connecteur Chrome, qui capture même en
 arrière-plan, mais n'y charge pas les médias et ignore `resize_window`.
 
-**Un titre qui déborde sous `overflow-hidden` est invisible au script de débordement** — le
+**Un titre qui déborde sous `overflow-hidden` est invisible au script de débordement** : le
 filtre « masqué par un parent » l'écarte, et c'est le cas du héros. Mesure le mot le plus
 long du `h1` avec `canvas.measureText` dans sa police calculée, et compare à
 `h1.clientWidth` : « sérieusement, » en Syne 800 faisait 401 px dans 327.
 
-**Un fichier serveur importé par un composant client compile — jusqu'au jour où il ne compile
-plus.** Une chaîne d'imports innocente — un composant client → un helper de calcul → un
-helper de formatage → le fichier qui lit la base → Prisma — passe sans broncher tant que rien
+**Un fichier serveur importé par un composant client compile, jusqu'au jour où il ne compile
+plus.** Une chaîne d'imports innocente (un composant client → un helper de calcul → un
+helper de formatage → le fichier qui lit la base → Prisma) passe sans broncher tant que rien
 n'est spécifique à Node. Le jour où une ligne `import path from "node:path"` arrive quelque
 part dans la chaîne, le build échoue avec une trace qui désigne le composant, à quatre
 fichiers du vrai coupable. Sépare le pur du serveur dès l'écriture des fichiers-contrats,
@@ -1847,12 +1847,12 @@ c'est le seul moment où ça ne coûte rien.
 **Deux blocages de suite sur le même outil, et il est en panne.** Un appel qui pend sans
 répondre, puis un second : on arrête, on le nomme à voix haute, on redémarre ce qui doit
 l'être. Jamais un troisième appel dans un sous-système bloqué. À ne pas confondre avec une
-tâche longue qui *rend compte* — un rendu, une installation, un build — qui est un travail,
+tâche longue qui *rend compte* (un rendu, une installation, un build), qui est un travail,
 pas un blocage.
 
 ## Ce que tu ne fais pas
 
-**Rien qui coûte de l'argent à l'utilisateur ne se lance sans son accord explicite** — pas
+**Rien qui coûte de l'argent à l'utilisateur ne se lance sans son accord explicite** : pas
 une image générée, pas une vidéo, pas un appel facturé, pas un nom de domaine. Annoncer un
 prix n'est pas obtenir un accord : après l'annonce, tu t'arrêtes et tu attends. Vécu : 78
 crédits engagés en cinq générations, sur des messages qui disaient « je lance maintenant ».
@@ -1865,7 +1865,7 @@ d'affiliation dans le projet.
 **Partager un lien n'est pas une mise en ligne**, et c'est la seule chose que tu fais dans ce
 domaine : `scripts/partager.mjs` sert le site depuis la machine de l'utilisateur derrière une
 adresse publique temporaire, sans compte et sans hébergeur. Le lien meurt quand il ferme la
-fenêtre — dis-le à chaque fois, pour que personne ne prenne un aperçu pour un site en
+fenêtre. Dis-le à chaque fois, pour que personne ne prenne un aperçu pour un site en
 production.
 
 Et si un déploiement devient nécessaire, **c'est lui qui tape la commande** : une publication

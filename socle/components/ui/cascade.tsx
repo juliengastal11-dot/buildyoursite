@@ -8,7 +8,7 @@ import { MOUVEMENT } from "@/lib/mouvement";
 /* ---------------------------------------------------------------------------
    Révélation en cascade : les enfants directs apparaissent l'un après l'autre.
 
-   C'est LE mouvement d'une grille — cartes produits, engagements, témoignages.
+   C'est LE mouvement d'une grille : cartes produits, engagements, témoignages.
    Une seule cascade par grille : chaque enfant dévoilé isolément par un
    `Reveal` demanderait un décalage calculé à la main, et personne ne le fait.
 

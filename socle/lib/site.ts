@@ -2,19 +2,19 @@
    Identité du site pour tout ce qui sort du HTML : titres et descriptions,
    image de partage, robots.txt, sitemap, URL canoniques.
 
-   Fichier-contrat, réglé une fois au bootstrap — comme le thème et le
+   Fichier-contrat, réglé une fois au bootstrap, comme le thème et le
    mouvement. Tout ce que les moteurs de recherche et les réseaux sociaux
    voient du site part d'ici ; un nom changé ici change partout.
 
    L'URL publique vient de l'environnement : en développement, localhost ;
-   en production, `NEXT_PUBLIC_SITE_URL` dans `.env` — à confirmer par
+   en production, `NEXT_PUBLIC_SITE_URL` dans `.env`, à confirmer par
    l'utilisateur au moment de la mise en ligne.
 --------------------------------------------------------------------------- */
 
 export const SITE = {
   nom: "Nouveau site",
   /** Une phrase, 150 caractères au plus : c'est celle que Google affiche. */
-  description: "Site généré par /buildyoursite — remplacer cette description au bootstrap.",
+  description: "Site généré par /buildyoursite. Remplacer cette description au bootstrap.",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
   locale: "fr_FR",
 

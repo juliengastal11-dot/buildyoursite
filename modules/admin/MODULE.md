@@ -1,4 +1,4 @@
-# Module `admin` — back-office
+# Module `admin` : back-office
 
 Espace `/admin` protégé, avec liste + création + édition + suppression sur les modèles du
 blueprint. **Dépend du module `auth`** : le greffer d'abord.
@@ -41,7 +41,7 @@ app/admin/<modele>/[id]/page.tsx     formulaire d'édition + suppression
 lib/actions/<modele>.ts              server actions
 ```
 
-## 3. Server actions — le patron
+## 3. Server actions : le patron
 
 ```ts
 "use server";

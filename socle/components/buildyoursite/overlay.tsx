@@ -1,14 +1,14 @@
 "use client";
 
 /* ---------------------------------------------------------------------------
-   Overlay d'édition visuelle — /buildyoursite
+   Overlay d'édition visuelle : /buildyoursite
    Injecté uniquement en développement (voir app/layout.tsx).
 
    Survol = surbrillance. Clic = sélection figée + bulle de commentaire.
    Les commentaires s'empilent avec une pastille numérotée, puis partent en lot.
    Une pastille se clique : le commentaire se rouvre, on le corrige ou on le
    retire. Après un envoi, une comète tourne autour de la barre tant que Claude
-   n'a pas accusé réception — pour que l'attente ne ressemble pas à une panne.
+   n'a pas accusé réception : pour que l'attente ne ressemble pas à une panne.
 
    Sur écran tactile, il n'y a pas de survol : la surbrillance apparaît au
    doigt posé, la sélection au relâchement.
@@ -160,7 +160,7 @@ const CLE_POS = "buildyoursite:position";
 
 /* La comète : un dégradé conique dont l'angle tourne. Elle est posée derrière
    la barre, légèrement plus grande ; la barre, opaque, ne laisse voir qu'un
-   anneau de trois pixels — la lumière semble faire le tour de la pastille. */
+   anneau de trois pixels : la lumière semble faire le tour de la pastille. */
 const STYLE_COMETE = `
 @property --byt-angle { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
 @keyframes byt-comete { to { --byt-angle: 360deg; } }
@@ -201,8 +201,8 @@ export function BuildYourSiteOverlay() {
   /** Un lot est parti et Claude n'a pas encore accusé réception : la comète tourne. */
   const [enAttente, setEnAttente] = useState(false);
 
-  // Position de la barre. Elle masque parfois un élément du site — un bouton
-  // flottant WhatsApp, par exemple — donc on doit pouvoir la pousser ailleurs.
+  // Position de la barre. Elle masque parfois un élément du site (un bouton
+  // flottant WhatsApp, par exemple), donc on doit pouvoir la pousser ailleurs.
   // Stockée comme un décalage par rapport à son ancrage bas-droite, et appliquée
   // en `transform` : déplacer en left/top recalculerait la mise en page à chaque
   // pixel du glissement.
@@ -523,12 +523,12 @@ export function BuildYourSiteOverlay() {
       {armed && hover && !draft && <div style={box(hover, C.accent, false)} />}
       {draft && <div style={box(draft.rect, C.accent, true)} />}
 
-      {/* pastilles des commentaires en attente — cliquables : le commentaire se rouvre */}
+      {/* pastilles des commentaires en attente, cliquables : le commentaire se rouvre */}
       {comments.map((c) => (
         <button
           key={c.n}
           type="button"
-          title={c.message + " — cliquer pour modifier"}
+          title={c.message + " · cliquer pour modifier"}
           onClick={() => rouvrir(c)}
           style={{
             position: "absolute",
@@ -736,7 +736,7 @@ export function BuildYourSiteOverlay() {
         </div>
       )}
 
-      {/* barre flottante — déplaçable par son fond ; la comète tourne autour pendant l'attente */}
+      {/* barre flottante, déplaçable par son fond ; la comète tourne autour pendant l'attente */}
       <div
         style={{
           position: "fixed",
@@ -868,7 +868,7 @@ export function BuildYourSiteOverlay() {
                 padding: "5px 12px",
               }}
             >
-              {sending ? "Envoi..." : "Envoyer — " + comments.length}
+              {sending ? "Envoi..." : "Envoyer · " + comments.length}
             </button>
           )}
         </div>

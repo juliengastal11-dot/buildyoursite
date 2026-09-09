@@ -7,7 +7,7 @@ Voici comment le voir sans jouer aux devinettes.
 ## 1. La mesure d'abord, l'œil ensuite
 
 Une capture d'écran trompe : la fenêtre coupe, l'overlay recouvre, et on croit voir des
-défauts qui n'existent pas. Sur ce bootstrap j'ai cru un `h2` coupé — la mesure a montré
+défauts qui n'existent pas. Sur ce bootstrap j'ai cru un `h2` coupé. La mesure a montré
 `deborde: false`, et c'était juste le bord de la capture.
 
 Mesure, puis confirme à l'œil. Jamais l'inverse.
@@ -54,7 +54,7 @@ Vérifie aussi que le corps de page ne défile pas horizontalement :
 ## 3. Corriger un titre qui déborde
 
 Cause quasi systématique : une seule taille de police, calibrée pour le bureau.
-`text-5xl` sans palier plus petit, et un long mot français fait le reste — un adverbe en
+`text-5xl` sans palier plus petit, et un long mot français fait le reste : un adverbe en
 display 800 fait 523 px pour une boîte de 477.
 
 Correction : toujours un palier bas.
@@ -68,7 +68,7 @@ Correction : toujours un palier bas.
 sinon l'émulation reste collée à l'onglet.
 
 Attention : une largeur émulée plus grande que le panneau est **réduite à l'échelle** dans la
-capture. Le rendu paraît minuscule dans un coin — c'est un artefact de la capture, pas un
+capture. Le rendu paraît minuscule dans un coin : c'est un artefact de la capture, pas un
 défaut de mise en page. Pour juger à l'œil, reste à la taille du panneau ; pour juger le
 bureau, mesure en JS plutôt que de regarder.
 
@@ -92,32 +92,32 @@ un créneau choisi à 10:00 Paris était bien stocké en `08:00Z`.
 
 ## L'auto-test, avant de montrer quoi que ce soit
 
-Chaque point se vérifie dans le panneau ou par un appel, jamais de mémoire — aucun ne se
+Chaque point se vérifie dans le panneau ou par un appel, jamais de mémoire. Aucun ne se
 suppose.
 
 > **L'ordre suit l'écran prioritaire du blueprint.** Sur un site pensé pour le bureau,
-> commence par 1280 px — mais ne saute jamais 375 px : c'est là que les grilles cassent, et
+> commence par 1280 px, mais ne saute jamais 375 px : c'est là que les grilles cassent, et
 > une page cassée sur téléphone reste une page cassée même quand le téléphone est
 > minoritaire.
 
 1. **Chaque page à 375 px de large** (`resize_window`, préréglage mobile), puis à la largeur
    du bureau. Débordements, textes coupés, images écrasées, barre de navigation qui recouvre
    un titre. **Et le mot le plus long du `h1`, mesuré** : le script de débordement ne voit
-   pas un titre coupé sous un `overflow-hidden` — celui du héros, presque toujours. Dans sa
+   pas un titre coupé sous un `overflow-hidden`, celui du héros, presque toujours. Dans sa
    police calculée, `canvas.getContext("2d").measureText(mot).width` comparé à
    `h1.clientWidth` : « sérieusement, » en Syne 800 à 36 px faisait 401 px dans 327, coupé
    net à l'écran, invisible pour le script.
 2. **Chaque bouton et chaque lien**, cliqués. Un lien mort, un bouton sans effet, une ancre
    qui n'existe pas.
-3. **Le formulaire jusqu'à son état de succès** — et son état d'erreur. Que voit-on après
+3. **Le formulaire jusqu'à son état de succès**, et son état d'erreur. Que voit-on après
    avoir envoyé ? Et si un champ manque ?
 4. **Le survol.** Passe le curseur sur une carte cliquable, un lien à flèche, une photo.
-   Si rien ne répond, la moitié « réaction » du mouvement a été oubliée — voir
+   Si rien ne répond, la moitié « réaction » du mouvement a été oubliée : voir
    `mouvement.md`, « Les états ». Un `grep -r "carte-reactive\|lien-fleche" app components`
    qui ne rend rien sur un site plein de cartes cliquables est un défaut, pas un choix.
    **Survole une carte qui a fini d'entrer en scène**, pas une carte immobile : GSAP laissait
    un `transform` en ligne à la fin d'une cascade, et un style en ligne l'emporte sur
-   `.carte-reactive:hover` — le survol était mort sur toute carte révélée, sur quatre
+   `.carte-reactive:hover` : le survol était mort sur toute carte révélée, sur quatre
    bootstraps, sans qu'aucune capture le montre. La mesure qui tranche, après la
    révélation : `el.getAttribute("style")` ne doit plus contenir `transform`.
 5. **La console vide**, à la largeur du bureau et à 375 px (`read_console_messages`,
@@ -126,10 +126,10 @@ suppose.
    écartées comme « du bruit » sans jamais être nommées. Elles l'étaient peut-être ; on n'en
    sait rien, et c'est ça le défaut. Retrouve la requête fautive
    (`read_network_requests` avec un `urlPattern`), nomme-la, et alors seulement écarte-la.
-6. **Le mouvement réduit — testé, pas supposé.** Dans le panneau :
+6. **Le mouvement réduit : testé, pas supposé.** Dans le panneau :
    `matchMedia("(prefers-reduced-motion: reduce)").matches`, et si le panneau sait l'émuler,
    recharge et regarde. S'il ne sait pas, relis **chaque** primitive et **chaque** classe
-   d'état pour confirmer sa garde — et dis dans ton rapport que c'est une relecture, pas un
+   d'état pour confirmer sa garde, et dis dans ton rapport que c'est une relecture, pas un
    essai. « Probablement respecté » n'est pas une vérification.
 7. **Le clavier.** `Tab` depuis le haut d'une page : l'ordre suit-il la lecture, le lien
    d'évitement apparaît-il en premier, l'anneau de focus est-il visible partout, le menu
@@ -137,20 +137,20 @@ suppose.
    destiné à des collectivités ou à un service public, c'est une obligation autant qu'un
    argument de vente.
 8. **L'image de partage.** Ouvre `/opengraph-image` et regarde-la. C'est la vignette qui
-   s'affiche quand le lien du site est envoyé par messagerie — souvent la toute première
+   s'affiche quand le lien du site est envoyé par messagerie, souvent la toute première
    chose qu'un client voit du travail. Elle est générée automatiquement, donc jamais
    regardée : nom tronqué, contraste raté, description qui déborde ne se voient qu'ici.
-9. **Les queues des lettres** — g, y, p — dans tout texte masqué ou tronqué, à 100 %.
+9. **Les queues des lettres** (g, y, p) dans tout texte masqué ou tronqué, à 100 %.
 10. **Rien ne déborde latéralement** : la page ne défile pas de côté, même en tirant.
 11. **Les trous restants, comptés et situés.** `verifier-projet.mjs` liste les
     `[[À CONFIRMER PAR L'UTILISATEUR : … ]]` avec leur fichier et leur ligne. Ceux qui sont
-    dans du code livré — `app/`, `components/`, `lib/` — sont **visibles par un visiteur** :
+    dans du code livré (`app/`, `components/`, `lib/`) sont **visibles par un visiteur** :
     sur la machine du constructeur c'est un pense-bête, sur un lien envoyé à un client c'est
     une note de chantier publiée. Un relecteur a classé celui des mentions légales comme le
     défaut le plus sérieux d'un site par ailleurs propre. Ils se redisent à la remise, un par
     un, avec leur emplacement.
 12. **Le relecteur** : un agent sans contexte, l'URL et la liste des pages, une seule
-    consigne — rapporter, pas corriger. **Il ouvre son propre onglet** (`tabs_create`) et ne
+    consigne. Rapporter, pas corriger. **Il ouvre son propre onglet** (`tabs_create`) et ne
     touche à aucun autre : c'est le seul agent autorisé à se servir du navigateur, et il
     travaille quand plus personne n'écrit.
 13. **L'œil neuf, en dernier.** La liste posée, la page regardée comme un inconnu qui

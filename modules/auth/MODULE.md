@@ -1,4 +1,4 @@
-# Module `auth` — Auth.js v5 + Prisma + identifiants
+# Module `auth` : Auth.js v5 + Prisma + identifiants
 
 Authentification e-mail / mot de passe, sans service externe, sans compte à créer.
 À greffer quand le blueprint prévoit des comptes utilisateurs.
@@ -20,7 +20,7 @@ AUTH_SECRET="<openssl rand -base64 32, ou npx auth secret>"
 
 ## 3. Schéma Prisma
 
-Fusionner dans `prisma/schema.prisma` — **ne pas écraser les modèles du projet** :
+Fusionner dans `prisma/schema.prisma`, **ne pas écraser les modèles du projet** :
 
 ```prisma
 model User {
@@ -79,19 +79,19 @@ Copier `files/` à la racine du projet en conservant l'arborescence :
 
 | Fichier | Rôle |
 |---|---|
-| `auth.config.ts` | Config sans adaptateur — utilisable par le middleware (edge) |
+| `auth.config.ts` | Config sans adaptateur, utilisable par le middleware (edge) |
 | `auth.ts` | Instance complète, adaptateur Prisma, provider identifiants |
 | `middleware.ts` | Protège les routes privées |
 | `app/api/auth/[...nextauth]/route.ts` | Handlers |
 | `lib/actions/auth-actions.ts` | Server action de connexion |
-| `app/connexion/page.tsx` | Page de connexion — **Server Component** |
-| `app/connexion/formulaire.tsx` | Le formulaire — composant client |
+| `app/connexion/page.tsx` | Page de connexion, **Server Component** |
+| `app/connexion/formulaire.tsx` | Le formulaire, composant client |
 
 ### Pourquoi la connexion est coupée en deux
 
 La page doit lire `?suite=` pour renvoyer l'utilisateur là où il allait. En Next.js 15,
 `searchParams` est une **promesse** côté serveur, et `useSearchParams` côté client exige une
-frontière `Suspense` — sans quoi le build échoue. La page lit donc le paramètre côté serveur
+frontière `Suspense`, sans quoi le build échoue. La page lit donc le paramètre côté serveur
 et le passe en prop au formulaire client, qui le renvoie dans un champ caché.
 
 Le paramètre est filtré : seul un chemin interne est accepté (`/…` mais pas `//…`), sinon

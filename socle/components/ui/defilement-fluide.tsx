@@ -14,7 +14,7 @@ import { gsap, ScrollTrigger, mouvementReduit } from "@/lib/gsap";
 
    Attention, c'est le seul élément du socle qui **détourne une interaction
    native**. Sur une vitrine ou une boutique, c'est un parti pris assumé ; sur
-   une application visitée tous les jours, retire ce composant du layout —
+   une application visitée tous les jours, retire ce composant du layout :
    rien d'autre n'en dépend.
 
    Lenis est piloté par l'horloge de GSAP, et prévient ScrollTrigger à chaque

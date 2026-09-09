@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { lireReglages } from "@/lib/reglages";
 
 /* ---------------------------------------------------------------------------
-   Politique de confidentialité — dès qu'une donnée est collectée, même un
+   Politique de confidentialité : dès qu'une donnée est collectée, même un
    simple formulaire de contact.
 
    Adapte les rubriques au traitement RÉEL du site. Décrire une collecte qui
@@ -44,7 +44,7 @@ export default async function Confidentialite() {
 
       <Bloc titre="Données collectées et finalités">
         <p>
-          [[À CONFIRMER PAR L'UTILISATEUR : lister ce que le site collecte réellement — par exemple nom,
+          [[À CONFIRMER PAR L'UTILISATEUR : lister ce que le site collecte réellement, par exemple nom,
           e-mail, téléphone et adresse de livraison via le formulaire de commande]]
         </p>
         <p>
@@ -61,14 +61,14 @@ export default async function Confidentialite() {
       </Bloc>
 
       <Bloc titre="Durée de conservation">
-        <p>[[À CONFIRMER PAR L'UTILISATEUR : durée réelle — par exemple 3 ans après le dernier contact,
+        <p>[[À CONFIRMER PAR L'UTILISATEUR : durée réelle, par exemple 3 ans après le dernier contact,
           10 ans pour les pièces comptables]]</p>
       </Bloc>
 
       <Bloc titre="Destinataires">
         <p>
-          [[À CONFIRMER PAR L'UTILISATEUR : lister les sous-traitants réels — hébergeur, prestataire de
-          paiement, transporteur, service d&apos;envoi d&apos;e-mails]]
+          [[À CONFIRMER PAR L'UTILISATEUR : lister les sous-traitants réels (hébergeur, prestataire de
+          paiement, transporteur, service d&apos;envoi d&apos;e-mails)]]
         </p>
       </Bloc>
 
@@ -79,7 +79,7 @@ export default async function Confidentialite() {
           l&apos;exercer, écrivez à {contact}.
         </p>
         <p>
-          Vous pouvez également introduire une réclamation auprès de la CNIL —{" "}
+          Vous pouvez également introduire une réclamation auprès de la CNIL :{" "}
           <a
             href="https://www.cnil.fr"
             target="_blank"
@@ -95,7 +95,7 @@ export default async function Confidentialite() {
       <Bloc titre="Cookies">
         <p>
           [[À CONFIRMER PAR L'UTILISATEUR : décrire les traceurs réellement utilisés. Si le site n&apos;utilise
-          ni mesure d&apos;audience ni publicité, l&apos;écrire — c&apos;est une information
+          ni mesure d&apos;audience ni publicité, l&apos;écrire : c&apos;est une information
           en soi, et il n&apos;y a alors pas de bandeau à afficher]]
         </p>
       </Bloc>

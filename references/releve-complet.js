@@ -1,5 +1,5 @@
 /* ===========================================================================
-   RELEVÉ COMPLET D'UN SITE DE RÉFÉRENCE — un seul passage, six dimensions.
+   RELEVÉ COMPLET D'UN SITE DE RÉFÉRENCE : un seul passage, six dimensions.
 
    À coller tel quel dans `javascript_tool` sur la page de référence, une fois
    qu'elle est chargée (voir extraction-charte.md §1-4 pour l'atteindre : SPA,
@@ -109,8 +109,8 @@ R.photos = {
         alt: i.alt,
         naturel: i.naturalWidth + "x" + i.naturalHeight,
         /* --- LE CADRAGE : autant travaillé que la palette ---
-           Sur la référence, trois motifs distincts coexistaient — 16/11 pour
-           les blocs, hauteur fixe pour les cartes, 4/5 pour les portraits —
+           Sur la référence, trois motifs distincts coexistaient (16/11 pour
+           les blocs, hauteur fixe pour les cartes, 4/5 pour les portraits)
            avec UN coin surdimensionné par photo, alterné d'une photo à
            l'autre. C'est ce rythme qui fait l'élégance, pas le rayon uniforme. */
         cadre: {
@@ -154,7 +154,7 @@ const mvt = {
 
 // Apparitions : mesurer AVANT d'avoir parcouru la page. Une apparition
 // jouée « une fois » a déjà joué si on a défilé, et on conclurait qu'il
-// n'y en a pas — erreur commise, puis corrigée en rechargeant.
+// n'y en a pas. Erreur commise, puis corrigée en rechargeant.
 const sousLePli = [...document.querySelectorAll("section h2, section img, section p")].filter(
     (el) => el.getBoundingClientRect().top > window.innerHeight * 1.5,
 );
@@ -174,7 +174,7 @@ mvt.apparitions = {
    retient le retard maximal. Tester une seule image donne un faux négatif :
    la première image d'une page est souvent un fond de héros en `absolute
    inset-0`, qui suit le défilement exactement. Erreur commise en testant ce
-   script — il concluait « pas de parallaxe » sur une page qui en avait. */
+   script : il concluait « pas de parallaxe » sur une page qui en avait. */
 const hauteurPage = document.documentElement.scrollHeight;
 const mesures = [];
 for (const fraction of [0.2, 0.45, 0.7]) {
@@ -225,14 +225,14 @@ window.scrollTo(0, yDepart);
    La référence avait trois téléphones dans son héros : chacun un lien vers sa
    page de marque, tous les trois se soulevant au survol. Elle avait aussi un
    bouton flottant en bas à droite, sur chaque page. Le relevé mesurait bien
-   les transitions et listait bien les liens — mais séparément, dans deux
+   les transitions et listait bien les liens, mais séparément, dans deux
    sections qui ne se parlaient pas. Le site livré a eu un téléphone, immobile
    et sans lien, et plus de bouton flottant. Personne ne s'en est aperçu avant
    la remise.
 
    Cette section réunit les trois informations sur UNE ligne par élément : ce
    que c'est, où ça mène, comment ça réagit. Le blueprint doit ensuite donner à
-   chaque ligne un verdict — reproduit, réinterprété, abandonné — avec la
+   chaque ligne un verdict (reproduit, réinterprété, abandonné) avec la
    raison quand c'est abandonné. Un élément qui disparaît sans sa ligne est un
    défaut, pas une décision. */
 const transitionDe = (el) => {
@@ -306,5 +306,5 @@ R.CHECKLIST = [
 ];
 
 // Dernière expression : `javascript_tool` la renvoie telle quelle.
-// Pas de `return` — il serait hors fonction, donc invalide.
+// Pas de `return` : il serait hors fonction, donc invalide.
 JSON.stringify(R, null, 1);

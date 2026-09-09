@@ -43,7 +43,7 @@ const opt = (nom) => {
 };
 
 /* Une seule interface de lecture, ouverte au premier besoin, fermée à la fin.
-   Sans terminal — CI, script — aucune question n'est posée : on garde ce qu'on a. */
+   Sans terminal (CI, script), aucune question n'est posée : on garde ce qu'on a. */
 let rl = null;
 async function demander(question) {
   if (!process.stdin.isTTY) return "";
@@ -127,7 +127,7 @@ if (!racine) {
 config.racineProjets = racine;
 config.appellation = appellation ?? "";
 
-/* Photos provisoires. Sans clé, Openverse prend le relais — sur le sujet mais
+/* Photos provisoires. Sans clé, Openverse prend le relais, sur le sujet mais
    tiré d'une archive. La question ne se pose qu'une fois : une réponse vide
    est gardée comme telle, on ne la redemande pas à chaque relance. */
 const pexels = opt("pexels");
@@ -138,8 +138,8 @@ else if (config.pexelsApiKey === undefined) {
   );
 }
 
-/* Identité git. Le premier commit d'un projet est refusé — « Author identity
-   unknown » — sur une machine sans configuration globale. On ne demande que
+/* Identité git. Le premier commit d'un projet est refusé (« Author identity
+   unknown ») sur une machine sans configuration globale. On ne demande que
    dans ce cas : si la globale existe, elle suffit et on n'y touche pas. */
 const gitNom = opt("git-nom");
 const gitEmail = opt("git-email");

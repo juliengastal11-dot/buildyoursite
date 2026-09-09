@@ -1,4 +1,4 @@
-# Le décor — fonds, et bibliothèques de composants
+# Le décor : fonds, et bibliothèques de composants
 
 Deux raisons font qu'un site généré se reconnaît au premier coup d'œil : **des sections
 rectangulaires empilées sur un fond uni**, et **une structure identique d'un site à l'autre**.
@@ -14,7 +14,7 @@ node "<skill>/scripts/fonds.mjs" --lister
 ```
 
 Les couleurs sortent des jetons `--color-*` du bloc `@theme` : **un fond ne peut pas être hors
-palette**, il n'a pas d'autre source. Le rendu est déterministe — même graine, même forme —
+palette**, il n'a pas d'autre source. Le rendu est déterministe (même graine, même forme),
 donc un changement de palette se régénère sans perdre la composition.
 
 | Besoin | Type | Hauteur | Réglage |
@@ -29,7 +29,7 @@ donc un changement de palette se régénère sans perdre la composition.
 
 **Deux fonds par site, pas davantage.** Un héros et un séparateur, c'est déjà beaucoup.
 Et seulement ceux que le blueprint nomme, avec leur emplacement : un fond généré « au cas où »
-finit dans `public/` sans emploi — c'est arrivé.
+finit dans `public/` sans emploi. C'est arrivé.
 Au-delà, chaque section a son décor et la page paraît rapiécée.
 
 **Le texte passe avant le fond.** Si la lecture demande un effort, baisse l'opacité ou pose
@@ -45,15 +45,15 @@ modifiable à la main.
 
 Le premier jet posait les triangles de `grille` à 0,04 d'opacité et 80 points pour
 1 440 × 500. Rendu puis mesuré au pixel : un écart de 20 sur 765 avec le fond, et un pour cent
-de couverture. Invisible. La règle est devenue un calcul — on prend dans la palette la
+de couverture. Invisible. La règle est devenue un calcul : on prend dans la palette la
 couleur la plus éloignée du fond en luminance, et l'opacité compense un contraste faible.
 Après correction, sur une charte crème et pétrole : écart moyen de 80 pour `grille`, pics à
-184 pour `points`. **Discret veut dire léger, pas absent** — et ça se vérifie en regardant
+184 pour `points`. **Discret veut dire léger, pas absent**, et ça se vérifie en regardant
 les pixels, pas en jugeant à l'œil dans un panneau qui ne repeint pas toujours.
 
 ---
 
-## 2. Les registres de composants — une référence, pas une réserve
+## 2. Les registres de composants : une référence, pas une réserve
 
 Le socle déclare un registre au format shadcn dans `socle/components.json` :
 
@@ -91,7 +91,7 @@ il donne l'identité, pas l'agencement.
 | Titres et textes de démonstration | Le garde-fou les refuse, et à raison |
 
 **Donc : lire, comprendre l'agencement, réécrire avec nos jetons et nos primitives.** Un bloc
-recopié tel quel donne cinq sites identiques — c'est exactement ce que D2 refuse. Un
+recopié tel quel donne cinq sites identiques. C'est exactement ce que D2 refuse. Un
 agencement compris et rejoué avec la charte du projet donne un site qui ne ressemble à aucun
 autre.
 

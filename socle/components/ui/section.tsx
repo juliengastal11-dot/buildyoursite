@@ -28,7 +28,7 @@ export type SectionProps = {
    * Exemple : `"components/sections/hero.tsx"`.
    *
    * Posé en `data-src`, il permet à l'overlay d'édition de savoir quel fichier
-   * ouvrir quand on clique n'importe où dans la section — les descendants en
+   * ouvrir quand on clique n'importe où dans la section. Les descendants en
    * héritent. **À renseigner systématiquement** : c'est ce qui remplace une
    * recherche dans tout le projet par une recherche dans un seul fichier.
    */

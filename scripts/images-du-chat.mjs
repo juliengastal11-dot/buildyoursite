@@ -12,7 +12,7 @@
    `.jsonl`, et les images y sont stockées en base64, avec leur type. Il suffit
    donc de les décoder.
 
-   Ce que ça change : le geste naturel — glisser cinq photos dans le chat —
+   Ce que ça change : le geste naturel (glisser cinq photos dans le chat)
    devient le bon geste. Personne n'a plus à créer un dossier, à retrouver un
    chemin, ni à comprendre pourquoi son fichier « n'existe pas ».
 
@@ -52,7 +52,7 @@ if (drapeau("help")) {
 
 /* Claude Code range les conversations dans ~/.claude/projects/<dossier-encodé>.
    Le nom encode le chemin du projet : `C:\Sites` devient `C--Sites`. On ne
-   devine pas — on prend le fichier le plus récemment écrit, qui est la session
+   devine pas. On prend le fichier le plus récemment écrit, qui est la session
    en cours, celle qui vient justement de recevoir les images. */
 function transcription() {
   const force = opt("transcription");
@@ -129,8 +129,8 @@ for (let i = lignes.length - 1; i >= 0 && images.length < combien; i--) {
     continue;
   }
   /* Deux sortes d'images vivent dans une conversation : celles que la personne
-     a collées, et celles qu'un outil a rendues — mes propres captures du
-     panneau, par dizaines. Seules les premières nous intéressent, et elles se
+     a collées, et celles qu'un outil a rendues (mes propres captures du
+     panneau, par dizaines). Seules les premières nous intéressent, et elles se
      distinguent à ce qu'elles n'accompagnent aucun résultat d'outil. */
   if (obj.toolUseResult !== undefined) continue;
   const trouvees = [];

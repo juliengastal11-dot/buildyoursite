@@ -4,7 +4,7 @@ import type { DefaultSession } from "next-auth";
    Typage de la session.
 
    Sans ce fichier, `session.user.id` et `session.user.role` n'existent pas pour
-   TypeScript, et chaque appelant écrit `(session.user as { id?: string }).id` —
+   TypeScript, et chaque appelant écrit `(session.user as { id?: string }).id` :
    un cast répété partout, qui finit par masquer une vraie erreur de type.
 
    Les champs sont remplis dans les callbacks `jwt` et `session` de
