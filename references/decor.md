@@ -72,8 +72,39 @@ lecture gratuite et immédiate, et c'est là tout l'intérêt.
 
 > **La recherche par mot-clé ne fonctionne pas sur ce registre** : il ne publie pas d'index
 > `registry.json`, donc `shadcn search` échoue. On consulte un composant dont on connaît le
-> nom. Le site de la bibliothèque sert à en trouver un ; un serveur MCP hébergé existe aussi
-> et couvre la recherche, mais il n'est pas nécessaire pour lire.
+> nom, et c'est là qu'un connecteur de bibliothèque prend le relais.
+
+### Le connecteur de bibliothèque : ce qui est gratuit, ce qui se compte
+
+Si le relevé des capacités a trouvé **un connecteur de bibliothèque de composants**, il
+répond à la question que la ligne de commande ne sait pas poser : « montre-moi des sections
+de tarifs à trois formules ». Éprouvé sur un connecteur réel, voici ce qui se paie et ce qui
+ne se paie pas. La distinction commande tout le reste.
+
+| Ce qu'on demande | Ce que ça rend | Ce que ça coûte |
+|---|---|---|
+| La recherche, par mots-clés ou par besoin | nom, description, auteur, **une image de rendu**, parfois une vidéo, la commande d'installation | rien, et sans plafond |
+| Le classement par pertinence sur un besoin écrit en français | les mêmes fiches, avec un indice de confiance et la raison du choix | rien |
+| Un thème de couleurs | le CSS complet des jetons, prêt à lire | rien |
+| **Le code source d'un composant** | le composant, sa démo, ses dépendances | **une unité sur deux par jour** au palier gratuit |
+
+**L'image de rendu est la clé.** Elle s'enregistre avec `curl` et se regarde directement. Sur
+une section de tarifs, elle a suffi à lire tout ce qu'on cherchait : l'eyebrow au-dessus du
+titre, les trois cartes dont celle du milieu surélevée avec sa pastille, le prix en gros
+avec sa mention par mois posée sur la même ligne de base, la liste à coches, et le bouton
+plein sur la carte mise en avant quand les deux autres l'ont en contour. C'est l'agencement,
+c'est-à-dire exactement ce qu'on était venu chercher, et ça n'a rien coûté.
+
+**Donc : on cherche, on regarde l'image, on rejoue avec nos jetons.** Le code source ne se
+demande que si l'image laisse une vraie question sans réponse, par exemple une mécanique
+d'ouverture qu'on ne devine pas. Et comme il se compte, **il se demande à l'utilisateur
+avant**, avec le chiffre du jour : « il me reste deux consultations de code aujourd'hui,
+j'en prends une pour comprendre comment ce panneau s'ouvre ? ». C'est la règle de l'argent,
+qui ne fait pas d'exception pour un quota gratuit.
+
+> **La vidéo de rendu ne se regarde pas.** Le panneau navigateur refuse de naviguer vers un
+> `.mp4`, et l'extraction d'images demande `ffmpeg`, absent de la machine par défaut. La
+> description du composant dit souvent ce qui bouge ; c'est ce qu'on lit à la place.
 
 ### Ce qu'on en prend, et ce qu'on n'en prend pas
 
@@ -89,6 +120,17 @@ il donne l'identité, pas l'agencement.
 | `bg-zinc-50`, `text-[#272729]`, `dark:bg-zinc-900` | Des couleurs en dur, hors de notre thème. Le site perd son identité section par section, et un changement de palette ne les atteint pas |
 | `motion`, `react-icons`, `react-use-measure` | Une seconde bibliothèque de mouvement à côté de GSAP, et deux dépendances d'icônes. Voir D7 : deux systèmes de mouvement, c'est un de trop |
 | Titres et textes de démonstration | Le garde-fou les refuse, et à raison |
+
+**Le garde-fou est le filet, pas la permission.** `verifier-projet.mjs` bloque désormais
+toute couleur hors du thème : la palette nommée de Tailwind avec sa nuance, le blanc et le
+noir absolus, et la valeur écrite à la main dans la classe. Mesuré sur un composant repris
+tel quel : trois blocages en une ligne. Il attrape aussi le jeton étranger, du type
+`text-primary-foreground`, que notre thème ne définit pas puisqu'il dit `text-on-primary`.
+
+**Tous les composants ne sont pas sales.** Certains, écrits au format shadcn, n'emploient
+que des jetons et s'appuient sur des primitives qu'on a déjà : bouton, carte, icônes. Sur
+ceux-là, l'écart se résume au nom de deux ou trois jetons et aux textes de démonstration.
+Ça ne change pas la règle, ça change seulement le temps que l'adaptation prend.
 
 **Donc : lire, comprendre l'agencement, réécrire avec nos jetons et nos primitives.** Un bloc
 recopié tel quel donne cinq sites identiques. C'est exactement ce que D2 refuse. Un

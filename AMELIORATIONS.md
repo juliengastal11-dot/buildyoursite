@@ -2053,3 +2053,40 @@ phrase, et elle prend deux points. Les deux vivaient dans le même fichier.
 conditions de vente, les incises des mentions légales, la liste des sous-traitants de la
 politique de confidentialité : treize chaînes lues par les visiteurs de tous les sites
 construits jusqu'ici.
+
+## Une bibliothèque de composants, branchée par sa capacité (2026-09-12)
+
+Un connecteur de bibliothèque a été ajouté au compte. Avant d'écrire une seule règle, j'ai
+appelé ses outils, parce qu'une règle écrite sur une capacité supposée finit en promesse
+fausse dans le skill. Cinq mesures, toutes utiles.
+
+**La recherche est gratuite et sans plafond.** Elle rend nom, description, auteur, une image
+de rendu, parfois une vidéo, et la commande d'installation. Le classement par pertinence
+accepte un besoin écrit en français et rend un indice de confiance avec sa raison.
+
+**L'image de rendu se télécharge et se regarde.** C'est la découverte qui décide de tout le
+reste : l'agencement d'une section de tarifs s'y lit en entier, cartes, pastille, ligne de
+base du prix, liste à coches, bouton plein au centre. On n'a pas besoin du code pour ça.
+
+**Le code source, lui, se compte : deux par jour.** Le retour porte le solde restant et
+l'heure de recharge. Ce n'est pas de l'argent, mais c'est une réserve qui appartient à
+l'utilisateur. Décision D19, dans le prolongement de D16.
+
+**La vidéo de rendu ne se regarde pas.** Le panneau refuse un `.mp4` et `ffmpeg` est absent
+de la machine. La description dit souvent ce qui bouge, et c'est ce qu'on lit à la place.
+
+**Tous les composants ne sont pas sales.** Celui que j'ai récupéré n'employait que des jetons
+et des primitives qu'on a déjà. L'écart tenait au nom de deux jetons et aux textes de
+démonstration. D'autres fiches, en revanche, annoncent une seconde bibliothèque de mouvement.
+
+### Le trou que ce chantier a révélé
+
+Le contrôle des couleurs cherchait une couleur du thème qui n'existe pas. Il ne voyait donc
+pas `bg-zinc-900` : cette classe existe toujours, Tailwind la fournit d'office. Testé sur du
+code repris tel quel, le garde-fou ne signalait qu'un jeton étranger sur quatre problèmes et
+laissait passer la palette entière.
+
+Un contrôle bloquant a été ajouté : palette nommée de Tailwind avec sa nuance, blanc et noir
+absolus, valeur écrite à la main dans la classe. Mesuré avant d'en faire un bloquant, le
+socle, les modules et deux sites déjà livrés n'en portent aucune. Zéro faux positif, trois
+blocages sur le code importé.

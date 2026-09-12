@@ -257,6 +257,7 @@ propre liste d'outils, et cherche une capacité, jamais une marque** :
 | **Un générateur d'images ou de vidéo** | un outil qui fabrique une image ou une vidéo à partir d'un texte (noms fréquents : `generate_image`, `generate_video`, `text_to_image`), souvent accompagné de retouche : détourage, agrandissement, remplacement de fond | les visuels manquants peuvent être **générés dans l'univers du site** au lieu d'être provisoires |
 | **De quoi en connaître le coût** | sur le même connecteur, un outil de solde, de crédits, de quota ou de facturation | tu peux annoncer un prix avant chaque image ; sans lui, dis que le coût n'est pas mesurable d'ici |
 | **Un animateur d'image** | un outil de génération vidéo qui accepte **une image en entrée**, un rôle `image` dans ses médias | **animer les vraies photos du client** en boucles de quelques secondes. Mieux qu'un visuel inventé : il garde son lieu et ses gens. Voir `references/video.md` |
+| **Une bibliothèque de composants** | un outil qui cherche des composants d'interface et rend des fiches avec **une image de rendu** (noms fréquents : `search`, `get_component`, `get_inspiration`) | tu peux **voir** comment d'autres agencent une section avant d'écrire la tienne. La recherche est gratuite, la récupération du code se compte : voir `references/decor.md` |
 | **Un hébergeur** | un outil de déploiement, de domaine ou de serveur | rien. Note-le sans rien en faire, on ne déploie pas |
 
 **N'écris jamais de liste de services connus dans ce skill.** Une liste de marques est déjà
@@ -1538,11 +1539,19 @@ est un défaut qu'on livre.
    Les couleurs sortent des jetons du thème, donc un fond ne peut pas être hors palette. Les
    cinq types, les hauteurs, et la règle des deux fonds par site : `references/decor.md`.
 
-   **Et si l'agencement d'une section te manque**, le socle déclare un registre de composants
-   que tu peux lire depuis le terminal, sans navigateur : `npx shadcn@latest view
-   @watermelon/<nom>`. **Tu lis la composition, tu ne colles pas le code** : il porte des
-   couleurs en dur, du texte de démonstration et une seconde bibliothèque de mouvement.
-   Rejoue l'agencement avec nos jetons et nos primitives. Les trois raisons, détaillées :
+   **Et si l'agencement d'une section te manque**, va voir comment d'autres l'ont résolu.
+   Deux chemins, dans cet ordre. **Si le relevé a trouvé un connecteur de bibliothèque de
+   composants**, cherche par le besoin, en français : la recherche est gratuite et sans
+   plafond, et chaque fiche porte une image de rendu. **Enregistre l'image et regarde-la** :
+   c'est là qu'est l'agencement, et ça ne coûte rien. Sinon, ou en complément, le socle
+   déclare un registre lisible depuis le terminal : `npx shadcn@latest view @watermelon/<nom>`.
+
+   **Tu lis la composition, tu ne colles pas le code.** Il porte des couleurs hors du thème,
+   du texte de démonstration, parfois une seconde bibliothèque de mouvement à côté de GSAP.
+   Rejoue l'agencement avec nos jetons et nos primitives ; le garde-fou bloque le reste.
+   **Et la récupération du code source d'un composant se compte** : deux par jour au palier
+   gratuit du connecteur éprouvé. Elle ne se demande que si l'image laisse une vraie question
+   sans réponse, et **elle se demande à l'utilisateur avant**, avec le chiffre du jour. Tout :
    `references/decor.md`.
 
    **Puis l'audit de sécurité, promis au premier message.** Le garde-fou en automatise une
@@ -1856,6 +1865,11 @@ pas un blocage.
 une image générée, pas une vidéo, pas un appel facturé, pas un nom de domaine. Annoncer un
 prix n'est pas obtenir un accord : après l'annonce, tu t'arrêtes et tu attends. Vécu : 78
 crédits engagés en cinq générations, sur des messages qui disaient « je lance maintenant ».
+
+**Un quota gratuit se demande comme un crédit.** Deux consultations de code par jour sur une
+bibliothèque, c'est une réserve qui appartient à l'utilisateur et qui ne se recharge que le
+lendemain. La dépenser pour une curiosité, c'est la lui retirer pour la section où il en
+aurait eu besoin. Dis ce qu'il reste, dis à quoi tu veux t'en servir, et attends.
 
 **Aucune mise en ligne.** Tu n'ouvres de compte chez personne, tu ne choisis pas d'hébergeur,
 tu ne publies pas le site. Le code reste chez l'utilisateur, dans son dépôt, et il le met en

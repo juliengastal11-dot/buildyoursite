@@ -188,6 +188,63 @@ async function couleursNonDefinies(racine) {
    écrite, une action serveur d'administration sans contrôle de session.
    Le reste (validation côté serveur, redirections, débit) se relit.
    =========================================================================== */
+/* ===========================================================================
+   2 bis. La palette qui n'est pas la nôtre : bloquant
+   Le contrôle précédent cherche une couleur du thème qui n'existe pas. Il ne
+   voit donc pas `bg-zinc-900` : cette classe existe toujours, Tailwind la
+   fournit d'office. Elle n'est pourtant dans le thème d'aucun projet, et
+   c'est exactement ce qu'un composant copié depuis une bibliothèque traîne
+   avec lui. Le site perd son identité section par section, et le jour où la
+   palette change, ces couleurs-là ne bougent pas.
+
+   Trois formes, toutes refusées : la palette nommée de Tailwind avec sa
+   nuance (`text-slate-500`), le blanc et le noir absolus (`bg-white`), et la
+   valeur écrite à la main dans la classe (`text-[#272729]`).
+
+   Mesuré avant d'en faire un bloquant : ni le socle, ni les modules, ni un
+   site déjà livré n'en portent une seule. Zéro faux positif sur tout ce
+   qu'on a construit.
+   =========================================================================== */
+const PALETTE_TAILWIND = new Set([
+  "slate", "gray", "zinc", "neutral", "stone", "red", "orange", "amber",
+  "yellow", "lime", "green", "emerald", "teal", "cyan", "sky", "blue",
+  "indigo", "violet", "purple", "fuchsia", "pink", "rose",
+]);
+
+const PREFIXES_COULEUR =
+  "text|bg|border|ring|fill|stroke|decoration|divide|caret|outline|from|via|to|shadow|accent|placeholder";
+
+async function paletteHorsTheme(racine) {
+  const trouvees = new Map();
+  for (const f of await fichiers(racine, [".tsx", ".ts"])) {
+    const texte = sansCommentaires(await readFile(f, "utf8"));
+    for (const [i, ligne] of texte.split("\n").entries()) {
+      const ou = `${cheminLisible(racine, f)}:${i + 1}`;
+
+      for (const m of ligne.matchAll(new RegExp(`(?:${PREFIXES_COULEUR})-([a-z]+)-(\\d{2,3})\\b`, "g"))) {
+        if (!PALETTE_TAILWIND.has(m[1])) continue;
+        if (!trouvees.has(m[0])) trouvees.set(m[0], ou);
+      }
+      for (const m of ligne.matchAll(new RegExp(`\\b(?:${PREFIXES_COULEUR})-(white|black)\\b`, "g"))) {
+        if (!trouvees.has(m[0])) trouvees.set(m[0], ou);
+      }
+      for (const m of ligne.matchAll(new RegExp(`(?:${PREFIXES_COULEUR})-\\[(#[0-9a-fA-F]{3,8}|rgba?\\([^\\]]*|hsla?\\([^\\]]*)\\]`, "g"))) {
+        if (!trouvees.has(m[0])) trouvees.set(m[0], ou);
+      }
+    }
+  }
+  if (trouvees.size === 0) return;
+  const liste = [...trouvees].slice(0, 8).map(([c, ou]) => `${ou} · ${c}`).join("\n      ");
+  const reste = trouvees.size - 8;
+  signale(
+    true,
+    `${trouvees.size} couleur(s) hors du thème`,
+    liste +
+      (reste > 0 ? `\n      … et ${reste} autre(s)` : "") +
+      `\n      remplace par un jeton du thème ; c'est la trace d'un composant repris sans être adapté`,
+  );
+}
+
 async function securite(racine) {
   // .env suivi par git : la clé de tout le monde.
   try {
@@ -670,6 +727,7 @@ if (cibleSocle) {
   console.log(`Contrôle du socle · ${racine}\n`);
   await donneesPersonnelles(racine);
   await couleursNonDefinies(racine);
+  await paletteHorsTheme(racine);
   await degradesObsoletes(racine);
   await policesDistantes(racine);
   await valeursEnDur(racine);
@@ -679,6 +737,7 @@ if (cibleProjet) {
   const racine = path.resolve(cibleProjet === true ? "." : cibleProjet);
   console.log(`Contrôle du projet · ${racine}${production ? " (avant production)" : ""}\n`);
   await couleursNonDefinies(racine);
+  await paletteHorsTheme(racine);
   await degradesObsoletes(racine);
   await policesDistantes(racine);
   await traceDesign(racine);

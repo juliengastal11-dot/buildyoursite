@@ -531,3 +531,28 @@ devient un point médian « · » plutôt qu'une virgule.
 
 `verifier-projet.mjs` le signale avec les mots creux, en avertissement ; un tiret voulu se
 tait avec le commentaire `mots-creux-ok`. Demande de l'utilisateur, le 2026-09-08.
+
+---
+
+## D19. On regarde l'image du composant, on ne prend pas son code
+
+Une bibliothèque de composants répond à la seule question qu'un design system ne traite pas :
+comment agencer une section. Mais elle répond de deux façons, et une seule est gratuite.
+
+**La recherche ne coûte rien et n'a pas de plafond.** Elle rend une fiche par composant, avec
+une image de rendu. Cette image s'enregistre et se regarde : sur une section de tarifs, elle
+a donné l'eyebrow, les trois cartes dont celle du milieu surélevée avec sa pastille, le prix
+et sa mention posés sur la même ligne de base, la liste à coches, le bouton plein au centre
+et en contour sur les côtés. C'est l'agencement en entier, sans une unité dépensée.
+
+**Le code source se compte : deux par jour au palier gratuit.** Il ne se demande que si
+l'image laisse une vraie question sans réponse, et il se demande à l'utilisateur avant, avec
+le chiffre du jour. Un quota gratuit est une réserve qui lui appartient et qui ne se recharge
+que le lendemain : le dépenser pour une curiosité, c'est le lui retirer pour la section où il
+en aurait eu besoin. C'est D16 appliqué à autre chose que des crédits.
+
+**Et le code, quand on l'a, ne se colle pas.** Il porte des couleurs hors du thème, du texte
+de démonstration, parfois une seconde bibliothèque de mouvement. Le garde-fou bloque
+désormais toute couleur hors du thème, ce qui rend l'emprunt sûr sans le rendre automatique.
+
+Éprouvé le 2026-09-12 sur un connecteur réel, avant d'écrire la moindre règle.
