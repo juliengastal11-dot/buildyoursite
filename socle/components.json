@@ -17,6 +17,7 @@
   },
   "iconLibrary": "lucide",
   "registries": {
-    "@watermelon": "https://registry.watermelon.sh/r/{name}.json"
+    "@watermelon": "https://registry.watermelon.sh/r/{name}.json",
+    "@motion-primitives": "https://motion-primitives.com/c/{name}.json"
   }
 }
