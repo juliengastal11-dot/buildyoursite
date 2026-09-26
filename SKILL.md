@@ -164,6 +164,8 @@ peut suivre du doigt. Reprends-la telle quelle, en remplaçant `{appellation}` s
 >    déjà (un logo, des photos, un site qui t'appartient).
 > 3. **Je prépare le terrain** : l'identité visuelle, une direction claire, et je vais
 >    lire comment les clients de ce métier parlent, pour écrire le site dans leurs mots.
+>    Puis je cherche dans ta bibliothèque d'inspiration comment d'autres ont réussi chaque
+>    section, avant de dessiner la tienne.
 > 4. **Je t'écris le plan complet** : les pages, les textes, mes hypothèses numérotées.
 >    C'est le moment où tu reprends la main : tu relis, tu corriges, et rien ne se
 >    construit avant ton accord.
@@ -257,13 +259,18 @@ propre liste d'outils, et cherche une capacité, jamais une marque** :
 | **Un générateur d'images ou de vidéo** | un outil qui fabrique une image ou une vidéo à partir d'un texte (noms fréquents : `generate_image`, `generate_video`, `text_to_image`), souvent accompagné de retouche : détourage, agrandissement, remplacement de fond | les visuels manquants peuvent être **générés dans l'univers du site** au lieu d'être provisoires |
 | **De quoi en connaître le coût** | sur le même connecteur, un outil de solde, de crédits, de quota ou de facturation | tu peux annoncer un prix avant chaque image ; sans lui, dis que le coût n'est pas mesurable d'ici |
 | **Un animateur d'image** | un outil de génération vidéo qui accepte **une image en entrée**, un rôle `image` dans ses médias | **animer les vraies photos du client** en boucles de quelques secondes. Mieux qu'un visuel inventé : il garde son lieu et ses gens. Voir `references/video.md` |
-| **Une bibliothèque de composants** | un outil qui cherche des composants d'interface et rend des fiches avec **une image de rendu** (noms fréquents : `search`, `get_component`, `get_inspiration`) | tu peux **voir** comment d'autres agencent une section avant d'écrire la tienne. La recherche est gratuite, la récupération du code se compte : voir `references/decor.md` |
+| **La bibliothèque d'inspiration** | le skill `bibliotheques-ui`, et les serveurs qu'il cite : `search`, `get_component`, `get_inspiration`, `search_design_systems`, `list_skills` | **consultée obligatoirement en phase 0.59**, section par section. Note dans le relevé quelles sources répondent ; une source muette se dit, elle ne bloque pas les autres |
 | **Un hébergeur** | un outil de déploiement, de domaine ou de serveur | rien. Note-le sans rien en faire, on ne déploie pas |
 
 **N'écris jamais de liste de services connus dans ce skill.** Une liste de marques est déjà
 fausse le jour où on l'écrit (chacun a son fournisseur) et périmée six mois plus tard. La
 capacité, elle, ne vieillit pas. Nomme dans le relevé **le connecteur que tu as réellement
 trouvé**, quel qu'il soit, et sers-t'en ensuite sous ce nom.
+
+**Une exception, décidée par l'utilisateur : la bibliothèque d'inspiration.** Ce skill est
+désormais à son usage seul, et il veut que chaque site passe par sa bibliothèque. Elle est
+donc nommée, mais elle vit ailleurs : dans le skill `bibliotheques-ui`, qui tient la liste
+des sources et la façon de les interroger. C'est là qu'on l'enrichit, jamais ici.
 
 Recopie le tout en une checklist, une ligne par capacité, et dis ce que chaque ✗ change.
 Exemple, avec un générateur appelé ici `X`, le tien portera un autre nom :
@@ -1047,6 +1054,68 @@ Ce que ça donne, et ce que ça interdit :
 Écris le relevé dans le blueprint, sous **« Voix des clients »**, avec les sources. C'est
 ce qui nourrit `CONTENU.md` à l'étape suivante.
 
+## Phase 0.59 : La bibliothèque d'inspiration
+
+**Aucune section ne se dessine de tête.** Avant le blueprint, pour chaque section prévue, tu
+vas voir comment d'autres l'ont réussie. C'est obligatoire, sur tous les chemins, y compris
+le mode fidèle, et le garde-fou le vérifie. Une section inventée de tête ressemble à toutes
+les autres ; une section rejouée d'après deux ou trois bonnes références ressemble à
+quelqu'un.
+
+**Invoque le skill `bibliotheques-ui`.** Il tient la bibliothèque : quelle source interroger
+selon le besoin, et comment. Composants, sections entières, mouvement, jetons, fonds,
+finitions : chaque besoin a ses sources, par serveur MCP, par registre shadcn ou par lecture
+directe d'un site.
+
+Pour chaque section du plan :
+
+1. **Cherche dans au moins deux sources**, par le besoin, en français quand la source le
+   comprend : « section tarifs à trois formules, celle du milieu mise en avant ». Pour une
+   section entière, commence par les prompts de mise en page et les blocs ; pour un
+   composant, par les bibliothèques de composants ; pour ce qui bouge, par les sources de
+   mouvement.
+2. **Regarde, ne te contente pas de lire.** Quand une fiche porte une image de rendu,
+   enregistre-la et regarde-la : c'est là qu'est l'agencement. Une description ne dit pas où
+   tombe le regard.
+3. **Choisis ce que tu reprends, et écris-le** : un agencement, une mécanique d'interaction,
+   une valeur de mouvement, un détail de finition. Jamais un bloc entier recopié : cinq sites
+   bâtis sur le même bloc se ressemblent tous.
+
+Le squelette de chaque section, en phase 0.6, suit la référence retenue.
+
+**Ce qui ne change pas.** On lit, on ne colle pas : le code d'une bibliothèque porte ses
+couleurs, ses textes de démonstration, parfois une bibliothèque de mouvement de plus. On
+rejoue avec les jetons et les primitives du socle, GSAP reste le seul moteur de mouvement, et
+le garde-fou bloque toute couleur hors du thème. Tout ce qui se compte se demande avant :
+récupération de code sur un quota quotidien, blocs premium.
+
+**Si une source ne répond pas**, dis-le en une ligne et passe à la suivante. **Si aucune ne
+répond**, dis-le à l'utilisateur avant d'aller plus loin : construire sans bibliothèque est
+une décision qu'il prend, pas un repli silencieux.
+
+### Le relevé d'inspiration : obligatoire
+
+Le blueprint porte une section `## Relevé d'inspiration`, une ligne par section :
+
+```markdown
+## Relevé d'inspiration
+
+| Section | Consulté | Ce qu'on reprend | Ce qu'on laisse |
+|---|---|---|---|
+| Héros | vibeprompts, sections hero · 21st, « Hero Scroll Video Pin Reveal », image regardée | titre à gauche, photo pleine hauteur à droite, révélation au défilement | la vidéo, le badge animé |
+| Tarifs | watermelon, « Pricing 1 » · reui, blocs tarifs | trois cartes, celle du milieu surélevée, prix et mention sur la même ligne de base | la bascule mensuel ou annuel |
+| Réservation | reui, calendrier · component.gallery, sélecteur de date | grille du mois, créneaux en liste à droite | la vue semaine |
+```
+
+Trois usages, tous concrets. L'utilisateur voit d'où vient chaque section et peut dire « pas
+celle-là, montre-m'en une autre ». Chaque agent constructeur reçoit la ligne de sa section
+dans son brief. Et six mois plus tard, on sait ce qui a inspiré quoi, et on peut le rejouer.
+
+**Le garde-fou refuse un projet dont le blueprint n'a pas cette section**, comme pour le
+relevé de design. Une bibliothèque réellement indisponible s'écrit quand même : « aucune
+source ne répondait, sections dessinées de tête, avec l'accord de l'utilisateur » est une
+trace. Le silence n'en est pas une.
+
 ## Phase 0.6 : Blueprint
 
 **Ouvre `references/structures.md` avant d'écrire une ligne.** Il donne, par type de site,
@@ -1311,6 +1380,10 @@ est un défaut qu'on livre.
    > (`action={async (fd) => { const r = await action(fd); setRetour(r); }}`) ou passe par
    > `useActionState`. Ne la branche jamais nue sur `action={…}`.
 
+   **L'inspiration vient du relevé.** Chaque brief cite la ligne du relevé d'inspiration de
+   sa section : les sources, ce qu'on reprend, ce qu'on laisse. L'agent regarde lui-même la
+   référence avant d'écrire, et dit dans son rapport ce qu'il y a pris.
+
    **Le texte vient de `CONTENU.md`, posé tel quel.** Chaque brief cite les lignes de sa
    section et dit : « ces lignes sont finales : ne les reformule pas, ne complète pas avec
    du texte de ton cru ; s'il manque une ligne, laisse `[[À CONFIRMER PAR L'UTILISATEUR : …]]` et signale-le
@@ -1539,12 +1612,13 @@ est un défaut qu'on livre.
    Les couleurs sortent des jetons du thème, donc un fond ne peut pas être hors palette. Les
    cinq types, les hauteurs, et la règle des deux fonds par site : `references/decor.md`.
 
-   **Et si l'agencement d'une section te manque**, va voir comment d'autres l'ont résolu.
-   Deux chemins, dans cet ordre. **Si le relevé a trouvé un connecteur de bibliothèque de
-   composants**, cherche par le besoin, en français : la recherche est gratuite et sans
-   plafond, et chaque fiche porte une image de rendu. **Enregistre l'image et regarde-la** :
-   c'est là qu'est l'agencement, et ça ne coûte rien. Sinon, ou en complément, le socle
-   déclare un registre lisible depuis le terminal : `npx shadcn@latest view @watermelon/<nom>`.
+   **La bibliothèque a été consultée en phase 0.59, et elle reste ouverte pendant la
+   construction.** Chaque brief porte la ligne du relevé d'inspiration de sa section, et
+   l'agent constructeur y revient pour les détails que la ligne ne couvre pas : un survol, un
+   état vide, une transition. Toujours par le skill `bibliotheques-ui`, dans deux sources au
+   moins. Quand une fiche porte une image de rendu, **enregistre-la et regarde-la** : c'est
+   là qu'est l'agencement, et ça ne coûte rien. Les registres du projet se lisent aussi
+   depuis le terminal : `npx shadcn@latest view @reui/<nom>`.
 
    **Tu lis la composition, tu ne colles pas le code.** Il porte des couleurs hors du thème,
    du texte de démonstration, parfois une seconde bibliothèque de mouvement à côté de GSAP.

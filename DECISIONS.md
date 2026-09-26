@@ -556,3 +556,25 @@ de démonstration, parfois une seconde bibliothèque de mouvement. Le garde-fou 
 désormais toute couleur hors du thème, ce qui rend l'emprunt sûr sans le rendre automatique.
 
 Éprouvé le 2026-09-12 sur un connecteur réel, avant d'écrire la moindre règle.
+
+---
+
+## D20. La construction passe par la bibliothèque d'inspiration
+
+Décision de l'utilisateur, le 2026-09-26 : chaque site passe par sa bibliothèque d'inspiration,
+section par section, avant le blueprint. Une section dessinée de tête ressemble à toutes les
+autres ; une section rejouée d'après deux ou trois bonnes références ressemble à quelqu'un.
+
+**Ce que ça impose.** Une phase 0.59, obligatoire sur tous les chemins. Un relevé
+d'inspiration dans le blueprint, une ligne par section : les sources consultées, ce qu'on
+reprend, ce qu'on laisse. Le garde-fou bloque un blueprint qui n'en a pas, comme il bloque déjà
+celui qui n'a pas de relevé de design. Chaque agent constructeur reçoit la ligne de sa section
+et dit dans son rapport ce qu'il a pris.
+
+**Ce que ça change dans les règles du skill.** Le skill passe à l'usage seul de l'utilisateur.
+La règle « une capacité, jamais une marque » reçoit donc une exception : la bibliothèque est
+nommée. Elle vit dans le skill personnel `bibliotheques-ui`, qui tient les sources et la façon
+de les interroger ; c'est là qu'on l'enrichit.
+
+**Ce qui ne change pas.** D19 tient toujours : on regarde l'agencement, on ne colle pas le code,
+GSAP reste le seul moteur de mouvement, et tout ce qui se compte se demande avant.

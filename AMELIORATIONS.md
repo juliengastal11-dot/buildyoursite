@@ -2090,3 +2090,27 @@ Un contrôle bloquant a été ajouté : palette nommée de Tailwind avec sa nuan
 absolus, valeur écrite à la main dans la classe. Mesuré avant d'en faire un bloquant, le
 socle, les modules et deux sites déjà livrés n'en portent aucune. Zéro faux positif, trois
 blocages sur le code importé.
+
+## La bibliothèque devient une étape, plus un recours (2026-09-26)
+
+Jusqu'ici, le skill ne consultait une bibliothèque de composants qu'en secours, quand
+l'agencement d'une section manquait. Rien ne l'imposait, et le gabarit remis aux agents
+constructeurs n'en parlait pas : pendant un bootstrap, c'est la procédure du skill qui mène,
+et une étape facultative saute sans que personne le voie.
+
+**Vérifié avant d'écrire.** Un agent constructeur, du même type que ceux du bootstrap, a été
+lancé pour dire ce qu'il voyait. Il voit le skill `bibliotheques-ui`, il a interrogé un serveur
+de la bibliothèque et rapporté deux vraies sections de tarifs, et il reçoit les instructions
+globales de l'utilisateur. Une réserve : il les reçoit dans la version lue à l'ouverture de la
+session, pas celle du disque. Une consigne changée en cours de session n'atteint donc les
+agents qu'à la session suivante.
+
+**Ce qui a été écrit.** Une phase 0.59 obligatoire, annoncée dès le premier message. Un relevé
+d'inspiration exigé dans le blueprint et contrôlé par le garde-fou, testé dans les trois cas :
+absent, il bloque ; présent, avec une apostrophe droite ou courbe, il passe. Une ligne
+d'inspiration dans chaque brief, une section dédiée dans le gabarit des agents, et une sixième
+ligne à leur rapport. Décision D20.
+
+**À savoir pour les projets déjà livrés.** Leurs blueprints n'ont pas ce relevé : le garde-fou
+les bloquera, comme il bloque déjà ceux qui n'ont pas de relevé de design. C'est voulu. Le
+relevé s'écrit en quelques lignes le jour où l'on reprend un de ces sites.

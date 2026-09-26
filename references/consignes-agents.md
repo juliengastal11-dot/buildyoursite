@@ -90,12 +90,26 @@ dans ton rapport.
 fil d'ariane, ligne qui aligne une quantité et un prix, écris un point médian « · ». Une
 virgule y serait illisible.
 
+## Avant d'écrire : la bibliothèque d'inspiration
+
+Ton brief cite la ligne du relevé d'inspiration de ta section : les sources, ce qu'on
+reprend, ce qu'on laisse. **Commence par regarder toi-même la référence.** Pour un détail que
+la ligne ne couvre pas (un survol, un état vide, une transition), invoque le skill
+`bibliotheques-ui` et cherche dans deux sources avant d'écrire. Quand une fiche porte une
+image de rendu, enregistre-la et regarde-la.
+
+Tu reprends un agencement ou une mécanique, **jamais un bloc de code** : tu le réécris avec
+les jetons et les primitives listés plus haut, et GSAP reste le seul moteur de mouvement. Ce
+qui se compte (récupération de code sur un quota, bloc premium), tu ne le déclenches pas : tu
+le signales dans ton rapport.
+
 ## Ton rapport, à la fin
 
-Cinq lignes :
+Six lignes :
 1. Les fichiers écrits.
 2. Ce que tu as dû décider seul, et pourquoi.
 3. Ce que tu as marqué `[[À CONFIRMER]]`.
 4. Ce dont tu aurais eu besoin d'un autre périmètre.
 5. Ce qui, dans ces consignes, t'a semblé contradictoire ou manquant.
+6. Ce que tu as pris dans la bibliothèque, et à quelle source.
 ```

@@ -317,6 +317,22 @@ async function traceDesign(racine) {
   );
 }
 
+/* La même exigence pour la bibliothèque d'inspiration. L'utilisateur veut que
+   chaque site passe par elle, section par section : rien ne prouve qu'elle a
+   été consultée, sauf ce qu'on en garde. Une bibliothèque indisponible s'écrit
+   aussi ; le silence, lui, bloque. L'apostrophe peut être droite ou courbe. */
+async function traceInspiration(racine) {
+  const bp = path.join(racine, "BLUEPRINT.md");
+  if (!existsSync(bp)) return;
+  const texte = await readFile(bp, "utf8");
+  if (/^#+\s*Relev[eé] d['’]inspiration/im.test(texte)) return;
+  signale(
+    true,
+    "le blueprint ne dit pas où chaque section a trouvé son inspiration",
+    "BLUEPRINT.md · ajoute une section « Relevé d'inspiration » : par section, les sources consultées, ce qu'on reprend, ce qu'on laisse. Bibliothèque indisponible ? Dis-le, et dis pourquoi",
+  );
+}
+
 /* ===========================================================================
    2 ter. Une police servie par un tiers
    Un `@import` ou un `<link>` vers un CDN de polices fait transmettre l'adresse
@@ -741,6 +757,7 @@ if (cibleProjet) {
   await degradesObsoletes(racine);
   await policesDistantes(racine);
   await traceDesign(racine);
+  await traceInspiration(racine);
   await securite(racine);
   await trousLegaux(racine, production);
   await photosProvisoires(racine, production);
