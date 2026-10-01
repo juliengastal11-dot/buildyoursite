@@ -165,7 +165,8 @@ peut suivre du doigt. Reprends-la telle quelle, en remplaçant `{appellation}` s
 > 3. **Je prépare le terrain** : l'identité visuelle, une direction claire, et je vais
 >    lire comment les clients de ce métier parlent, pour écrire le site dans leurs mots.
 >    Puis je cherche dans ta bibliothèque d'inspiration comment d'autres ont réussi chaque
->    section, avant de dessiner la tienne.
+>    section, avant de dessiner la tienne. Si tu veux partir du style d'une marque connue,
+>    choisis-la dans ton nuancier : https://claude.ai/artifact/RwxGUngGJRawoceX81aJMU
 > 4. **Je t'écris le plan complet** : les pages, les textes, mes hypothèses numérotées.
 >    C'est le moment où tu reprends la main : tu relis, tu corriges, et rien ne se
 >    construit avant ton accord.
@@ -508,14 +509,20 @@ peut-être trois fois par an.
 
 Les deux questions ci-dessous sont **obligatoires et passent en dernier** :
 
-> **{appellation}, souhaites-tu que je m'inspire d'un site déjà existant ?**
-> - *Oui* → **et l'adresse arrive dans un second temps.** Une option à clic ne porte pas
->   de texte libre : il clique le libellé sans passer par « Autre ». Après son oui, demande
->   l'adresse seule, en texte, avant de continuer
+> **{appellation}, souhaites-tu que je m'inspire d'un site déjà existant, ou du style d'une
+> marque connue ?**
+> - *Oui, d'un site* → **et l'adresse arrive dans un second temps.** Une option à clic ne
+>   porte pas de texte libre : il clique le libellé sans passer par « Autre ». Après son oui,
+>   demande l'adresse seule, en texte, avant de continuer
+> - *Oui, du style d'une marque* → même mécanique, le nom arrive dans un second temps. Donne
+>   le lien de son nuancier, où il choisit et copie la consigne :
+>   https://claude.ai/artifact/RwxGUngGJRawoceX81aJMU. Puis demande le nom seul, et suis
+>   « Une marque nommée, sans adresse » (phase 0.c)
 > - *Non, compose l'identité de zéro* → UI/UX Pro Max décide tout
 
-`{appellation}` vient de `config.json`. Vide, la question devient simplement
-« Souhaites-tu que je m'inspire d'un site déjà existant ? ». N'invente jamais d'appellation.
+`{appellation}` vient de `config.json`. Vide, la question devient simplement « Souhaites-tu
+que je m'inspire d'un site déjà existant, ou du style d'une marque connue ? ». N'invente jamais
+d'appellation.
 
 > **Souhaites-tu valider le blueprint avant que je construise ?**
 > - *Oui, montre-le-moi* (recommandé) → tu t'arrêtes en phase 0.6 et tu attends
@@ -525,6 +532,10 @@ La seconde question existe pour que le choix (et la responsabilité) soient les 
 Ne la saute jamais, même quand tu penses connaître sa préférence.
 
 ## Phase 0.c : Si une référence est donnée, ou trouvée
+
+**Deux cas, qu'on distingue d'abord.** Une **adresse**, donnée ou trouvée, suit tout ce qui
+vient : trois questions, puis le relevé. Une **marque nommée sans adresse** (« dans le style de
+Stripe ») prend son propre chemin, en fin de phase : « Une marque nommée, sans adresse ».
 
 Trois questions de plus, **posées avant de relever quoi que ce soit**. Elles ne coûtent rien
 et elles évitent une contrefaçon.
@@ -690,6 +701,53 @@ de rester entre toi et toi-même :
 
 (Valeurs fictives, pour la forme du tableau. Les tiennes viennent du relevé.)
 
+### Une marque nommée, sans adresse : son DESIGN.md
+
+« Dans le style de Stripe », « sobre comme Linear » : quand l'utilisateur nomme une marque au
+lieu de donner une adresse, ou décrit une ambiance qui rappelle nettement l'une des 74 de la
+bibliothèque, ne devine pas son site et n'en ouvre aucune page. Lis son **DESIGN.md complet**,
+par le skill `bibliotheques-ui` (source awesome-design-md : l'index, la recette de lecture et
+les sections à ouvrir y sont). Quand c'est l'ambiance qui rappelle une marque, dis en une ligne
+laquelle tu retiens avant de l'ouvrir, après avoir relu son `Overview` : l'ambiance de l'index
+peut se tromper.
+
+**Ce cas ne passe pas par les trois questions, et ce n'est pas un oubli.** Elles portent sur un
+site (à qui il appartient, ses liens, reproduire ou s'inspirer), et il n'y en a pas : rien n'est
+ouvert, relevé ni téléchargé chez la marque, le fichier est un texte public. Une marque tierce
+vaut « non, c'est une inspiration » : **nouvelle création**, langage visuel seulement, aucun
+lien repris. C'est la seule lecture permise avant ces réponses, et elle ne contredit pas
+l'avertissement ci-dessus : elle ne touche pas au site de la marque. La table « Ce qui se
+reprend » s'applique telle quelle.
+
+**La question d'inspiration de la phase 0.b se pose quand même**, avec la marque du prompt en
+hypothèse (« j'ai noté : dans le style de Linear ») ; *Oui, du style d'une marque* la confirme
+ou en change. Si la réponse contredit le prompt (« Non, compose l'identité de zéro »), demande
+en une ligne laquelle des deux l'emporte, sans deviner. Et une marque nommée n'est pas le cas
+« Aucune référence » de la phase 0.5.
+
+**Si la marque nommée est celle de l'utilisateur ou de son client**, ce n'est plus ce cas : sa
+référence lui appartient, tout ce qui précède reste entier et c'est SON site que tu relèves.
+
+La suite est celle de « Référence + nouvelle création » (phase 0.5), le DESIGN.md tenant la
+place du relevé de charte, avec trois précisions que le fichier ne tranche pas seul :
+
+- **Ce qu'on garde.** La structure de la palette (fond, paliers de surface, rôles du texte, rôle
+  et rareté de l'accent), le ton, la densité, les composants. **La teinte de l'accent reste celle
+  du client**, ou celle que l'utilisateur demande expressément. La police propriétaire se
+  remplace par l'équivalent libre, servi par `next/font`, jamais la sienne.
+- **Le moteur.** `--design-system` reprend la main sur la structure et les partis pris, avec le
+  métier et deux ou trois mots d'ambiance tirés de l'`Overview` dans la requête, en anglais. Les
+  molettes `--variance` et `--density` sont estimées d'après le fichier : écris-les comme des
+  estimations. Le fichier ne dit rien du mouvement : `--motion` se décide par le type de site. Si
+  le moteur rend une autre palette ou une autre paire typographique, **le fichier gagne** ; le
+  moteur ne tranche que ce que le fichier ne couvre pas.
+- **La signature.** Un fichier donne un langage, pas un élément signature : « La barre de
+  direction » reste à écrire pour ce site, à partir du monde du métier.
+
+La trace va dans `## Relevé de design` : à la place de la requête,
+`DESIGN.md awesome-design-md/<slug>`, puis ce que le fichier donne, ce qu'on garde, ce qu'on
+écarte. Le fichier se lit, il ne s'ajoute pas au projet.
+
 ## Phase 0.5 : Design system
 
 ```
@@ -814,6 +872,9 @@ effets, le mouvement et les guidelines de qualité.
 ### Trois cas, trois comportements
 
 Ils découlent directement des réponses de la phase 0.c.
+
+Une **marque nommée sans adresse** n'est pas le cas « Aucune référence » : elle prend « Référence
++ nouvelle création » (voir la phase 0.c, « Une marque nommée, sans adresse »).
 
 **Aucune référence** : le moteur décide, l'utilisateur arbitre. Sa sortie (motif de page,
 sections, stratégie de CTA, palette en variables CSS, typographie, effets, à éviter,
@@ -1067,6 +1128,15 @@ selon le besoin, et comment. Composants, sections entières, mouvement, jetons, 
 finitions : chaque besoin a ses sources, par serveur MCP, par registre shadcn ou par lecture
 directe d'un site.
 
+**D'abord la direction, quand la demande en a une.** Si le prompt nomme une marque, ou décrit
+une ambiance qui en rappelle une (voir la phase 0.c, « Une marque nommée, sans adresse »), le
+DESIGN.md complet de cette marque est lu **avant** les sections : il donne la direction de tout
+le site, et la bibliothèque donne ensuite l'agencement de chaque section. Il tient la première
+ligne du relevé d'inspiration, « Direction ». Les règles de composants qui en sortent (boutons,
+cartes, champs, leurs états), écrites en valeurs du thème et non en valeurs de la marque,
+rejoignent `consignes-agents.md` : l'agent constructeur n'a pas lu le fichier, il lit les
+consignes.
+
 Pour chaque section du plan :
 
 1. **Cherche dans au moins deux sources**, par le besoin, en français quand la source le
@@ -1102,6 +1172,7 @@ Le blueprint porte une section `## Relevé d'inspiration`, une ligne par section
 
 | Section | Consulté | Ce qu'on reprend | Ce qu'on laisse |
 |---|---|---|---|
+| Direction | awesome-design-md, Linear, fichier lu en entier | fond presque noir, un seul accent, rayons de 4 à 12 px, composants denses | la teinte lavande, sa police propriétaire |
 | Héros | vibeprompts, sections hero · 21st, « Hero Scroll Video Pin Reveal », image regardée | titre à gauche, photo pleine hauteur à droite, révélation au défilement | la vidéo, le badge animé |
 | Tarifs | watermelon, « Pricing 1 » · reui, blocs tarifs | trois cartes, celle du milieu surélevée, prix et mention sur la même ligne de base | la bascule mensuel ou annuel |
 | Réservation | reui, calendrier · component.gallery, sélecteur de date | grille du mois, créneaux en liste à droite | la vue semaine |
@@ -1810,6 +1881,13 @@ Le watcher te réveille quand un lot est envoyé. Alors :
 
 Si un commentaire est ambigu, prends la lecture la plus probable et applique-la : l'utilisateur
 corrigera d'un autre clic, c'est plus rapide qu'une question.
+
+Un commentaire qui **nomme une marque ou une ambiance** (« plus comme Stripe », « des cartes à
+la Linear ») est une demande d'allure : passe par le skill `bibliotheques-ui`, source
+awesome-design-md, lis les sections du DESIGN.md qui concernent l'élément, rejoue avec les
+jetons du site, et nomme la source dans ta ligne de réponse. La recette et l'index sont dans
+`~/.claude/skills/bibliotheques-ui/awesome-design-md.md` ; le nuancier où l'utilisateur choisit
+une marque : https://claude.ai/artifact/RwxGUngGJRawoceX81aJMU.
 
 ## Checkpoints
 

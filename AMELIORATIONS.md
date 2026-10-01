@@ -2114,3 +2114,47 @@ ligne à leur rapport. Décision D20.
 **À savoir pour les projets déjà livrés.** Leurs blueprints n'ont pas ce relevé : le garde-fou
 les bloquera, comme il bloque déjà ceux qui n'ont pas de relevé de design. C'est voulu. Le
 relevé s'écrit en quelques lignes le jour où l'on reprend un de ces sites.
+
+## Le langage visuel d'une marque, lu dans son fichier complet (2026-10-01)
+
+Une demande comme « dans le style de Stripe » n'avait pas de chemin : elle tombait soit sur la
+question d'inspiration, qui attend une adresse, soit sur Pro Max, dont la base ne connaît pas les
+marques. La bibliothèque `bibliotheques-ui` a reçu une source qui y répond : awesome-design-md,
+74 fichiers DESIGN.md complets, lus depuis GitHub. Décision D21.
+
+**Vérifié avant d'écrire.** Les 74 fichiers répondent (de 4 à 44 Ko, 2,1 Mo en tout). La recette
+a été jouée sur cinq marques. Deux surprises ont changé le texte : `WebFetch` ne rend pas un
+fichier mais un résumé, d'où `curl -o` puis lecture ; et les fichiers ne portent pas les neuf
+sections que le README annonce, mais de 8 à 11, sous d'autres noms, d'où le `grep` de la table
+des matières avant de lire.
+
+**Ce qui a été écrit.** Dans la phase 0.c, un aiguillage en tête (adresse ou marque nommée) et
+un chemin pour la marque nommée, sans les trois questions. Dans la phase 0.59, la direction lue
+avant les sections, sur une ligne « Direction » du relevé d'inspiration. Dans le gabarit des
+agents, un bloc où l'orchestrateur recopie les règles de composants. En phase 2, le cas du
+commentaire qui nomme une marque. Le garde-fou n'a pas changé : il exige les deux mêmes relevés.
+
+**Éprouvé par deux agents neufs, en lecture seule.** L'un a joué `/overlay … dans le style de
+Notion`, l'autre `/buildyoursite … dans le style de Linear` : tous deux ont suivi la chaîne
+jusqu'au bout (skill, bibliothèque, fiche, `curl`, table des matières, lecture) et rapporté de
+vraies valeurs. Ils ont aussi trouvé ce que ma première rédaction laissait flou, corrigé depuis :
+un exemple faux (le README dit « serif headings » pour Notion, le fichier n'en a aucun) ;
+l'en-tête YAML, qui porte les valeurs et que la table des matières ne montre pas ; l'accent (la
+structure de la palette se reprend, la teinte reste celle du client) ; le « non » de la question
+d'inspiration, qui ne doit pas annuler une marque nommée ; la règle des deux sources ; et une
+commande `npx … lint` que les fichiers suggèrent et qu'on ne lance pas. Leurs contrastes calculés
+à la main ont été revérifiés : le texte blanc sur l'accent de Linear au survol ne fait que 2,87
+pour 1.
+
+**Le nuancier, pour ne pas l'oublier.** À la demande de l'utilisateur, une page « Nuancier
+DESIGN.md » (artifact privé) montre les 74 marques : un échantillon peint aux couleurs lues dans
+chaque fichier, l'aperçu, le site officiel vérifié, la consigne à copier. Son lien apparaît dans
+le déroulé annoncé (étape 3), dans la question d'inspiration, qui propose désormais le style
+d'une marque, et en phase 2. La règle du « non » qui n'annulait pas une marque nommée est
+remplacée : une réponse qui contredit le prompt se tranche par une question. En construisant la
+page, le README s'est encore trompé deux fois : il fait de Clay une agence créative quand le
+fichier décrit Clay.com, et donne Supabase pour sombre quand son fichier est blanc.
+
+**À savoir.** Les polices de ces fichiers sont souvent propriétaires : le skill demande
+l'équivalent libre. Et un skill déjà lancé dans une session ouverte garde l'ancien texte :
+l'ajout joue au prochain lancement.

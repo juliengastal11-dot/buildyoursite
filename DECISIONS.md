@@ -578,3 +578,28 @@ de les interroger ; c'est là qu'on l'enrichit.
 
 **Ce qui ne change pas.** D19 tient toujours : on regarde l'agencement, on ne colle pas le code,
 GSAP reste le seul moteur de mouvement, et tout ce qui se compte se demande avant.
+
+---
+
+## D21. Le langage visuel d'une marque se lit dans son DESIGN.md complet
+
+Décision de l'utilisateur, le 2026-10-01 : quand une demande nomme une marque, ou décrit une
+ambiance qui en rappelle une, la bibliothèque `bibliotheques-ui` ouvre le DESIGN.md complet de
+cette marque (source awesome-design-md, 74 marques, lu depuis GitHub), et `/buildyoursite` comme
+`/overlay` le consultent d'eux-mêmes, sans que l'utilisateur ait à le redire.
+
+**Ce que ça impose.** En construction : la phase 0.c traite une marque nommée comme une
+référence de tiers en nouvelle création, sans les trois questions, puisque rien n'est ouvert,
+relevé ni téléchargé chez la marque ; la phase 0.59 lit le fichier avant les sections et le
+consigne sur une ligne « Direction » du relevé d'inspiration ; ses règles de composants rejoignent
+les consignes des agents. En édition : un commentaire qui nomme une marque passe par la même
+source. La teinte de l'accent reste celle du client. La question d'inspiration de la phase 0.b
+propose le style d'une marque, avec le lien du nuancier où l'utilisateur la choisit ; une réponse
+qui contredit le prompt se tranche par une question, jamais en devinant.
+
+**Ce qui ne change pas.** On reprend la forme, jamais ce qui identifie la marque : ni nom, ni
+logo, ni textes, ni photos, ni liens, ni police propriétaire. Les valeurs passent par les jetons
+du thème, et le garde-fou bloque toujours une couleur hors du thème. Il n'a pas changé : les deux
+relevés qu'il exige existent, le fichier consulté s'y inscrit. La source se lit, elle ne
+s'installe pas : rien n'est écrit dans le projet du client. Et comme pour D20, la liste des
+sources vit dans `bibliotheques-ui`, pas ici.

@@ -98,6 +98,13 @@ la ligne ne couvre pas (un survol, un état vide, une transition), invoque le sk
 `bibliotheques-ui` et cherche dans deux sources avant d'écrire. Quand une fiche porte une
 image de rendu, enregistre-la et regarde-la.
 
+{Si le relevé d'inspiration a une ligne « Direction » (un DESIGN.md de marque a été lu),
+recopie ici ses règles de composants : boutons, cartes, champs, états, ombres, rayons, en
+classes et valeurs du thème, jamais en valeurs de la marque. Chaque classe citée doit exister :
+vérifie-la dans `app/globals.css` et dans les composants du socle avant de l'écrire, et dis
+quel jeton porte quel rôle (les niveaux de surface, l'accent, le trait). L'agent n'a pas lu le
+fichier : ce bloc est tout ce qu'il en connaît. Sinon, supprime cette accolade.}
+
 Tu reprends un agencement ou une mécanique, **jamais un bloc de code** : tu le réécris avec
 les jetons et les primitives listés plus haut, et GSAP reste le seul moteur de mouvement. Ce
 qui se compte (récupération de code sur un quota, bloc premium), tu ne le déclenches pas : tu
