@@ -1885,7 +1885,10 @@ corrigera d'un autre clic, c'est plus rapide qu'une question.
 Un commentaire qui **nomme une marque ou une ambiance** (« plus comme Stripe », « des cartes à
 la Linear ») est une demande d'allure : passe par le skill `bibliotheques-ui`, source
 awesome-design-md, lis les sections du DESIGN.md qui concernent l'élément, rejoue avec les
-jetons du site, et nomme la source dans ta ligne de réponse. La recette et l'index sont dans
+jetons du site, et nomme la source dans ta ligne de réponse. Un commentaire dont la cible porte
+`deplacement` vient de la croix et des points de l'overlay (translation, ordre parmi les
+voisins) : suis « Quand un lot porte un déplacement » dans
+`~/.claude/skills/overlay/SKILL.md`. La recette et l'index sont dans
 `~/.claude/skills/bibliotheques-ui/awesome-design-md.md` ; le nuancier où l'utilisateur choisit
 une marque : https://claude.ai/artifact/RwxGUngGJRawoceX81aJMU.
 
