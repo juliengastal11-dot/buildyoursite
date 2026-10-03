@@ -260,7 +260,7 @@ propre liste d'outils, et cherche une capacité, jamais une marque** :
 | **Un générateur d'images ou de vidéo** | un outil qui fabrique une image ou une vidéo à partir d'un texte (noms fréquents : `generate_image`, `generate_video`, `text_to_image`), souvent accompagné de retouche : détourage, agrandissement, remplacement de fond | les visuels manquants peuvent être **générés dans l'univers du site** au lieu d'être provisoires |
 | **De quoi en connaître le coût** | sur le même connecteur, un outil de solde, de crédits, de quota ou de facturation | tu peux annoncer un prix avant chaque image ; sans lui, dis que le coût n'est pas mesurable d'ici |
 | **Un animateur d'image** | un outil de génération vidéo qui accepte **une image en entrée**, un rôle `image` dans ses médias | **animer les vraies photos du client** en boucles de quelques secondes. Mieux qu'un visuel inventé : il garde son lieu et ses gens. Voir `references/video.md` |
-| **La bibliothèque d'inspiration** | le skill `bibliotheques-ui`, et les serveurs qu'il cite : `search`, `get_component`, `get_inspiration`, `search_design_systems`, `list_skills` | **consultée obligatoirement en phase 0.59**, section par section. Note dans le relevé quelles sources répondent ; une source muette se dit, elle ne bloque pas les autres |
+| **La bibliothèque d'inspiration** | le skill `bibliotheques-ui`, et les serveurs qu'il cite : `search`, `get_component`, `get_inspiration`, `search_design_systems`, `list_skills`, et `motionsites` une fois connecté | **consultée obligatoirement en phase 0.59**, section par section. Note dans le relevé quelles sources répondent ; une source muette se dit, elle ne bloque pas les autres |
 | **Un hébergeur** | un outil de déploiement, de domaine ou de serveur | rien. Note-le sans rien en faire, on ne déploie pas |
 
 **N'écris jamais de liste de services connus dans ce skill.** Une liste de marques est déjà
@@ -1136,6 +1136,16 @@ ligne du relevé d'inspiration, « Direction ». Les règles de composants qui e
 cartes, champs, leurs états), écrites en valeurs du thème et non en valeurs de la marque,
 rejoignent `consignes-agents.md` : l'agent constructeur n'a pas lu le fichier, il lit les
 consignes.
+
+**Un héros ou une page animée : motionsites.** Quand une section est un héros animé (vidéo de
+fond, défilement mis en scène) ou que la page entière vit de son mouvement, `bibliotheques-ui`
+ajoute motionsites : ses prompts décrivent des sites animés complets. La recherche
+(`search_prompts`, `list_prompts`, `get_related_prompts`) est gratuite : cherche d'abord et
+présente deux ou trois fiches, avec leur page (`url`) à ouvrir. **Seul `get_prompt`, qui rend le
+texte complet, se compte** (trois en compte gratuit, tout en payant) : annonce lequel tu veux
+lire et attends le oui avant de le récupérer. On le lit, on n'en prend que la mise en page et le mouvement, et on
+le rejoue avec GSAP et les jetons du thème, jamais collé. S'il n'est pas connecté (le serveur
+répond « Needs authentication »), dis-le en une ligne et passe aux autres sources.
 
 Pour chaque section du plan :
 

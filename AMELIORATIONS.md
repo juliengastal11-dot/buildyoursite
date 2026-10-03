@@ -2158,3 +2158,23 @@ fichier décrit Clay.com, et donne Supabase pour sombre quand son fichier est bl
 **À savoir.** Les polices de ces fichiers sont souvent propriétaires : le skill demande
 l'équivalent libre. Et un skill déjà lancé dans une session ouverte garde l'ancien texte :
 l'ajout joue au prochain lancement.
+
+## motionsites rejoint la bibliothèque (2026-10-02)
+
+Un serveur MCP de plus, à la demande de l'utilisateur : motionsites, plus de 500 prompts de
+sites animés. Déclaré avec `claude mcp add motionsites --scope user --transport http`, il reste
+en « Needs authentication » : le serveur répond `401` et attend une connexion par navigateur
+avec un compte MotionSites. La page officielle dit « aucune clé d'API », ce qui est exact, mais
+ne dit ni les outils ni la limite : trois prompts en compte gratuit, tout en payant.
+
+**Ce qui a été écrit.** Dans la phase 0.59, un paragraphe : un héros animé ou une page qui vit de
+son mouvement passe aussi par motionsites ; la recherche est gratuite, seul `get_prompt` se
+compte, donc il s'annonce et attend le oui ; et on le rejoue avec GSAP et les jetons du thème au lieu de le coller. La source se décrit
+dans `bibliotheques-ui`, comme les autres.
+
+**À savoir.** Connecté le 2026-10-02. Les quatre outils (`search_prompts`, `list_prompts`,
+`get_related_prompts`, `get_prompt`) ont été relevés dans une session à part, sans appeler
+`get_prompt` : c'est le seul qui consomme le quota de trois prompts gratuits. Une recherche d'essai
+a montré des fiches avec `access`, `url` et `preview_url` (une vidéo, parfois absente), toutes
+`premium` en tête de résultat : un compte gratuit filtre par `access=free`. Les résultats portent
+aussi un champ publicitaire `upgrade_cta`, à ignorer.
